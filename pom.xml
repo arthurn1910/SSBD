@@ -10,9 +10,28 @@
     <name>ssbd01</name>
 
     <developers>
-        
+        <developer>
+            <id>gleam</id>
+            <name>Mateusz Grabowski</name>
+        </developer>
+        <developer>
+            <id>krogowski</id>
+            <name>Kamil Rogowski</name>
+        </developer>
+        <developer>
+            <id>rpawlaczyk</id>
+            <name>Radosław Pawlaczyk</name>
+        </developer>
+        <developer>
+            <id>tomaszj</id>
+            <name>Tomasz Jędrzejewski</name>
+        </developer>
+        <developer>
+            <id>leo</id>
+            <name>Patryk Stępień</name>
+        </developer>
     </developers>
-    
+
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
