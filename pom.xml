@@ -30,10 +30,6 @@
             <id>leo</id>
             <name>Patryk Stępień</name>
         </developer>
-        <developer>
-            <id>zmax</id>
-            <name>Maksymilian Zgierski</name>
-        </developer>
     </developers>
 
     <properties>
