@@ -10,7 +10,10 @@
     <name>ssbd01</name>
 
     <developers>
-        
+        <developer>
+            <id>zmax</id>
+            <name>Maksymilian Zgierski</name>
+        </developer>
     </developers>
     
     <properties>
