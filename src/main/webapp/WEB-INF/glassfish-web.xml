@@ -4,7 +4,7 @@
 <glassfish-web-app>
     <security-role-mapping>
         <role-name>ADMINISTRATOR</role-name>
-        <group-name>ADMIN</group-name>
+        <group-name>ADMINISTRATOR</group-name>
     </security-role-mapping>
     <security-role-mapping>
         <role-name>AGENT</role-name>
@@ -12,10 +12,10 @@
     </security-role-mapping>
     <security-role-mapping>
         <role-name>KLIENT</role-name>
-        <group-name>CLIENT</group-name>
+        <group-name>KLIENT</group-name>
     </security-role-mapping>
     <security-role-mapping>
         <role-name>MENADZER</role-name>
-        <group-name>MANAGER</group-name>
+        <group-name>MENADZER</group-name>
     </security-role-mapping>
 </glassfish-web-app>
