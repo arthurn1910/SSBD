@@ -67,9 +67,9 @@ public class Konto implements Serializable {
     @Column(name = "version")
     private long version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idAgenta")
-    private Collection<Ogloszenie> ogloszenieCollection;
+    private Collection<Ogloszenie> ogloszenieAgentaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idWlasciciela")
-    private Collection<Ogloszenie> ogloszenieCollection1;
+    private Collection<Ogloszenie> ogloszenieWlascicielaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "kontoId")
     private Collection<PoziomDostepu> poziomDostepuCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKonta")
@@ -143,20 +143,20 @@ public class Konto implements Serializable {
         this.version = version;
     }
 
-    public Collection<Ogloszenie> getOgloszenieCollection() {
-        return ogloszenieCollection;
+    public Collection<Ogloszenie> getOgloszenieAgentaCollection() {
+        return ogloszenieAgentaCollection;
     }
 
-    public void setOgloszenieCollection(Collection<Ogloszenie> ogloszenieCollection) {
-        this.ogloszenieCollection = ogloszenieCollection;
+    public void setOgloszenieAgentaCollection(Collection<Ogloszenie> ogloszenieAgentaCollection) {
+        this.ogloszenieAgentaCollection = ogloszenieAgentaCollection;
     }
 
-    public Collection<Ogloszenie> getOgloszenieCollection1() {
-        return ogloszenieCollection1;
+    public Collection<Ogloszenie> getOgloszenieWlascicielaCollection() {
+        return ogloszenieWlascicielaCollection;
     }
 
-    public void setOgloszenieCollection1(Collection<Ogloszenie> ogloszenieCollection1) {
-        this.ogloszenieCollection1 = ogloszenieCollection1;
+    public void setOgloszenieWlascicielaCollection(Collection<Ogloszenie> ogloszenieWlascicielaCollection) {
+        this.ogloszenieWlascicielaCollection = ogloszenieWlascicielaCollection;
     }
 
     public Collection<PoziomDostepu> getPoziomDostepuCollection() {
