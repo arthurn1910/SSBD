@@ -41,10 +41,11 @@
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia</class>
-    <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Ulubione</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.WartosciDlaKategorii</class>
+    <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Ulubione</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.DanePersonalne</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto</class>
+    <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
