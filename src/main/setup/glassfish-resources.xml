@@ -41,5 +41,4 @@
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="ssbd01"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="jdbc/ssbd01admin1Datasource" object-type="user" pool-name="ssbd01adminPool"/>
 </resources>

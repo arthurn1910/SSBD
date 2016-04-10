@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,14 +17,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,12 +44,17 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Ogloszenie.findByCena", query = "SELECT o FROM Ogloszenie o WHERE o.cena = :cena"),
     @NamedQuery(name = "Ogloszenie.findByRynekPierwotny", query = "SELECT o FROM Ogloszenie o WHERE o.rynekPierwotny = :rynekPierwotny"),
     @NamedQuery(name = "Ogloszenie.findByDataDodania", query = "SELECT o FROM Ogloszenie o WHERE o.dataDodania = :dataDodania"),
-    @NamedQuery(name = "Ogloszenie.findByVersion", query = "SELECT o FROM Ogloszenie o WHERE o.version = :version")})
+    @NamedQuery(name = "Ogloszenie.findByVersion", query = "SELECT o FROM Ogloszenie o WHERE o.version = :version"),
+    @NamedQuery(name = "Ogloszenie.findByAktywne", query = "SELECT o FROM Ogloszenie o WHERE o.aktywne = :aktywne")})
 public class Ogloszenie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="ogloszenie_id_seq",
+                       sequenceName="ogloszenie_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="ogloszenie_id_seq")
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -70,23 +79,28 @@ public class Ogloszenie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
+    @Version
     private long version;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "aktywne")
+    private boolean aktywne;
+    @ManyToMany(mappedBy = "ogloszenieUlubioneCollection")
+    private Collection<Konto> kontoCollection = new ArrayList<Konto>();
     @JoinColumn(name = "id_agenta", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Konto idAgenta;
     @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Konto idWlasciciela;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private Nieruchomosc nieruchomosc;
     @JoinColumn(name = "typ_ogloszenia", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private TypOgloszenia typOgloszenia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOgloszenia")
-    private Collection<Ulubione> ulubioneCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOgloszenia")
-    private Collection<Spotkanie> spotkanieCollection;
+    private Collection<Spotkanie> spotkanieCollection = new ArrayList<Spotkanie>();
 
     public Ogloszenie() {
     }
@@ -95,13 +109,14 @@ public class Ogloszenie implements Serializable {
         this.id = id;
     }
 
-    public Ogloszenie(Long id, String tytul, int cena, boolean rynekPierwotny, Date dataDodania, long version) {
+    public Ogloszenie(Long id, String tytul, int cena, boolean rynekPierwotny, Date dataDodania, long version, boolean aktywne) {
         this.id = id;
         this.tytul = tytul;
         this.cena = cena;
         this.rynekPierwotny = rynekPierwotny;
         this.dataDodania = dataDodania;
         this.version = version;
+        this.aktywne = aktywne;
     }
 
     public Long getId() {
@@ -144,12 +159,20 @@ public class Ogloszenie implements Serializable {
         this.dataDodania = dataDodania;
     }
 
-    public long getVersion() {
-        return version;
+    public boolean getAktywne() {
+        return aktywne;
     }
 
-    public void setVersion(long version) {
-        this.version = version;
+    public void setAktywne(boolean aktywne) {
+        this.aktywne = aktywne;
+    }
+
+    public Collection<Konto> getKontoCollection() {
+        return kontoCollection;
+    }
+
+    public void setKontoCollection(Collection<Konto> kontoCollection) {
+        this.kontoCollection = kontoCollection;
     }
 
     public Konto getIdAgenta() {
@@ -182,14 +205,6 @@ public class Ogloszenie implements Serializable {
 
     public void setTypOgloszenia(TypOgloszenia typOgloszenia) {
         this.typOgloszenia = typOgloszenia;
-    }
-
-    public Collection<Ulubione> getUlubioneCollection() {
-        return ulubioneCollection;
-    }
-
-    public void setUlubioneCollection(Collection<Ulubione> ulubioneCollection) {
-        this.ulubioneCollection = ulubioneCollection;
     }
 
     public Collection<Spotkanie> getSpotkanieCollection() {

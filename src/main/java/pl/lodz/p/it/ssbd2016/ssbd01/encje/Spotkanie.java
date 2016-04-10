@@ -8,6 +8,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,9 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -32,12 +35,17 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Spotkanie.findAll", query = "SELECT s FROM Spotkanie s"),
     @NamedQuery(name = "Spotkanie.findById", query = "SELECT s FROM Spotkanie s WHERE s.id = :id"),
     @NamedQuery(name = "Spotkanie.findByDataSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dataSpotkania = :dataSpotkania"),
-    @NamedQuery(name = "Spotkanie.findByVersion", query = "SELECT s FROM Spotkanie s WHERE s.version = :version")})
+    @NamedQuery(name = "Spotkanie.findByVersion", query = "SELECT s FROM Spotkanie s WHERE s.version = :version"),
+    @NamedQuery(name = "Spotkanie.findByDlugoscSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dlugoscSpotkania = :dlugoscSpotkania")})
 public class Spotkanie implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="spotkanie_id_seq",
+                       sequenceName="spotkanie_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="spotkanie_id_seq")
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -49,12 +57,17 @@ public class Spotkanie implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
+    @Version
     private long version;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "dlugosc_spotkania")
+    private int dlugoscSpotkania;
     @JoinColumn(name = "id_uzytkownika", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Konto idUzytkownika;
     @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private Ogloszenie idOgloszenia;
 
     public Spotkanie() {
@@ -64,10 +77,11 @@ public class Spotkanie implements Serializable {
         this.id = id;
     }
 
-    public Spotkanie(Long id, Date dataSpotkania, long version) {
+    public Spotkanie(Long id, Date dataSpotkania, long version, int dlugoscSpotkania) {
         this.id = id;
         this.dataSpotkania = dataSpotkania;
         this.version = version;
+        this.dlugoscSpotkania = dlugoscSpotkania;
     }
 
     public Long getId() {
@@ -86,12 +100,12 @@ public class Spotkanie implements Serializable {
         this.dataSpotkania = dataSpotkania;
     }
 
-    public long getVersion() {
-        return version;
+    public int getDlugoscSpotkania() {
+        return dlugoscSpotkania;
     }
 
-    public void setVersion(long version) {
-        this.version = version;
+    public void setDlugoscSpotkania(int dlugoscSpotkania) {
+        this.dlugoscSpotkania = dlugoscSpotkania;
     }
 
     public Konto getIdUzytkownika() {
