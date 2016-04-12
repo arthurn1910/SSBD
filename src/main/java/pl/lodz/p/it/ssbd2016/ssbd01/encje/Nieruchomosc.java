@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,14 +17,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -47,7 +50,11 @@ public class Nieruchomosc implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name="nieruchomosc_id_seq",
+                       sequenceName="nieruchomosc_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="nieruchomosc_id_seq")
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -75,14 +82,15 @@ public class Nieruchomosc implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
+    @Version
     private long version;
+    @ManyToMany(mappedBy = "nieruchomoscWyposazonaCollection")
+    private Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection = new ArrayList<ElementWyposazeniaNieruchomosci>();
     @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private TypNieruchomosci typNieruchomosci;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "nieruchomosc")
     private Ogloszenie ogloszenie;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idNieruchomosci")
-    private Collection<NieruchomoscPosiada> nieruchomoscPosiadaCollection;
 
     public Nieruchomosc() {
     }
@@ -155,12 +163,12 @@ public class Nieruchomosc implements Serializable {
         this.powierzchniaDzialki = powierzchniaDzialki;
     }
 
-    public long getVersion() {
-        return version;
+    public Collection<ElementWyposazeniaNieruchomosci> getElementWyposazeniaNieruchomosciCollection() {
+        return elementWyposazeniaNieruchomosciCollection;
     }
 
-    public void setVersion(long version) {
-        this.version = version;
+    public void setElementWyposazeniaNieruchomosciCollection(Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection) {
+        this.elementWyposazeniaNieruchomosciCollection = elementWyposazeniaNieruchomosciCollection;
     }
 
     public TypNieruchomosci getTypNieruchomosci() {
@@ -177,14 +185,6 @@ public class Nieruchomosc implements Serializable {
 
     public void setOgloszenie(Ogloszenie ogloszenie) {
         this.ogloszenie = ogloszenie;
-    }
-
-    public Collection<NieruchomoscPosiada> getNieruchomoscPosiadaCollection() {
-        return nieruchomoscPosiadaCollection;
-    }
-
-    public void setNieruchomoscPosiadaCollection(Collection<NieruchomoscPosiada> nieruchomoscPosiadaCollection) {
-        this.nieruchomoscPosiadaCollection = nieruchomoscPosiadaCollection;
     }
 
     @Override

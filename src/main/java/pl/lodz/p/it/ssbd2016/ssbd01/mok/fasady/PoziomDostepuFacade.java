@@ -5,10 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
