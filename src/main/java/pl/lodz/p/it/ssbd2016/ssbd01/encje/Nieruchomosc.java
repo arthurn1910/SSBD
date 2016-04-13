@@ -79,6 +79,8 @@ public class Nieruchomosc implements Serializable {
     private Date rokBudowy;
     @Column(name = "powierzchnia_dzialki")
     private Integer powierzchniaDzialki;
+    @Column(name = "powierzchnia_nieruchomosci")
+    private Integer powierzchniaNieruchomosci;
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
@@ -163,6 +165,14 @@ public class Nieruchomosc implements Serializable {
         this.powierzchniaDzialki = powierzchniaDzialki;
     }
 
+    public Integer getPowierzchniaNieruchomosci() {
+        return powierzchniaNieruchomosci;
+    }
+
+    public void setPowierzchniaNieruchomosci(Integer powierzchniaNieruchomosci) {
+        this.powierzchniaNieruchomosci = powierzchniaNieruchomosci;
+    }
+    
     public Collection<ElementWyposazeniaNieruchomosci> getElementWyposazeniaNieruchomosciCollection() {
         return elementWyposazeniaNieruchomosciCollection;
     }
