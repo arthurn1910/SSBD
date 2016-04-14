@@ -63,7 +63,7 @@ public class Konto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
-    @Column(name = "login")
+    @Column(name = "login", updatable = false)
     private String login;
     @Basic(optional = false)
     @NotNull

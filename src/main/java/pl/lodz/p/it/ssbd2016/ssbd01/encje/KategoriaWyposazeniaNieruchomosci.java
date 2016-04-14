@@ -50,7 +50,7 @@ public class KategoriaWyposazeniaNieruchomosci implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 64)
-    @Column(name = "nazwa")
+    @Column(name = "nazwa", updatable = false)
     private String nazwa;
     @Basic(optional = false)
     @NotNull
