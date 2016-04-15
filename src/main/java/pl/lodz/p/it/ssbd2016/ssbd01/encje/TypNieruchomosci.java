@@ -52,7 +52,7 @@ public class TypNieruchomosci implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "nazwa")
+    @Column(name = "nazwa", updatable = false)
     private String nazwa;
     @Basic(optional = false)
     @NotNull
