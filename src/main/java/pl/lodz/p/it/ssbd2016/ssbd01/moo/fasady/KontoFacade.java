@@ -11,14 +11,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
  *
  * @author java
  */
 @Stateless
-public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements OgloszenieFacadeLocal {
+public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")
     private EntityManager em;
@@ -28,8 +28,20 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
         return em;
     }
 
-    public OgloszenieFacade() {
-        super(Ogloszenie.class);
+    public KontoFacade() {
+        super(Konto.class);
+    }
+
+    @Override
+    public Konto znajdzPoLoginie(String login) {
+        Query q = em.createNamedQuery("Konto.findAll");
+        List<Konto> l = (List<Konto>) q.getResultList();
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).getLogin() == login) {
+                return l.get(i);
+            }
+        }
+        return l.get(0);
     }
     
 }

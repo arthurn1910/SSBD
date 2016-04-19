@@ -5,20 +5,19 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
 /**
  *
  * @author java
  */
 @Stateless
-public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements OgloszenieFacadeLocal {
+public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implements TypOgloszeniaFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")
     private EntityManager em;
@@ -28,8 +27,15 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
         return em;
     }
 
-    public OgloszenieFacade() {
-        super(Ogloszenie.class);
+    public TypOgloszeniaFacade() {
+        super(TypOgloszenia.class);
+    }
+
+    @Override
+    public TypOgloszenia znajdzPoNazwie(String typ) {
+        Query q = em.createNamedQuery("TypOgloszenia.findByNazwa");
+        q.setParameter("nazwa", typ);
+        return (TypOgloszenia) q.getSingleResult();
     }
     
 }

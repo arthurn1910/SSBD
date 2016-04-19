@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista ulubionych ogloszen</title>
+    </h:head>
+    <h:body> Lista ulubionych ogloszen<br />
+                <h:form id="listaUlubionychOgloszenForm">
+            
+            <h:dataTable id="listaOgloszen" var="row" value="#{wyswietlUlubioneOgloszeniaBean.ogloszeniaDataModel}">
+                <h:column id="login">
+                    <f:facet name="header">Tytuł</f:facet>
+                    <h:outputText value="#{row.tytul}" />
+                </h:column>
+                <h:column id="imie">
+                    <f:facet name="header">Cena</f:facet>
+                    <h:outputText value="#{row.cena}" />
+                </h:column>
+                <h:column id="nazwisko">
+                    <f:facet name="header">Miejscowosc</f:facet>
+                    <h:outputText value="#{row.nieruchomosc.miejscowosc}" />
+                </h:column>
+                <h:column id="wlasciciel">
+                    <f:facet name="header">wlasciciel</f:facet>
+                    <h:outputText value="#{row.idWlasciciela.login}" />
+                </h:column>
+                
+                <h:column id="stan">
+                    <f:facet name="header">stan</f:facet>
+                    <h:panelGrid columns="2">
+                        <h:selectBooleanCheckbox id="aktywne" value="#{row.aktywne}" disabled="true"/>    
+                        <h:outputLabel for="aktywne" value="aktywne" />    
+                    </h:panelGrid>
+                </h:column>                                
+                
+            </h:dataTable>
+                    <h:commandButton value="Powróć" action="cancel" />
+        </h:form>
+
+    </h:body>
+</html>
+
