@@ -62,7 +62,7 @@ public class PoziomDostepu implements Serializable {
     @Version
     private long version;
     @JoinColumn(name = "konto_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Konto kontoId;
 
     public PoziomDostepu() {

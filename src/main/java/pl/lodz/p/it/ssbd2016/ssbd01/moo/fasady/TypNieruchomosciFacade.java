@@ -18,7 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 @Stateless
 public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> implements TypNieruchomosciFacadeLocal {
 
-    @PersistenceContext(unitName = "ssbd01adminPU")
+    @PersistenceContext(unitName = "ssbd01mooPU")
     private EntityManager em;
 
     @Override

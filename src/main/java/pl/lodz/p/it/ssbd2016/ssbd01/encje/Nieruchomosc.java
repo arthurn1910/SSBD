@@ -89,7 +89,7 @@ public class Nieruchomosc implements Serializable {
     @ManyToMany(mappedBy = "nieruchomoscWyposazonaCollection")
     private Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection = new ArrayList<ElementWyposazeniaNieruchomosci>();
     @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private TypNieruchomosci typNieruchomosci;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "nieruchomosc")
     private Ogloszenie ogloszenie;
