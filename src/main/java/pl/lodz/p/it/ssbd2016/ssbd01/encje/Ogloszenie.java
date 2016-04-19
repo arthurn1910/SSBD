@@ -88,16 +88,16 @@ public class Ogloszenie implements Serializable {
     @ManyToMany(mappedBy = "ogloszenieUlubioneCollection")
     private Collection<Konto> kontoCollection = new ArrayList<Konto>();
     @JoinColumn(name = "id_agenta", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Konto idAgenta;
     @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Konto idWlasciciela;
     @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private Nieruchomosc nieruchomosc;
     @JoinColumn(name = "typ_ogloszenia", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private TypOgloszenia typOgloszenia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idOgloszenia")
     private Collection<Spotkanie> spotkanieCollection = new ArrayList<Spotkanie>();

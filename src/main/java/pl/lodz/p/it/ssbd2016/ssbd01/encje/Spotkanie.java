@@ -64,10 +64,10 @@ public class Spotkanie implements Serializable {
     @Column(name = "dlugosc_spotkania")
     private int dlugoscSpotkania;
     @JoinColumn(name = "id_uzytkownika", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Konto idUzytkownika;
     @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id")
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private Ogloszenie idOgloszenia;
 
     public Spotkanie() {
