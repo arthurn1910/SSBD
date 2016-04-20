@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Dodawanie spotkania</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            Data spotkania:<br/>
+            Rok     <h:inputText value="#{dodawanieSpotkania.rok}"/><br/>
+            Miesiąc <h:inputText value="#{dodawanieSpotkania.miesiac}"/><br/>
+            Dzień   <h:inputText value="#{dodawanieSpotkania.dzien}"/><br/><br/>
+            Długość spotkania<h:inputText value="#{dodawanieSpotkania.dlugosc}"/><br/>
+            <h:commandButton value="Utworz spotkanie" action="#{dodawanieSpotkania.dodajSpotkanie}" />
+        </h:form>
+    </h:body>
+</html>
+

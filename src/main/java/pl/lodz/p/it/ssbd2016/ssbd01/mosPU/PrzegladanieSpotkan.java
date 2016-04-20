@@ -5,17 +5,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import java.util.List;
 import java.util.ArrayList;
 
-@ManagedBean(name = "mos4")
+@ManagedBean(name = "przegladanieSpotkan")
 @RequestScoped
-public class Mos4 implements Serializable {
+public class PrzegladanieSpotkan implements Serializable {
     @Inject
-    private MOKEndpointLocal mokEndpoint;
+    private MOSEndpointLocal mosEndpoint;
     
     private List<Spotkanie> spotkania;
     private Konto konto;
@@ -28,7 +28,7 @@ public class Mos4 implements Serializable {
     
     @PostConstruct
     public void init() {
-        konto = mokEndpoint.pobierzPierwszeKonto();
+        konto = mosEndpoint.pobierzPierwszeKonto();
         spotkania = new ArrayList(konto.getSpotkanieCollection());
     }
     

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
-        <title>MOS4</title>
+        <title>Przeglądanie spotkań</title>
     </h:head>
     <h:body>
         <h:form>
-            Użytkownik: #{mos4.konto.imie} #{mos4.konto.nazwisko} (id: #{mos4.konto.id})
+            Użytkownik: #{przegladanieSpotkan.konto.imie} #{przegladanieSpotkan.konto.nazwisko} (id: #{przegladanieSpotkan.konto.id})
         </h:form>
         <h:form>
-            <h:dataTable value="#{mos4.spotkania}" var="spotkanie">
+            <h:dataTable value="#{przegladanieSpotkan.spotkania}" var="spotkanie">
                 <h:column>Data: #{spotkanie.dataSpotkania}</h:column>
                 <h:column>, długość: #{spotkanie.dlugoscSpotkania}</h:column>
                 <h:column>, id ogłoszenia:#{spotkanie.idOgloszenia.id}</h:column>

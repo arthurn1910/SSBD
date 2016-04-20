@@ -11,23 +11,17 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mosPU;
  */
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
 import java.util.Date;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
-@ManagedBean(name = "mos1")
-@RequestScoped
-public class Mos1 implements Serializable {
-    @Inject
-    private MOKEndpointLocal mokEndpoint;
-    @Inject
-    private MOOEndpointLocal mooEndpoint;
+@ManagedBean(name = "dodawanieSpotkania")
+@SessionScoped
+public class DodawanieSpotkania implements Serializable {
     @Inject
     private MOSEndpointLocal mosEndpoint;
     
@@ -66,9 +60,9 @@ public class Mos1 implements Serializable {
 
     public void dodajSpotkanie() {
         System.out.println("Dodawanie spotkania:");
-        Konto konto = mokEndpoint.pobierzPierwszeKonto();
+        Konto konto = mosEndpoint.pobierzPierwszeKonto();
         
-        Ogloszenie ogloszenie = mooEndpoint.pobierzPierwszeOgloszenie();
+        Ogloszenie ogloszenie = mosEndpoint.pobierzPierwszeOgloszenie();
         Spotkanie spotkanie = new Spotkanie();
         spotkanie.setDataSpotkania(new Date(Integer.parseInt(rok) - 1900, Integer.parseInt(miesiac), Integer.parseInt(dzien)));
         spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
