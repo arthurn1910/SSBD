@@ -18,7 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
  * @author java
  */
 @Stateless
-public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLocal {
+public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")
     private EntityManager em;
@@ -28,7 +28,7 @@ public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLoc
         return em;
     }
 
-    public KontoFacade() {
+    public KontoMOOFacade() {
         super(Konto.class);
     }
 
