@@ -1,21 +1,20 @@
-package pl.lodz.p.it.ssbd2016.ssbd01.mosPU;
+package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import java.util.List;
 import java.util.ArrayList;
 
-@ManagedBean(name = "przegladanieSpotkan")
+@ManagedBean
 @RequestScoped
 public class PrzegladanieSpotkan implements Serializable {
     @Inject
-    private MOSEndpointLocal mosEndpoint;
+    private SpotkanieSession spotkanieSession;
     
     private List<Spotkanie> spotkania;
     private Konto konto;
@@ -28,7 +27,7 @@ public class PrzegladanieSpotkan implements Serializable {
     
     @PostConstruct
     public void init() {
-        konto = mosEndpoint.pobierzPierwszeKonto();
+        konto = spotkanieSession.pobierzPierwszeKonto();
         spotkania = new ArrayList(konto.getSpotkanieCollection());
     }
     

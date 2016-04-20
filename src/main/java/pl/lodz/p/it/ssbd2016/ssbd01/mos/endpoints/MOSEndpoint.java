@@ -24,13 +24,7 @@ public class MOSEndpoint implements MOSEndpointLocal {
     public void dodajSpotkanie(Spotkanie spotkanie) {
         spotkanieFacade.create(spotkanie);
     }
-    
-    @Override
-    public List<Konto> pobierzKonta() {
-        List<Konto> konta = kontoFacade.findAll();
-        return konta;
-    }
-    
+
     @Override
     public Konto pobierzPierwszeKonto() {
         List<Konto> konta = kontoFacade.findAll();
@@ -42,5 +36,4 @@ public class MOSEndpoint implements MOSEndpointLocal {
         List<Ogloszenie> ogloszenia = ogloszenieFacade.findAll();
         return ogloszenia.get(0);
     }
-
 }

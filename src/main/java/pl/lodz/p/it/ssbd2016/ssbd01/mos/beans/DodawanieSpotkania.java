@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.it.ssbd2016.ssbd01.mosPU;
+package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 /**
  *
@@ -11,19 +11,19 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mosPU;
  */
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
-import java.util.Date;
-import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
-@ManagedBean(name = "dodawanieSpotkania")
-@SessionScoped
+@ManagedBean
+@RequestScoped
 public class DodawanieSpotkania implements Serializable {
     @Inject
-    private MOSEndpointLocal mosEndpoint;
+    private SpotkanieSession spotkanieSession;
+    
+    private final Ogloszenie ogloszenie = new Ogloszenie();
+    private final Konto konto = new Konto();
     
     private String rok;
     private String miesiac;
@@ -58,20 +58,8 @@ public class DodawanieSpotkania implements Serializable {
         this.dlugosc = dlugosc;
     }
 
-    public void dodajSpotkanie() {
-        System.out.println("Dodawanie spotkania:");
-        Konto konto = mosEndpoint.pobierzPierwszeKonto();
-        
-        Ogloszenie ogloszenie = mosEndpoint.pobierzPierwszeOgloszenie();
-        Spotkanie spotkanie = new Spotkanie();
-        spotkanie.setDataSpotkania(new Date(Integer.parseInt(rok) - 1900, Integer.parseInt(miesiac), Integer.parseInt(dzien)));
-        spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
-        spotkanie.setIdUzytkownika(konto);
-        spotkanie.setIdOgloszenia(ogloszenie);
-        mosEndpoint.dodajSpotkanie(spotkanie);
-        
-        konto.getSpotkanieCollection().add(spotkanie);
-        ogloszenie.getSpotkanieCollection().add(spotkanie);
-        
+    public String dodajSpotkanie() {
+        spotkanieSession.dodajSpotkanie(konto, ogloszenie);
+        return "success";
     }
 }
