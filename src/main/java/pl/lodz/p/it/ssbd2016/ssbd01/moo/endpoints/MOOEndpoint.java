@@ -14,11 +14,11 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
 
 /**
  *
@@ -28,7 +28,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
 public class MOOEndpoint implements MOOEndpointLocal {
 
     @EJB
-    private KontoFacadeLocal kontoFacade;
+    private KontoMOOFacadeLocal kontoFacade;
     @EJB
     private TypOgloszeniaFacadeLocal typOgloszeniaFacade;
     @EJB
