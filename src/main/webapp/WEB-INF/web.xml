@@ -14,13 +14,13 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    
+   
     <session-config>
         <session-timeout>
-            10
+            30
         </session-timeout>
     </session-config>
-    
+    <!-- definicja ról uwzględnianych w kontroli dostępu -->
     <security-role>
         <description/>
         <role-name>ADMINISTRATOR</role-name>
@@ -37,8 +37,10 @@
         <description/>
         <role-name>KLIENT</role-name>
     </security-role>
-        
     <!-- kontrola dostępu do zasobów administratora -->
+    <welcome-file-list>
+        <welcome-file>faces/index.xhtml</welcome-file>
+    </welcome-file-list>
     <security-constraint>
         <display-name>AdministratorConstr</display-name>
         <web-resource-collection>
@@ -55,7 +57,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
     <!-- kontrola dostępu do zasobów menedżera -->
     <security-constraint>
         <display-name>MenadzerConstr</display-name>
@@ -73,8 +74,7 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
-     <!-- kontrola dostępu do zasobów agenta -->
+    <!-- kontrola dostępu do zasobów agenta -->
     <security-constraint>
         <display-name>AgentConstr</display-name>
         <web-resource-collection>
@@ -91,8 +91,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
-    
     <!-- kontrola dostępu do zasobów klienta -->
     <security-constraint>
         <display-name>KlientConstr</display-name>
@@ -110,15 +108,13 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
     <!-- definicja metody logowania, odwołanie do stron z formularzem logowania i komunikatem błędu -->
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>ssbd01realm</realm-name>
         <form-login-config>
             <form-login-page>/login/login.html</form-login-page>
-            <form-error-page>/login/error.html</form-error-page> 
+            <form-error-page>/login/error.html</form-error-page>
         </form-login-config>
     </login-config>
- 
 </web-app>

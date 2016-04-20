@@ -29,5 +29,7 @@ public interface TypNieruchomosciFacadeLocal {
     List<TypNieruchomosci> findRange(int[] range);
 
     int count();
+
+    public TypNieruchomosci znajdzPoNazwie(String typ);
     
 }

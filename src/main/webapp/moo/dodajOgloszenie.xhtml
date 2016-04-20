@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Dodaj ogloszenie</title>
+    </h:head>
+    <h:body>
+        Dodaj ogłoszenie
+        <h:form>
+            Tytul: <h:inputText value="#{dodajOgloszenieBean.ogloszenie.tytul}"/><br />
+            Cena: <h:inputText value="#{dodajOgloszenieBean.ogloszenie.cena}"/><br />
+            Powierzchnia: <h:inputText value="#{dodajOgloszenieBean.nieruchomosc.powierzchniaNieruchomosci}"/><br />
+            <h:commandButton action="#{dodajOgloszenieBean.dodajOgloszenie()}" value="Utwórz" />
+            <h:commandButton value="Powróć" action="cancel" />
+        </h:form>
+    </h:body>
+</html>

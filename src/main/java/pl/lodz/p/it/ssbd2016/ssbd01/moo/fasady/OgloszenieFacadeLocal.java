@@ -28,6 +28,5 @@ public interface OgloszenieFacadeLocal {
 
     List<Ogloszenie> findRange(int[] range);
 
-    int count();
-    
+    int count();    
 }
