@@ -1,7 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import java.io.Serializable;
-import javax.faces.bean.SessionScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
@@ -14,13 +14,13 @@ public class SpotkanieSession implements Serializable {
     @Inject
     private MOSEndpointLocal mosEndpoint;
     
-    public void dodajSpotkanie(Konto k, Ogloszenie o) {
+    public void dodajSpotkanie(Konto k, Ogloszenie o, String rok, String miesiac, String dzien, String dlugosc) {
         Konto konto = mosEndpoint.pobierzPierwszeKonto();
         
         Ogloszenie ogloszenie = mosEndpoint.pobierzPierwszeOgloszenie();
         Spotkanie spotkanie = new Spotkanie();
-        spotkanie.setDataSpotkania(new Date(2016, 6, 10));
-        spotkanie.setDlugoscSpotkania(30);
+        spotkanie.setDataSpotkania(new Date(Integer.parseInt(rok) - 1900, Integer.parseInt(miesiac), Integer.parseInt(dzien)));
+        spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
         spotkanie.setIdUzytkownika(konto);
         spotkanie.setIdOgloszenia(ogloszenie);
         mosEndpoint.dodajSpotkanie(spotkanie);

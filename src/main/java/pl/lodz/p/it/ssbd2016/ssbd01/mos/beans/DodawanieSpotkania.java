@@ -10,7 +10,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
  * @author java
  */
 import java.io.Serializable;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -59,7 +59,7 @@ public class DodawanieSpotkania implements Serializable {
     }
 
     public String dodajSpotkanie() {
-        spotkanieSession.dodajSpotkanie(konto, ogloszenie);
+        spotkanieSession.dodajSpotkanie(konto, ogloszenie, rok, miesiac, dzien, dlugosc);
         return "success";
     }
 }

@@ -1,7 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import java.io.Serializable;
-import javax.faces.bean.RequestScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
