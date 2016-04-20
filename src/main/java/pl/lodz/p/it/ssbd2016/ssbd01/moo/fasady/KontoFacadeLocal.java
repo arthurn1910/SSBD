@@ -14,7 +14,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
  * @author java
  */
 @Local
-public interface KontoMOOFacadeLocal {
+public interface KontoFacadeLocal {
 
     void create(Konto konto);
 
