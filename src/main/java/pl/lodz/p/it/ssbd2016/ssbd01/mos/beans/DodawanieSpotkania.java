@@ -10,13 +10,13 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
  * @author java
  */
 import java.io.Serializable;
-import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class DodawanieSpotkania implements Serializable {
     @Inject
