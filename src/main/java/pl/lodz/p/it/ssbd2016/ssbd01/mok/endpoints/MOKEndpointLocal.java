@@ -26,4 +26,10 @@ public interface MOKEndpointLocal {
     public void odblokujKonto(Konto rowData);
 
     public void zablokujKonto(Konto rowData);
+
+    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
+
+    public Konto pobierzUzytkownika(String login);
+
+    public List<Konto> pobierzPodobneKonta(Konto konto);
 }

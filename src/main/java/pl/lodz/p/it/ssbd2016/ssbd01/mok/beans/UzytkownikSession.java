@@ -55,4 +55,16 @@ public class UzytkownikSession implements Serializable {
     void zablokujKonto(Konto rowData) {
         MOKEndpoint.zablokujKonto(rowData);
     }
+
+    List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
+        return MOKEndpoint.pobierzWszystkieNiepotwierdzoneKonta();
+    }
+
+    Konto pobierzUrzytkownika(String login) {
+        return MOKEndpoint.pobierzUzytkownika(login);
+    }
+
+    List<Konto> pobierzPodobneKonta(Konto konto) {
+        return MOKEndpoint.pobierzPodobneKonta(konto);
+    }
 }
