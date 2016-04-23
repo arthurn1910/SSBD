@@ -5,17 +5,21 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
-import java.io.IOException;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.PoziomDostepu_;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.manager.KontoManagerLocal;
+
+import javax.annotation.Resource;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
+import javax.ejb.Stateful;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  *
@@ -23,14 +27,17 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
  */
 @Stateful
 public class MOKEndpoint implements MOKEndpointLocal{
-    
+
+    @EJB
+    private KontoManagerLocal kontoManager;
     @EJB
     private KontoFacadeLocal kontoFacade;
-    
     @EJB
     private PoziomDostepuFacadeLocal poziomDostepuFacade;
    
     private Konto kontoStan;
+    @Resource
+    private SessionContext sessionContext;
     
     @Override
     public void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu) {
@@ -56,6 +63,7 @@ public class MOKEndpoint implements MOKEndpointLocal{
         k.setPotwierdzone(true);
     }
 
+
     @Override
     public void odblokujKonto(Konto rowData) {
         Konto o = kontoFacade.find(rowData.getId());
@@ -67,4 +75,22 @@ public class MOKEndpoint implements MOKEndpointLocal{
         Konto o = kontoFacade.find(rowData.getId());
         o.setAktywne(false);
     }
+
+    @Override
+    public void zmienHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        kontoManager.zmienHaslo(noweHaslo, stareHaslo);
+    }
+
+
+    @Override
+    public Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException {
+        kontoStan = kontoFacade.find(konto.getId());
+        return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
+    }
+
+    @Override
+    public Konto pobierzMojeKonto() {
+        return kontoFacade.findByLogin(sessionContext.getCallerPrincipal().getName());
+    }
+
 }

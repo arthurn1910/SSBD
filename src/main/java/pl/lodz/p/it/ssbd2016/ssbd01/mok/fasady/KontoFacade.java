@@ -5,14 +5,15 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import javax.persistence.Query;
 
 /**
- *
  * @author java
  */
 @Stateless
@@ -29,5 +30,12 @@ public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLoc
     public KontoFacade() {
         super(Konto.class);
     }
-    
+
+    @Override
+    public Konto findByLogin(String login) {
+        Query query = em.createNamedQuery("Konto.findByLogin");
+        query.setParameter("login", login);
+        return (Konto) query.getSingleResult();
+    }
 }
+
