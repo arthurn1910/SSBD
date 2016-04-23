@@ -1,5 +1,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -21,7 +24,16 @@ public class EdytujDaneBean implements Serializable {
     private String nowePowtorzoneHaslo;
     private String noweHaslo;
     private String stareHaslo;
+    private Konto konto;
 
+    @PostConstruct
+    private void initKonto() {
+        konto = uzytkownikSession.znajdzPoLoginie("kontoC");
+    }
+
+    public void edytujDaneUzytkownika() {
+        uzytkownikSession.edytujDaneUzytkownika(konto);
+    }
     public void zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (noweHaslo.equals(nowePowtorzoneHaslo))
@@ -38,6 +50,10 @@ public class EdytujDaneBean implements Serializable {
 
     public String getStareHaslo() {
         return stareHaslo;
+    }
+
+    public Konto getKonto() {
+        return konto;
     }
 
     public void setStareHaslo(String stareHaslo) {

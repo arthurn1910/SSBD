@@ -9,7 +9,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 import javax.ejb.Local;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -31,7 +30,9 @@ public interface MOKEndpointLocal {
 
     void zmienHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
-    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
-
     Konto pobierzMojeKonto();
+
+    Konto znajdzPoLoginie(String login);
+
+    void edytujKonto(Konto konto);
 }

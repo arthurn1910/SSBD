@@ -78,6 +78,13 @@ public class UzytkownikSession implements Serializable {
 
     public void zmienHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienHaslo(noweHaslo, stareHaslo);
+    }
 
+    public Konto znajdzPoLoginie(String login) {
+        return MOKEndpoint.znajdzPoLoginie(login);
+    }
+
+    public void edytujDaneUzytkownika(Konto konto) {
+        MOKEndpoint.edytujKonto(konto);
     }
 }
