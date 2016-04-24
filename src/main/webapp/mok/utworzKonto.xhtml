@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Utwórz konto</title>
+    </h:head>
+    <h:body>
+        Utwórz konto
+        <h:form>
+            Imie: <h:inputText value="#{dodajUzytkownika.imie}"/><br />
+            Nazwisko: <h:inputText value="#{dodajUzytkownika.nazwisko}"/><br />
+            Login: <h:inputText value="#{dodajUzytkownika.login}"/><br />
+            Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
+            Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
+            Rola: <h:selectOneRadio value="#{dodajUzytkownika.rola}" layout="pageDirection">
+                    <f:selectItem itemValue="agent" itemLabel="Agent" />
+                    <f:selectItem itemValue="klient" itemLabel="Klient" />
+                    <f:selectItem itemValue="menadzer" itemLabel="Menadżer" />
+            </h:selectOneRadio>
+            Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
+            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><br />
+            <h:commandButton action="powrot" value="Powróć" />
+            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
+                value="Utwórz" action="#{dodajUzytkownika.utworzKonto()}"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </h:body>
+</html>
+

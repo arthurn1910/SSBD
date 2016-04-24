@@ -40,9 +40,35 @@
             <to-view-id>/mok/kontaNiepotwierdzone.xhtml</to-view-id>
             <redirect />
         </navigation-case>
+        <navigation-case>
+            <from-outcome>wyszukajKontaNiepotwierdzone</from-outcome>
+            <to-view-id>/mok/parametryWyszukiwaniaUzytkownika.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>utworzKonto</from-outcome>
+            <to-view-id>/mok/utworzKonto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/mok/kontaNiepotwierdzone.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mok/parametryWyszukiwaniaUzytkownika.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mok/utworzKonto.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
             <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>

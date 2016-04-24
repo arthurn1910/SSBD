@@ -29,6 +29,7 @@ public class DodajUzytkownika {
     private String powtorzHaslo;
     private String telefon;
     private String email;
+    private String rola;
     
     public String getImie() {
         return imie;
@@ -78,6 +79,13 @@ public class DodajUzytkownika {
     public void setEmail(String e) {
         this.email = e;
     }
+    
+    public String getRola() {
+        return rola;
+    }  
+    public void setRola(String r) {
+        this.rola = r;
+    }
 
     public Konto getKonto() {
         return konto;
@@ -92,6 +100,18 @@ public class DodajUzytkownika {
         this.konto.setTelefon(this.telefon);
         
         sesjaKonta.rejestrujKlienta(konto);
+        return "success";
+    }
+    
+    public String utworzKonto() {
+        this.konto.setImie(this.imie);
+        this.konto.setNazwisko(this.nazwisko);
+        this.konto.setHaslo(this.haslo);
+        this.konto.setEmail(this.email);
+        this.konto.setLogin(this.login);
+        this.konto.setTelefon(this.telefon);
+        
+        sesjaKonta.utworzKonto(konto, rola);
         return "success";
     }
 }

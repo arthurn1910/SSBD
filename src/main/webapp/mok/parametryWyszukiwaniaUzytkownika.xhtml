@@ -1,16 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista kont niepotwierdzonych</title>
+    </h:head>
+    <h:body>
+        Lista kont niepotwierdzonych<br /><br />
+        Wyszukiwanie według:<br />
+        <h:form id="listaKontForm1">
+            <h:selectOneRadio value="#{wyszukajKontaNiepotwierdzone.parametr}" layout="pageDirection">
+                    <f:selectItem itemValue="id" itemLabel="ID" />
+                    <f:selectItem itemValue="login" itemLabel="Login" />
+                    <f:selectItem itemValue="email" itemLabel="Email" />
+                    <f:selectItem itemValue="telefon" itemLabel="Telefon" />
+                    <f:selectItem itemValue="nazwisko" itemLabel="Nazwisko" />
+            </h:selectOneRadio>
+            Wartość parametru: <h:inputText value="#{wyszukajKontaNiepotwierdzone.wartoscParametru}"/><br />
+            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKontaNiepotwierdzone.kontaNiepotwierdzoneWyszukiwanie}">
+                <h:column id="login1">
+                    <f:facet name="header">login</f:facet>
+                    <h:outputText value="#{row.login}" />
+                </h:column>
+                <h:column id="imie1">
+                    <f:facet name="header">imię</f:facet>
+                    <h:outputText value="#{row.imie}" />
+                </h:column>
+                <h:column id="nazwisko1">
+                    <f:facet name="header">nazwisko</f:facet>
+                    <h:outputText value="#{row.nazwisko}" />
+                </h:column>
+                <h:column id="email1">
+                    <f:facet name="header">email</f:facet>
+                    <h:outputText value="#{row.email}" />
+                </h:column>
+                <h:column id="informacje1">
+                    <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
+                </h:column>
+                <h:column id="potwierdzWyszukiwanie">
+                    <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
+                        value="Potwierdź konto" action="#{wyszukajKontaNiepotwierdzone.ok()}" class="edit_icon" >
+                    </h:commandButton> 
+                </h:column> 
+            </h:dataTable>
+            <h:commandButton value="Powróć" action="powrot" />
+            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaNiepotwierdzone.initWyszukiwanie()}" />
+        </h:form>
+
+    </h:body>
 </html>
+

@@ -8,7 +8,7 @@
     </h:head>
     <h:body>
         Lista kont niepotwierdzonych<br />
-                <h:form id="listaKontForm">
+        <h:form id="listaKontForm">
             
             <h:dataTable id="listaKont" var="row" value="#{wyswietlKontaNiepotwierdzone.kontaNiepotwierdzone}">
                 <h:column id="login">
@@ -31,7 +31,9 @@
                     <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
                 </h:column>
                 <h:column id="potwierdz">
-                    <h:commandButton value="Potwierdź konto" action="#{wyswietlKontaNiepotwierdzone.potwierdzKonto()}" />
+                    <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
+                        value="Potwierdż konto" action="#{wyswietlKontaNiepotwierdzone.potwierdzKonto()}"  class="edit_icon" >
+                    </h:commandButton> 
                 </h:column> 
             </h:dataTable>
             <h:commandButton value="Powróć" action="powrot" />
