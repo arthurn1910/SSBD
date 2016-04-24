@@ -16,4 +16,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 @Local
 public interface KontoManagerLocal {
     public List<Konto> znajdzPodobne(Konto konto);
+
+    public boolean dodajPoziomDostepu(Konto konto, String poziom);
+
+    public boolean odlaczPoziomDostepu(Konto konto, String poziom);
 }

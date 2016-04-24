@@ -32,4 +32,8 @@ public interface MOKEndpointLocal {
     public Konto pobierzUzytkownika(String login);
 
     public List<Konto> pobierzPodobneKonta(Konto konto);
+
+    public boolean dodajPoziomDostepu(Konto konto, String poziom);
+
+    public boolean odlaczPoziomDostepu(Konto konto, String poziom);
 }

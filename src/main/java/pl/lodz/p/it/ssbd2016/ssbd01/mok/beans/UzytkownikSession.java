@@ -12,6 +12,7 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import static pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.PoziomDostepu_.poziom;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 /*
  *
@@ -66,5 +67,13 @@ public class UzytkownikSession implements Serializable {
 
     List<Konto> pobierzPodobneKonta(Konto konto) {
         return MOKEndpoint.pobierzPodobneKonta(konto);
+    }
+
+    boolean dodajPoziomDostepu(Konto konto, String poziom) {
+        return MOKEndpoint.dodajPoziomDostepu(konto, poziom);
+    }
+
+    boolean odlaczPoziomDostepu(Konto konto, String poziom) {
+        return MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
     }
 }

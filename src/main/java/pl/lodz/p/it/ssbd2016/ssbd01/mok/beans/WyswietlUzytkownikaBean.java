@@ -6,13 +6,16 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import java.io.IOException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
  *
@@ -22,17 +25,24 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 @RequestScoped 
 public class WyswietlUzytkownikaBean {
     @Inject
-    private UzytkownikSession sesjaKonta;
+    private UzytkownikSession uzytkownikSession;
     
     private Konto konto;
 
+    private DataModel<String> poziomyDostepuDataModel;
+
+    public DataModel<String> getPoziomyDostepuDataModel() {
+        return poziomyDostepuDataModel;
+    }
+    
     public Konto getKonto() {
         return konto;
     }
         
     @PostConstruct
     private void initKonto() {
-        konto = sesjaKonta.pobierzUrzytkownika("Szprync");
+        poziomyDostepuDataModel = new ListDataModel<String>(PoziomDostepuManager.getPoziomyDostepu());
+        konto = uzytkownikSession.pobierzUrzytkownika("kontoA");
         if (konto == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
@@ -40,5 +50,27 @@ public class WyswietlUzytkownikaBean {
                 
             }
         }
+    }
+    
+    public void dodajPoziomDostepu() {
+        if (!uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData())) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
+            } catch (IOException e) {
+                
+            }
+        }
+        initKonto();
+    }
+    
+    public void odlaczPoziomDostepu() {
+        if (!uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData())) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
+            } catch (IOException e) {
+                
+            }
+        }
+        initKonto();
     }
 }

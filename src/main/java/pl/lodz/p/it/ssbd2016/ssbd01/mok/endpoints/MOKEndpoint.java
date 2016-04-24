@@ -18,6 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
  *
@@ -90,5 +91,15 @@ public class MOKEndpoint implements MOKEndpointLocal{
     @Override
     public List<Konto> pobierzPodobneKonta(Konto konto) {
         return kontoManager.znajdzPodobne(konto);
+    }
+
+    @Override
+    public boolean dodajPoziomDostepu(Konto konto, String poziom) {
+        return kontoManager.dodajPoziomDostepu(konto, poziom);
+    }
+
+    @Override
+    public boolean odlaczPoziomDostepu(Konto konto, String poziom) {
+        return kontoManager.odlaczPoziomDostepu(konto, poziom);
     }
 }
