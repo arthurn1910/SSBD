@@ -9,10 +9,13 @@
     <h:body>
         Rejestruj konto klienta
         <h:form>
+            Imie: <h:inputText value="#{dodajUzytkownika.imie}"/><br />
+            Nazwisko: <h:inputText value="#{dodajUzytkownika.nazwisko}"/><br />
             Login: <h:inputText value="#{dodajUzytkownika.login}"/><br />
             Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
             Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
-            
+            Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
+            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><br />
             <h:commandButton action="powrot" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
                 value="Zarejestruj" action="#{dodajUzytkownika.rejestrujKontoKlienta()}"  class="edit_icon" >

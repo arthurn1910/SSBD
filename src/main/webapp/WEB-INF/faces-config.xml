@@ -24,11 +24,6 @@
             <to-view-id>/mok/zalogujLubZarejestrujUzytkownika.xhtml</to-view-id>
             <redirect />
         </navigation-case>
-        <navigation-case>
-            <from-outcome>blad</from-outcome>
-            <to-view-id>/mok/bladRejestracjiUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/mok/zalogujLubZarejestrujUzytkownika.xhtml</from-view-id>
@@ -39,10 +34,18 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/bladRejestracjiUzytkownika.xhtml</from-view-id>
+        <from-view-id>/mok/zarzadzanieKontami.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>kontaNiepotwierdzone</from-outcome>
+            <to-view-id>/mok/kontaNiepotwierdzone.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mok/kontaNiepotwierdzone.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/dodajUzytkownika.xhtml</to-view-id>
+            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

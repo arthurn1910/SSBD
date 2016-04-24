@@ -83,26 +83,14 @@ public class DodajUzytkownika {
         return konto;
     }
     
-    public String sprawdzKontoKlienta() {
-        this.konto.setEmail(this.email);
-        this.konto.setLogin(this.login);
-        this.konto.setTelefon(this.telefon);
-        if(this.email.length() < 1 || this.email.length() > 64 || this.login.length() < 1 || this.login.length() > 32 ||
-                this.telefon.length() < 1 || this.telefon.length() > 64)
-            return "blad";
-        else
-        {
-            rejestrujKontoKlienta();
-            return "success";
-        }
-    }
-    
     public String rejestrujKontoKlienta() {
+        this.konto.setImie(this.imie);
+        this.konto.setNazwisko(this.nazwisko);
+        this.konto.setHaslo(this.haslo);
         this.konto.setEmail(this.email);
         this.konto.setLogin(this.login);
         this.konto.setTelefon(this.telefon);
-        System.out.println(konto.getLogin());
- //       System.out.println(konto);
+        
         sesjaKonta.rejestrujKlienta(konto);
         return "success";
     }

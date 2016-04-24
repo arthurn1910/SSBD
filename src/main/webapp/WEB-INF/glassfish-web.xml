@@ -18,4 +18,8 @@
         <role-name>MENADZER</role-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+    <role-name>rejestrujKontoKlienta</role-name>
+    <group-name>KLIENT</group-name>
+  </security-role-mapping>
 </glassfish-web-app>

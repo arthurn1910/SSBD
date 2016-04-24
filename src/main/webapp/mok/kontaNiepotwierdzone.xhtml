@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista kont niepotwierdzonych</title>
+    </h:head>
+    <h:body>
+        Lista kont niepotwierdzonych<br />
+                <h:form id="listaKontForm">
+            
+            <h:dataTable id="listaKont" var="row" value="#{wyswietlKontaNiepotwierdzone.kontaNiepotwierdzone}">
+                <h:column id="login">
+                    <f:facet name="header">login</f:facet>
+                    <h:outputText value="#{row.login}" />
+                </h:column>
+                <h:column id="imie">
+                    <f:facet name="header">imię</f:facet>
+                    <h:outputText value="#{row.imie}" />
+                </h:column>
+                <h:column id="nazwisko">
+                    <f:facet name="header">nazwisko</f:facet>
+                    <h:outputText value="#{row.nazwisko}" />
+                </h:column>
+                <h:column id="email">
+                    <f:facet name="header">email</f:facet>
+                    <h:outputText value="#{row.email}" />
+                </h:column>
+                <h:column id="informacje">
+                    <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
+                </h:column>
+                <h:column id="potwierdz">
+                    <h:commandButton value="Potwierdź konto" action="#{wyswietlKontaNiepotwierdzone.potwierdzKonto()}" />
+                </h:column> 
+            </h:dataTable>
+            <h:commandButton value="Powróć" action="powrot" />
+        </h:form>
+
+    </h:body>
+</html>
+
