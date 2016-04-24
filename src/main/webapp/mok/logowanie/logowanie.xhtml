@@ -6,9 +6,14 @@
         <title>Logowanie</title>
     </h:head>
     <h:body>
-        <h2> Błędny login lub hasło </h2>
+        <h2> Zaloguj </h2>
         <h:form>
+            Login: <h:inputText  value="#{logowanie.login}"/><br />
+            Hasło: <h:inputSecret value="#{logowanie.haslo}"/><br />
             <h:commandButton action="cancel" value="Powróć" />
+            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
+                             value="Logowanie" action="#{logowanie.zalogujKlienta()}"  class="edit_icon" >
+            </h:commandButton> 
         </h:form>
     </h:body>
 </html>
