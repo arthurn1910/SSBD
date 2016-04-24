@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Informacje o użytkowniku</title>
+    </h:head>
+    <h:body>
+        <h2> Informacje o użytkowniku </h2>
+        <h:form>
+            Imie: <h:outputText value="#{wyswietlInformacje.imie}"/><br />
+            Nazwisko: <h:outputText value="#{wyswietlInformacje.nazwisko}"/><br />
+            Login: <h:outputText  value="#{wyswietlInformacje.login}"/><br />
+            Email: <h:outputText  value="#{wyswietlInformacje.email}"/><br />
+            Telefon: <h:outputText  value="#{wyswietlInformacje.telefon}"/><br />
+            Aktywne: <h:outputText  value="#{wyswietlInformacje.aktywne}"/><br />
+            Potwierdzone: <h:outputText  value="#{wyswietlInformacje.potwierdzone}"/><br />
+            Poziomy dostępu: <h:outputText  value="#{wyswietlInformacje.poziomyDostepu}"/><br />
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
+                             value="Odblokuj" action="#{wyswietlInformacje.odblokuj()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
+                             value="Zablokuj" action="#{wyswietlInformacje.zablokuj()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
+                             value="Potwierdź" action="#{wyswietlInformacje.potwierdz()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton value="Odłącz poziom" action="odlaczPoziom"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton value="Dołącz poziom" action="dolaczPoziom"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </h:body>
+</html>

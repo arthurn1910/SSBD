@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Dołącz poziom dostępu</title>
+    </h:head>
+    <h:body>
+        <h2> Wybierz poziom</h2>
+        <h:form>            
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Agent?')) return false"
+                             value="Agent" action="#{odlaczPoziom.odlaczAgent()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Menadzer?')) return false"
+                             value="Menadzer" action="#{odlaczPoziom.odlaczMenadzer()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Administrator?')) return false"
+                             value="Administrator" action="#{odlaczPoziom.odlaczAdministrator()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton value="Powrót" action="wyswietlInformacje"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </h:body>
+</html>

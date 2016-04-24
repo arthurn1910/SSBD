@@ -6,10 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedProperty;
-import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 /**
  *
  * @author rpawlaczyk

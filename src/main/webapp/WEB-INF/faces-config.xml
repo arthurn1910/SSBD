@@ -31,4 +31,60 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlInformacje</from-outcome>
+            <to-view-id>/mok/wyswietlInformacje.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>odlaczPoziom</from-outcome>
+            <to-view-id>/mok/odlaczPoziom.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>dolaczPoziom</from-outcome>
+            <to-view-id>/mok/dolaczPoziom.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+     <navigation-rule>
+        <navigation-case>
+            <from-outcome>odlaczPoziomE</from-outcome>
+            <to-view-id>/mok/odlaczPoziomE.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>dolaczPoziomE</from-outcome>
+            <to-view-id>/mok/dolaczPoziomE.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>potwierdzError</from-outcome>
+            <to-view-id>/mok/potwierdzError.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>zablokujError</from-outcome>
+            <to-view-id>/mok/zablokujError.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>odblokujError</from-outcome>
+            <to-view-id>/mok/odblokujError.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
