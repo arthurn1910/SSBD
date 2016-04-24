@@ -31,13 +31,14 @@ public class UzytkownikSession implements Serializable {
         kontoRejestracja.setEmail(k.getEmail());
         kontoRejestracja.setDataUtworzenia(new Date());
         kontoRejestracja.setTelefon(k.getTelefon());
-        
 
         PoziomDostepu poziomDostepu = new PoziomDostepu();
         poziomDostepu.setPoziom("AGENT");
         poziomDostepu.setAktywny(true);
         poziomDostepu.setKontoId(k);
+        System.out.println(kontoRejestracja.getLogin());
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
+        System.out.println(kontoRejestracja.getLogin());
     }
     
     List<Konto> pobierzWszystkieKonta() {

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Rejestruj konto klienta</title>
+    </h:head>
+    <h:body>
+        Rejestruj konto klienta
+        <h:form>
+            Login: <h:inputText value="#{dodajUzytkownika.login}"/><br />
+            Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
+            Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
+            
+            <h:commandButton action="powrot" value="Powróć" />
+            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
+                value="Zarejestruj" action="#{dodajUzytkownika.rejestrujKontoKlienta()}"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </h:body>
+</html>
+
