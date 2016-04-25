@@ -7,8 +7,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 import javax.ejb.EJB;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
@@ -23,21 +30,21 @@ public class UzytkownikSession implements Serializable {
     private MOKEndpointLocal MOKEndpoint;
     
     public void rejestrujKlienta(Konto k) {
+        
+        
+        //String cryptedPass = Arrays.toString(cryptedBytes);
+        
+        
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setHaslo("blablabla"); //!!! Hasło powinno być w postaci skrótu np. MD5!
         kontoRejestracja.setImie("Janusz");
-        kontoRejestracja.setNazwisko("Pospolity");
+        kontoRejestracja.setNazwisko("Andrzej");
         kontoRejestracja.setEmail(k.getEmail());
         kontoRejestracja.setDataUtworzenia(new Date());
         kontoRejestracja.setTelefon(k.getTelefon());
-        
-
-        PoziomDostepu poziomDostepu = new PoziomDostepu();
-        poziomDostepu.setPoziom("AGENT");
-        poziomDostepu.setAktywny(true);
-        poziomDostepu.setKontoId(k);
-        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
+       
+        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
     }
     
     List<Konto> pobierzWszystkieKonta() {

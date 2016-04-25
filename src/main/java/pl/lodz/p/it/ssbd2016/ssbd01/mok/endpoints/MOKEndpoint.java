@@ -16,6 +16,9 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.PoziomDostepu_;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
+import pl.lodz.p.it.ssbd2016ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
  *
@@ -32,17 +35,17 @@ public class MOKEndpoint implements MOKEndpointLocal{
    
     private Konto kontoStan;
     
+    @EJB
+    private KontoManagerLocal kontoManager;
+    
     @Override
-    public void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu) {
-        konto.setAktywne(true);
-        konto.setPotwierdzone(false);
-        kontoFacade.create(konto);
-        
-        poziomDostepu.setKontoId(konto);
-        poziomDostepuFacade.create(poziomDostepu);
-        konto.getPoziomDostepuCollection().add(poziomDostepu);
-        
-        
+    public void rejestrujKontoKlienta(Konto konto) {
+        kontoManager.rejestrujKontoKlienta(konto);
+    }
+    
+    @Override
+    public boolean utworzKonto(Konto konto, List<String> poziomyDostepu) {
+        return kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 
     @Override
@@ -55,13 +58,14 @@ public class MOKEndpoint implements MOKEndpointLocal{
         Konto k = kontoFacade.find(konto.getId());
         k.setPotwierdzone(true);
     }
-
+    
     @Override
-    public void odblokujKonto(Konto rowData) {
-        Konto o = kontoFacade.find(rowData.getId());
+    public void odblokujKonto(Konto konto) {
+        Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(true);
     }
 
+    
     @Override
     public void zablokujKonto(Konto rowData) {
         Konto o = kontoFacade.find(rowData.getId());
