@@ -3,14 +3,9 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
-import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 @ManagedBean(name="wyszukajKontaNiepotwierdzone")
@@ -22,7 +17,6 @@ public class WyszukajKontaNiepotwierdzone {
     private ArrayList<Konto> kontaNiepotwierdzoneWyszukiwanie = new ArrayList();
     private String parametr;
     private String wartoscParametru;
-    private boolean first = true;
     
     public ArrayList<Konto> getKontaNiepotwierdzoneWyszukiwanie() {
         return kontaNiepotwierdzoneWyszukiwanie;
@@ -45,7 +39,7 @@ public class WyszukajKontaNiepotwierdzone {
     @PostConstruct
     public void init() {
         List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
-        kontaNiepotwierdzoneWyszukiwanie = new ArrayList<Konto>();
+        kontaNiepotwierdzoneWyszukiwanie = new ArrayList();
         
         for(int i = 0; i < temp.size(); i++)
         {
@@ -56,7 +50,7 @@ public class WyszukajKontaNiepotwierdzone {
     
     public void initWyszukiwanie() {
         List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
-        kontaNiepotwierdzoneWyszukiwanie = new ArrayList<Konto>();
+        kontaNiepotwierdzoneWyszukiwanie = new ArrayList();
         
         for(int i = 0; i < temp.size(); i++)
         {
