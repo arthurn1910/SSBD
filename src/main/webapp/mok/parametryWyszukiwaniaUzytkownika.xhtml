@@ -18,34 +18,36 @@
                     <f:selectItem itemValue="nazwisko" itemLabel="Nazwisko" />
             </h:selectOneRadio>
             Wartość parametru: <h:inputText value="#{wyszukajKontaNiepotwierdzone.wartoscParametru}"/><br />
+            <h:commandButton value="Powróć" action="powrot" />
+            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaNiepotwierdzone.initWyszukiwanie()}" />
+        </h:form>
+        <h:form>
             <h:dataTable id="listaKont1" var="row" value="#{wyszukajKontaNiepotwierdzone.kontaNiepotwierdzoneWyszukiwanie}">
-                <h:column id="login1">
+                <h:column id="login">
                     <f:facet name="header">login</f:facet>
                     <h:outputText value="#{row.login}" />
                 </h:column>
-                <h:column id="imie1">
+                <h:column id="imie">
                     <f:facet name="header">imię</f:facet>
                     <h:outputText value="#{row.imie}" />
                 </h:column>
-                <h:column id="nazwisko1">
+                <h:column id="nazwisko">
                     <f:facet name="header">nazwisko</f:facet>
                     <h:outputText value="#{row.nazwisko}" />
                 </h:column>
-                <h:column id="email1">
+                <h:column id="email">
                     <f:facet name="header">email</f:facet>
                     <h:outputText value="#{row.email}" />
                 </h:column>
-                <h:column id="informacje1">
+                <h:column id="informacje">
                     <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
                 </h:column>
                 <h:column id="potwierdzWyszukiwanie">
                     <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
-                        value="Potwierdź konto" action="#{wyszukajKontaNiepotwierdzone.ok()}" class="edit_icon" >
+                        value="Potwierdź konto" action="#{wyszukajKontaNiepotwierdzone.potwierdzKontoWyszukiwanie(row)}" class="edit_icon" >
                     </h:commandButton> 
                 </h:column> 
             </h:dataTable>
-            <h:commandButton value="Powróć" action="powrot" />
-            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaNiepotwierdzone.initWyszukiwanie()}" />
         </h:form>
 
     </h:body>
