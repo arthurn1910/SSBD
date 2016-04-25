@@ -1,28 +1,32 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Lista kont niepotwierdzonych</title>
-    </h:head>
-    <h:body>
-        Lista kont niepotwierdzonych<br /><br />
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="top">
+        <p>${msg["main.page"]}/${msg["menu.manageAccounts"]}</p>
+    </ui:define>
+
+    <ui:define name="left">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+
+    <ui:define name="content">
+        Lista kont<br /><br />
         Wyszukiwanie według:<br />
         <h:form id="listaKontForm1">
-            <h:selectOneRadio value="#{wyszukajKontaNiepotwierdzone.parametr}" layout="pageDirection">
-                    <f:selectItem itemValue="id" itemLabel="ID" />
-                    <f:selectItem itemValue="login" itemLabel="Login" />
-                    <f:selectItem itemValue="email" itemLabel="Email" />
-                    <f:selectItem itemValue="telefon" itemLabel="Telefon" />
-                    <f:selectItem itemValue="nazwisko" itemLabel="Nazwisko" />
-            </h:selectOneRadio>
-            Wartość parametru: <h:inputText value="#{wyszukajKontaNiepotwierdzone.wartoscParametru}"/><br />
+            Login: <h:inputText value="#{wyszukajKonta.login}"/><br />
+            Imie: <h:inputText value="#{wyszukajKonta.imie}"/><br />
+            Nazwisko: <h:inputText value="#{wyszukajKonta.nazwisko}"/><br />
+            Email: <h:inputText value="#{wyszukajKonta.email}"/><br />
+            Telefon: <h:inputText value="#{wyszukajKonta.telefon}"/><br />
             <h:commandButton value="Powróć" action="powrot" />
-            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaNiepotwierdzone.initWyszukiwanie()}" />
+            <h:commandButton value="Wyszukaj" action="#{wyszukajKonta.initWyszukiwanie()}" />
         </h:form>
         <h:form>
-            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKontaNiepotwierdzone.kontaNiepotwierdzoneWyszukiwanie}">
+            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKonta.kontaWyszukiwanie}">
                 <h:column id="login">
                     <f:facet name="header">login</f:facet>
                     <h:outputText value="#{row.login}" />
@@ -39,17 +43,23 @@
                     <f:facet name="header">email</f:facet>
                     <h:outputText value="#{row.email}" />
                 </h:column>
+                <h:column id="telefon">
+                    <f:facet name="header">telefon</f:facet>
+                    <h:outputText value="#{row.telefon}" />
+                </h:column>
+                <h:column id="potwierdzone">
+                    <f:facet name="header">potwierdzone</f:facet>
+                    <h:outputText value="#{row.potwierdzone}" />
+                </h:column>
+                <h:column id="aktywne">
+                    <f:facet name="header">aktywne</f:facet>
+                    <h:outputText value="#{row.aktywne}" />
+                </h:column>
                 <h:column id="informacje">
                     <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
                 </h:column>
-                <h:column id="potwierdzWyszukiwanie">
-                    <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
-                        value="Potwierdź konto" action="#{wyszukajKontaNiepotwierdzone.potwierdzKontoWyszukiwanie(row)}" class="edit_icon" >
-                    </h:commandButton> 
-                </h:column> 
             </h:dataTable>
         </h:form>
-
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

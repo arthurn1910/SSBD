@@ -26,8 +26,8 @@ public class UzytkownikSession implements Serializable {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
         kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
-        kontoRejestracja.setImie("Janusz");
-        kontoRejestracja.setNazwisko("Pospolity");
+        kontoRejestracja.setImie(k.getImie());
+        kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
         kontoRejestracja.setDataUtworzenia(new Date());
         kontoRejestracja.setTelefon(k.getTelefon());
@@ -36,9 +36,7 @@ public class UzytkownikSession implements Serializable {
         poziomDostepu.setPoziom("AGENT");
         poziomDostepu.setAktywny(true);
         poziomDostepu.setKontoId(k);
-        System.out.println(kontoRejestracja.getLogin());
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
-        System.out.println(kontoRejestracja.getLogin());
     }
     
     public void utworzKonto(Konto k, String poziom)
@@ -46,8 +44,8 @@ public class UzytkownikSession implements Serializable {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
         kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
-        kontoRejestracja.setImie("Janusz");
-        kontoRejestracja.setNazwisko("Pospolity");
+        kontoRejestracja.setImie(k.getImie());
+        kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
         kontoRejestracja.setDataUtworzenia(new Date());
         kontoRejestracja.setTelefon(k.getTelefon());
@@ -56,9 +54,7 @@ public class UzytkownikSession implements Serializable {
         poziomDostepu.setPoziom(poziom.toUpperCase());
         poziomDostepu.setAktywny(true);
         poziomDostepu.setKontoId(k);
-        System.out.println(kontoRejestracja.getLogin());
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
-        System.out.println(kontoRejestracja.getLogin());
     }
     
     List<Konto> pobierzWszystkieKonta() {

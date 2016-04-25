@@ -3,7 +3,22 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-<navigation-rule>   
+
+  <application>
+        <locale-config>
+            <default-locale>pl</default-locale>
+            <supported-locale>pl</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <message-bundle>
+            i18n.jsf_messages
+        </message-bundle>
+    </application>  
+    <navigation-rule>   
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/success.xhtml</to-view-id>
@@ -41,7 +56,7 @@
             <redirect />
         </navigation-case>
         <navigation-case>
-            <from-outcome>wyszukajKontaNiepotwierdzone</from-outcome>
+            <from-outcome>wyszukajKonta</from-outcome>
             <to-view-id>/mok/parametryWyszukiwaniaUzytkownika.xhtml</to-view-id>
             <redirect />
         </navigation-case>

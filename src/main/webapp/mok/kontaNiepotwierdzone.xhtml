@@ -1,12 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Lista kont niepotwierdzonych</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="../templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="top">
+        <p>${msg["main.page"]}/${msg["menu.manageAccounts"]}</p>
+    </ui:define>
+
+    <ui:define name="left">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+
+    <ui:define name="content">
         Lista kont niepotwierdzonych<br />
         <h:form id="listaKontForm">
             
@@ -27,6 +34,10 @@
                     <f:facet name="header">email</f:facet>
                     <h:outputText value="#{row.email}" />
                 </h:column>
+                <h:column id="telefon">
+                    <f:facet name="header">telefon</f:facet>
+                    <h:outputText value="#{row.telefon}" />
+                </h:column>
                 <h:column id="informacje">
                     <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
                 </h:column>
@@ -39,6 +50,6 @@
             <h:commandButton value="Powróć" action="powrot" />
         </h:form>
 
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 
