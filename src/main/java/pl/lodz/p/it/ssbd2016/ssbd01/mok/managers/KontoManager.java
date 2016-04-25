@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import java.util.List;
@@ -15,8 +10,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
- *
- * @author java
+ * Klasa pośrednicząca miedzy MOKEndpoint a fasadami. Przetwarza niezbędne dane.
+ * Implementuje interfejs KontoManagaerLocal
  */
 @Stateless
 public class KontoManager implements KontoManagerLocal {
@@ -62,18 +57,24 @@ public class KontoManager implements KontoManagerLocal {
     @Override
     public boolean dodajPoziomDostepu(Konto konto, String poziom) {
         if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
+            // Posiadamy dany poziom
             PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
+            // Sprawdzamy czy poziom jest aktywny i czy możemy dołączyć dany poziom
             if (!aktualnyPoziom.getAktywny() && PoziomDostepuManager.czyMoznaDodacPoziom(konto, poziom)) {
+                // Jeśli tak aktywujemy posiadany już poziom
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(true);
                 return true;
             } else {
+                // Jeśli nie zwracamy błąd
                 return false;
             }
         } else {
+            // Nie posiadamy danego poziomu dostępu
+            // Sprawdzamy czy możemy taki poziom dodać
             if (PoziomDostepuManager.czyMoznaDodacPoziom(konto, poziom)) {
                 Konto aktualneKonto = kontoFacade.znajdzPoLoginie(konto.getLogin());
-
+                //Tworzymy i dodajemy nowy poziom dostępu
                 PoziomDostepu nowyPoziom = PoziomDostepuManager.stwórzPoziomDostepu(poziom);
                 poziomDostepuFacade.create(nowyPoziom);
 
@@ -83,21 +84,27 @@ public class KontoManager implements KontoManagerLocal {
                 return true;
             }
         }
+        // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
         return false;
     }
 
     @Override
     public boolean odlaczPoziomDostepu(Konto konto, String poziom) {
         if (PoziomDostepuManager.czyPosiadaAktywnyPoziomDostepu(konto, poziom)) {
+            
             PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
+            
             if (aktualnyPoziom.getAktywny()) {
+                // Jeśli poziom jest aktywny to go dezaktywujemy
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(false);
                 return true;
             } else {
+                // Jeśli poziom jest nieaktywny zwracamy błąd
                 return false;
             }
         }
+        // Jeśli nie udało się odłączyć poziom dostępu zwracamy błąd
         return false;
     }
     
