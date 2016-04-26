@@ -7,64 +7,45 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 /**
  * Created by Kamil Rogowski on 23.04.2016.
+ * Obsługa zmiany danych przez admina i użytkownika
  */
 @ManagedBean
 @RequestScoped
 public class EdytujDaneBean implements Serializable {
-    private static final Logger logger = Logger.getLogger(EdytujDaneBean.class.getName());
 
     @Inject
     private UzytkownikSession uzytkownikSession;
-    private String nowePowtorzoneHaslo;
-    private String noweHaslo;
-    private String stareHaslo;
     private Konto konto;
 
     @PostConstruct
     private void initKonto() {
-        konto = uzytkownikSession.znajdzPoLoginie("kontoC");
+
+        konto = uzytkownikSession.znajdzPoLoginie("kontoA");
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
     }
 
-    public void edytujDaneUzytkownika() {
-        uzytkownikSession.edytujDaneUzytkownika(konto);
-    }
-    public void zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    /**
+     * Metoda zapisuje zmiany po edycji konta
+     */
+    public void zapiszPoEdycji() {
 
-        if (noweHaslo.equals(nowePowtorzoneHaslo))
-            uzytkownikSession.zmienHaslo(noweHaslo, stareHaslo);
-    }
-
-    public String getNoweHaslo() {
-        return noweHaslo;
-    }
-
-    public void setNoweHaslo(String noweHaslo) {
-        this.noweHaslo = noweHaslo;
-    }
-
-    public String getStareHaslo() {
-        return stareHaslo;
+        uzytkownikSession.zapiszKontoPoEdycji();
     }
 
     public Konto getKonto() {
         return konto;
     }
 
-    public void setStareHaslo(String stareHaslo) {
-        this.stareHaslo = stareHaslo;
+    public Konto getUzytkownikSession() {
+        return uzytkownikSession.getKontoEdytuj();
     }
 
-    public String getNowePowtorzoneHaslo() {
-        return nowePowtorzoneHaslo;
+    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
+        this.uzytkownikSession = uzytkownikSession;
     }
 
-    public void setNowePowtorzoneHaslo(String nowePowtorzoneHaslo) {
-        this.nowePowtorzoneHaslo = nowePowtorzoneHaslo;
-    }
+
 }

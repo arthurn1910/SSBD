@@ -1,5 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.manager;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+
 import javax.ejb.Local;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -10,5 +12,7 @@ import java.security.NoSuchAlgorithmException;
 @Local
 public interface KontoManagerLocal {
 
-    void zmienHaslo(String konto, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+
+    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 }

@@ -7,13 +7,13 @@
     <title>Zmień dane</title>
 </h:head>
 <h:body>
-    Moje dane
+    Dane konta
     <h:form>
-        Imie: <h:inputText value="#{edytujDaneBean.konto.imie}"/><br/>
-        Nazwisko: <h:inputText value="#{edytujDaneBean.konto.nazwisko}"/><br/>
-        Email: <h:inputText value="#{edytujDaneBean.konto.email}"/><br/>
-        Telefon: <h:inputText value="#{edytujDaneBean.konto.telefon}"/><br/>
-        <h:commandButton action="#{edytujDaneBean.edytujDaneUzytkownika()}" value="Wyślij"/>
+        Imie: <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
+        Nazwisko: <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>
+        Email: <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
+        Telefon: <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
+        <h:commandButton action="#{edytujDaneBean.zapiszPoEdycji()}" value="Wyślij"/>
     </h:form>
 </h:body>
 </html>

@@ -13,6 +13,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -33,14 +34,6 @@ public class UzytkownikSession implements Serializable {
     private MOKEndpointLocal MOKEndpoint;
 
     private Konto kontoEdytuj;
-
-    public Konto getKontoEdytuj() {
-        return kontoEdytuj;
-    }
-
-    public void setKontoEdytuj(Konto kontoEdytuj) {
-        this.kontoEdytuj = kontoEdytuj;
-    }
 
     public void rejestrujKlienta(Konto k) {
         Konto kontoRejestracja = new Konto();
@@ -76,15 +69,65 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.zablokujKonto(rowData);
     }
 
-    public void zmienHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        MOKEndpoint.zmienHaslo(noweHaslo, stareHaslo);
-    }
-
+    /**
+     * Szuka konta o danym loginie
+     *
+     * @param login login konta
+     * @return Konto
+     */
     public Konto znajdzPoLoginie(String login) {
         return MOKEndpoint.znajdzPoLoginie(login);
     }
 
-    public void edytujDaneUzytkownika(Konto konto) {
-        MOKEndpoint.edytujKonto(konto);
+    public void setKontoEdytuj(Konto kontoEdytuj) {
+        this.kontoEdytuj = kontoEdytuj;
+    }
+
+    public Konto getKontoEdytuj() {
+        return kontoEdytuj;
+
+    }
+
+    /**
+     * pobiera i zapisuje kopię konta do edycji
+     *
+     * @param konto konto do edycji
+     */
+    public void pobierzKontoDoEdycji(Konto konto) {
+        try {
+            kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * zapisuje kopię konta po edycji
+     */
+    public void zapiszKontoPoEdycji() {
+        MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
+    }
+
+    /**
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
+    }
+
+    /**
+     * @param konto     konto do zmiany
+     * @param noweHaslo nowe hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MOKEndpoint.zmienHaslo(konto, noweHaslo);
     }
 }

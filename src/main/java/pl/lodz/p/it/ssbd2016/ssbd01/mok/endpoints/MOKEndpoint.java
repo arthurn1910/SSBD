@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -75,15 +77,15 @@ public class MOKEndpoint implements MOKEndpointLocal{
     }
 
     @Override
-    public void zmienHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        kontoManager.zmienHaslo(noweHaslo, stareHaslo);
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
     }
-
 
     @Override
-    public Konto pobierzMojeKonto() {
-        return kontoFacade.findByLogin(sessionContext.getCallerPrincipal().getName());
+    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        kontoManager.zmienHaslo(konto, noweHaslo);
     }
+
 
     @Override
     public Konto znajdzPoLoginie(String login) {
@@ -91,9 +93,33 @@ public class MOKEndpoint implements MOKEndpointLocal{
     }
 
     @Override
-    public void edytujKonto(Konto konto) {
-        kontoFacade.edit(konto);
+    public Konto pobierzKontoDoEdycji(Konto konto) {
+        kontoStan = kontoFacade.find(konto.getId());
+        try {
+            return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
     }
+
+    @Override
+    public void zapiszKontoPoEdycji(Konto konto) {
+        if (kontoStan == null) {
+            throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
+        }
+        if (!kontoStan.equals(konto)) {
+            throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
+        }
+        kontoStan.setEmail(konto.getEmail());
+        kontoStan.setImie(konto.getImie());
+        kontoStan.setEmail(konto.getEmail());
+        kontoStan.setNazwisko(konto.getNazwisko());
+        kontoFacade.edit(kontoStan);
+        kontoStan = null;
+    }
+
 
 }
