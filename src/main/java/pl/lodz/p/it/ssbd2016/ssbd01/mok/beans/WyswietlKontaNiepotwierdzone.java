@@ -9,10 +9,12 @@ import javax.faces.model.DataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import javax.faces.model.ListDataModel;
 
+/**
+ * Obiekty tej klasy są wykorzystywane do wyświetlania kont użytkowników niepotwierdzonych
+ * @author Maksymilian Zgierski
+ */
 @Named
 @RequestScoped
 public class WyswietlKontaNiepotwierdzone implements Serializable {
@@ -32,13 +34,13 @@ public class WyswietlKontaNiepotwierdzone implements Serializable {
     @PostConstruct
     public void init() {
         List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
-        List<Konto> konta = new ArrayList<Konto>();
+        List<Konto> konta = new ArrayList();
         for(int i = 0; i < temp.size(); i++)
         {
             if(temp.get(i).getPotwierdzone() == false)
                 konta.add(temp.get(i));
         }
-        kontaNiepotwierdzone = new ListDataModel<Konto>(konta);
+        kontaNiepotwierdzone = new ListDataModel(konta);
     }
     
   /**

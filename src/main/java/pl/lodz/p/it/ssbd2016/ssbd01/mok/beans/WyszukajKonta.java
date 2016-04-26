@@ -8,6 +8,10 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
+/**
+ * Obiekty tej klasy są wykorzystywane do wyszukiwania kont użytkowników
+ * @author Maksymilian Zgierski
+ */
 @Named
 @RequestScoped
 public class WyszukajKonta {
