@@ -69,11 +69,11 @@ public class UzytkownikSession implements Serializable {
         return MOKEndpoint.pobierzPodobneKonta(konto);
     }
 
-    boolean dodajPoziomDostepu(Konto konto, String poziom) {
-        return MOKEndpoint.dodajPoziomDostepu(konto, poziom);
+    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
     }
 
-    boolean odlaczPoziomDostepu(Konto konto, String poziom) {
-        return MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
     }
 }

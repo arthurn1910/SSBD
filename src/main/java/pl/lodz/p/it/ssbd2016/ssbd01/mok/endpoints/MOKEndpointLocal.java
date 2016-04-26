@@ -11,8 +11,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
- *
- * @author Patryk
+ * Interfejs API servera dla modułu funkcjonalnego MOK
  */
 @Local
 public interface MOKEndpointLocal {
@@ -52,7 +51,7 @@ public interface MOKEndpointLocal {
      * @param poziom    nazwa poziomu dostępu
      * @return          potwierdzenie wykonania operacji
      */
-    public boolean dodajPoziomDostepu(Konto konto, String poziom);
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
 
     /**
      * Metoda odłączająca dany poziom dostępu do konta
@@ -60,5 +59,5 @@ public interface MOKEndpointLocal {
      * @param poziom    nazwa poziomu dostępu
      * @return          potwierdzenie wykonania operacji
      */
-    public boolean odlaczPoziomDostepu(Konto konto, String poziom);
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 }

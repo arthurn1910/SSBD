@@ -82,12 +82,12 @@ public class MOKEndpoint implements MOKEndpointLocal{
     }
     
     @Override
-    public boolean dodajPoziomDostepu(Konto konto, String poziom) {
-        return kontoManager.dodajPoziomDostepu(konto, poziom);
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+        kontoManager.dodajPoziomDostepu(konto, poziom);
     }
 
     @Override
-    public boolean odlaczPoziomDostepu(Konto konto, String poziom) {
-        return kontoManager.odlaczPoziomDostepu(konto, poziom);
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+        kontoManager.odlaczPoziomDostepu(konto, poziom);
     }
 }

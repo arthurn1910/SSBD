@@ -21,14 +21,16 @@ public interface KontoManagerLocal {
      * @param konto     konto do którego należy dodać poziom dostępu
      * @param poziom    nazwa poziomu dostępu
      * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception
      */
-    public boolean dodajPoziomDostepu(Konto konto, String poziom);
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
     
     /**
      * Metoda odłączająca dany poziom dostępu do konta
      * @param konto     konto od którego należy odłączyć poziom dostępu
      * @param poziom    nazwa poziomu dostępu
      * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception
      */
-    public boolean odlaczPoziomDostepu(Konto konto, String poziom);
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 }

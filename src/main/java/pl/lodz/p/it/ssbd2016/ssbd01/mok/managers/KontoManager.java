@@ -55,7 +55,7 @@ public class KontoManager implements KontoManagerLocal {
     }
 
     @Override
-    public boolean dodajPoziomDostepu(Konto konto, String poziom) {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
         if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
             PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
@@ -64,10 +64,9 @@ public class KontoManager implements KontoManagerLocal {
                 // Jeśli tak aktywujemy posiadany już poziom
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(true);
-                return true;
             } else {
                 // Jeśli nie zwracamy błąd
-                return false;
+                throw new Exception("Nie możemy dodać poziomu dostępu");
             }
         } else {
             // Nie posiadamy danego poziomu dostępu
@@ -75,21 +74,21 @@ public class KontoManager implements KontoManagerLocal {
             if (PoziomDostepuManager.czyMoznaDodacPoziom(konto, poziom)) {
                 Konto aktualneKonto = kontoFacade.znajdzPoLoginie(konto.getLogin());
                 //Tworzymy i dodajemy nowy poziom dostępu
-                PoziomDostepu nowyPoziom = PoziomDostepuManager.stwórzPoziomDostepu(poziom);
+                PoziomDostepu nowyPoziom = PoziomDostepuManager.stworzPoziomDostepu(poziom);
                 poziomDostepuFacade.create(nowyPoziom);
 
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
                 nowyPoziom.setKontoId(aktualneKonto);
                 nowyPoziom.setAktywny(true);
-                return true;
+            } else {                
+                // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
+                throw new Exception("Nie możemy dodać poziomu dostępu");
             }
         }
-        // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-        return false;
     }
 
     @Override
-    public boolean odlaczPoziomDostepu(Konto konto, String poziom) {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
         if (PoziomDostepuManager.czyPosiadaAktywnyPoziomDostepu(konto, poziom)) {
             
             PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
@@ -98,14 +97,14 @@ public class KontoManager implements KontoManagerLocal {
                 // Jeśli poziom jest aktywny to go dezaktywujemy
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(false);
-                return true;
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                return false;
+                throw new Exception("Nie możemy dodać poziomu dostępu");
             }
+        } else {            
+            // Jeśli nie udało się odłączyć poziom dostępu zwracamy błąd
+            throw new Exception("Nie możemy dodać poziomu dostępu");
         }
-        // Jeśli nie udało się odłączyć poziom dostępu zwracamy błąd
-        return false;
     }
     
 }

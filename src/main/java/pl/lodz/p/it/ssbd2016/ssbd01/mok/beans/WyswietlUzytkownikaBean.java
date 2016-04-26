@@ -6,6 +6,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -41,7 +43,7 @@ public class WyswietlUzytkownikaBean {
     @PostConstruct
     private void initKonto() {
         poziomyDostepuDataModel = new ListDataModel<String>(PoziomDostepuManager.getPoziomyDostepu());
-        konto = uzytkownikSession.pobierzUrzytkownika("kontoA");
+        konto = uzytkownikSession.pobierzUrzytkownika("test1");
         if (konto == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
@@ -52,24 +54,28 @@ public class WyswietlUzytkownikaBean {
     }
     
     public void dodajPoziomDostepu() {
-        if (!uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData())) {
+        try {
+            uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        } catch (Exception e) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
-            } catch (IOException e) {
-                
+            } catch (IOException ex) {
+                Logger.getLogger(WyswietlUzytkownikaBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        } 
         initKonto();
     }
     
     public void odlaczPoziomDostepu() {
-        if (!uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData())) {
+        try {
+            uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        } catch (Exception e) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("mokStronaBledu.xhtml");
-            } catch (IOException e) {
-                
+            } catch (IOException ex) {
+                Logger.getLogger(WyswietlUzytkownikaBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
+        }        
         initKonto();
     }
 }
