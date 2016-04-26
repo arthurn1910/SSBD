@@ -60,6 +60,9 @@ public class WyszukajKonta {
         this.telefon = t;
     }
     
+  /**
+ * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole kontaWyszukiwanie wszystkimi kontami
+ */
     @PostConstruct
     public void init() {
         List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
@@ -68,56 +71,21 @@ public class WyszukajKonta {
         for(int i = 0; i < temp.size(); i++)
             kontaWyszukiwanie.add(temp.get(i));
     }
-    
+  
+  /**
+ * Inicjalizuje pole kontaWyszukiwanie wszystkimi kontami, których dane pasują do wzorców
+ * wpisanych w odpowiednie pola w formularzu
+ */
     public void initWyszukiwanie() {
-        List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
         kontaWyszukiwanie = new ArrayList();
-        
-        for(int i = 0; i < temp.size(); i++)
-        {
-            if(login.length() != 0)
-            {
-                if(temp.get(i).getLogin().contains(login) == true)
-                {
-                    kontaWyszukiwanie.add(temp.get(i));
-                    continue;
-                }
-            }
-            if(imie.length() != 0)
-            {
-                if(temp.get(i).getImie().contains(imie) == true)
-                {
-                    kontaWyszukiwanie.add(temp.get(i));
-                    continue;
-                }
-            }
-            if(nazwisko.length() != 0)
-            {
-                if(temp.get(i).getNazwisko().contains(nazwisko) == true)
-                {
-                    kontaWyszukiwanie.add(temp.get(i));
-                    continue;
-                }
-            }
-            if(email.length() != 0)
-            {
-                if(temp.get(i).getEmail().contains(email) == true)
-                {
-                    kontaWyszukiwanie.add(temp.get(i));
-                    continue;
-                }
-            }
-            if(telefon.length() != 0)
-            {
-                if(temp.get(i).getTelefon().contains(telefon) == true)
-                {
-                    kontaWyszukiwanie.add(temp.get(i));
-                    continue;
-                }
-            }
-            if(login.length() == 0 && imie.length() == 0 && nazwisko.length() == 0 && email.length() == 0 &&
-                    telefon.length() == 0)
-                kontaWyszukiwanie.add(temp.get(i));
-        }
+        Konto temp = new Konto();
+        temp.setLogin(login);
+        temp.setImie(imie);
+        temp.setNazwisko(nazwisko);
+        temp.setEmail(email);
+        temp.setTelefon(telefon);
+        List<Konto> konta = uzytkownikSession.pobierzPodobneKonta(temp);
+        for(int i = 0; i < konta.size(); i++)
+            kontaWyszukiwanie.add(konta.get(i));
     }
 }

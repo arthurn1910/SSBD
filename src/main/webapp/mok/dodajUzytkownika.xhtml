@@ -18,7 +18,7 @@
             Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
             Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
             Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
-            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><br />
+            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><h:message for="" /> <br />
             <h:commandButton action="powrot" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
                 value="Zarejestruj" action="#{dodajUzytkownika.rejestrujKontoKlienta()}"  class="edit_icon" >

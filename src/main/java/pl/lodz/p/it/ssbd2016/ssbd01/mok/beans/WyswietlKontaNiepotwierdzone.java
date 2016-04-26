@@ -25,6 +25,10 @@ public class WyswietlKontaNiepotwierdzone implements Serializable {
         return kontaNiepotwierdzone;
     }
     
+  /**
+ * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
+ * kontaNiepotwierdzone wszystkimi niepotwierdzonymi kontami
+ */
     @PostConstruct
     public void init() {
         List<Konto> temp = uzytkownikSession.pobierzWszystkieKonta();
@@ -37,6 +41,9 @@ public class WyswietlKontaNiepotwierdzone implements Serializable {
         kontaNiepotwierdzone = new ListDataModel<Konto>(konta);
     }
     
+  /**
+ * Potwierdza kont, które zostało wybrane w formularzu (poprzez naciśnięcie przycisku obok konta)
+ */
     public void potwierdzKonto() {
         uzytkownikSession.potwierdzKonto(kontaNiepotwierdzone.getRowData());
         init();

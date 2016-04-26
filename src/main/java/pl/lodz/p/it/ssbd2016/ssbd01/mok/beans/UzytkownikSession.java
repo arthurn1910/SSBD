@@ -22,6 +22,10 @@ public class UzytkownikSession implements Serializable {
     @EJB
     private MOKEndpointLocal MOKEndpoint;
     
+    /**
+ * Rejestruje konto, nadając mu poziom dostępu klienta
+ * @param  k  konto, które ma zostać zarejestrowane
+ */
     public void rejestrujKlienta(Konto k) {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
@@ -33,12 +37,17 @@ public class UzytkownikSession implements Serializable {
         kontoRejestracja.setTelefon(k.getTelefon());
 
         PoziomDostepu poziomDostepu = new PoziomDostepu();
-        poziomDostepu.setPoziom("AGENT");
+        poziomDostepu.setPoziom("KLIENT");
         poziomDostepu.setAktywny(true);
         poziomDostepu.setKontoId(k);
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
     }
     
+    /**
+ * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
+ * @param  k  konto, które ma zostać zarejestrowane
+ * @param  poziom  poziom dostępu, który ma mieć nowo tworzone konto
+ */
     public void utworzKonto(Konto k, String poziom)
     {
         Konto kontoRejestracja = new Konto();
@@ -57,12 +66,21 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
     }
     
+  /**
+ * Pobiera z endpointa listę kont, których dane pasują do wzorców zawartych w obiekcie Konto, przekazywanym jako parametr
+ * @param  k  konto, które zawiera wzorce
+ * @return lista kont spełniających wymagania dotyczące wzorców
+ */
+    List<Konto> pobierzPodobneKonta(Konto k) {
+        List<Konto> konta = MOKEndpoint.pobierzPodobneKonta(k);
+        return konta;
+    }
+    
     List<Konto> pobierzWszystkieKonta() {
         return MOKEndpoint.pobierzWszystkieKonta();
     }
     
     void potwierdzKonto(Konto rowData) {
-        System.out.println(rowData.getLogin());
         MOKEndpoint.potwierdzKonto(rowData);
     }
     

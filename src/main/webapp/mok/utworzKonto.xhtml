@@ -28,7 +28,7 @@
                     <f:selectItem itemValue="administrator" itemLabel="Administrator" />
             </h:selectOneRadio>
             Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
-            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><br />
+            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><h:message for="" /><br />
             <h:commandButton action="powrot" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
                 value="Utwórz" action="#{dodajUzytkownika.utworzKonto()}"  class="edit_icon" >
