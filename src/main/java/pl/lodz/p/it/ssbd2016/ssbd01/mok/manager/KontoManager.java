@@ -26,6 +26,9 @@ public class KontoManager implements KontoManagerLocal {
     private SessionContext sessionContext;
     private Konto kontoDoEdycji;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHasloWpisane) {
 
@@ -46,6 +49,9 @@ public class KontoManager implements KontoManagerLocal {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void zmienHaslo(Konto konto, String noweHaslo) {
         kontoDoEdycji = kontoFacade.find(konto.getId());

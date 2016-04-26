@@ -22,11 +22,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
- *
  * @author Patryk
  */
 @Stateful
-public class MOKEndpoint implements MOKEndpointLocal{
+public class MOKEndpoint implements MOKEndpointLocal {
 
     @EJB
     private KontoManagerLocal kontoManager;
@@ -76,22 +75,33 @@ public class MOKEndpoint implements MOKEndpointLocal{
         o.setAktywne(false);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         kontoManager.zmienHaslo(konto, noweHaslo);
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Konto znajdzPoLoginie(String login) {
         return kontoFacade.findByLogin(login);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Konto pobierzKontoDoEdycji(Konto konto) {
         kontoStan = kontoFacade.find(konto.getId());
@@ -105,6 +115,9 @@ public class MOKEndpoint implements MOKEndpointLocal{
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void zapiszKontoPoEdycji(Konto konto) {
         if (kontoStan == null) {

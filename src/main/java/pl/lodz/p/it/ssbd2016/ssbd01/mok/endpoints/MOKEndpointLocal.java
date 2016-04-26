@@ -29,13 +29,45 @@ public interface MOKEndpointLocal {
 
     void zablokujKonto(Konto rowData);
 
+    /**
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
+    /**
+     * @param noweHaslo nowe hasło w postaci jawnej
+     * @param konto     konto które podlegało edycji
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
+    /**
+     * zapisuje konto ze zmienionymi parameterami
+     *
+     * @param konto konto do zmiany
+     */
     void zapiszKontoPoEdycji(Konto konto);
 
+    /**
+     * Wyszukuje konto o podanym loginie
+     *
+     * @param login login jako string
+     * @return znalezione konto
+     */
     Konto znajdzPoLoginie(String login);
 
+    /**
+     * Pobiera konto do edycji
+     *
+     * @param konto przyjmuje konto do edytowania
+     * @return zwraca kopię
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
 }
+

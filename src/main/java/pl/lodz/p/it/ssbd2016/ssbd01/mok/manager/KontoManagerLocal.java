@@ -11,8 +11,22 @@ import java.security.NoSuchAlgorithmException;
  */
 @Local
 public interface KontoManagerLocal {
-
+    /**
+     * Przypadek gdy modyfikujemy własne hasło
+     *
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasłow w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
+    /**
+     * Przypadek gdy admin modyfikuje nam hasło
+     * @param konto
+     * @param noweHaslo
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 }
