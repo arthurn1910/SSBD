@@ -3,7 +3,21 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-<navigation-rule>   
+    <application>
+        <locale-config>
+            <default-locale>pl</default-locale>
+            <supported-locale>pl</supported-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>i18n.messages</base-name>
+            <var>msg</var>
+        </resource-bundle>
+        <message-bundle>
+            i18n.jsf_messages
+        </message-bundle>
+    </application>
+    <navigation-rule>   
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/success.xhtml</to-view-id>
@@ -20,14 +34,14 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>errorLogin</from-outcome>
-            <to-view-id>/mok/logowanie/error.html</to-view-id>
+            <to-view-id>mok/errorLogin.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>zalogowano</from-outcome>
-            <to-view-id>/zalogowano.html</to-view-id>
+            <to-view-id>mok/zalogowano.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -49,41 +63,6 @@
         <navigation-case>
             <from-outcome>dolaczPoziom</from-outcome>
             <to-view-id>/mok/dolaczPoziom.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-     <navigation-rule>
-        <navigation-case>
-            <from-outcome>odlaczPoziomE</from-outcome>
-            <to-view-id>/mok/odlaczPoziomE.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>dolaczPoziomE</from-outcome>
-            <to-view-id>/mok/dolaczPoziomE.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>potwierdzError</from-outcome>
-            <to-view-id>/mok/potwierdzError.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>zablokujError</from-outcome>
-            <to-view-id>/mok/zablokujError.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>odblokujError</from-outcome>
-            <to-view-id>/mok/odblokujError.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

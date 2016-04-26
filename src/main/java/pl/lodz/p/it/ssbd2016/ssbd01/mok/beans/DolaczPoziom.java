@@ -11,28 +11,58 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
  */
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
 @RequestScoped
 public class DolaczPoziom {
-    public String dolaczAgent(){
-        if(false){
-            return "dolaczPoziomE";
-        }
-        return "wyswietlInformacje";
+    @Inject
+    private UzytkownikSession uzytkownikSession;
+    
+    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
+        this.uzytkownikSession = uzytkownikSession;
     }
-    public String dolaczMenadzer(){
-        if(true){
-            return "dolaczPoziomE";
-        }
-        return "wyswietlInformacje";
+    
+    /***
+     * Metoda wywołuje funkcje odlaczPoziomAgent w uzytkownikSession oraz metode initModel()
+     */
+    public void dolaczPoziomAgent(){
+        uzytkownikSession.dolaczPoziomAgent();
     }
-    public String dolaczAdministrator(){
-        if(false){
-            return "dolaczPoziomE";
-        }
-        return "wyswietlInformacje";
+    /***
+     * Metoda wywołuje funkcje odlaczPoziomMenadzer w uzytkownikSession oraz metode initModel()
+     */
+    public void dolaczPoziomMenadzer(){
+        uzytkownikSession.dolaczPoziomMenadzer();
+    }
+    /***
+     * Metoda wywołuje funkcje odlaczPoziomAdministrator w uzytkownikSession oraz metode initModel()
+     */
+    public void dolaczPoziomAdministrator(){
+        uzytkownikSession.dolaczPoziomAdministrator();
+    }
+    /***
+     * Funkcja sprawdza czy konto posiada poziom Agent
+     * @return 
+     */
+    public Boolean sprawdzPoziomAgent(){
+        return uzytkownikSession.sprawdzPoziomAgent();
+
+    }
+    /***
+     * Funkcja sprawdza czy konto posiada poziom Menadzer
+     * @return 
+     */
+    public Boolean sprawdzPoziomMenadzer(){
+        return uzytkownikSession.sprawdzPoziomMenadzer();
+    }
+    /***
+     * Funkcja sprawdza czy konto posiada poziom Adminstrator
+     * @return 
+     */
+    public Boolean sprawdzPoziomAdministrator(){
+        return uzytkownikSession.sprawdzPoziomAdministrator();
     }
      
 }

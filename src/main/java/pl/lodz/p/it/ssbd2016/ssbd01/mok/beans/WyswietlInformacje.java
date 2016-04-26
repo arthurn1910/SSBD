@@ -5,8 +5,11 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
  *
@@ -15,75 +18,61 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class WyswietlInformacje {
-    private String imie;
-    private String nazwisko;
-    private String email;
-    private String telefon;
-    private String login;
-    private String aktywne;
-    private String potwierdzone;
-    private String poziomyDostepu;
+    @Inject
+    private UzytkownikSession uzytkownikSession;
+    private Konto konto;
 
-    public WyswietlInformacje() {
-        imie="anna";
-        nazwisko="mann";
-        email="111@op.pl";
-        telefon="123456789";
-        login="am";
-        aktywne="tak";
-        potwierdzone="nie";
-        poziomyDostepu="klient";
+    public Konto getKonto() {
+        return konto;
     }
 
-    public String getImie() {
-        return imie;
-    }
-
-    public String getNazwisko() {
-        return nazwisko;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getAktywne() {
-        return aktywne;
-    }
-
-    public String getPotwierdzone() {
-        return potwierdzone;
-    }
-
-    public String getPoziomyDostepu() {
-        return poziomyDostepu;
+    public void setKonto(Konto konto) {
+        this.konto = konto;
     }
     
-    public String zablokuj(){
-        if(true)
-            return "zablokujError";
-        this.aktywne="nie";
-        return "wyswietlInformacje";
+    
+    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
+        this.uzytkownikSession = uzytkownikSession;
     }
-    public String odblokuj(){
-        if(false)
-            return "odblokujError";
-        this.aktywne="tak";
-        return "wyswietlInformacje";
+    
+    /**
+     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
+     * konto przez konto użytkownika którego chcemy wyświetlić
+     */
+    @PostConstruct
+    public void initModel() {
+        konto = uzytkownikSession.getKontoUzytkownika();
     }
-    public String potwierdz(){
-        if(true)
-            return "potwierdzError";
-        this.potwierdzone="tak";
-        return "wyswietlInformacje";
+    /***
+     * Metoda wywołująca metode zablokujKonto w uzytkownikSession i wywołująca metodę initModel
+     */
+    
+    public void zablokuj(){
+        uzytkownikSession.zablokujKonto();
+        initModel();
+    }
+    /***
+     * Funkcja wywołująca funkcje pobierzPoziomy z uzytkownikSession
+     * @return 
+     */
+    public String pobierzPoziomy(){
+        return uzytkownikSession.pobierzPoziomy();
+    }
+    
+    /***
+     * Metoda wywołująca metode odblokujKonto w uzytkownikSession i wywołująca metodę initModel
+     */
+    public void odblokuj(){
+        uzytkownikSession.odblokujKonto();
+        initModel();
+    }
+    /***
+     * Metoda wywołująca metode potwierdzKonto w uzytkownikSession i wywołująca metodę initModel
+     */
+    public void potwierdz(){
+        uzytkownikSession.potwierdzKonto();
+        initModel();
+
     }
     
 }

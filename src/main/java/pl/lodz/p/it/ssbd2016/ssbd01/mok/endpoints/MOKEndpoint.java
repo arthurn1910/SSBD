@@ -52,19 +52,79 @@ public class MOKEndpoint implements MOKEndpointLocal{
 
     @Override
     public void potwierdzKonto(Konto konto) {
-        Konto k = kontoFacade.find(konto.getId());
-        k.setPotwierdzone(true);
+        /*Konto k = kontoFacade.find(konto.getId());
+        k.setPotwierdzone(true);*/
     }
 
     @Override
     public void odblokujKonto(Konto rowData) {
-        Konto o = kontoFacade.find(rowData.getId());
-        o.setAktywne(true);
+        /*Konto o = kontoFacade.find(rowData.getId());
+        o.setAktywne(true);*/
     }
 
     @Override
     public void zablokujKonto(Konto rowData) {
-        Konto o = kontoFacade.find(rowData.getId());
-        o.setAktywne(false);
+        /*Konto o = kontoFacade.find(rowData.getId());
+        o.setAktywne(false);*/
     }
+    
+    @Override
+    public Boolean zaloguj(String login, String haslo) {
+        return "a".equals(login) && "a".equals(haslo);
+    }
+
+    @Override
+    public void dolaczPoziomAgent(Konto konto) {
+    }
+
+    @Override
+    public void dolaczPoziomMenadzer(Konto konto) {
+    }
+
+    @Override
+    public void dolaczPoziomAdministrator(Konto konto) {
+    }
+
+    @Override
+    public void odlaczPoziomAgent(Konto konto) {
+    }
+
+    @Override
+    public void odlaczPoziomMenadzer(Konto konto) {
+    }
+
+    @Override
+    public void odlaczPoziomAdministrator(Konto konto) {
+    }
+
+    @Override
+    public Boolean sprawdzPoziomAgent(Konto konto) {
+        return true;
+    }
+
+    @Override
+    public Boolean sprawdzPoziomMenadzer(Konto konto) {
+        return false;
+    }
+
+    @Override
+    public Boolean sprawdzPoziomAdministrator(Konto konto) {
+        return true;
+    }
+
+    @Override
+    public Konto pobierzUzytkownika() {
+        Konto a=new Konto(new Long(1221123131), "aaa", "aaa", false, false, 0);
+        a.setEmail("aaa");
+        a.setTelefon("cccc");
+        a.setImie("anna");
+        a.setNazwisko("1111");
+        return a;
+    }
+
+    @Override
+    public String pobierzPoziomy(Konto kontoUzytkownika) {
+        return "Klient, Agent";
+    }
+
 }
