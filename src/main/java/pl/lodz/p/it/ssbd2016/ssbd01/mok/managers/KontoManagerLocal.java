@@ -17,7 +17,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 @Local
 public interface KontoManagerLocal {
     
-        /**
+    /**
      * metody tworzy konto klienta(niepotwierdzone)
      * @param konto konto do utworzenia
      */

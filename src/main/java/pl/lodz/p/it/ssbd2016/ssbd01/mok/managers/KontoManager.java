@@ -32,7 +32,8 @@ public class KontoManager implements KontoManagerLocal {
     private KontoFacadeLocal kontoFacade;
     
     @EJB
-    private PoziomDostepuFacadeLocal poziomDostepuFacade;
+    private PoziomDostepuFacadeLocal poziomDostepuFacade;   
+    
     @Override
     public void rejestrujKontoKlienta(Konto konto) {
         konto.setAktywne(true);
@@ -53,7 +54,7 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     public boolean utworzKonto(Konto konto, List<String> poziomyDostepu) {
-        if (PoziomDostepuManager.sprawdzCzyPoziomySieWykluczaja(poziomyDostepu)) {
+        if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(generateMD5Hash(konto.getHaslo()));
@@ -71,24 +72,25 @@ public class KontoManager implements KontoManagerLocal {
             return false;
     }
 
+    
     @Override
-    public String generateMD5Hash(String password) {
-        //String password = "haslo1";
-        byte[] bytesOfMessage = null;
+    public String generateMD5Hash(String haslo) {
+        byte[] bajtyWiadomosci = null;
         try {
-            bytesOfMessage = password.getBytes("UTF-8");
+            bajtyWiadomosci = haslo.getBytes("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
         }
-        MessageDigest test = null;
+        MessageDigest generatorMD = null;
         try {
-            test = MessageDigest.getInstance("MD5");
+            generatorMD = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
         }
             
-        byte[] cryptedBytes = test.digest(bytesOfMessage);
-        BigInteger bigInt = new BigInteger(1,cryptedBytes);
-        return bigInt.toString(16);    }
+        byte[] zaszyfrowaneBajty = generatorMD.digest(bajtyWiadomosci);
+        BigInteger wartoscLiczbowa = new BigInteger(1,zaszyfrowaneBajty);
+        return wartoscLiczbowa.toString(16);    
+    }
     
 }

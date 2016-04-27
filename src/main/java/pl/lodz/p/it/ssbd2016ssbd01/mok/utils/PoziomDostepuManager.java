@@ -6,7 +6,13 @@
 package pl.lodz.p.it.ssbd2016ssbd01.mok.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
@@ -16,68 +22,86 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
  */
 public class PoziomDostepuManager {
     private static List<String> poziomyDostepu = dodajPoziomyDostepu();
+    private static List<List<String>> poprawneKombinacjePoziomowDostepu = dodajPoprawneKombinacjePoziomowDostepu();
 
     private PoziomDostepuManager() {        
     }
     
+    /**
+     * Metoda definiująca poziomy dostępu
+     * @return      lista nazw poziomu dostepu
+     */
     private static List<String> dodajPoziomyDostepu() {
-        List<String> nowePoziomy = new ArrayList<String>();
-        nowePoziomy.add("ADMINISTRATOR");
-        nowePoziomy.add("MENADZER");
-        nowePoziomy.add("AGENT");
-        nowePoziomy.add("KLIENT");
+        List<String> nowePoziomy;
+        String poziomyDostepuDoParsowania = null;
+        
+        try {
+            Context ctx = new InitialContext();
+            poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
+        } catch (NamingException ex) {
+            Logger.getLogger(PoziomDostepuManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
+        
         return nowePoziomy;
     }
 
-    public static List<String> getPoziomyDostepu() {
-        return new ArrayList<String>(poziomyDostepu);
+    private static List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() {
+        List<List<String>> nowePoprawneKombinacjePoziomowDostepu = new ArrayList<List<String>>();
+        String kombinacjePoziomowDostepuDoParsowania = null;
+        List<String> pojedynczaKombinacjaDoParsowania = null;
+        
+        try {
+            Context ctx = new InitialContext();
+            kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
+        } catch (NamingException ex) {
+            Logger.getLogger(PoziomDostepuManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
+            nowePoprawneKombinacjePoziomowDostepu.add(new ArrayList<String>(Arrays.asList(kombinacja.split(","))));
+        }
+        
+        return nowePoprawneKombinacjePoziomowDostepu;
     }
-       
+    
+    /**
+     * Metoda tworząca poziomy dostępu z określonego zbioru wartości
+     * @param poziom    nazwa poziomu dostepu
+     * @return          nowy obiekt o określonej nazwie
+     */   
     public static PoziomDostepu stworzPoziomDostepu(String poziom) {
         if (!poziomyDostepu.contains(poziom)) {
             return null;
         }
-        
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();
         nowyPoziomDostepu.setPoziom(poziom);
         
         return nowyPoziomDostepu;
     }
-    
-    public static boolean czyMoznaDodacPoziom(Konto konto, String nowyPoziom) {
-        List<String> poziomyAktywne = new ArrayList<String>();
-        for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
-            if (poziom.getAktywny()) {
-                poziomyAktywne.add(poziom.getPoziom());
-            }
-        }
-        // Jesli dany poziom juz posiadamy
-        if (poziomyAktywne.contains(nowyPoziom)) {
-            return false;
-        }
         
-        poziomyAktywne.add(nowyPoziom);
-        // Jesli jestesmy adminem lub klientem - nie mozemy miec innych poziomow
-        if (((poziomyAktywne.contains(poziomyDostepu.get(0)) || poziomyAktywne.contains(poziomyDostepu.get(3))) 
-                && poziomyAktywne.size() > 1)) {
-            return false;
-        }
-        
-        return true;
-    }
-    
     /**
      * metoda sprawdza, czy poziomy dostepu jakie chcemy dodac, nie wykluczaja sie
      * @param poziomyDostepu lista stringow, zawierajaca poziomy dostepu
      * @return 
      */
-    public static boolean sprawdzCzyPoziomySieWykluczaja(List<String> poziomyDostepu)
-    {
-        if (((poziomyDostepu.contains(poziomyDostepu.get(0)) || poziomyDostepu.contains(poziomyDostepu.get(3))) 
-                && poziomyDostepu.size() > 1)) {
-            return false;
+     public static boolean czyPoprawnaKombinacjaPoziomowDostepu(List<String> poziomyDostepu) {
+        if (poziomyDostepu.size() == 1) {
+            return true;
+        } else if (poziomyDostepu.size() > 1) {
+            for (List<String> kombinacja:poprawneKombinacjePoziomowDostepu) {
+                System.out.println("Poziom: " + poziomyDostepu.size());
+                System.out.println("Poziom: " + Arrays.toString(poziomyDostepu.toArray()));
+                
+                System.out.println("Kombinacja: " + kombinacja.size());
+                System.out.println("Kombinacja: " + Arrays.toString(kombinacja.toArray()));
+                if (poziomyDostepu.size() == kombinacja.size() && kombinacja.containsAll(poziomyDostepu)) {
+                    return true;
+                }
+            }
         }
-        return true;
+        return false;
     }
     
     /**
@@ -90,34 +114,5 @@ public class PoziomDostepuManager {
         nowyPoziomDostepu.setPoziom(poziomyDostepu.get(3));
         
         return nowyPoziomDostepu;
-    }
-    
-    public static boolean czyPosiadaPoziomDostepu(Konto konto, String poziom) {
-        for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
-            System.out.println(obecnyPoziom.getPoziom() + " ? "+ poziom);
-            if (obecnyPoziom.getPoziom().equals(poziom)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    public static boolean czyPosiadaAktywnyPoziomDostepu(Konto konto, String poziom) {
-        for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
-            System.out.println(obecnyPoziom.getPoziom() + " ? "+ poziom);
-            if (obecnyPoziom.getPoziom().equals(poziom)) {
-                return obecnyPoziom.getAktywny();
-            }
-        }
-        return false;
-    }
-    
-    public static PoziomDostepu pobierzPoziomDostepu(Konto konto, String poziom) {
-        for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
-            if (obecnyPoziom.getPoziom().equals(poziom)) {
-                return obecnyPoziom;
-            }
-        }
-        return null;
     }
 }
