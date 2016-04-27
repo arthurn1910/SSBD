@@ -36,6 +36,5 @@ public interface KontoManagerLocal {
      * @param password haslo w jawnej postaci
      * @return haslo w skrocie MD5
      */
-    String generateMD5Hash(String password);
     
 }

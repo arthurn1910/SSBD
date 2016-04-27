@@ -20,6 +20,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
 
 /**
  *
@@ -38,7 +39,7 @@ public class KontoManager implements KontoManagerLocal {
     public void rejestrujKontoKlienta(Konto konto) {
         konto.setAktywne(true);
         konto.setPotwierdzone(false);
-        konto.setHaslo(generateMD5Hash(konto.getHaslo()));
+        konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
         try{
         kontoFacade.create(konto);
         }
@@ -57,7 +58,7 @@ public class KontoManager implements KontoManagerLocal {
         if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
-            konto.setHaslo(generateMD5Hash(konto.getHaslo()));
+            konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
             kontoFacade.create(konto);
             
             for (String poziomDostepuStr: poziomyDostepu) {
@@ -68,25 +69,4 @@ public class KontoManager implements KontoManagerLocal {
             }
         }
     }
-    
-    @Override
-    public String generateMD5Hash(String haslo) {
-        byte[] bajtyWiadomosci = null;
-        try {
-            bajtyWiadomosci = haslo.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        MessageDigest generatorMD = null;
-        try {
-            generatorMD = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
-        byte[] zaszyfrowaneBajty = generatorMD.digest(bajtyWiadomosci);
-        BigInteger wartoscLiczbowa = new BigInteger(1,zaszyfrowaneBajty);
-        return wartoscLiczbowa.toString(16);    
-    }
-    
 }
