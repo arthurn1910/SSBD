@@ -106,5 +106,15 @@ public class KontoManager implements KontoManagerLocal {
             throw new Exception("Nie możemy dodać poziomu dostępu");
         }
     }
+
+    @Override
+    public void zmienHaslo(Konto konto, String noweHaslo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

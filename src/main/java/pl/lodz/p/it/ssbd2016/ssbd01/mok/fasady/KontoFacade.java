@@ -10,7 +10,6 @@ import javax.persistence.Query;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
- *
  * @author java
  */
 @Stateless
@@ -78,4 +77,11 @@ public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLoc
         return listaKontPodobnych;
     }
     
+    @Override
+    public Konto findByLogin(String login) {
+        Query query = em.createNamedQuery("Konto.findByLogin");
+        query.setParameter("login", login);
+        return (Konto) query.getSingleResult();
+    }
 }
+

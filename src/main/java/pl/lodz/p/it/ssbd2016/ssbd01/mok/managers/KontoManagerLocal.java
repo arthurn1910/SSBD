@@ -33,4 +33,8 @@ public interface KontoManagerLocal {
      * @throws java.lang.Exception
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
+
+    public void zmienHaslo(Konto konto, String noweHaslo);
+
+    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo);
 }
