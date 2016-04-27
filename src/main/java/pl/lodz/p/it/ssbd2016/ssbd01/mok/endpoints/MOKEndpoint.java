@@ -11,6 +11,10 @@ import javax.ejb.Stateful;
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+
 /**
  * API servera dla modułu funkcjonalnego MOK
  * @author Patryk
@@ -40,6 +44,16 @@ public class MOKEndpoint implements MOKEndpointLocal {
         poziomDostepuFacade.create(poziomDostepu);
         konto.getPoziomDostepuCollection().add(poziomDostepu);
     }
+    
+    @Override
+    public void rejestrujKontoKlienta(Konto konto) {
+        kontoManager.rejestrujKontoKlienta(konto);
+    }
+    
+    @Override
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
+        kontoManager.utworzKonto(konto, poziomyDostepu);
+    }
 
     @Override
     public List<Konto> pobierzWszystkieKonta() {
@@ -51,19 +65,19 @@ public class MOKEndpoint implements MOKEndpointLocal {
         /*Konto k = kontoFacade.find(konto.getId());
         k.setPotwierdzone(true);*/
     }
-    /***
-     * Metoda odblokowująca konto uzytkownikowi
-     * @param rowData 
-     */
-    @Override
-    public void odblokujKonto(Konto rowData) {
-        /*Konto o = kontoFacade.find(rowData.getId());
-        o.setAktywne(true);*/
-    }
+
     /***
      * Metoda zablokowująca konto uzytkownikowi
      * @param rowData 
      */
+    
+    @Override
+    public void odblokujKonto(Konto konto) {
+        Konto o = kontoFacade.find(konto.getId());
+        o.setAktywne(true);
+    }
+
+    
     @Override
     public void zablokujKonto(Konto rowData) {
         /*Konto o = kontoFacade.find(rowData.getId());
