@@ -9,6 +9,9 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ResourceBundle;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  * Created by Kamil Rogowski on 26.04.2016.
@@ -38,9 +41,26 @@ public class ZmienHasloBean {
      */
     public void zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        if (noweHaslo.equals(nowePowtorzoneHaslo))
+        if (this.czyHaslaSiezgadzaja())
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
     }
+    
+  /** Sprawdza czy dwa hasła znajdujące się w formularzach są identyczne
+ * @return true, jeżeli hasła są identyczne; false, jeżeli hasła są różne
+ */
+    public boolean czyHaslaSiezgadzaja(){
+        if (!(noweHaslo.equals(nowePowtorzoneHaslo))) {
+            FacesContext fctx = FacesContext.getCurrentInstance();
+            
+            ResourceBundle rbl = ResourceBundle.getBundle("i18n.messages");
+            FacesMessage fmsg = new FacesMessage(rbl.getString("passwords.not.matching"));
+
+            fctx.addMessage(null, fmsg);
+            return false;
+        }
+        return true;
+    }
+
 
     /**
      * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy admin zmienia nam hasło
