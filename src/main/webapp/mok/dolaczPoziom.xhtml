@@ -17,13 +17,13 @@
         Wybierz poziom
         <h:form>
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Agent?')) return false"
-                             value="Agent" action="#{dolaczPoziom.dolaczPoziomAgent()}"  class="edit_icon" rendered="#{not dolaczPoziom.sprawdzPoziomAgent()}">
+                             value="Agent" action="#{dolaczPoziomBean.dolaczPoziomAgent()}"  class="edit_icon" rendered="#{not dolaczPoziomBean.sprawdzPoziomAgent()}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Menadzer?')) return false"
-                             value="Menadzer" action="#{dolaczPoziom.dolaczPoziomMenadzer()}"  class="edit_icon" rendered="#{not dolaczPoziom.sprawdzPoziomMenadzer()}">
+                             value="Menadzer" action="#{dolaczPoziomBean.dolaczPoziomMenadzer()}"  class="edit_icon" rendered="#{not dolaczPoziomBean.sprawdzPoziomMenadzer()}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz dolaczyć poziom Administrator?')) return false"
-                             value="Administrator" action="#{dolaczPoziom.dolaczPoziomAdministrator()}"  class="edit_icon" rendered="#{not dolaczPoziom.sprawdzPoziomAdministrator()}">
+                             value="Administrator" action="#{dolaczPoziomBean.dolaczPoziomAdministrator()}"  class="edit_icon" rendered="#{not dolaczPoziomBean.sprawdzPoziomAdministrator()}">
             </h:commandButton> 
             <h:commandButton value="Powrót" action="wyswietlInformacje"  class="edit_icon" >
             </h:commandButton> 

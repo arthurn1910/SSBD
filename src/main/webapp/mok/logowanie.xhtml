@@ -12,11 +12,11 @@
      <ui:define name="content">
         Zaloguj się do konta
         <h:form>
-            Login: <h:inputText  value="#{logowanie.login}"/><br />
-            Hasło: <h:inputSecret value="#{logowanie.haslo}"/><br />
+            Login: <h:inputText  value="#{logowanieBean.login}"/><br />
+            Hasło: <h:inputSecret value="#{logowanieBean.haslo}"/><br />
             <h:commandButton action="errorLogin" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                         value="Logowanie" action="#{logowanie.zalogujKlienta()}"  class="edit_icon" >
+                         value="Logowanie" action="#{logowanieBean.zalogujKlienta()}"  class="edit_icon" >
             </h:commandButton> 
         </h:form>
     </ui:define>

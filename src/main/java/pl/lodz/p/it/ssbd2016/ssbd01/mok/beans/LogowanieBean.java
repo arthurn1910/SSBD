@@ -5,18 +5,22 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 /**
  *
  * @author rpawlaczyk
  */
 @Named
 @RequestScoped
-public class Logowanie {
-    @Inject
-    private LogowanieSession logowanieSession;
+public class LogowanieBean {
+    @EJB
+    private MOKEndpointLocal MOKEndpoint;
+    
     private String login;
     private String haslo;
     /**
@@ -53,7 +57,9 @@ public class Logowanie {
      * @return 
      */
     public String zalogujKlienta(){
-        return logowanieSession.zaloguj(login, haslo);
+        if(MOKEndpoint.zaloguj(login,haslo)==true)
+            return "zalogowano";
+        return "errorLogin";
     }
 
 }

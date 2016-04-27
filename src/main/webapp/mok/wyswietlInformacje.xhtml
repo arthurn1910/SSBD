@@ -16,22 +16,22 @@
     
      <ui:define name="content">
         <h:form>
-            Imie: <h:outputText value="#{wyswietlInformacje.konto.imie}"/><br />
-            Nazwisko: <h:outputText value="#{wyswietlInformacje.konto.nazwisko}"/><br />
-            Login: <h:outputText  value="#{wyswietlInformacje.konto.login}"/><br />
-            Email: <h:outputText  value="#{wyswietlInformacje.konto.email}"/><br />
-            Telefon: <h:outputText  value="#{wyswietlInformacje.konto.telefon}"/><br />
-            Aktywne: <h:outputText  value="#{wyswietlInformacje.konto.aktywne}"/><br />
-            Potwierdzone: <h:outputText  value="#{wyswietlInformacje.konto.potwierdzone}"/><br />
-            Poziomy dostępu: <h:outputText  value="#{wyswietlInformacje.pobierzPoziomy()}"/><br />
+            Imie: <h:outputText value="#{wyswietlInformacjeBean.konto.imie}"/><br />
+            Nazwisko: <h:outputText value="#{wyswietlInformacjeBean.konto.nazwisko}"/><br />
+            Login: <h:outputText  value="#{wyswietlInformacjeBean.konto.login}"/><br />
+            Email: <h:outputText  value="#{wyswietlInformacjeBean.konto.email}"/><br />
+            Telefon: <h:outputText  value="#{wyswietlInformacjeBean.konto.telefon}"/><br />
+            Aktywne: <h:outputText  value="#{wyswietlInformacjeBean.konto.aktywne}"/><br />
+            Potwierdzone: <h:outputText  value="#{wyswietlInformacjeBean.konto.potwierdzone}"/><br />
+            Poziomy dostępu: <h:outputText  value="#{wyswietlInformacjeBean.pobierzPoziomy()}"/><br />
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
-                             value="Odblokuj" action="#{wyswietlInformacje.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlInformacje.konto.aktywne}">
+                             value="Odblokuj" action="#{wyswietlInformacjeBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlInformacjeBean.konto.aktywne}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
-                             value="Zablokuj" action="#{wyswietlInformacje.zablokuj()}"  class="edit_icon" rendered="#{not wyswietlInformacje.konto.aktywne}">
+                             value="Zablokuj" action="#{wyswietlInformacjeBean.zablokuj()}"  class="edit_icon" rendered="#{not wyswietlInformacjeBean.konto.aktywne}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
-                             value="Potwierdź" action="#{wyswietlInformacje.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlInformacje.konto.potwierdzone}">
+                             value="Potwierdź" action="#{wyswietlInformacjeBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlInformacjeBean.konto.potwierdzone}">
             </h:commandButton> 
             <h:commandButton value="Odłącz poziom" action="odlaczPoziom"  class="edit_icon" >
             </h:commandButton> 

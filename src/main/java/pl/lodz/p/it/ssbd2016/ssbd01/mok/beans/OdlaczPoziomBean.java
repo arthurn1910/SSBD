@@ -16,10 +16,13 @@ import javax.inject.Named;
 
 @Named
 @RequestScoped
-public class OdlaczPoziom {
+public class OdlaczPoziomBean {
     @Inject
     private UzytkownikSession uzytkownikSession;
-    
+    /***
+     * Metoda ustawiajaca uzytkowniksession
+     * @param uzytkownikSession 
+     */
     public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
         this.uzytkownikSession = uzytkownikSession;
     }

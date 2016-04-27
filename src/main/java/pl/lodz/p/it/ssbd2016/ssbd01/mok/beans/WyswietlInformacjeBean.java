@@ -17,32 +17,43 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
  */
 @Named
 @RequestScoped
-public class WyswietlInformacje {
+public class WyswietlInformacjeBean {
     @Inject
     private UzytkownikSession uzytkownikSession;
     private Konto konto;
-
+    /***
+     * Funkcja pobierająca konto
+     * @return 
+     */
     public Konto getKonto() {
         return konto;
     }
-
+    /***
+     * Metoda ustawiająca konto
+     * @param konto 
+     */
     public void setKonto(Konto konto) {
         this.konto = konto;
     }
     
-    
-    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
-        this.uzytkownikSession = uzytkownikSession;
-    }
-    
     /**
-     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
-     * konto przez konto użytkownika którego chcemy wyświetlić
-     */
+    * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
+    * konto przez konto użytkownika którego chcemy wyświetlić
+    */
     @PostConstruct
     public void initModel() {
         konto = uzytkownikSession.getKontoUzytkownika();
     }
+    
+    
+    /***
+     * Metoda ustawiająca uzytkownikSession
+     * @param uzytkownikSession 
+     */
+    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
+        this.uzytkownikSession = uzytkownikSession;
+    }
+    
     /***
      * Metoda wywołująca metode zablokujKonto w uzytkownikSession i wywołująca metodę initModel
      */
