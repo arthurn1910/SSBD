@@ -17,4 +17,11 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlInformacje</from-outcome>
+            <to-view-id>/mok/wyswietlInformacje.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

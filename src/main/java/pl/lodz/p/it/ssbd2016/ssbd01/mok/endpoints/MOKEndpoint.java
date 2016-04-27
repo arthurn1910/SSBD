@@ -67,4 +67,11 @@ public class MOKEndpoint implements MOKEndpointLocal{
         Konto o = kontoFacade.find(rowData.getId());
         o.setAktywne(false);
     }
+
+    @Override
+    public Boolean zmianaHasla(String stareHaslo, String nowehaslo, String nowePowtorzoneHaslo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+      
+    
 }

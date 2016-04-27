@@ -26,4 +26,6 @@ public interface MOKEndpointLocal {
     public void odblokujKonto(Konto rowData);
 
     public void zablokujKonto(Konto rowData);
+    
+    public Boolean zmianaHasla(String stareHaslo, String nowehaslo, String nowePowtorzoneHaslo);
 }

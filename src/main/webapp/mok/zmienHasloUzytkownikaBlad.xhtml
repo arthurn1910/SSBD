@@ -17,9 +17,9 @@
             Nowe haslo: <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
             Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}"/><br />            
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{zmienHasloBean.zmienMojeHaslo()}"  class="edit_icon"">
+                             value="Potwierdz" action="#{zmienHasloBean.zmienMojeHaslo()}"  class="edit_icon">
             </h:commandButton> 
-            <h:commandButton action="powrot" value="Powrot"/>
+            <h:commandButton action="wyswietlajInformacje" value="Powrot"/>
         </h:form>
 </ui:define>
 </ui:composition>
