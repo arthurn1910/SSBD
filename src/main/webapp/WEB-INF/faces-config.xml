@@ -33,22 +33,6 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/dodajUzytkownika.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/zalogujLubZarejestrujUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/mok/zalogujLubZarejestrujUzytkownika.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>zarejestruj</from-outcome>
-            <to-view-id>/mok/dodajUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>/mok/zarzadzanieKontami.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>kontaNiepotwierdzone</from-outcome>

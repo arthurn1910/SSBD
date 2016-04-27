@@ -72,7 +72,9 @@ public class UzytkownikSession implements Serializable {
  * @return lista kont spełniających wymagania dotyczące wzorców
  */
     List<Konto> pobierzPodobneKonta(Konto k) {
-        List<Konto> konta = MOKEndpoint.pobierzPodobneKonta(k);
+//        List<Konto> konta = MOKEndpoint.pobierzPodobneKonta(k);
+        // tymczasowo
+        List<Konto> konta = MOKEndpoint.pobierzWszystkieKonta();
         return konta;
     }
     
