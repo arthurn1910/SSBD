@@ -47,7 +47,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Konto.findByHaslo", query = "SELECT k FROM Konto k WHERE k.haslo = :haslo"),
     @NamedQuery(name = "Konto.findByPotwierdzone", query = "SELECT k FROM Konto k WHERE k.potwierdzone = :potwierdzone"),
     @NamedQuery(name = "Konto.findByAktywne", query = "SELECT k FROM Konto k WHERE k.aktywne = :aktywne"),
-    @NamedQuery(name = "Konto.findByVersion", query = "SELECT k FROM Konto k WHERE k.version = :version")})
+    @NamedQuery(name = "Konto.findByVersion", query = "SELECT k FROM Konto k WHERE k.version = :version"),
+    @NamedQuery(name = "Konto.findSimilar", query = "SELECT k FROM Konto k WHERE k.imie like :imie AND k.nazwisko like :nazwisko AND k.email like :email AND k.telefon like :telefon AND k.potwierdzone = :potwierdzone AND k.aktywne = :aktywne")})
 public class Konto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -124,11 +125,6 @@ public class Konto implements Serializable {
     @Column(name = "data_utworzenia", table="dane_personalne")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUtworzenia;
-    @Basic(optional=false)
-    @NotNull
-    @Column(name="version",table="dane_personalne")
-    @Version
-    private long version_dane;
     
     public String getImie() {
         return imie;

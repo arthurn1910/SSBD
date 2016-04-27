@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Lista kont</title>
+    </h:head>
+    <h:body> 
+        <h1>Lista kont</h1><br />
+        <h:form id="listaKontForm">            
+            <h:dataTable id="listaKont" var="konto" value="#{wyswietlUzytkownikowBean.kontaDataModel}">
+                <h:column id="login">
+                    <f:facet name="header">Login</f:facet>
+                    <h:outputText value="#{konto.login}" />
+                </h:column>
+                <h:column id="imie">
+                    <f:facet name="header">Imie</f:facet>
+                    <h:outputText value="#{konto.imie}" />
+                </h:column>
+                <h:column id="nazwisko">
+                    <f:facet name="header">Nazwisko</f:facet>
+                    <h:outputText value="#{konto.nazwisko}" />
+                </h:column>
+                <h:column id="email">
+                    <f:facet name="header">email</f:facet>
+                    <h:outputText value="#{konto.email}" />
+                </h:column>
+                <h:column id="stan">
+                    <f:facet name="header">stan</f:facet>
+                    <h:outputText value="#{konto.aktywne}" />
+                </h:column>
+                <h:column id="potwierdzone">
+                    <f:facet name="header">potwierdzone</f:facet>
+                    <h:outputText value="#{konto.potwierdzone}" />
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Powróć" action="cancel" />
+        </h:form>
+    </h:body>
+</html>
