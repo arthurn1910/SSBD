@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.lodz.p.it.ssbd2016ssbd01.mok.utils;
+package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

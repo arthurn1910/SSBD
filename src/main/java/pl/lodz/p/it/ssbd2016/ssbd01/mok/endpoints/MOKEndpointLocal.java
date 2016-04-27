@@ -30,7 +30,7 @@ public interface MOKEndpointLocal {
      * @param poziomyDostepu poziomy dostepu jakie beda przypisane(string List)
      * @return 
      */
-    boolean utworzKonto(Konto konto, List<String> poziomyDostepu);
+    void utworzKonto(Konto konto, List<String> poziomyDostepu);
     
     /**
      * Metoda, która pobiera wszystkie konta

@@ -29,7 +29,7 @@ public interface KontoManagerLocal {
      * @param poziomyDostepu poziomy dostepu jakie beda przypisane(string List)
      * @return true/false
      */
-    boolean utworzKonto(Konto konto, List<String> poziomyDostepu);
+    void utworzKonto(Konto konto, List<String> poziomyDostepu);
     
     /**
      * generuje skrót MD5 z podanego hasła

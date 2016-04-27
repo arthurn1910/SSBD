@@ -19,7 +19,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
-import pl.lodz.p.it.ssbd2016ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
  *
@@ -53,7 +53,7 @@ public class KontoManager implements KontoManagerLocal {
     }
     
     @Override
-    public boolean utworzKonto(Konto konto, List<String> poziomyDostepu) {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
         if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
@@ -66,12 +66,8 @@ public class KontoManager implements KontoManagerLocal {
                 konto.getPoziomDostepuCollection().add(poziomDostepu);
                 poziomDostepuFacade.create(poziomDostepu);
             }
-            return true;
         }
-        else 
-            return false;
     }
-
     
     @Override
     public String generateMD5Hash(String haslo) {

@@ -18,7 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
-import pl.lodz.p.it.ssbd2016ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
  *
@@ -44,8 +44,8 @@ public class MOKEndpoint implements MOKEndpointLocal{
     }
     
     @Override
-    public boolean utworzKonto(Konto konto, List<String> poziomyDostepu) {
-        return kontoManager.utworzKonto(konto, poziomyDostepu);
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
+        kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 
     @Override
