@@ -18,4 +18,29 @@
         <role-name>MENADZER</role-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>GOSC</role-name>
+        <group-name>GOSC</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>rejestrujKontoKlienta</role-name>
+        <group-name>GOSC</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>utworzKonto</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>potwierdzKonto</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>potwierdzKonto</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>initWyszukiwanie</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
 </glassfish-web-app>
