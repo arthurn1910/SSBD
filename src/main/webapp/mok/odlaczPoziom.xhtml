@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="top">
+        <p>Odłącz poziom dostępu</p>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="../templates/menu.xhtml" />
+    </ui:define>
+    
+     <ui:define name="content">
+        Wybierz poziom
+        <h:form>
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odlaczyć poziom Agent?')) return false"
+                             value="Agent" action="#{odlaczPoziomBean.odlaczPoziomAgent()}"  class="edit_icon" rendered="#{odlaczPoziomBean.sprawdzPoziomAgent()}">
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odlaczyć poziom Menadzer?')) return false"
+                             value="Menadzer" action="#{odlaczPoziomBean.odlaczPoziomMenadzer()}"  class="edit_icon" rendered="#{odlaczPoziomBean.sprawdzPoziomMenadzer()}">
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odlaczyć poziom Administrator?')) return false"
+                             value="Administrator" action="#{odlaczPoziomBean.odlaczPoziomAdministrator()}"  class="edit_icon" rendered="#{odlaczPoziomBean.sprawdzPoziomAdministrator()}">
+            </h:commandButton> 
+            <h:commandButton value="Powrót" action="wyswietlInformacje"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -26,4 +26,29 @@ public interface MOKEndpointLocal {
     public void odblokujKonto(Konto rowData);
 
     public void zablokujKonto(Konto rowData);
+
+    public Boolean zaloguj(String login, String haslo);
+
+    public void dolaczPoziomAgent(Konto konto);
+
+    public void dolaczPoziomMenadzer(Konto konto);
+
+    public void dolaczPoziomAdministrator(Konto konto);
+
+    public void odlaczPoziomAgent(Konto konto);
+
+    public void odlaczPoziomMenadzer(Konto konto);
+
+    public void odlaczPoziomAdministrator(Konto konto);
+
+    public Boolean sprawdzPoziomAgent(Konto konto);
+
+    public Boolean sprawdzPoziomMenadzer(Konto konto);
+
+    public Boolean sprawdzPoziomAdministrator(Konto konto);
+
+    public Konto pobierzUzytkownika();
+
+    public String pobierzPoziomy(Konto kontoUzytkownika);
+
 }
