@@ -12,7 +12,7 @@ import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 /**
- *
+ * Klasa ta jest wykorzystywana do logowania użytkownika do systemu
  * @author rpawlaczyk
  */
 @Named

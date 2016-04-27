@@ -6,7 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 /**
- *
+ * Klasa ta jest wykorzystywana do odłaczenia i sprawdzenia poziomów dostępu użytkownika
  * @author rpawlaczyk
  */
 

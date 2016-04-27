@@ -12,7 +12,7 @@ import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
- *
+ * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku oraz zablokowania, odblokowania i potwierdzenia jego konta
  * @author rpawlaczyk
  */
 @Named
