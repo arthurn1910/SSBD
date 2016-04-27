@@ -13,7 +13,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -94,13 +93,7 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      */
     public void pobierzKontoDoEdycji(Konto konto) {
-        try {
-            kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
 
     }
 
@@ -112,22 +105,20 @@ public class UzytkownikSession implements Serializable {
     }
 
     /**
+     * Przekazuje dane w postaci jawnej do endpointa
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
     }
 
     /**
+     * Przekazuje konto i hasło do endpointa
      * @param konto     konto do zmiany
      * @param noweHaslo nowe hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
-    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public void zmienHaslo(Konto konto, String noweHaslo) {
         MOKEndpoint.zmienHaslo(konto, noweHaslo);
     }
 }

@@ -12,20 +12,19 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.manager.KontoManagerLocal;
 
-import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Patryk
  */
 @Stateful
 public class MOKEndpoint implements MOKEndpointLocal {
+
+    private static final Logger logger = Logger.getLogger(MOKEndpoint.class.getName());
 
     @EJB
     private KontoManagerLocal kontoManager;
@@ -35,8 +34,6 @@ public class MOKEndpoint implements MOKEndpointLocal {
     private PoziomDostepuFacadeLocal poziomDostepuFacade;
 
     private Konto kontoStan;
-    @Resource
-    private SessionContext sessionContext;
 
     @Override
     public void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu) {
@@ -79,7 +76,7 @@ public class MOKEndpoint implements MOKEndpointLocal {
      * {@inheritDoc}
      */
     @Override
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) {
         kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
     }
 
@@ -87,7 +84,7 @@ public class MOKEndpoint implements MOKEndpointLocal {
      * {@inheritDoc}
      */
     @Override
-    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public void zmienHaslo(Konto konto, String noweHaslo) {
         kontoManager.zmienHaslo(konto, noweHaslo);
     }
 
@@ -105,6 +102,8 @@ public class MOKEndpoint implements MOKEndpointLocal {
     @Override
     public Konto pobierzKontoDoEdycji(Konto konto) {
         kontoStan = kontoFacade.find(konto.getId());
+        logger.info(kontoStan.toString());
+
         try {
             return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
         } catch (IOException e) {
@@ -120,18 +119,22 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zapiszKontoPoEdycji(Konto konto) {
+
         if (kontoStan == null) {
             throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
         }
         if (!kontoStan.equals(konto)) {
             throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
         }
+
+        logger.info(kontoStan.toString());
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setNazwisko(konto.getNazwisko());
         kontoFacade.edit(kontoStan);
         kontoStan = null;
+
     }
 
 

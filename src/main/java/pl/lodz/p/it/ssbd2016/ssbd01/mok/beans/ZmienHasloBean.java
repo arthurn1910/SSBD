@@ -27,31 +27,33 @@ public class ZmienHasloBean {
 
     @PostConstruct
     private void initKonto() {
-        konto = uzytkownikSession.znajdzPoLoginie("kontoA");
+        konto = uzytkownikSession.znajdzPoLoginie("kontoC");
     }
 
     /**
      * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy zmieniamy swoje hasło
      *
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
-    public void zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public boolean zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        if (noweHaslo.equals(nowePowtorzoneHaslo))
+        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
+            return true;
+        }
+        return false;
     }
 
     /**
      * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy admin zmienia nam hasło
-     *
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
+     * @return true jeśli operacja zakończona sukcesem, false, jeśli nie
      */
-    public void zmienHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public boolean zmienHaslo() {
 
-        if (noweHaslo.equals(nowePowtorzoneHaslo))
+        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
             uzytkownikSession.zmienHaslo(konto, noweHaslo);
+            return true;
+        }
+        return false;
     }
 
     public String getStareHaslo() {

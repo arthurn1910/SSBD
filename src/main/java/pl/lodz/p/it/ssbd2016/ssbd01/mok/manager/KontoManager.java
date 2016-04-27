@@ -8,12 +8,11 @@ import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.logging.Logger;
 
 /**
  * Created by Kamil Rogowski on 23.04.2016.
+ * @author Kamil Rogowski
  */
 @Stateless
 public class KontoManager implements KontoManagerLocal {
@@ -34,14 +33,9 @@ public class KontoManager implements KontoManagerLocal {
 
         kontoDoEdycji = kontoFacade.findByLogin(sessionContext.getCallerPrincipal().getName());
         String stareHaslo = kontoDoEdycji.getHaslo();
-        String hashedPassword = null;
+        String hashedPassword = HashCreator.MD5(noweHaslo);
+        stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
 
-        try {
-            hashedPassword = HashCreator.MD5(noweHaslo);
-            stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            logger.info("KontoManager - zmienHaslo()");
-        }
         if (stareHasloWpisane.equals(stareHaslo)) {
             kontoDoEdycji.setHaslo(hashedPassword);
             kontoFacade.edit(kontoDoEdycji);
@@ -55,13 +49,9 @@ public class KontoManager implements KontoManagerLocal {
     @Override
     public void zmienHaslo(Konto konto, String noweHaslo) {
         kontoDoEdycji = kontoFacade.find(konto.getId());
-        try {
-            String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
-            kontoDoEdycji.setHaslo(noweZahashowanehaslo);
-            kontoFacade.edit(kontoDoEdycji);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            logger.info("KontoManager - zmienHaslo()");
-        }
+        String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
+        kontoDoEdycji.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(kontoDoEdycji);
 
     }
 }

@@ -9,9 +9,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 import javax.ejb.Local;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -30,20 +27,18 @@ public interface MOKEndpointLocal {
     void zablokujKonto(Konto rowData);
 
     /**
+     *  Przekazuje hasła w postaci jawnej do managera
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo);
 
     /**
+     * Przekazuje konto do zmiany do managera z hasłem postaci jawnej
      * @param noweHaslo nowe hasło w postaci jawnej
      * @param konto     konto które podlegało edycji
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
-    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    void zmienHaslo(Konto konto, String noweHaslo);
 
     /**
      * zapisuje konto ze zmienionymi parameterami
@@ -65,9 +60,8 @@ public interface MOKEndpointLocal {
      *
      * @param konto przyjmuje konto do edytowania
      * @return zwraca kopię
-     * @throws IOException
-     * @throws ClassNotFoundException
      */
-    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
+
+    Konto pobierzKontoDoEdycji(Konto konto);
 }
 
