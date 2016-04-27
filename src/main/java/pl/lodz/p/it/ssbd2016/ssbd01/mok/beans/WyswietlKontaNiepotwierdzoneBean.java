@@ -17,7 +17,7 @@ import javax.faces.model.ListDataModel;
  */
 @Named
 @RequestScoped
-public class WyswietlKontaNiepotwierdzone implements Serializable {
+public class WyswietlKontaNiepotwierdzoneBean implements Serializable {
     @Inject
     private UzytkownikSession uzytkownikSession;
     

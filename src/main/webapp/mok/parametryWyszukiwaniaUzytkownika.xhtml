@@ -17,16 +17,16 @@
         Lista kont<br /><br />
         Wyszukiwanie według:<br />
         <h:form id="listaKontForm1">
-            Login: <h:inputText value="#{wyszukajKonta.login}"/><br />
-            Imie: <h:inputText value="#{wyszukajKonta.imie}"/><br />
-            Nazwisko: <h:inputText value="#{wyszukajKonta.nazwisko}"/><br />
-            Email: <h:inputText value="#{wyszukajKonta.email}"/><br />
-            Telefon: <h:inputText value="#{wyszukajKonta.telefon}"/><br />
+            Login: <h:inputText value="#{wyszukajKontaBean.login}"/><br />
+            Imie: <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
+            Nazwisko: <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
+            Email: <h:inputText value="#{wyszukajKontaBean.email}"/><br />
+            Telefon: <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
             <h:commandButton value="Powróć" action="powrot" />
-            <h:commandButton value="Wyszukaj" action="#{wyszukajKonta.initWyszukiwanie()}" />
+            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.initWyszukiwanie()}" />
         </h:form>
         <h:form>
-            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKonta.kontaWyszukiwanie}">
+            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKontaBean.kontaWyszukiwanie}">
                 <h:column id="login">
                     <f:facet name="header">login</f:facet>
                     <h:outputText value="#{row.login}" />

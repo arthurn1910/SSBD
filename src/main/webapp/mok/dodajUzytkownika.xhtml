@@ -16,16 +16,16 @@
     <ui:define name="content">
         Rejestruj konto klienta
         <h:form>
-            Imie: <h:inputText value="#{dodajUzytkownika.imie}"/><br />
-            Nazwisko: <h:inputText value="#{dodajUzytkownika.nazwisko}"/><br />
-            Login: <h:inputText value="#{dodajUzytkownika.login}"/><br />
-            Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
-            Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
-            Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
-            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><h:message for="" /> <br />
+            Imie: <h:inputText value="#{dodajUzytkownikaBean.imie}"/><br />
+            Nazwisko: <h:inputText value="#{dodajUzytkownikaBean.nazwisko}"/><br />
+            Login: <h:inputText value="#{dodajUzytkownikaBean.login}"/><br />
+            Email: <h:inputText value="#{dodajUzytkownikaBean.email}"/><br />
+            Telefon: <h:inputText value="#{dodajUzytkownikaBean.telefon}"/><br />
+            Hasło: <h:inputSecret value="#{dodajUzytkownikaBean.haslo}"/><br />
+            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownikaBean.powtorzHaslo}"/><h:message for="" /> <br />
             <h:commandButton action="powrot" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                value="Zarejestruj" action="#{dodajUzytkownika.rejestrujKontoKlienta()}"  class="edit_icon" >
+                value="Zarejestruj" action="#{dodajUzytkownikaBean.rejestrujKontoKlienta()}"  class="edit_icon" >
             </h:commandButton> 
         </h:form>
     </ui:define>

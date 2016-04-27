@@ -17,7 +17,7 @@
         Lista kont niepotwierdzonych<br />
         <h:form id="listaKontForm">
             
-            <h:dataTable id="listaKont" var="row" value="#{wyswietlKontaNiepotwierdzone.kontaNiepotwierdzone}">
+            <h:dataTable id="listaKont" var="row" value="#{wyswietlKontaNiepotwierdzoneBean.kontaNiepotwierdzone}">
                 <h:column id="login">
                     <f:facet name="header">login</f:facet>
                     <h:outputText value="#{row.login}" />
@@ -43,7 +43,7 @@
                 </h:column>
                 <h:column id="potwierdz">
                     <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
-                        value="Potwierdż konto" action="#{wyswietlKontaNiepotwierdzone.potwierdzKonto()}"  class="edit_icon" >
+                        value="Potwierdż konto" action="#{wyswietlKontaNiepotwierdzoneBean.potwierdzKonto()}"  class="edit_icon" >
                     </h:commandButton> 
                 </h:column> 
             </h:dataTable>

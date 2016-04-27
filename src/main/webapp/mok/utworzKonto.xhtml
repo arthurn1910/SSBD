@@ -16,23 +16,23 @@
     <ui:define name="content">
         Utwórz konto
         <h:form>
-            Imie: <h:inputText value="#{dodajUzytkownika.imie}"/><br />
-            Nazwisko: <h:inputText value="#{dodajUzytkownika.nazwisko}"/><br />
-            Login: <h:inputText value="#{dodajUzytkownika.login}"/><br />
-            Email: <h:inputText value="#{dodajUzytkownika.email}"/><br />
-            Telefon: <h:inputText value="#{dodajUzytkownika.telefon}"/><br />
-            Rola: <h:selectOneRadio value="#{dodajUzytkownika.rola}" layout="pageDirection">
+            Imie: <h:inputText value="#{dodajUzytkownikaBean.imie}"/><br />
+            Nazwisko: <h:inputText value="#{dodajUzytkownikaBean.nazwisko}"/><br />
+            Login: <h:inputText value="#{dodajUzytkownikaBean.login}"/><br />
+            Email: <h:inputText value="#{dodajUzytkownikaBean.email}"/><br />
+            Telefon: <h:inputText value="#{dodajUzytkownikaBean.telefon}"/><br />
+            Rola: <h:selectOneRadio value="#{dodajUzytkownikaBean.rola}" layout="pageDirection">
                     <f:selectItem itemValue="agent" itemLabel="Agent" />
                     <f:selectItem itemValue="klient" itemLabel="Klient" />
                     <f:selectItem itemValue="menadzer" itemLabel="Menadżer" />
                     <f:selectItem itemValue="administrator" itemLabel="Administrator" />
             </h:selectOneRadio>
-            Hasło: <h:inputSecret value="#{dodajUzytkownika.haslo}"/><br />
-            Powtórz hasło: <h:inputSecret value="#{dodajUzytkownika.powtorzHaslo}"/><h:message for="" /><br />
+            Hasło: <h:inputSecret value="#{dodajUzytkownikaBean.haslo}"/><br />
+            Powtórz hasło <h:inputSecret value="#{dodajUzytkownikaBean.powtorzHaslo}"/><h:message for="" /><br />
             <h:commandButton action="powrot" value="Powróć" />
             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                value="Utwórz" action="#{dodajUzytkownika.utworzKonto()}"  class="edit_icon" >
-            </h:commandButton> 
+               value="Utwórz konto" action="#{dodajUzytkownikaBean.utworzKonto()}"  class="edit_icon" >
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

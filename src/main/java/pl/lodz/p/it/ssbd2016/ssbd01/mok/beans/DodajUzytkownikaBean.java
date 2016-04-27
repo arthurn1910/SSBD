@@ -14,7 +14,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
  */
 @Named
 @RequestScoped  
-public class DodajUzytkownika {
+public class DodajUzytkownikaBean {
     @Inject
     private UzytkownikSession sesjaKonta;
     
