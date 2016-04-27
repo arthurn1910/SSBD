@@ -5,11 +5,20 @@
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
+    
+    
     <ui:define name="top">
         <p>Edytuj dane</p>
     </ui:define>
     
+    
+
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    
      <ui:define name="content">
+         
         Zmień dane dotycznące użytkownika:
         <h:form>
         Imie: <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>

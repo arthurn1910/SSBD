@@ -8,18 +8,21 @@
     <ui:define name="top">
         <p>Zmien haslo innego uzytkownika</p>
     </ui:define>
+   
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
     
      <ui:define name="content">
         Zmien haslo innego uzytkownika:
         <h:form>
-            Obecne hasło:       <h:inputSecret value="#{zmienHasloBean.stareHaslo}"/><br/>
             Nowe haslo:         <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
             Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}"/><br />            
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{zmienHasloBean.zmienMojeHaslo()}"  class="edit_icon">
+                             value="Potwierdz" action="#{zmienHasloBean.zmienHaslo()}"  class="edit_icon">
             </h:commandButton> 
             <h:commandButton action="wyswietlajInformacje" value="Powrot" />
             
         </h:form>
-</ui:define>
+        </ui:define>
 </ui:composition>
