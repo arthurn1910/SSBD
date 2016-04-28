@@ -3,7 +3,7 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-  <application>
+    <application>
         <locale-config>
             <default-locale>pl</default-locale>
             <supported-locale>pl</supported-locale>
@@ -40,6 +40,13 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
+            <from-outcome>edytujDane</from-outcome>
+            <to-view-id>mok/edytujDane.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
             <from-outcome>zalogowano</from-outcome>
             <to-view-id>mok/zalogowano.xhtml</to-view-id>
             <redirect />
@@ -47,8 +54,22 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
+            <from-outcome>edytujDaneKontaInnegoUzytkownika</from-outcome>
+            <to-view-id>mok/edytujDaneKontaInnegoUzytkownika.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
             <from-outcome>wyswietlInformacje</from-outcome>
             <to-view-id>/mok/wyswietlInformacje.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>zmienHasloUzytkownika</from-outcome>
+            <to-view-id>/mok/zmienHasloUzytkownika.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -105,6 +126,13 @@
         <navigation-case>
             <from-outcome>powrot</from-outcome>
             <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>zmienWlasneHaslo</from-outcome>
+            <to-view-id>/mok/zmienWlasneHaslo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

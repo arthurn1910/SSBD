@@ -5,9 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+
+import javax.ejb.Local;
+import java.util.List;
 
 /**
  *
@@ -29,5 +30,7 @@ public interface KontoFacadeLocal {
     List<Konto> findRange(int[] range);
 
     int count();
+
+    Konto findByLogin(String login);
     
 }
