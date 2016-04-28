@@ -7,7 +7,11 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+
 import javax.ejb.Local;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -103,19 +107,22 @@ public interface MOKEndpointLocal {
      * @return          potwierdzenie wykonania operacji
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
-    /**
-     *  Przekazuje hasła w postaci jawnej do managera
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasło w postaci jawnej
-     */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo);
 
     /**
-     * Przekazuje konto do zmiany do managera z hasłem postaci jawnej
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+
+    /**
      * @param noweHaslo nowe hasło w postaci jawnej
      * @param konto     konto które podlegało edycji
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
      */
-    void zmienHaslo(Konto konto, String noweHaslo);
+    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
     /**
      * zapisuje konto ze zmienionymi parameterami
@@ -133,14 +140,6 @@ public interface MOKEndpointLocal {
     Konto znajdzPoLoginie(String login);
 
     /**
-     * Pobiera konto do edycji
-     *
-     * @param konto przyjmuje konto do edytowania
-     * @return zwraca kopię
-     */
-
-    Konto pobierzKontoDoEdycji(Konto konto);
-    /**
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane 
      */
@@ -151,5 +150,10 @@ public interface MOKEndpointLocal {
      * @param konto konto, ktore ma zostac zablokowane
      */
     public void zablokujKonto(Konto konto);
+    /*
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
 }
 

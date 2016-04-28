@@ -46,6 +46,4 @@ public class EdytujDaneBean implements Serializable {
     public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
         this.uzytkownikSession = uzytkownikSession;
     }
-
-
 }

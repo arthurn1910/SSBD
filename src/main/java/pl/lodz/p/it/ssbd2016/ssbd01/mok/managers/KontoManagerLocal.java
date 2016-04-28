@@ -1,5 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -34,10 +36,6 @@ public interface KontoManagerLocal {
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 
-    public void zmienHaslo(Konto konto, String noweHaslo);
-
-    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo);
-
     /**
      * metody tworzy konto klienta(niepotwierdzone)
      * @param konto konto do utworzenia
@@ -52,10 +50,25 @@ public interface KontoManagerLocal {
      */
     void utworzKonto(Konto konto, List<String> poziomyDostepu);
     
-    /**
-     * generuje skrót MD5 z podanego hasła
-     * @param password haslo w jawnej postaci
-     * @return haslo w skrocie MD5
+/**
+     * Przypadek gdy modyfikujemy własne hasło
+     *
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasłow w postaci jawnej
+     *
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
      */
+    void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+
+    /**
+     * Przypadek gdy admin modyfikuje nam hasło
+     * @param konto
+     * @param noweHaslo
+     *
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
+    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     
 }

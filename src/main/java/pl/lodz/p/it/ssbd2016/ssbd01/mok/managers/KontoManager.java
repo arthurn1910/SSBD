@@ -1,28 +1,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import java.util.List;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.HashCreator;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
@@ -34,13 +20,16 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
  */
 @Stateless
 public class KontoManager implements KontoManagerLocal {
-    
+    private static final Logger logger = Logger.getLogger(pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.class.getName());
+
     @EJB
     private KontoFacadeLocal kontoFacade;
     
+    @Resource
+    private SessionContext sessionContext;
     @EJB
     private PoziomDostepuFacadeLocal poziomDostepuFacade;
-    
+    private Konto kontoDoEdycji;
     @Override
     public List<Konto> znajdzPodobne(Konto konto) {
         Konto kontoWyszukaj = new Konto();
@@ -125,16 +114,6 @@ public class KontoManager implements KontoManagerLocal {
             throw new Exception("Nie możemy dodać poziomu dostępu");
         }
     }
-
-    @Override
-    public void zmienHaslo(Konto konto, String noweHaslo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
         
     @Override
     public void rejestrujKontoKlienta(Konto konto) {
@@ -169,5 +148,35 @@ public class KontoManager implements KontoManagerLocal {
                 poziomDostepuFacade.create(poziomDostepu);
             }
         }
+    }
+    
+    @Override
+    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHasloWpisane) {
+
+        kontoDoEdycji = kontoFacade.findByLogin(sessionContext.getCallerPrincipal().getName());
+        String stareHaslo = kontoDoEdycji.getHaslo();
+        stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
+        String hashedPassword = null;
+
+        hashedPassword = HashCreator.MD5(noweHaslo);
+        stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
+        if (stareHasloWpisane.equals(stareHaslo)) {
+            kontoDoEdycji.setHaslo(hashedPassword);
+            kontoFacade.edit(kontoDoEdycji);
+            logger.info("haslo zmienione nowy hash: " + kontoDoEdycji.getHaslo());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void zmienHaslo(Konto konto, String noweHaslo) {
+        kontoDoEdycji = kontoFacade.find(konto.getId());
+        String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
+        kontoDoEdycji.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(kontoDoEdycji);
+        kontoDoEdycji.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(kontoDoEdycji);
     }
 }

@@ -37,6 +37,5 @@ public interface KontoFacadeLocal {
     
     public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
 
-    public List<Konto> znajdzPodobne(Konto konto);
-    
+    public List<Konto> znajdzPodobne(Konto konto);    
 }

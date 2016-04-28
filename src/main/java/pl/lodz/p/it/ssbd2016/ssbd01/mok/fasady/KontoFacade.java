@@ -2,6 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

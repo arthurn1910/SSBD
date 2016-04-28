@@ -10,18 +10,8 @@ import java.util.logging.Logger;
  * Created by Kamil Rogowski on 23.04.2016.
  * Klasa użytkowa kowertująca string na hash MD5
  */
+
 public class HashCreator {
-
-    private HashCreator() {
-
-    }
-
-    /**
-     * konwertuje bajty na stringi w hex
-     *
-     * @param data bajty danych
-     * @return hex
-     */
     private static String convertToHex(byte[] data) {
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < data.length; i++) {

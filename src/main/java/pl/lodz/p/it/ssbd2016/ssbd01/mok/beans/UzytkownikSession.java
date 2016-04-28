@@ -23,6 +23,18 @@ import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /*
@@ -96,7 +108,6 @@ public class UzytkownikSession implements Serializable {
         kontoRejestracja.setEmail(k.getEmail());
         kontoRejestracja.setDataUtworzenia(new Date());
         kontoRejestracja.setTelefon(k.getTelefon());
-
         PoziomDostepu poziomDostepu = new PoziomDostepu();
         poziomDostepu.setPoziom(poziom.toUpperCase());
         poziomDostepu.setAktywny(true);
@@ -123,7 +134,7 @@ public class UzytkownikSession implements Serializable {
         List<Konto> konta = MOKEndpoint.pobierzWszystkieKonta();
         return konta;
     }
-    
+
     List<Konto> pobierzWszystkieKonta() {
         return MOKEndpoint.pobierzWszystkieKonta();
     }
@@ -277,8 +288,20 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      */
     public void pobierzKontoDoEdycji(Konto konto) {
-        kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
-
+        try {
+            kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
+            try {
+                kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -292,6 +315,8 @@ public class UzytkownikSession implements Serializable {
      * Przekazuje dane w postaci jawnej do endpointa
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
      */
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
@@ -301,8 +326,10 @@ public class UzytkownikSession implements Serializable {
      * Przekazuje konto i hasło do endpointa
      * @param konto     konto do zmiany
      * @param noweHaslo nowe hasło w postaci jawnej
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
      */
-    public void zmienHaslo(Konto konto, String noweHaslo) {
+    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienHaslo(konto, noweHaslo);
     }
 }
