@@ -19,13 +19,34 @@ import java.util.List;
  */
 @Local
 public interface MOKEndpointLocal {
-    void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu);
 
+    void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu);
+    
+    /**
+     * metody tworzy konto klienta(niepotwierdzone)
+     * @param konto konto do utworzenia
+     */
+    void rejestrujKontoKlienta(Konto konto);
+    
+    /**
+     * tworzenie konta o dowolnym, niewykluczajacym sie poziomie dostepu
+     * @param konto konto jakie zostaje utworzone
+     * @param poziomyDostepu poziomy dostepu jakie beda przypisane(string List)
+     * @return 
+     */
+    void utworzKonto(Konto konto, List<String> poziomyDostepu);
+    
+    /**
+     * Metoda, która pobiera wszystkie konta
+     * @return Lista kont
+     */
     List<Konto> pobierzWszystkieKonta();
 
+    /**
+     * Metoda zmienia stan konta na potwierdzone
+     * @param konto konto,ktore ma zostac potwierdzone
+     */
     void potwierdzKonto(Konto konto);
-
-    void odblokujKonto(Konto rowData);
 
     /**
      * @param noweHaslo  nowe hasło w postaci jawnej
@@ -42,8 +63,6 @@ public interface MOKEndpointLocal {
      * @throws NoSuchAlgorithmException
      */
     void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-
-    public void zablokujKonto(Konto rowData);
 
     public Boolean zaloguj(String login, String haslo);
 
@@ -93,5 +112,16 @@ public interface MOKEndpointLocal {
      * @throws ClassNotFoundException
      */
     Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
+    /**
+     * Metoda zmienia stan konta na aktywne
+     * @param konto konto które ma zostać odblokowane 
+     */
+    public void odblokujKonto(Konto konto);
+
+    /**
+     * Metoda zmienia stan konta na nieaktywne
+     * @param konto konto, ktore ma zostac zablokowane
+     */
+    public void zablokujKonto(Konto konto);
 }
 

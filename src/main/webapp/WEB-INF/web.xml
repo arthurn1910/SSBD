@@ -37,6 +37,18 @@
         <description/>
         <role-name>KLIENT</role-name>
     </security-role>
+    <!-- definicja poziomów dostępu -->
+    <env-entry> 
+        <env-entry-name>PoziomyDostepu</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>ADMINISTRATOR;MENADZER;AGENT;KLIENT;</env-entry-value> 
+    </env-entry>
+    <!-- definicja poprawncyh kombinacji poziomów dostępu -->
+    <env-entry> 
+        <env-entry-name>PoprawneKombinacjePoziomowDostepu</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>MENADZER,AGENT;</env-entry-value> 
+    </env-entry>
     <!-- kontrola dostępu do zasobów administratora -->
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
