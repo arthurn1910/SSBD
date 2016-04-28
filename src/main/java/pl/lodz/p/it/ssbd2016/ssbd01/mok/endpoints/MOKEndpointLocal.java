@@ -5,6 +5,8 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import java.util.List;
+import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 /**
  * @author Patryk
+ * Interfejs API servera dla modułu funkcjonalnego MOK
  */
 @Local
 public interface MOKEndpointLocal {
@@ -123,5 +126,41 @@ public interface MOKEndpointLocal {
      * @param konto konto, ktore ma zostac zablokowane
      */
     public void zablokujKonto(Konto konto);
+
+    /**
+     * Metoda zwracająca liste niepotwierdzonych kont
+     * @return          lista niepotwierdzonych kont
+     */
+    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
+
+    /**
+     * Metoda zwracająca obiekt klasy konto z danym loginem
+     * @param login     login użytkownika do wyszukania
+     * @return          obiekt klasy konto o zadanym loginie
+     */
+    public Konto pobierzUzytkownika(String login);
+
+    /**
+     * Metoda zwracająca liste kont podobnych do zadanego konta
+     * @param konto     obiekt zawierający kryteria wyszukania
+     * @return          lista podobnych kont
+     */
+    public List<Konto> pobierzPodobneKonta(Konto konto);
+
+    /**
+     * Metoda dodająca dany poziom dostępu do konta
+     * @param konto     konto do którego należy dodać poziom dostępu
+     * @param poziom    nazwa poziomu dostępu
+     * @return          potwierdzenie wykonania operacji
+     */
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
+
+    /**
+     * Metoda odłączająca dany poziom dostępu do konta
+     * @param konto     konto od którego należy odłączyć poziom dostępu
+     * @param poziom    nazwa poziomu dostępu
+     * @return          potwierdzenie wykonania operacji
+     */
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 }
 

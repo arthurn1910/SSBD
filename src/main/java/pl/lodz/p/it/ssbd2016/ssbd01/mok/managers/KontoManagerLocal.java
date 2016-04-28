@@ -52,4 +52,28 @@ public interface KontoManagerLocal {
      */
     void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
     
+    /**
+     * Metoda zwracająca liste kont podobnych do zadanego konta
+     * @param konto     obiekt zawierający kryteria wyszukania
+     * @return          lista podobnych kont
+     */
+    public List<Konto> znajdzPodobne(Konto konto);
+    
+    /**
+     * Metoda dodająca dany poziom dostępu do konta
+     * @param konto     konto do którego należy dodać poziom dostępu
+     * @param poziom    nazwa poziomu dostępu
+     * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception
+     */
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
+    
+    /**
+     * Metoda odłączająca dany poziom dostępu do konta
+     * @param konto     konto od którego należy odłączyć poziom dostępu
+     * @param poziom    nazwa poziomu dostępu
+     * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception
+     */
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 }

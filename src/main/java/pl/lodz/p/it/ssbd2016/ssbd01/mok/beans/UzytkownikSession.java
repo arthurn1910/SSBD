@@ -6,12 +6,7 @@
 
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
-
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import java.io.IOException;
 import java.io.Serializable;
@@ -19,14 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -111,12 +98,6 @@ public class UzytkownikSession implements Serializable {
  * @param  k  konto, które zawiera wzorce
  * @return lista kont spełniających wymagania dotyczące wzorców
  */
-    List<Konto> pobierzPodobneKonta(Konto k) {
-//        List<Konto> konta = MOKEndpoint.pobierzPodobneKonta(k);
-        // tymczasowo
-        List<Konto> konta = MOKEndpoint.pobierzWszystkieKonta();
-        return konta;
-    }
     
     List<Konto> pobierzWszystkieKonta() {
         return MOKEndpoint.pobierzWszystkieKonta();
@@ -290,5 +271,24 @@ public class UzytkownikSession implements Serializable {
      */
     public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienHaslo(konto, noweHaslo);
+    }
+    List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
+        return MOKEndpoint.pobierzWszystkieNiepotwierdzoneKonta();
+    }
+
+    Konto pobierzUrzytkownika(String login) {
+        return MOKEndpoint.pobierzUzytkownika(login);
+    }
+
+    List<Konto> pobierzPodobneKonta(Konto konto) {
+        return MOKEndpoint.pobierzPodobneKonta(konto);
+    }
+
+    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
+    }
+
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
     }
 }

@@ -33,4 +33,10 @@ public interface KontoFacadeLocal {
 
     Konto findByLogin(String login);
     
+    public Konto znajdzPoLoginie(String login);
+    
+    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
+
+    public List<Konto> znajdzPodobne(Konto konto);
+    
 }

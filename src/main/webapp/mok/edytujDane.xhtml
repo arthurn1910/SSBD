@@ -26,7 +26,7 @@
         Email: <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
         Telefon: <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
         <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{zmienHasloBean.zapiszPoEdycji()}"  class="edit_icon">
+                             value="Potwierdz" action="#{edytujDaneBean.zapiszPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
             <h:commandButton action="wyswietlajInformacje" value="Powrot" />
         </h:form>
