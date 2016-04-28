@@ -76,6 +76,28 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
     }
     
+    public void rejestrujKlienta2(Konto k) {
+        
+        
+        //String cryptedPass = Arrays.toString(cryptedBytes);
+        
+        
+        Konto kontoRejestracja = new Konto();
+        kontoRejestracja.setLogin(k.getLogin());
+        kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setImie(k.getImie());
+        kontoRejestracja.setNazwisko(k.getNazwisko());
+        kontoRejestracja.setEmail(k.getEmail());
+        kontoRejestracja.setDataUtworzenia(new Date());
+        kontoRejestracja.setTelefon(k.getTelefon());
+        PoziomDostepu poziomDostepu = new PoziomDostepu();
+        poziomDostepu.setPoziom("KLIENT");
+        poziomDostepu.setAktywny(true);
+        poziomDostepu.setKontoId(k);
+        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja, poziomDostepu);
+    }
+    
+    
     /**
  * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
  * @param  k  konto, które ma zostać zarejestrowane
