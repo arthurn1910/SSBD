@@ -106,7 +106,11 @@ public class Konto implements Serializable {
     @Column(name = "data_utworzenia", table="dane_personalne")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUtworzenia;
-    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version", table="dane_personalne")
+    @Version
+    private long versionA;
     public String getImie() {
         return imie;
     }

@@ -203,13 +203,7 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo){
-        try {
-            kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MOKEndpoint.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(MOKEndpoint.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
     }
 
     /**
@@ -217,13 +211,7 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zmienHaslo(Konto konto, String noweHaslo){
-        try {
-            kontoManager.zmienHaslo(konto, noweHaslo);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(MOKEndpoint.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(MOKEndpoint.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        kontoManager.zmienHaslo(konto, noweHaslo);
     }
 
     /**

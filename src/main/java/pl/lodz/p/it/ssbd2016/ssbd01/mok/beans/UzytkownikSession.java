@@ -59,7 +59,7 @@ public class UzytkownikSession implements Serializable {
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
      */
-    public void rejestrujKlienta(Konto k) {
+    public void rejestrujKlienta2(Konto k) {
         
         
         //String cryptedPass = Arrays.toString(cryptedBytes);
@@ -76,7 +76,7 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
     }
     
-    public void rejestrujKlienta2(Konto k) {
+    public void rejestrujKlienta(Konto k) {
         
         
         //String cryptedPass = Arrays.toString(cryptedBytes);

@@ -41,7 +41,7 @@ public interface KontoManagerLocal {
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo);
 
     /**
      * Przypadek gdy admin modyfikuje nam hasło
@@ -50,7 +50,7 @@ public interface KontoManagerLocal {
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
+    void zmienHaslo(Konto konto, String noweHaslo);
     
     /**
      * Metoda zwracająca liste kont podobnych do zadanego konta
