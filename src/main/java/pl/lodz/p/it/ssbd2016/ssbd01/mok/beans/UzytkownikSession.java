@@ -8,34 +8,23 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 
 /*
  *
@@ -48,8 +37,9 @@ public class UzytkownikSession implements Serializable {
 
     @EJB
     private MOKEndpointLocal MOKEndpoint;
-    private Konto kontoUzytkownika;
 
+    private Konto kontoUzytkownika;
+    private Konto kontoEdytuj;
     /***
      * Funkcja zwracająca kontoUzytkownika
      * @return 
@@ -66,12 +56,26 @@ public class UzytkownikSession implements Serializable {
     }
     
     /**
- * Rejestruje konto, nadając mu poziom dostępu klienta
- * @param  k  konto, które ma zostać zarejestrowane
- */
-
-    private Konto kontoEdytuj;
-
+     * Rejestruje konto, nadając mu poziom dostępu klienta
+     * @param  k  konto, które ma zostać zarejestrowane
+     */
+    public void rejestrujKlienta2(Konto k) {
+        
+        
+        //String cryptedPass = Arrays.toString(cryptedBytes);
+        
+        Konto kontoRejestracja = new Konto();
+        kontoRejestracja.setLogin(k.getLogin());
+        kontoRejestracja.setHaslo("blablabla"); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setImie("Janusz");
+        kontoRejestracja.setNazwisko("Andrzej");
+        kontoRejestracja.setEmail(k.getEmail());
+        kontoRejestracja.setDataUtworzenia(new Date());
+        kontoRejestracja.setTelefon(k.getTelefon());
+       
+        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
+    }
+    
     public void rejestrujKlienta(Konto k) {
         
         
@@ -93,6 +97,7 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja, poziomDostepu);
     }
     
+    
     /**
  * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
  * @param  k  konto, które ma zostać zarejestrowane
@@ -112,15 +117,7 @@ public class UzytkownikSession implements Serializable {
         poziomDostepu.setPoziom(poziom.toUpperCase());
         poziomDostepu.setAktywny(true);
         poziomDostepu.setKontoId(k);
-        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja,poziomDostepu);
-        kontoRejestracja.setHaslo("blablabla"); //!!! Hasło powinno być w postaci skrótu np. MD5!
-        kontoRejestracja.setImie("Janusz");
-        kontoRejestracja.setNazwisko("Andrzej");
-        kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(new Date());
-        kontoRejestracja.setTelefon(k.getTelefon());
-       
-        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
+        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja, poziomDostepu);
     }
     
   /**
@@ -128,13 +125,7 @@ public class UzytkownikSession implements Serializable {
  * @param  k  konto, które zawiera wzorce
  * @return lista kont spełniających wymagania dotyczące wzorców
  */
-    List<Konto> pobierzPodobneKonta(Konto k) {
-//        List<Konto> konta = MOKEndpoint.pobierzPodobneKonta(k);
-        // tymczasowo
-        List<Konto> konta = MOKEndpoint.pobierzWszystkieKonta();
-        return konta;
-    }
-
+    
     List<Konto> pobierzWszystkieKonta() {
         return MOKEndpoint.pobierzWszystkieKonta();
     }
@@ -235,24 +226,8 @@ public class UzytkownikSession implements Serializable {
         return MOKEndpoint.pobierzPoziomy(kontoUzytkownika);
     }
 
-    void potwierdzKonto(Konto rowData) {
+    public void potwierdzKonto(Konto rowData) {
         MOKEndpoint.potwierdzKonto(rowData);
-    }
-
-    List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
-        return MOKEndpoint.pobierzWszystkieNiepotwierdzoneKonta();
-    }
-
-    Konto pobierzUrzytkownika(String login) {
-        return MOKEndpoint.pobierzUzytkownika(login);
-    }
-
-    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
-        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
-    }
-
-    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
-        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
     }
 
     public void odblokujKonto(Konto rowData) {
@@ -288,20 +263,7 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      */
     public void pobierzKontoDoEdycji(Konto konto) {
-        try {
-            kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
-            try {
-                kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
     }
 
     /**
@@ -315,21 +277,43 @@ public class UzytkownikSession implements Serializable {
      * Przekazuje dane w postaci jawnej do endpointa
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
      */
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
     }
 
     /**
-     * Przekazuje konto i hasło do endpointa
      * @param konto     konto do zmiany
      * @param noweHaslo nowe hasło w postaci jawnej
      * @throws UnsupportedEncodingException
      * @throws NoSuchAlgorithmException
      */
-    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    
+    List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
+        return MOKEndpoint.pobierzWszystkieNiepotwierdzoneKonta();
+    }
+
+    Konto pobierzUrzytkownika(String login) {
+        return MOKEndpoint.pobierzUzytkownika(login);
+    }
+
+    List<Konto> pobierzPodobneKonta(Konto konto) {
+        return MOKEndpoint.pobierzPodobneKonta(konto);
+    }
+
+    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
+    }
+
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
+    }
+    /**
+     * Przekazuje konto i hasło do endpointa
+     * @param konto     konto do zmiany
+     * @param noweHaslo nowe hasło w postaci jawnej
+     */
+    public void zmienHaslo(Konto konto, String noweHaslo) {
         MOKEndpoint.zmienHaslo(konto, noweHaslo);
     }
 }

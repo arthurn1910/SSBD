@@ -1,23 +1,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.logging.Logger;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
-
-/**
- * API servera dla modułu funkcjonalnego MOK
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.manager.KontoManagerLocal;
-
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
@@ -26,14 +17,25 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
+import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Patryk
+ * API servera dla modułu funkcjonalnego MOK
  */
 @Stateful
 public class MOKEndpoint implements MOKEndpointLocal {
 
     private static final Logger logger = Logger.getLogger(MOKEndpoint.class.getName());
+
     @EJB
     private KontoManagerLocal kontoManager;
     @EJB
@@ -42,6 +44,8 @@ public class MOKEndpoint implements MOKEndpointLocal {
     private PoziomDostepuFacadeLocal poziomDostepuFacade;
 
     private Konto kontoStan;
+    @Resource
+    private SessionContext sessionContext;
 
     @Override
     public void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu) {
@@ -75,10 +79,6 @@ public class MOKEndpoint implements MOKEndpointLocal {
         k.setPotwierdzone(true);*/
     }
 
-    /***
-     * Metoda zablokowująca konto uzytkownikowi
-     * @param rowData 
-     */
     @Override
     public void odblokujKonto(Konto konto) {
         Konto o = kontoFacade.find(konto.getId());
@@ -86,6 +86,10 @@ public class MOKEndpoint implements MOKEndpointLocal {
     }
 
     
+    /***
+     * Metoda zablokowująca konto uzytkownikowi
+     * @param rowData 
+     */
     @Override
     public void zablokujKonto(Konto rowData) {
         /*Konto o = kontoFacade.find(rowData.getId());
@@ -193,6 +197,34 @@ public class MOKEndpoint implements MOKEndpointLocal {
         return "Klient, Agent";
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo){
+        kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void zmienHaslo(Konto konto, String noweHaslo){
+        kontoManager.zmienHaslo(konto, noweHaslo);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Konto znajdzPoLoginie(String login) {
+        return kontoFacade.findByLogin(login);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
         return kontoFacade.pobierzWszystkieNiepotwierdzoneKonta();
@@ -228,33 +260,10 @@ public class MOKEndpoint implements MOKEndpointLocal {
      * {@inheritDoc}
      */
     @Override
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        kontoManager.zmienHaslo(konto, noweHaslo);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Konto znajdzPoLoginie(String login) {
-        return kontoFacade.findByLogin(login);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Konto pobierzKontoDoEdycji(Konto konto) {
         kontoStan = kontoFacade.find(konto.getId());
         logger.info(kontoStan.toString());
+
         try {
             return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
         } catch (IOException e) {
@@ -270,12 +279,14 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zapiszKontoPoEdycji(Konto konto) {
+
         if (kontoStan == null) {
             throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
         }
         if (!kontoStan.equals(konto)) {
             throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
         }
+
         logger.info(kontoStan.toString());
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());
@@ -283,6 +294,7 @@ public class MOKEndpoint implements MOKEndpointLocal {
         kontoStan.setNazwisko(konto.getNazwisko());
         kontoFacade.edit(kontoStan);
         kontoStan = null;
+
     }
 
 

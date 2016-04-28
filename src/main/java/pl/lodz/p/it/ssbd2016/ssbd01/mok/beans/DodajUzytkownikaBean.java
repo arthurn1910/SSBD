@@ -27,7 +27,7 @@ public class DodajUzytkownikaBean {
     }
     public String rejestrujKontoKlienta() {
         System.out.println(konto);
-        sesjaKonta.rejestrujKlienta(konto);
+        sesjaKonta.rejestrujKlienta2(konto);
         return "success";
     }
 }

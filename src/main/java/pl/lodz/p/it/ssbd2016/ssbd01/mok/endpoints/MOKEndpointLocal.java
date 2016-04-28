@@ -5,9 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import java.util.List;
+import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-
 import javax.ejb.Local;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -15,13 +16,14 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
- * Interfejs API servera dla modułu funkcjonalnego MOK
  * @author Patryk
+ * Interfejs API servera dla modułu funkcjonalnego MOK
  */
 @Local
 public interface MOKEndpointLocal {
-    void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu);
 
+    void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu);
+    
     /**
      * metody tworzy konto klienta(niepotwierdzone)
      * @param konto konto do utworzenia
@@ -40,6 +42,7 @@ public interface MOKEndpointLocal {
      * Metoda, która pobiera wszystkie konta
      * @return Lista kont
      */
+
     List<Konto> pobierzWszystkieKonta();
 
     /**
@@ -71,6 +74,47 @@ public interface MOKEndpointLocal {
     public Konto pobierzUzytkownika();
 
     public String pobierzPoziomy(Konto kontoUzytkownika);
+
+    /**
+     *  Przekazuje hasła w postaci jawnej do managera
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     */
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo);
+
+    /**
+     * Przekazuje konto do zmiany do managera z hasłem postaci jawnej
+     * @param noweHaslo nowe hasło w postaci jawnej
+     * @param konto     konto które podlegało edycji
+     */
+    void zmienHaslo(Konto konto, String noweHaslo);
+
+    /**
+     * zapisuje konto ze zmienionymi parameterami
+     *
+     * @param konto konto do zmiany
+     */
+    void zapiszKontoPoEdycji(Konto konto);
+
+    /**
+     * Wyszukuje konto o podanym loginie
+     *
+     * @param login login jako string
+     * @return znalezione konto
+     */
+    Konto znajdzPoLoginie(String login);
+
+    /**
+     * Metoda zmienia stan konta na aktywne
+     * @param konto konto które ma zostać odblokowane 
+     */
+    public void odblokujKonto(Konto konto);
+
+    /**
+     * Metoda zmienia stan konta na nieaktywne
+     * @param konto konto, ktore ma zostac zablokowane
+     */
+    public void zablokujKonto(Konto konto);
 
     /**
      * Metoda zwracająca liste niepotwierdzonych kont
@@ -108,52 +152,6 @@ public interface MOKEndpointLocal {
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 
-    /**
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-
-    /**
-     * @param noweHaslo nowe hasło w postaci jawnej
-     * @param konto     konto które podlegało edycji
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-
-    /**
-     * zapisuje konto ze zmienionymi parameterami
-     *
-     * @param konto konto do zmiany
-     */
-    void zapiszKontoPoEdycji(Konto konto);
-
-    /**
-     * Wyszukuje konto o podanym loginie
-     *
-     * @param login login jako string
-     * @return znalezione konto
-     */
-    Konto znajdzPoLoginie(String login);
-
-    /**
-     * Metoda zmienia stan konta na aktywne
-     * @param konto konto które ma zostać odblokowane 
-     */
-    public void odblokujKonto(Konto konto);
-
-    /**
-     * Metoda zmienia stan konta na nieaktywne
-     * @param konto konto, ktore ma zostac zablokowane
-     */
-    public void zablokujKonto(Konto konto);
-    /*
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
+    Konto pobierzKontoDoEdycji(Konto konto);
 }
 

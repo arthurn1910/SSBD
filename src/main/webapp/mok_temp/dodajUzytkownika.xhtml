@@ -8,10 +8,10 @@
     <h:body>
         Rejestruj konto klienta
         <h:form>
-            Login: <h:inputText value="#{dodajUzytkownika.konto.login}"/><br />
-            email: <h:inputText value="#{dodajUzytkownika.konto.email}"/><br />
-            telefon: <h:inputText value="#{dodajUzytkownika.konto.telefon}"/><br />
-            <h:commandButton action="#{dodajUzytkownika.rejestrujKontoKlienta()}" value="Utwórz" />
+            Login: <h:inputText value="#{dodajUzytkownikaBean.konto.login}"/><br />
+            email: <h:inputText value="#{dodajUzytkownikaBean.konto.email}"/><br />
+            telefon: <h:inputText value="#{dodajUzytkownikaBean.konto.telefon}"/><br />
+            <h:commandButton action="#{dodajUzytkownikaBean.rejestrujKontoKlienta()}" value="Utwórz" />
             <h:commandButton value="Powróć" action="cancel" />
         </h:form>
     </h:body>

@@ -1,9 +1,3 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 
 import java.util.ArrayList;
@@ -18,10 +12,10 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
- * Klasa definiująca dostępne poziomy dostępu. Udostępnia metody tworzenia,
- * pobierania i sprawdzania poziomów dostępu.
  *
  * @author java
+ * Klasa definiująca dostępne poziomy dostępu. Udostępnia metody tworzenia,
+ * pobierania i sprawdzania poziomów dostępu.
  */
 public class PoziomDostepuManager {
     private static List<String> poziomyDostepu = dodajPoziomyDostepu();
@@ -49,7 +43,7 @@ public class PoziomDostepuManager {
         
         return nowePoziomy;
     }
-    
+
     private static List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() {
         List<List<String>> nowePoprawneKombinacjePoziomowDostepu = new ArrayList<List<String>>();
         String kombinacjePoziomowDostepuDoParsowania = null;
@@ -68,17 +62,16 @@ public class PoziomDostepuManager {
         
         return nowePoprawneKombinacjePoziomowDostepu;
     }
-    
+
     public static List<String> getPoziomyDostepu() {
         return new ArrayList<String>(poziomyDostepu);
     }
-
+       
     /**
      * Metoda tworząca poziomy dostępu z określonego zbioru wartości
      * @param poziom    nazwa poziomu dostepu
      * @return          nowy obiekt o określonej nazwie
      */
- 
     public static PoziomDostepu stworzPoziomDostepu(String poziom) {
         if (!poziomyDostepu.contains(poziom)) {
             return null;
@@ -89,7 +82,7 @@ public class PoziomDostepuManager {
         
         return nowyPoziomDostepu;
     }
-    
+        
     /**
      * Metoda definiująca warunki dodania poziomów dostępu
      * @param konto         konto do którego chcemy dodać poziom
@@ -117,13 +110,8 @@ public class PoziomDostepuManager {
         
         return true;
     }
-            
-    /**
-     * metoda sprawdza, czy poziomy dostepu jakie chcemy dodac, nie wykluczaja sie
-     * @param poziomyDostepu lista stringow, zawierajaca poziomy dostepu
-     * @return 
-     */
-     public static boolean czyPoprawnaKombinacjaPoziomowDostepu(List<String> poziomyDostepu) {
+    
+    public static boolean czyPoprawnaKombinacjaPoziomowDostepu(List<String> poziomyDostepu) {
         if (poziomyDostepu.size() == 1) {
             return true;
         } else if (poziomyDostepu.size() > 1) {
@@ -142,6 +130,17 @@ public class PoziomDostepuManager {
     }
     
     /**
+     * Tworzy poziom dostepu Klient
+     * @return zwraca poziom dostepu
+     */
+    public static PoziomDostepu stworzPoziomDostepuKlient() {
+        
+        PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();
+        nowyPoziomDostepu.setPoziom(poziomyDostepu.get(3));
+        
+        return nowyPoziomDostepu;
+    }
+    /*
      * Metoda sprawdzająca czy dane konto posiada poziom dostępu
      * @param konto         konto dla którego sprawdzamy poziomy dostępu
      * @param poziom        nazwa poziomu dostępu
@@ -186,16 +185,5 @@ public class PoziomDostepuManager {
             }
         }
         return null;
-    }
-    /*
-     * Tworzy poziom dostepu Klient
-     * @return zwraca poziom dostepu
-     */
-    public static PoziomDostepu stworzPoziomDostepuKlient() {
-        
-        PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();
-        nowyPoziomDostepu.setPoziom(poziomyDostepu.get(3));
-        
-        return nowyPoziomDostepu;
     }
 }

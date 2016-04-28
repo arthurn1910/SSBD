@@ -16,7 +16,7 @@
         <message-bundle>
             i18n.jsf_messages
         </message-bundle>
-    </application>
+    </application>  
     <navigation-rule>   
         <navigation-case>
             <from-outcome>success</from-outcome>
@@ -34,28 +34,28 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>errorLogin</from-outcome>
-            <to-view-id>mok/errorLogin.xhtml</to-view-id>
+            <to-view-id>/mok/errorLogin.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDane</from-outcome>
-            <to-view-id>mok/edytujDane.xhtml</to-view-id>
+            <to-view-id>/mok/edytujDane.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>zalogowano</from-outcome>
-            <to-view-id>mok/zalogowano.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowano.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDaneKontaInnegoUzytkownika</from-outcome>
-            <to-view-id>mok/edytujDaneKontaInnegoUzytkownika.xhtml</to-view-id>
+            <to-view-id>/mok/edytujDaneKontaInnegoUzytkownika.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
