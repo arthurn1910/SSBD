@@ -16,11 +16,11 @@
     <ui:define name="content">
         Utwórz konto
         <h:form>
-            Imie: <h:inputText value="#{dodajUzytkownikaBean.imie}"/><br />
-            Nazwisko: <h:inputText value="#{dodajUzytkownikaBean.nazwisko}"/><br />
-            Login: <h:inputText value="#{dodajUzytkownikaBean.login}"/><br />
-            Email: <h:inputText value="#{dodajUzytkownikaBean.email}"/><br />
-            Telefon: <h:inputText value="#{dodajUzytkownikaBean.telefon}"/><br />
+            Imie: <h:inputText value="#{dodajUzytkownikaBean.konto.imie}"/><br />
+            Nazwisko: <h:inputText value="#{dodajUzytkownikaBean.konto.nazwisko}"/><br />
+            Login: <h:inputText value="#{dodajUzytkownikaBean.konto.login}"/><br />
+            Email: <h:inputText value="#{dodajUzytkownikaBean.konto.email}"/><br />
+            Telefon: <h:inputText value="#{dodajUzytkownikaBean.konto.telefon}"/><br />
             Rola: <h:selectOneRadio value="#{dodajUzytkownikaBean.rola}" layout="pageDirection">
                     <f:selectItem itemValue="agent" itemLabel="Agent" />
                     <f:selectItem itemValue="klient" itemLabel="Klient" />

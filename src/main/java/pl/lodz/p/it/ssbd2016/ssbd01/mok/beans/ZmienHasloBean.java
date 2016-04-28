@@ -31,20 +31,9 @@ public class ZmienHasloBean {
     @PostConstruct
     private void initKonto() {
         konto = uzytkownikSession.znajdzPoLoginie("kontoA");
+        konto = uzytkownikSession.znajdzPoLoginie("kontoC");
     }
 
-    /**
-     * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy zmieniamy swoje hasło
-     *
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    public void zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
-        if (this.czyHaslaSiezgadzaja())
-            uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
-    }
-    
   /** Sprawdza czy dwa hasła znajdujące się w formularzach są identyczne
  * @return true, jeżeli hasła są identyczne; false, jeżeli hasła są różne
  */
@@ -60,18 +49,27 @@ public class ZmienHasloBean {
         }
         return true;
     }
+    
+    public boolean zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
+        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
+            uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
+            return true;
+        }
+        return false;
+    }
 
     /**
      * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy admin zmienia nam hasło
-     *
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
+     * @return true jeśli operacja zakończona sukcesem, false, jeśli nie
      */
-    public void zmienHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public boolean zmienHaslo() {
 
-        if (noweHaslo.equals(nowePowtorzoneHaslo))
+        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
             uzytkownikSession.zmienHaslo(konto, noweHaslo);
+            return true;
+        }
+        return false;
     }
 
     public String getStareHaslo() {
@@ -97,5 +95,4 @@ public class ZmienHasloBean {
     public void setNowePowtorzoneHaslo(String nowePowtorzoneHaslo) {
         this.nowePowtorzoneHaslo = nowePowtorzoneHaslo;
     }
-
 }

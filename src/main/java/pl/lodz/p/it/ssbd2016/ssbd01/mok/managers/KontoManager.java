@@ -62,12 +62,8 @@ public class KontoManager implements KontoManagerLocal {
         String stareHaslo = kontoDoEdycji.getHaslo();
         String hashedPassword = null;
 
-        try {
-            hashedPassword = HashCreator.MD5(noweHaslo);
-            stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            logger.info("KontoManager - zmienHaslo()");
-        }
+        hashedPassword = HashCreator.MD5(noweHaslo);
+        stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
         if (stareHasloWpisane.equals(stareHaslo)) {
             kontoDoEdycji.setHaslo(hashedPassword);
             kontoFacade.edit(kontoDoEdycji);
@@ -81,13 +77,9 @@ public class KontoManager implements KontoManagerLocal {
     @Override
     public void zmienHaslo(Konto konto, String noweHaslo) {
         kontoDoEdycji = kontoFacade.find(konto.getId());
-        try {
-            String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
-            kontoDoEdycji.setHaslo(noweZahashowanehaslo);
-            kontoFacade.edit(kontoDoEdycji);
-        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-            logger.info("KontoManager - zmienHaslo()");
-        }
+        String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
+        kontoDoEdycji.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(kontoDoEdycji);
 
     }
     

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-
 import javax.ejb.Local;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -43,6 +42,7 @@ public interface MOKEndpointLocal {
      * Metoda, która pobiera wszystkie konta
      * @return Lista kont
      */
+
     List<Konto> pobierzWszystkieKonta();
 
     /**
@@ -50,22 +50,6 @@ public interface MOKEndpointLocal {
      * @param konto konto,ktore ma zostac potwierdzone
      */
     void potwierdzKonto(Konto konto);
-
-    /**
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
-
-    /**
-     * @param noweHaslo nowe hasło w postaci jawnej
-     * @param konto     konto które podlegało edycji
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienHaslo(Konto konto, String noweHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException;
 
     public Boolean zaloguj(String login, String haslo);
 
@@ -92,6 +76,20 @@ public interface MOKEndpointLocal {
     public String pobierzPoziomy(Konto kontoUzytkownika);
 
     /**
+     *  Przekazuje hasła w postaci jawnej do managera
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     */
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo);
+
+    /**
+     * Przekazuje konto do zmiany do managera z hasłem postaci jawnej
+     * @param noweHaslo nowe hasło w postaci jawnej
+     * @param konto     konto które podlegało edycji
+     */
+    void zmienHaslo(Konto konto, String noweHaslo);
+
+    /**
      * zapisuje konto ze zmienionymi parameterami
      *
      * @param konto konto do zmiany
@@ -106,15 +104,6 @@ public interface MOKEndpointLocal {
      */
     Konto znajdzPoLoginie(String login);
 
-    /**
-     * Pobiera konto do edycji
-     *
-     * @param konto przyjmuje konto do edytowania
-     * @return zwraca kopię
-     * @throws IOException
-     * @throws ClassNotFoundException
-     */
-    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
     /**
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane 
@@ -162,5 +151,7 @@ public interface MOKEndpointLocal {
      * @return          potwierdzenie wykonania operacji
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
+
+    Konto pobierzKontoDoEdycji(Konto konto);
 }
 

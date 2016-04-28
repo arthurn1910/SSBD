@@ -84,4 +84,5 @@ public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLoc
         }
         return listaKontPodobnych;
     }
-    }
+}
+

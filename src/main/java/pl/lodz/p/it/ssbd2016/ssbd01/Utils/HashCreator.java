@@ -3,11 +3,25 @@ package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Kamil Rogowski on 23.04.2016.
+ * Klasa użytkowa kowertująca string na hash MD5
  */
 public class HashCreator {
+
+    private HashCreator() {
+
+    }
+
+    /**
+     * konwertuje bajty na stringi w hex
+     *
+     * @param data bajty danych
+     * @return hex
+     */
     private static String convertToHex(byte[] data) {
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < data.length; i++) {
@@ -24,13 +38,22 @@ public class HashCreator {
         return buf.toString();
     }
 
-    public static String MD5(String text)
-            throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    /**
+     * Przyjmuje string zwraca skrót w postaci MD5
+     *
+     * @param text tekst do zmiany
+     * @return skrót w postaci MD5
+     */
+    public static String MD5(String text) {
         MessageDigest md;
-        md = MessageDigest.getInstance("MD5");
         byte[] md5hash = new byte[32];
-        md.update(text.getBytes("iso-8859-1"), 0, text.length());
-        md5hash = md.digest();
+        try {
+            md = MessageDigest.getInstance("MD5");
+            md.update(text.getBytes("iso-8859-1"), 0, text.length());
+            md5hash = md.digest();
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
+            Logger.getLogger(HashCreator.class.getName()).log(Level.SEVERE, null, e);
+        }
         return convertToHex(md5hash);
     }
 }
