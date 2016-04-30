@@ -75,8 +75,8 @@ public class MOKEndpoint implements MOKEndpointLocal {
 
     @Override
     public void potwierdzKonto(Konto konto) {
-        /*Konto k = kontoFacade.find(konto.getId());
-        k.setPotwierdzone(true);*/
+        Konto k = kontoFacade.find(konto.getId());
+        k.setPotwierdzone(true);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zablokujKonto(Konto rowData) {
-        /*Konto o = kontoFacade.find(rowData.getId());
-        o.setAktywne(false);*/
+        Konto o = kontoFacade.find(rowData.getId());
+        o.setAktywne(false);
     }
     /***
      * Funkcja logujaca uzytkownika do systemu
@@ -174,35 +174,13 @@ public class MOKEndpoint implements MOKEndpointLocal {
     public Boolean sprawdzPoziomAdministrator(Konto konto) {
         return true;
     }
-    /***
-     * Funkcja pobierajaca uzytkownika
-     * @return 
-     */
-    @Override
-    public Konto pobierzUzytkownika() {
-        Konto a=new Konto(new Long(1221123131), "aaa", "aaa", false, false, 0);
-        a.setEmail("aaa");
-        a.setTelefon("cccc");
-        a.setImie("anna");
-        a.setNazwisko("1111");
-        return a;
-    }
-    /***
-     * Funkcja zwraca poziomy dostępu uzytkownika
-     * @param kontoUzytkownika
-     * @return 
-     */
-    @Override
-    public String pobierzPoziomy(Konto kontoUzytkownika) {
-        return "Klient, Agent";
-    }
-
-
+    
+    
     /**
      * {@inheritDoc}
      */
     @Override
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo){
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo){        
         kontoManager.zmienMojeHasloJesliPoprawne(noweHaslo, stareHaslo);
     }
 
@@ -262,8 +240,6 @@ public class MOKEndpoint implements MOKEndpointLocal {
     @Override
     public Konto pobierzKontoDoEdycji(Konto konto) {
         kontoStan = kontoFacade.find(konto.getId());
-        logger.info(kontoStan.toString());
-
         try {
             return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
         } catch (IOException e) {
@@ -279,7 +255,6 @@ public class MOKEndpoint implements MOKEndpointLocal {
      */
     @Override
     public void zapiszKontoPoEdycji(Konto konto) {
-
         if (kontoStan == null) {
             throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
         }
@@ -287,15 +262,13 @@ public class MOKEndpoint implements MOKEndpointLocal {
             throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
         }
 
-        logger.info(kontoStan.toString());
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setNazwisko(konto.getNazwisko());
+        
         kontoFacade.edit(kontoStan);
+        
         kontoStan = null;
-
     }
-
-
 }

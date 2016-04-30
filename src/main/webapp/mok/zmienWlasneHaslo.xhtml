@@ -18,9 +18,9 @@
         <h:form>
             Obecne hasło: <h:inputSecret value="#{zmienHasloBean.stareHaslo}"/><br/>
             Nowe haslo: <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
-            Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}"/><br />            
+            Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />           
             <h:commandButton action="#{zmienHasloBean.zmienMojeHaslo()}" value="Potwierdź"/>
-            <h:commandButton action="wyswietlajInformacje" value="Powrot"/>
+            <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot"/>
         </h:form>
 </ui:define>
 </ui:composition>

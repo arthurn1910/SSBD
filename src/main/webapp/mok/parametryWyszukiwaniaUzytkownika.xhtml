@@ -17,46 +17,43 @@
         Lista kont<br /><br />
         Wyszukiwanie według:<br />
         <h:form id="listaKontForm1">
-            Login: <h:inputText value="#{wyszukajKontaBean.login}"/><br />
             Imie: <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
             Nazwisko: <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
             Email: <h:inputText value="#{wyszukajKontaBean.email}"/><br />
             Telefon: <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
-            <h:commandButton value="Powróć" action="powrot" />
-            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.initWyszukiwanie()}" />
+            Aktywne: <h:selectBooleanCheckbox value="#{wyszukajKontaBean.aktywne}" /><br />
+            Potwierdzone <h:selectBooleanCheckbox value="#{wyszukajKontaBean.potwierdzone}" /><br />
+            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.pobierzPodobneKonta()}" />
         </h:form>
         <h:form>
-            <h:dataTable id="listaKont1" var="row" value="#{wyszukajKontaBean.kontaWyszukiwanie}">
-                <h:column id="login">
-                    <f:facet name="header">login</f:facet>
-                    <h:outputText value="#{row.login}" />
-                </h:column>
+            <h:dataTable id="listaKont1" var="konto" value="#{wyszukajKontaBean.kontaDataModel}">
                 <h:column id="imie">
                     <f:facet name="header">imię</f:facet>
-                    <h:outputText value="#{row.imie}" />
+                    <h:outputText value="#{konto.imie}" />
                 </h:column>
                 <h:column id="nazwisko">
                     <f:facet name="header">nazwisko</f:facet>
-                    <h:outputText value="#{row.nazwisko}" />
+                    <h:outputText value="#{konto.nazwisko}" />
                 </h:column>
                 <h:column id="email">
                     <f:facet name="header">email</f:facet>
-                    <h:outputText value="#{row.email}" />
+                    <h:outputText value="#{konto.email}" />
                 </h:column>
                 <h:column id="telefon">
                     <f:facet name="header">telefon</f:facet>
-                    <h:outputText value="#{row.telefon}" />
+                    <h:outputText value="#{konto.telefon}" />
                 </h:column>
                 <h:column id="potwierdzone">
                     <f:facet name="header">potwierdzone</f:facet>
-                    <h:outputText value="#{row.potwierdzone}" />
+                    <h:outputText value="#{konto.potwierdzone}" />
                 </h:column>
                 <h:column id="aktywne">
                     <f:facet name="header">aktywne</f:facet>
-                    <h:outputText value="#{row.aktywne}" />
+                    <h:outputText value="#{konto.aktywne}" />
                 </h:column>
                 <h:column id="informacje">
-                    <h:commandButton value="Wyświetl informacje" action="wyswietlInformacje" />
+                    <h:commandButton value="Wyświetl informacje" action="#{wyszukajKontaBean.wyswietlSzczegolyKonta()}">
+                    </h:commandButton>
                 </h:column>
             </h:dataTable>
         </h:form>

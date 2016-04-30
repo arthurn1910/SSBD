@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -49,5 +50,10 @@ public class WyswietlKontaNiepotwierdzoneBean implements Serializable {
     public void potwierdzKonto() {
         uzytkownikSession.potwierdzKonto(kontaNiepotwierdzone.getRowData());
         init();
+    }
+    
+    public String wyswietlSzczegolyKonta() {
+        uzytkownikSession.setWybraneKonto(kontaNiepotwierdzone.getRowData());
+        return "wyswietlSzczegolyKonta";
     }
 }

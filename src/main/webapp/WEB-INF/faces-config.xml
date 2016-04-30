@@ -61,8 +61,15 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
-            <from-outcome>wyswietlInformacje</from-outcome>
-            <to-view-id>/mok/wyswietlInformacje.xhtml</to-view-id>
+            <from-outcome>wynik</from-outcome>
+            <to-view-id>/mok/wynikWyszukania.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlSzczegolyKonta</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -82,8 +89,8 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
-            <from-outcome>dolaczPoziom</from-outcome>
-            <to-view-id>/mok/dolaczPoziom.xhtml</to-view-id>
+            <from-outcome>modyfikujPoziomyDostepu</from-outcome>
+            <to-view-id>/mok/modyfikujPoziomyDostepu.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -110,6 +117,14 @@
         <navigation-case>
             <from-outcome>powrot</from-outcome>
             <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mok/modyfikujPoziomyDostepu.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

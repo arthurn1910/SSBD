@@ -23,6 +23,7 @@ public class ZmienHasloBean {
 
     @Inject
     private UzytkownikSession uzytkownikSession;
+    
     private String nowePowtorzoneHaslo;
     private String noweHaslo;
     private String stareHaslo;
@@ -30,46 +31,37 @@ public class ZmienHasloBean {
 
     @PostConstruct
     private void initKonto() {
-        konto = uzytkownikSession.znajdzPoLoginie("kontoA");
-        konto = uzytkownikSession.znajdzPoLoginie("kontoC");
+        konto = uzytkownikSession.getWybraneKonto();
     }
 
-  /** Sprawdza czy dwa hasła znajdujące się w formularzach są identyczne
- * @return true, jeżeli hasła są identyczne; false, jeżeli hasła są różne
- */
-    public boolean czyHaslaSiezgadzaja(){
+    /** 
+     * Sprawdza czy dwa hasła znajdujące się w formularzach są identyczne
+     * @return true, jeżeli hasła są identyczne; false, jeżeli hasła są różne
+     */
+    public boolean checkPasswordMatching() {
         if (!(noweHaslo.equals(nowePowtorzoneHaslo))) {
-            FacesContext fctx = FacesContext.getCurrentInstance();
-            
-            ResourceBundle rbl = ResourceBundle.getBundle("i18n.messages");
-            FacesMessage fmsg = new FacesMessage(rbl.getString("passwords.not.matching"));
-
-            fctx.addMessage(null, fmsg);
+            FacesMessage message = new FacesMessage("passwords dont match");
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("form:powtorzoneHaslo", message);
             return false;
         }
         return true;
     }
     
-    public boolean zmienMojeHaslo() throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
-        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
+    public void zmienMojeHaslo() {
+        if (checkPasswordMatching()) {
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
-            return true;
         }
-        return false;
     }
 
     /**
      * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy admin zmienia nam hasło
      * @return true jeśli operacja zakończona sukcesem, false, jeśli nie
      */
-    public boolean zmienHaslo() {
-
-        if (noweHaslo.equals(nowePowtorzoneHaslo)) {
+    public void zmienHaslo() {
+        if (checkPasswordMatching()) {
             uzytkownikSession.zmienHaslo(konto, noweHaslo);
-            return true;
         }
-        return false;
     }
 
     public String getStareHaslo() {

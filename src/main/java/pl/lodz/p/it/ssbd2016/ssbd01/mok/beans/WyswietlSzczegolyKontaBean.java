@@ -7,9 +7,11 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku oraz zablokowania, odblokowania i potwierdzenia jego konta
@@ -17,23 +19,18 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
  */
 @Named
 @RequestScoped
-public class WyswietlInformacjeBean {
+public class WyswietlSzczegolyKontaBean {
     @Inject
     private UzytkownikSession uzytkownikSession;
+    
     private Konto konto;
+    
     /***
      * Funkcja pobierająca konto
      * @return 
      */
     public Konto getKonto() {
         return konto;
-    }
-    /***
-     * Metoda ustawiająca konto
-     * @param konto 
-     */
-    public void setKonto(Konto konto) {
-        this.konto = konto;
     }
     
     /**
@@ -42,16 +39,21 @@ public class WyswietlInformacjeBean {
     */
     @PostConstruct
     public void initModel() {
-        konto = uzytkownikSession.getKontoUzytkownika();
+        konto = uzytkownikSession.getWybraneKonto();
     }
     
-    
     /***
-     * Metoda ustawiająca uzytkownikSession
-     * @param uzytkownikSession 
+     * Metoda tworząca string złożony z nazw poziomów dostępu danego użytkownika
+     * @return 
      */
-    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
-        this.uzytkownikSession = uzytkownikSession;
+    public String pobierzPoziomy(){
+        String poziomy = "";
+        
+        for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
+            poziomy += poziom.getPoziom() + ", ";
+        }
+        
+        return poziomy;
     }
     
     /***
@@ -59,31 +61,33 @@ public class WyswietlInformacjeBean {
      */
     
     public void zablokuj(){
-        uzytkownikSession.zablokujKonto();
+        uzytkownikSession.zablokujKonto(konto);
         initModel();
-    }
-    /***
-     * Funkcja wywołująca funkcje pobierzPoziomy z uzytkownikSession
-     * @return 
-     */
-    public String pobierzPoziomy(){
-        return uzytkownikSession.pobierzPoziomy();
     }
     
     /***
      * Metoda wywołująca metode odblokujKonto w uzytkownikSession i wywołująca metodę initModel
      */
     public void odblokuj(){
-        uzytkownikSession.odblokujKonto();
+        uzytkownikSession.odblokujKonto(konto);
         initModel();
     }
+    
     /***
      * Metoda wywołująca metode potwierdzKonto w uzytkownikSession i wywołująca metodę initModel
      */
     public void potwierdz(){
-        uzytkownikSession.potwierdzKonto();
+        uzytkownikSession.potwierdzKonto(konto);
         initModel();
-
     }
     
+    public String modyfikujPoziomyDostepu() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("konto", konto);
+        return "modyfikujPoziomyDostepu";
+    }
+    
+    public String edytujKonto() {
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujDane";
+    }
 }

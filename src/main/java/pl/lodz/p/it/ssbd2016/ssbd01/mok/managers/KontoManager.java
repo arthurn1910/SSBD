@@ -5,12 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -19,18 +14,9 @@ import javax.ejb.Stateless;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.HashCreator;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 
 /**
@@ -50,6 +36,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Resource
     private SessionContext sessionContext;
+    
     private Konto kontoDoEdycji;
 
     /**
@@ -88,16 +75,13 @@ public class KontoManager implements KontoManagerLocal {
         konto.setAktywne(true);
         konto.setPotwierdzone(false);
         konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
-        try{
         kontoFacade.create(konto);
-        }
-        catch(Exception e)
-        {
-            
-        }
+        
         PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepuKlient();
         poziomDostepu.setKontoId(konto);
+        
         poziomDostepuFacade.create(poziomDostepu);
+        
         konto.getPoziomDostepuCollection().add(poziomDostepu);
     }
     
@@ -112,8 +96,8 @@ public class KontoManager implements KontoManagerLocal {
             for (String poziomDostepuStr: poziomyDostepu) {
                 PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepu(poziomDostepuStr);     
                 poziomDostepu.setKontoId(konto);
-                konto.getPoziomDostepuCollection().add(poziomDostepu);
                 poziomDostepuFacade.create(poziomDostepu);
+                konto.getPoziomDostepuCollection().add(poziomDostepu);
             }
         }
     }
@@ -171,11 +155,11 @@ public class KontoManager implements KontoManagerLocal {
                 Konto aktualneKonto = kontoFacade.znajdzPoLoginie(konto.getLogin());
                 //Tworzymy i dodajemy nowy poziom dostępu
                 PoziomDostepu nowyPoziom = PoziomDostepuManager.stworzPoziomDostepu(poziom);
+                nowyPoziom.setKontoId(aktualneKonto);
+                nowyPoziom.setAktywny(true);
                 poziomDostepuFacade.create(nowyPoziom);
 
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
-                nowyPoziom.setKontoId(aktualneKonto);
-                nowyPoziom.setAktywny(true);
             } else {                
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
                 throw new Exception("Nie możemy dodać poziomu dostępu");

@@ -71,10 +71,6 @@ public interface MOKEndpointLocal {
 
     public Boolean sprawdzPoziomAdministrator(Konto konto);
 
-    public Konto pobierzUzytkownika();
-
-    public String pobierzPoziomy(Konto kontoUzytkownika);
-
     /**
      *  Przekazuje hasła w postaci jawnej do managera
      * @param noweHaslo  nowe hasło w postaci jawnej

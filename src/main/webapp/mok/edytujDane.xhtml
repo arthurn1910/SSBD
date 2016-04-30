@@ -5,30 +5,26 @@
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
-    
-    
+
     <ui:define name="top">
         <p>Edytuj dane</p>
     </ui:define>
     
-    
-
     <ui:define name="left">
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">
-         
+     <ui:define name="content">         
         Zmień dane dotycznące użytkownika:
         <h:form>
-        Imie: <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
-        Nazwisko: <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>
-        Email: <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
-        Telefon: <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
-        <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{edytujDaneBean.zapiszPoEdycji()}"  class="edit_icon">
+            Imie: <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}"/><br/>
+            Nazwisko: <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/>
+            Email: <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}"/><br/>
+            Telefon: <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}"/><br/>
+            <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
+                                 value="Potwierdz" action="#{edytujDaneBean.zapiszKontoPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
-            <h:commandButton action="wyswietlajInformacje" value="Powrot" />
+            <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot" />
         </h:form>
-</ui:define>
+    </ui:define>
 </ui:composition>

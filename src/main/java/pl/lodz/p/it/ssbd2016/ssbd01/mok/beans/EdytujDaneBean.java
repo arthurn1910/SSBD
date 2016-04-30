@@ -7,43 +7,27 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import java.io.Serializable;
+import javax.inject.Named;
 
 /**
  * Created by Kamil Rogowski on 23.04.2016.
  * Obsługa zmiany danych przez admina i użytkownika
  */
-@ManagedBean
+@Named
 @RequestScoped
 public class EdytujDaneBean implements Serializable {
 
     @Inject
     private UzytkownikSession uzytkownikSession;
-    private Konto konto;
-
-    @PostConstruct
-    private void initKonto() {
-
-        konto = uzytkownikSession.znajdzPoLoginie("kontoA");
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-    }
-
+    
     /**
      * Metoda zapisuje zmiany po edycji konta
      */
-    public void zapiszPoEdycji() {
-
+    public void zapiszKontoPoEdycji() {
         uzytkownikSession.zapiszKontoPoEdycji();
     }
-
-    public Konto getKonto() {
-        return konto;
-    }
-
-    public Konto getUzytkownikSession() {
+    
+    public Konto getKontoEdytuj() {
         return uzytkownikSession.getKontoEdytuj();
-    }
-
-    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
-        this.uzytkownikSession = uzytkownikSession;
     }
 }

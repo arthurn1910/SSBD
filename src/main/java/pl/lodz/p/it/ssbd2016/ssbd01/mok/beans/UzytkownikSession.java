@@ -6,22 +6,20 @@
 
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import java.io.IOException;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.model.DataModel;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
@@ -37,205 +35,77 @@ public class UzytkownikSession implements Serializable {
 
     @EJB
     private MOKEndpointLocal MOKEndpoint;
-
-    private Konto kontoUzytkownika;
+    
+    private Konto wybraneKonto;
+    
     private Konto kontoEdytuj;
-    /***
-     * Funkcja zwracająca kontoUzytkownika
-     * @return 
-     */
-    public Konto getKontoUzytkownika() {
-        ustawKontoUzytkownika();
-        return kontoUzytkownika;
+    
+    private DataModel<Konto> kontaDataModel;
+
+    public DataModel<Konto> getKontaDataModel() {
+        return kontaDataModel;
     }
-    /***
-     * Metoda ustawiajaca kontoUzytkownika
-     */
-    public void ustawKontoUzytkownika(){
-        kontoUzytkownika=MOKEndpoint.pobierzUzytkownika();
-    }
+
+    public void setKontaDataModel(DataModel<Konto> kontaDataModel) {
+        this.kontaDataModel = kontaDataModel;
+    }  
     
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
      */
-    public void rejestrujKlienta2(Konto k) {
-        
-        
-        //String cryptedPass = Arrays.toString(cryptedBytes);
-        
+    public void rejestrujKontoKlienta(Konto k) {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo("blablabla"); //!!! Hasło powinno być w postaci skrótu np. MD5!
-        kontoRejestracja.setImie("Janusz");
-        kontoRejestracja.setNazwisko("Andrzej");
+        kontoRejestracja.setHaslo(k.getHaslo()); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setImie(k.getImie());
+        kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(new Date());
+        kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
         kontoRejestracja.setTelefon(k.getTelefon());
        
         MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
     }
-    
-    public void rejestrujKlienta(Konto k) {
         
-        
-        //String cryptedPass = Arrays.toString(cryptedBytes);
-        
-        
-        Konto kontoRejestracja = new Konto();
-        kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
-        kontoRejestracja.setImie(k.getImie());
-        kontoRejestracja.setNazwisko(k.getNazwisko());
-        kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(new Date());
-        kontoRejestracja.setTelefon(k.getTelefon());
-        PoziomDostepu poziomDostepu = new PoziomDostepu();
-        poziomDostepu.setPoziom("KLIENT");
-        poziomDostepu.setAktywny(true);
-        poziomDostepu.setKontoId(k);
-        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja, poziomDostepu);
-    }
-    
     
     /**
- * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
- * @param  k  konto, które ma zostać zarejestrowane
- * @param  poziom  poziom dostępu, który ma mieć nowo tworzone konto
- */
-    public void utworzKonto(Konto k, String poziom)
+     * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
+     * @param  k  konto, które ma zostać zarejestrowane
+     * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
+     */
+    public void utworzKonto(Konto k, List<String> poziomyDostepu)
     {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo("2cd002d71ed9bc76bd123059c6beccef"); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setHaslo(k.getHaslo()); //!!! Hasło powinno być w postaci skrótu np. MD5!
         kontoRejestracja.setImie(k.getImie());
         kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(new Date());
+        kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
         kontoRejestracja.setTelefon(k.getTelefon());
-        PoziomDostepu poziomDostepu = new PoziomDostepu();
-        poziomDostepu.setPoziom(poziom.toUpperCase());
-        poziomDostepu.setAktywny(true);
-        poziomDostepu.setKontoId(k);
-        MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja, poziomDostepu);
+        
+        MOKEndpoint.utworzKonto(kontoRejestracja, poziomyDostepu);
     }
     
-  /**
- * Pobiera z endpointa listę kont, których dane pasują do wzorców zawartych w obiekcie Konto, przekazywanym jako parametr
- * @param  k  konto, które zawiera wzorce
- * @return lista kont spełniających wymagania dotyczące wzorców
- */
-    
+    /**
+     * Pobiera z endpointa listę kont, których dane pasują do wzorców zawartych w obiekcie Konto, przekazywanym jako parametr
+     * @param  k  konto, które zawiera wzorce
+     * @return lista kont spełniających wymagania dotyczące wzorców
+     */    
     List<Konto> pobierzWszystkieKonta() {
         return MOKEndpoint.pobierzWszystkieKonta();
     }
-    
-    /***
-     * Metoda przekazująca parametr do metody potwierdzKonto w MOKEndpoint
-     * @param rowData 
-     */
-    void potwierdzKonto() {
-        MOKEndpoint.potwierdzKonto(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca parametr do metody odblokujKonto w MOKEndpoint
-     * @param rowData 
-     */
-    void odblokujKonto() {
-        MOKEndpoint.odblokujKonto(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca parametr do metody zablokujKonto w MOKEndpoint
-     * @param rowData 
-     */
-    void zablokujKonto() {
-        MOKEndpoint.zablokujKonto(kontoUzytkownika);
+        
+    public void potwierdzKonto(Konto konto) {
+        MOKEndpoint.potwierdzKonto(konto);
     }
 
-    /***
-     * Metoda przekazująca paraqmetr do metody dolaczPoziomAgent w MOKEndpoint
-     * @param konto 
-     */
-    void dolaczPoziomAgent(){
-        MOKEndpoint.dolaczPoziomAgent(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca paraqmetr do metody dolaczPoziomMenadzer w MOKEndpoint
-     * @param konto 
-     */
-    void dolaczPoziomMenadzer(){
-         MOKEndpoint.dolaczPoziomMenadzer(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca paraqmetr do metody dolaczPoziomAdministrator w MOKEndpoint
-     * @param konto 
-     */
-    void dolaczPoziomAdministrator(){
-         MOKEndpoint.dolaczPoziomAdministrator(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca paraqmetr do metody odlaczPoziomAgent w MOKEndpoint
-     * @param konto 
-     */
-    void odlaczPoziomAgent(){
-        MOKEndpoint.odlaczPoziomAgent(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca paraqmetr do metody odlaczPoziomMenadzer w MOKEndpoint
-     * @param konto 
-     */
-    void odlaczPoziomMenadzer(){
-        MOKEndpoint.odlaczPoziomMenadzer(kontoUzytkownika);
-    }
-    /***
-     * Metoda przekazująca paraqmetr do metody odlaczPoziomAdministrator w MOKEndpoint
-     * @param konto 
-     */
-    void odlaczPoziomAdministrator(){
-        MOKEndpoint.odlaczPoziomAdministrator(kontoUzytkownika);
-    }
-    /***
-     * Funkcja przekazująca paraqmetr do funkcji sprawdzPoziomAgent w MOKEndpoint pobierająca typ Boolean i zwracająca go 
-     * @param konto
-     * @return 
-     */
-    Boolean sprawdzPoziomAgent(){
-        return MOKEndpoint.sprawdzPoziomAgent(kontoUzytkownika);
-    }
-    /***
-     * Funkcja przekazująca paraqmetr do funkcji sprawdzPoziomMenadzer w MOKEndpoint pobierająca typ Boolean i zwracająca go 
-     * @param konto
-     * @return 
-     */
-    Boolean sprawdzPoziomMenadzer(){
-        return MOKEndpoint.sprawdzPoziomMenadzer(kontoUzytkownika);
-    }
-    /***
-     * Funkcja przekazująca paraqmetr do funkcji sprawdzPoziomAdministrator w MOKEndpoint pobierająca typ Boolean i zwracająca go 
-     * @param konto
-     * @return 
-     */
-    Boolean sprawdzPoziomAdministrator(){
-        return MOKEndpoint.sprawdzPoziomAdministrator(kontoUzytkownika);
-    }
-    /***
-     * Funkcja przekazująca parametr kontoUzytkownika do funkcji pobierzPoziomy w MOKEndpoint i zwracająca typ String
-     * @return 
-     */
-    String pobierzPoziomy() {
-        return MOKEndpoint.pobierzPoziomy(kontoUzytkownika);
+    public void odblokujKonto(Konto konto) {
+        MOKEndpoint.odblokujKonto(konto);
     }
 
-    public void potwierdzKonto(Konto rowData) {
-        MOKEndpoint.potwierdzKonto(rowData);
-    }
-
-    public void odblokujKonto(Konto rowData) {
-        MOKEndpoint.odblokujKonto(rowData);
-    }
-
-    public void zablokujKonto(Konto rowData) {
-        MOKEndpoint.zablokujKonto(rowData);
+    public void zablokujKonto(Konto konto) {
+        MOKEndpoint.zablokujKonto(konto);
     }
 
     /**
@@ -263,7 +133,7 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      */
     public void pobierzKontoDoEdycji(Konto konto) {
-        kontoEdytuj = MOKEndpoint.pobierzKontoDoEdycji(konto);
+        setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
     }
 
     /**
@@ -278,7 +148,7 @@ public class UzytkownikSession implements Serializable {
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
      */
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) {           
         MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
     }
 
@@ -315,5 +185,13 @@ public class UzytkownikSession implements Serializable {
      */
     public void zmienHaslo(Konto konto, String noweHaslo) {
         MOKEndpoint.zmienHaslo(konto, noweHaslo);
+    }
+
+    public Konto getWybraneKonto() {
+        return MOKEndpoint.pobierzUzytkownika(wybraneKonto.getLogin());
+    }
+
+    public void setWybraneKonto(Konto wybraneKonto) {
+        this.wybraneKonto = wybraneKonto;
     }
 }

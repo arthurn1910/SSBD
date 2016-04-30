@@ -14,41 +14,39 @@
     </ui:define>
 
     <ui:define name="content">
-        Lista kont niepotwierdzonych<br />
-        <h:form id="listaKontForm">
-            
-            <h:dataTable id="listaKont" var="row" value="#{wyswietlKontaNiepotwierdzoneBean.kontaNiepotwierdzone}">
-                <h:column id="login">
-                    <f:facet name="header">login</f:facet>
-                    <h:outputText value="#{row.login}" />
-                </h:column>
+        Lista kont<br /><br />
+        <h:form>
+            <h:dataTable id="listaKont" var="konto" value="#{wyszukajKontaBean.kontaDataModel}">
                 <h:column id="imie">
                     <f:facet name="header">imię</f:facet>
-                    <h:outputText value="#{row.imie}" />
+                    <h:outputText value="#{konto.imie}" />
                 </h:column>
                 <h:column id="nazwisko">
                     <f:facet name="header">nazwisko</f:facet>
-                    <h:outputText value="#{row.nazwisko}" />
+                    <h:outputText value="#{konto.nazwisko}" />
                 </h:column>
                 <h:column id="email">
                     <f:facet name="header">email</f:facet>
-                    <h:outputText value="#{row.email}" />
+                    <h:outputText value="#{konto.email}" />
                 </h:column>
                 <h:column id="telefon">
                     <f:facet name="header">telefon</f:facet>
-                    <h:outputText value="#{row.telefon}" />
+                    <h:outputText value="#{konto.telefon}" />
+                </h:column>
+                <h:column id="potwierdzone">
+                    <f:facet name="header">potwierdzone</f:facet>
+                    <h:outputText value="#{konto.potwierdzone}" />
+                </h:column>
+                <h:column id="aktywne">
+                    <f:facet name="header">aktywne</f:facet>
+                    <h:outputText value="#{konto.aktywne}" />
                 </h:column>
                 <h:column id="informacje">
-                    <h:commandButton value="Wyświetl informacje" action="#{wyswietlKontaNiepotwierdzoneBean.wyswietlSzczegolyKonta()}" />
+                    <h:commandButton value="Wyświetl informacje" action="#{wyszukajKontaBean.wyswietlSzczegolyKonta()}">
+                    </h:commandButton>
                 </h:column>
-                <h:column id="potwierdz">
-                    <h:commandButton onclick="if (! confirm('Czy na pewno potwierdzić to konto?')) return false"
-                        value="Potwierdż konto" action="#{wyswietlKontaNiepotwierdzoneBean.potwierdzKonto()}"  class="edit_icon" >
-                    </h:commandButton> 
-                </h:column> 
             </h:dataTable>
         </h:form>
-
     </ui:define>
 </ui:composition>
 
