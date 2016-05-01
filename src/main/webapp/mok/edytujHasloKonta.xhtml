@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Zmien haslo innego uzytkownika</p>
+        <p>Zmien haslo innego konta</p>
     </ui:define>
    
     <ui:define name="left">
@@ -17,11 +17,10 @@
         Zmien haslo innego uzytkownika:
         <h:form>
             Nowe haslo:         <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
-            Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}"/><br />            
+            Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />             
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{zmienHasloBean.zmienHaslo()}"  class="edit_icon">
-            </h:commandButton> 
-            <h:commandButton action="wyswietlajInformacje" value="Powrot" />
+                             value="Potwierdz" action="#{zmienHasloBean.zmienHaslo()}"  class="edit_icon" />
+            <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot" />
             
         </h:form>
         </ui:define>

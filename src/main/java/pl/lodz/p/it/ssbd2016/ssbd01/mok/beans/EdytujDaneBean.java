@@ -1,49 +1,44 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import java.io.Serializable;
+import javax.inject.Named;
 
 /**
- * Created by Kamil Rogowski on 23.04.2016.
  * Obsługa zmiany danych przez admina i użytkownika
  */
-@ManagedBean
+@Named
 @RequestScoped
-public class EdytujDaneBean implements Serializable {
+public class EdytujDaneBean {
 
     @Inject
     private UzytkownikSession uzytkownikSession;
-    private Konto konto;
-
-    @PostConstruct
-    private void initKonto() {
-
-        konto = uzytkownikSession.znajdzPoLoginie("kontoA");
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-    }
-
+    
     /**
-     * Metoda zapisuje zmiany po edycji konta
+     * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
+     * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     * @throws Exception 
      */
-    public void zapiszPoEdycji() {
-
+    public String zapiszSwojeKontoPoEdycji()  throws Exception {
+        uzytkownikSession.zapiszSwojeKontoPoEdycji();
+        return "wyswietlSzczegolySwojegoKonta";
+    }
+    
+    /**
+     * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
+     * i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     */
+    public String zapiszKontoPoEdycji() {
         uzytkownikSession.zapiszKontoPoEdycji();
+        return "wyswietlSzczegolySwojegoKonta";
     }
-
-    public Konto getKonto() {
-        return konto;
-    }
-
-    public Konto getUzytkownikSession() {
+    
+    // Gettery i Settery
+    
+    public Konto getKontoEdytuj() {
         return uzytkownikSession.getKontoEdytuj();
-    }
-
-    public void setUzytkownikSession(UzytkownikSession uzytkownikSession) {
-        this.uzytkownikSession = uzytkownikSession;
     }
 }

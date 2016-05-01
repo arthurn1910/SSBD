@@ -109,7 +109,6 @@ public class Konto implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "version", table="dane_personalne")
-    @Version
     private long versionA;
     public String getImie() {
         return imie;

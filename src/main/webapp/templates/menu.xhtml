@@ -5,14 +5,23 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html">
 
+    <h2>Dla kazdego</h2>
     <ul>
-        <li><h:outputLink value="wyswietlInformacje.xhtml" >${msg["menu.wyswietlInformacje"]}</h:outputLink></li>
-        <li><h:outputLink value="zarzadzanieKontami.xhtml" >${msg["menu.manageAccounts"]}</h:outputLink></li>
-        <li><h:outputLink value="dodajUzytkownika.xhtml" >${msg["menu.addUser"]}</h:outputLink></li>
-        <li><h:outputLink value="edytujDane.xhtml" >${msg["menu.edytujdane"]}</h:outputLink></li>
-        <li><h:outputLink value="edytujDaneKontaInnegoUzytkownika.xhtml" >${msg["menu.edytujdaneinnegouzytkownika"]}</h:outputLink></li>
-        <li><h:outputLink value="zmienHasloUzytkownika.xhtml" >${msg["menu.zmienhaslouzytkownika"]}</h:outputLink></li>
-        <li><h:outputLink value="zmienWlasneHaslo.xhtml" >${msg["menu.zmienwlasnehaslo"]}</h:outputLink></li>
+        <li><h:outputLink value="#{request.contextPath}/index.xhtml" >${msg["menu.stronaGlowna"]}</h:outputLink></li>
+        <li><h:outputLink value="#{request.contextPath}/mok/logowanie.xhtml" >${msg["menu.logowanie"]}</h:outputLink></li>
+        <li><h:outputLink value="#{request.contextPath}/mok/rejestracjaKontaKlienta.xhtml" >${msg["menu.rejestracjaKontaKlienta"]}</h:outputLink></li>
     </ul>
+    <h2>Dla klienta</h2>
+    <ul>
+        <li><h:outputLink value="#{request.contextPath}/mok/wyswietlSzczegolySwojegoKonta.xhtml" >${msg["menu.szczegolyKonta"]}</h:outputLink></li>
+    </ul>
+    <h2>Dla admina</h2>
+    <ul>
+        <li><h:outputLink value="#{request.contextPath}/mok/utworzKonto.xhtml" >${msg["menu.utorzKonto"]}</h:outputLink></li>
+        <li><h:outputLink value="#{request.contextPath}/mok/wyszukajKonta.xhtml" >${msg["menu.wyszukajKonta"]}</h:outputLink></li>
+    </ul>
+    <h:form>
+        <h:commandButton value="Wyloguj" action="#{wylogujBean.wyloguj()}" />
+    </h:form>
 </ui:composition>
 

@@ -13,31 +13,65 @@
             <base-name>i18n.messages</base-name>
             <var>msg</var>
         </resource-bundle>
-        <message-bundle>
-            i18n.jsf_messages
-        </message-bundle>
-    </application>  
-    <navigation-rule>   
-        <navigation-case>
-            <from-outcome>success</from-outcome>
-            <to-view-id>/success.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
+        <message-bundle>i18n.jsf_messages</message-bundle>
+    </application>
+        
     <navigation-rule>
         <navigation-case>
-            <from-outcome>cancel</from-outcome>
-            <to-view-id>/index.html</to-view-id>
+            <from-outcome>index</from-outcome>
+            <to-view-id>index.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
     <navigation-rule>
         <navigation-case>
-            <from-outcome>errorLogin</from-outcome>
-            <to-view-id>/mok/errorLogin.xhtml</to-view-id>
+            <from-outcome>wyszukajKonta</from-outcome>
+            <to-view-id>/mok/wyszukajKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>rejestracjaKontaKlienta</from-outcome>
+            <to-view-id>/mok/rejestracjaKontaKlienta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>utworzKonto</from-outcome>
+            <to-view-id>/mok/utworzKonto.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>logowanie</from-outcome>
+            <to-view-id>/mok/logowanie.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlSzczegolyKonta</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlSzczegolySwojegoKonta</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolySwojegoKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+      
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDane</from-outcome>
@@ -46,93 +80,74 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <navigation-case>
-            <from-outcome>zalogowano</from-outcome>
-            <to-view-id>/mok/zalogowano.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>edytujDaneKontaInnegoUzytkownika</from-outcome>
-            <to-view-id>/mok/edytujDaneKontaInnegoUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>wyswietlInformacje</from-outcome>
-            <to-view-id>/mok/wyswietlInformacje.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>zmienHasloUzytkownika</from-outcome>
-            <to-view-id>/mok/zmienHasloUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>odlaczPoziom</from-outcome>
-            <to-view-id>/mok/odlaczPoziom.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <navigation-case>
-            <from-outcome>dolaczPoziom</from-outcome>
-            <to-view-id>/mok/dolaczPoziom.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/mok/zarzadzanieKontami.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>kontaNiepotwierdzone</from-outcome>
-            <to-view-id>/mok/kontaNiepotwierdzone.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>wyszukajKonta</from-outcome>
-            <to-view-id>/mok/parametryWyszukiwaniaUzytkownika.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>utworzKonto</from-outcome>
-            <to-view-id>/mok/utworzKonto.xhtml</to-view-id>
-            <redirect />
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/mok/kontaNiepotwierdzone.xhtml</from-view-id>
+        <from-view-id>/mok/edytujDane.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>edytujDaneKonta</from-outcome>
+            <to-view-id>/mok/edytujDaneKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/parametryWyszukiwaniaUzytkownika.xhtml</from-view-id>
+        <from-view-id>/mok/edytujDaneKonta.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>edytujHaslo</from-outcome>
+            <to-view-id>/mok/edytujHaslo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/utworzKonto.xhtml</from-view-id>
+        <from-view-id>/mok/edytujHaslo.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/zarzadzanieKontami.xhtml</to-view-id>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>edytujHasloKonta</from-outcome>
+            <to-view-id>/mok/edytujHasloKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
+        <from-view-id>/mok/edytujHasloKonta.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>zmienWlasneHaslo</from-outcome>
-            <to-view-id>/mok/zmienWlasneHaslo.xhtml</to-view-id>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+        
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>modyfikujPoziomyDostepu</from-outcome>
+            <to-view-id>/mok/modyfikujPoziomyDostepu.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mok/modyfikujPoziomyDostepu.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 
 import java.io.UnsupportedEncodingException;
@@ -14,10 +9,15 @@ import java.util.logging.Logger;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 
 /**
- *
- * @author java
+ * Klasa użytkowa. Umożliwia generowania skrótów MD5 dla haseł
  */
 public class MD5Generator {
+    
+    /**
+     * Metoda generująca skrót MD5
+     * @param haslo string z wartością do wygenerowania skrótu
+     * @return wygenerowany skrót
+     */
     public static String generateMD5Hash(String haslo) {
         byte[] bajtyWiadomosci = null;
         try {

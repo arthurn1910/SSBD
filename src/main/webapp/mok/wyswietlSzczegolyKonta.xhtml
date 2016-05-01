@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="top">
+        <p>Informacje o Użytkowniku</p>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    
+    
+     <ui:define name="content">
+        <h:form id="form">
+            Imie: <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.imie}"/><br />
+            Nazwisko: <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.nazwisko}"/><br />
+            Login: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.login}"/><br />
+            Email: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.email}"/><br />
+            Telefon: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.telefon}"/><br />
+            Aktywne: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
+            Potwierdzone: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
+            Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
+           <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
+                             value="Odblokuj" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne}">
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
+                             value="Zablokuj" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne}">
+            </h:commandButton> 
+            <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
+                             value="Potwierdź" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone}">
+            </h:commandButton> 
+            <h:commandButton value="Modyfikuj poziomy" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" >
+            </h:commandButton>
+            <h:commandButton value="Zmień hasło" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" >
+            </h:commandButton> 
+            <h:commandButton value="Edytuj dane" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" >
+            </h:commandButton> 
+        </h:form>
+    </ui:define>
+</ui:composition>
+        

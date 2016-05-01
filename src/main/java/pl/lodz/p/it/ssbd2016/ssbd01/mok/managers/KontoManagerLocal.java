@@ -6,51 +6,42 @@ import java.util.List;
 import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
- * @author java
+ * Interfejs dla KontoManager
  */
 @Local
 public interface KontoManagerLocal {
     
     /**
-     * metody tworzy konto klienta(niepotwierdzone)
-     * @param konto konto do utworzenia
+     * Metoda zmienia hasło obecnie zalogowanego użytkownika, pod warunkiem:
+     * konto należy do tego użytkownika, stareHaslo zgadza się z stanem w bazie.
+     * @param konto     konto obecnie zalogowanego użytkownika
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w w postaci jawnej
+     * @throws java.lang.Exception rzucany gdy hasła się nie zgadzają lub konto nie należy do obecnie zalogowanego użytkownika
+     */
+    void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHaslo) throws Exception ;
+
+    /**
+     * Metoda zmienia hasło podanego konta
+     * @param konto     konto, które ma mieć zmienione hasło
+     * @param noweHaslo nowe hasło
+     */
+    void zmienHaslo(Konto konto, String noweHaslo);
+    
+    /**
+     * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
+     * @param konto informacje kontcie do utworzenia
      */
     void rejestrujKontoKlienta(Konto konto);
     
     /**
-     * tworzenie konta o dowolnym, niewykluczajacym sie poziomie dostepu
-     * @param konto konto jakie zostaje utworzone
-     * @param poziomyDostepu poziomy dostepu jakie beda przypisane(string List)
-     * @return true/false
+     * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
+     * @param konto informacje kontcie do utworzenia
+     * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu);
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception;
     
-   /**
-     * Przypadek gdy modyfikujemy własne hasło
-     *
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasłow w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHaslo);
-
-    /**
-     * Przypadek gdy admin modyfikuje nam hasło
-     * @param konto
-     * @param noweHaslo
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
-    void zmienHaslo(Konto konto, String noweHaslo);
     
     /**
      * Metoda zwracająca liste kont podobnych do zadanego konta
@@ -63,8 +54,7 @@ public interface KontoManagerLocal {
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @return          potwierdzenie wykonania operacji
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception rzucany gdy nie można dodać poziomu dostępu
      */
     public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
     
@@ -72,8 +62,7 @@ public interface KontoManagerLocal {
      * Metoda odłączająca dany poziom dostępu do konta
      * @param konto     konto od którego należy odłączyć poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @return          potwierdzenie wykonania operacji
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception rzucany gdy nie można odłączyć poziomu dostępu
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 }
