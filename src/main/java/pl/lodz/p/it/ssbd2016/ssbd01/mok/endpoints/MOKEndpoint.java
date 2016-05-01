@@ -54,7 +54,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception {
         kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 

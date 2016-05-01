@@ -50,8 +50,7 @@ public class UzytkownikSession implements Serializable {
      * @param  k  konto, które ma zostać zarejestrowane
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
      */
-    public void utworzKonto(Konto k, List<String> poziomyDostepu)
-    {
+    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws Exception {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
         kontoRejestracja.setHaslo(k.getHaslo());

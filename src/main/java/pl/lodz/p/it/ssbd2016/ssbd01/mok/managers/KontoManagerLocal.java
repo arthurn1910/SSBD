@@ -40,7 +40,7 @@ public interface KontoManagerLocal {
      * @param konto informacje kontcie do utworzenia
      * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu);
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception;
     
     
     /**

@@ -81,7 +81,7 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception {
         if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
