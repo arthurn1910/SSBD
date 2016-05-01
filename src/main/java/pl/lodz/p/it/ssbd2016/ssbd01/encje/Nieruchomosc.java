@@ -91,7 +91,7 @@ public class Nieruchomosc implements Serializable {
     @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private TypNieruchomosci typNieruchomosci;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "nieruchomosc")
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "nieruchomosc")
     private Ogloszenie ogloszenie;
 
     public Nieruchomosc() {

@@ -57,7 +57,7 @@ public class TypOgloszenia implements Serializable {
     @Column(name = "version")
     @Version
     private long version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typOgloszenia")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.REMOVE, CascadeType.PERSIST}, mappedBy = "typOgloszenia")
     private Collection<Ogloszenie> ogloszenieCollection = new ArrayList<Ogloszenie>();
 
     public TypOgloszenia() {
