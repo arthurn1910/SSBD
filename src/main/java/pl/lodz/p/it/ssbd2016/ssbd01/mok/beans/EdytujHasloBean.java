@@ -1,25 +1,17 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
- * Created by Kamil Rogowski on 26.04.2016.
  * Obsługa zmiany hasła przez użytkownika i admina
  */
-@ManagedBean
+@Named
 @RequestScoped
-public class ZmienHasloBean {
+public class EdytujHasloBean {
 
     @Inject
     private UzytkownikSession uzytkownikSession;
@@ -27,16 +19,10 @@ public class ZmienHasloBean {
     private String nowePowtorzoneHaslo;
     private String noweHaslo;
     private String stareHaslo;
-    private Konto konto;
 
-    @PostConstruct
-    private void initKonto() {
-        konto = uzytkownikSession.getWybraneKonto();
-    }
-
-    /** 
-     * Sprawdza czy dwa hasła znajdujące się w formularzach są identyczne
-     * @return true, jeżeli hasła są identyczne; false, jeżeli hasła są różne
+    /**
+     * Metoda sprawdzająca czy podane hasła są identyczne
+     * @return  decyzja czy hasła są identyczne
      */
     public boolean checkPasswordMatching() {
         if (!(noweHaslo.equals(nowePowtorzoneHaslo))) {
@@ -48,22 +34,34 @@ public class ZmienHasloBean {
         return true;
     }
     
-    public void zmienMojeHaslo() {
+    /**
+     * Handler dla przyciku potwierdź. Metoda zmienia hasło dla obecnie
+     * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     * @throws Exception 
+     */
+    public String zmienMojeHaslo() throws Exception {
         if (checkPasswordMatching()) {
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
         }
+        return "wyswietlSzczegolyKonta";
     }
 
     /**
-     * sprawdza czy nowe hasło jest identyczne, jak powtórzone nowe hasło, przypadek gdy admin zmienia nam hasło
-     * @return true jeśli operacja zakończona sukcesem, false, jeśli nie
+     * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
+     * i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     * @throws Exception 
      */
-    public void zmienHaslo() {
+    public String zmienHaslo() throws Exception {
         if (checkPasswordMatching()) {
-            uzytkownikSession.zmienHaslo(konto, noweHaslo);
+            uzytkownikSession.zmienHaslo(noweHaslo);
         }
+        return "wyswietlSzczegolyKonta";
     }
 
+    // Gettery i Settery
+    
     public String getStareHaslo() {
         return stareHaslo;
     }

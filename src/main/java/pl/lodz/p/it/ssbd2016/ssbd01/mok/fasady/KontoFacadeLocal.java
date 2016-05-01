@@ -31,8 +31,6 @@ public interface KontoFacadeLocal {
 
     int count();
 
-    Konto findByLogin(String login);
-    
     public Konto znajdzPoLoginie(String login);
     
     public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();

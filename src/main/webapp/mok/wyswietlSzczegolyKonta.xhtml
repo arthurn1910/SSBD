@@ -10,7 +10,7 @@
     </ui:define>
     
     <ui:define name="left">
-        <ui:include src="../templates/menu.xhtml" />
+        <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
     
@@ -24,7 +24,7 @@
             Aktywne: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
             Potwierdzone: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
             Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
-            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
+           <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
                              value="Odblokuj" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
@@ -35,7 +35,7 @@
             </h:commandButton> 
             <h:commandButton value="Modyfikuj poziomy" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" >
             </h:commandButton>
-             <h:commandButton value="Zmień hasło" action="zmienHasloUzytkownika"  class="edit_icon" >
+            <h:commandButton value="Zmień hasło" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" >
             </h:commandButton> 
             <h:commandButton value="Edytuj dane" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" >
             </h:commandButton> 

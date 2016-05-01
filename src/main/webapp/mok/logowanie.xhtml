@@ -9,15 +9,25 @@
         <p>Logowanie</p>
     </ui:define>
     
-     <ui:define name="content">
-        Zaloguj się do konta
-        <h:form>
-            Login: <h:inputText  value="#{logowanieBean.login}"/><br />
-            Hasło: <h:inputSecret value="#{logowanieBean.haslo}"/><br />
-            <h:commandButton action="errorLogin" value="Powróć" />
-            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                         value="Logowanie" action="#{logowanieBean.zalogujKlienta()}"  class="edit_icon" >
-            </h:commandButton> 
-        </h:form>
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    
+    <ui:define name="content">
+        <form method="post" action="j_security_check">
+            <h:panelGrid columns="2">
+                <h:outputLabel for="j_username" value="Username" />
+                <input type="text" name="j_username" />
+
+                <h:outputLabel for="j_password" value="Password" />
+                <input type="password" name="j_password" />
+
+                <h:outputText value="" />
+                <h:panelGrid columns="2">
+                    <input type="submit" name="submit" value="Login" />
+                    <h:button outcome="index" value="Cancel" />
+                </h:panelGrid>
+            </h:panelGrid>
+        </form>
     </ui:define>
 </ui:composition>

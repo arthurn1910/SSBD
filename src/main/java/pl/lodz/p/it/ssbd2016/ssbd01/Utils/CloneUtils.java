@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 
 import java.io.ByteArrayInputStream;
@@ -13,11 +8,17 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- *
- * @author Patryk
+ * Klasa użytkowa umożliwia wykonanie głębokiej kopii obiektów
  */
 public class CloneUtils {
     
+    /**
+     * Metoda wykonuje głęboką kopie obiektu wykorzystując serializację
+     * @param source obiekt do wykonania kopii
+     * @return kopia obiektu
+     * @throws IOException
+     * @throws ClassNotFoundException 
+     */
     public static Object deepCloneThroughSerialization(Serializable source) throws IOException, ClassNotFoundException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(bos);
@@ -27,6 +28,5 @@ public class CloneUtils {
         ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
         ObjectInputStream in = new ObjectInputStream(bis);
         return in.readObject();
-    }
-    
+    }    
 }

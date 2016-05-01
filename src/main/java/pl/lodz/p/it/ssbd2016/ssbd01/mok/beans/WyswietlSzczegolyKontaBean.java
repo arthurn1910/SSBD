@@ -1,38 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
- * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku oraz zablokowania, odblokowania i potwierdzenia jego konta
- * @author rpawlaczyk
+ * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku 
+ * oraz zablokowania, odblokowania i potwierdzenia jego konta
  */
 @Named
 @RequestScoped
 public class WyswietlSzczegolyKontaBean {
+    
     @Inject
     private UzytkownikSession uzytkownikSession;
     
     private Konto konto;
-    
-    /***
-     * Funkcja pobierająca konto
-     * @return 
-     */
-    public Konto getKonto() {
-        return konto;
-    }
-    
+        
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika którego chcemy wyświetlić
@@ -42,9 +29,9 @@ public class WyswietlSzczegolyKontaBean {
         konto = uzytkownikSession.getWybraneKonto();
     }
     
-    /***
+    /**
      * Metoda tworząca string złożony z nazw poziomów dostępu danego użytkownika
-     * @return 
+     * @return  string zawierający poziomy dostępu oddzielone przecinkiem
      */
     public String pobierzPoziomy(){
         String poziomy = "";
@@ -56,38 +43,61 @@ public class WyswietlSzczegolyKontaBean {
         return poziomy;
     }
     
-    /***
-     * Metoda wywołująca metode zablokujKonto w uzytkownikSession i wywołująca metodę initModel
+    /**
+     * Handler przycisku zablokuj w widoku. Blokuje wybrane konto oraz odświeża widok
      */
-    
     public void zablokuj(){
         uzytkownikSession.zablokujKonto(konto);
         initModel();
     }
     
-    /***
-     * Metoda wywołująca metode odblokujKonto w uzytkownikSession i wywołująca metodę initModel
+    /**
+     * Handler przycisku odblokuj w widoku. Odblokowuje wybrane konto oraz odświeża widok
      */
     public void odblokuj(){
         uzytkownikSession.odblokujKonto(konto);
         initModel();
     }
     
-    /***
-     * Metoda wywołująca metode potwierdzKonto w uzytkownikSession i wywołująca metodę initModel
+    /**
+     * Handler przycisku potwierdź w widoku. Potwierdza wybrane konto oraz odświeża widok
      */
     public void potwierdz(){
         uzytkownikSession.potwierdzKonto(konto);
         initModel();
     }
     
+    /**
+     * Handler przycisku modyfkuj poziomy dostępu w widoku. Przekierowuje na widok edycji
+     * @return      przekierowanie do widoku edycji
+     */
     public String modyfikujPoziomyDostepu() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("konto", konto);
         return "modyfikujPoziomyDostepu";
     }
     
+    /**
+     * Handler przyciksu edytuj dane w widoku. Pobiera wybrane konto do edycji
+     * i przechodzi do odpowiendiej strony z edycją
+     * @return      przekierowanie do strony z edycją
+     */
     public String edytujKonto() {
         uzytkownikSession.pobierzKontoDoEdycji(konto);
-        return "edytujDane";
+        return "edytujDaneKonta";
+    }
+    
+    /**
+     * Handler przyciksu edytuj hasło w widoku. Pobiera wybrane konto do edycji
+     * i przechodzi do odpowiendiej strony z edycją
+     * @return      przekierowanie do strony z edycją
+     */
+    public String edytujHasloKonta() {
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujHasloKonta";
+    }
+        
+    // Gettery i Settery
+    
+    public Konto getKonto() {
+        return konto;
     }
 }

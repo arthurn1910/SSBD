@@ -18,14 +18,7 @@
         <role-name>MENADZER</role-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
-    <security-role-mapping>
-        <role-name>GOSC</role-name>
-        <group-name>GOSC</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>rejestrujKontoKlienta</role-name>
-        <group-name>GOSC</group-name>
-    </security-role-mapping>
+    
     <security-role-mapping>
         <role-name>utworzKonto</role-name>
         <group-name>ADMINISTRATOR</group-name>
@@ -35,12 +28,68 @@
         <group-name>ADMINISTRATOR</group-name>
     </security-role-mapping>
     <security-role-mapping>
-        <role-name>potwierdzKonto</role-name>
+        <role-name>odblokujKonto</role-name>
         <group-name>ADMINISTRATOR</group-name>
     </security-role-mapping>
     <security-role-mapping>
-        <role-name>initWyszukiwanie</role-name>
+        <role-name>zablokujKonto</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zmienMojeHaslo</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zmienHaslo</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>znajdzPoLoginie</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzPodobneKonta</role-name>
         <group-name>ADMINISTRATOR</group-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>dodajPoziomDostepu</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>odlaczPoziomDostepu</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzKontoDoEdycji</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zapiszSwojeKontoPoEdycji</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zapiszKontoPoEdycji</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>getSwojeKonto</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    
 </glassfish-web-app>

@@ -1,105 +1,34 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import javax.ejb.Local;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
- * @author Patryk
  * Interfejs API servera dla modułu funkcjonalnego MOK
  */
 @Local
 public interface MOKEndpointLocal {
 
-    void rejestrujKontoKlienta(Konto konto, PoziomDostepu poziomDostepu);
-    
     /**
-     * metody tworzy konto klienta(niepotwierdzone)
-     * @param konto konto do utworzenia
+     * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
+     * @param konto informacje kontcie do utworzenia
      */
     void rejestrujKontoKlienta(Konto konto);
     
     /**
-     * tworzenie konta o dowolnym, niewykluczajacym sie poziomie dostepu
-     * @param konto konto jakie zostaje utworzone
-     * @param poziomyDostepu poziomy dostepu jakie beda przypisane(string List)
-     * @return 
+     * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
+     * @param konto informacje kontcie do utworzenia
+     * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
      */
     void utworzKonto(Konto konto, List<String> poziomyDostepu);
     
     /**
-     * Metoda, która pobiera wszystkie konta
-     * @return Lista kont
-     */
-
-    List<Konto> pobierzWszystkieKonta();
-
-    /**
      * Metoda zmienia stan konta na potwierdzone
-     * @param konto konto,ktore ma zostac potwierdzone
+     * @param konto konto, które ma zostać potwierdzone
      */
     void potwierdzKonto(Konto konto);
-
-    public Boolean zaloguj(String login, String haslo);
-
-    public void dolaczPoziomAgent(Konto konto);
-
-    public void dolaczPoziomMenadzer(Konto konto);
-
-    public void dolaczPoziomAdministrator(Konto konto);
-
-    public void odlaczPoziomAgent(Konto konto);
-
-    public void odlaczPoziomMenadzer(Konto konto);
-
-    public void odlaczPoziomAdministrator(Konto konto);
-
-    public Boolean sprawdzPoziomAgent(Konto konto);
-
-    public Boolean sprawdzPoziomMenadzer(Konto konto);
-
-    public Boolean sprawdzPoziomAdministrator(Konto konto);
-
-    /**
-     *  Przekazuje hasła w postaci jawnej do managera
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasło w postaci jawnej
-     */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo);
-
-    /**
-     * Przekazuje konto do zmiany do managera z hasłem postaci jawnej
-     * @param noweHaslo nowe hasło w postaci jawnej
-     * @param konto     konto które podlegało edycji
-     */
-    void zmienHaslo(Konto konto, String noweHaslo);
-
-    /**
-     * zapisuje konto ze zmienionymi parameterami
-     *
-     * @param konto konto do zmiany
-     */
-    void zapiszKontoPoEdycji(Konto konto);
-
-    /**
-     * Wyszukuje konto o podanym loginie
-     *
-     * @param login login jako string
-     * @return znalezione konto
-     */
-    Konto znajdzPoLoginie(String login);
-
+    
     /**
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane 
@@ -108,35 +37,43 @@ public interface MOKEndpointLocal {
 
     /**
      * Metoda zmienia stan konta na nieaktywne
-     * @param konto konto, ktore ma zostac zablokowane
+     * @param konto konto które ma zostać zablokowane
      */
     public void zablokujKonto(Konto konto);
+    
+    /**
+     * Zmienia hasło dla obecnie zalogowanego użytkownika
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     * @throws java.lang.Exception rzucany gdy stare hasła się nie zgadzaja
+     */
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws Exception;
 
     /**
-     * Metoda zwracająca liste niepotwierdzonych kont
-     * @return          lista niepotwierdzonych kont
+     * Zmienia hasło dla obecnie edytowanego użytkownika
+     * @param noweHaslo nowe hasło w postaci jawnej
      */
-    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
+    void zmienHaslo(String noweHaslo);
 
     /**
-     * Metoda zwracająca obiekt klasy konto z danym loginem
-     * @param login     login użytkownika do wyszukania
-     * @return          obiekt klasy konto o zadanym loginie
+     * Wyszukuje konto o podanym loginie
+     * @param login login konta
+     * @return znalezione konto
      */
-    public Konto pobierzUzytkownika(String login);
-
+    Konto znajdzPoLoginie(String login);
+    
     /**
      * Metoda zwracająca liste kont podobnych do zadanego konta
      * @param konto     obiekt zawierający kryteria wyszukania
      * @return          lista podobnych kont
      */
     public List<Konto> pobierzPodobneKonta(Konto konto);
-
+    
     /**
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception rzucany gdy nie można dodać poziomu dostępu
      */
     public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
 
@@ -144,10 +81,36 @@ public interface MOKEndpointLocal {
      * Metoda odłączająca dany poziom dostępu do konta
      * @param konto     konto od którego należy odłączyć poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @return          potwierdzenie wykonania operacji
+     * @throws java.lang.Exception rzucany gdy nie można odłączyć poziomu dostępu
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
 
+    /**
+     * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
+     * @param konto     konto które chcemy edytować
+     * @return          głęboka kopia encji Konto
+     */
     Konto pobierzKontoDoEdycji(Konto konto);
+    
+    /**
+     * Metoda zapisuje konto użytkownika obecnie zalogowanego ze zmienionymi 
+     * parameterami. Sprawdzana jest blokada optymistyczna.
+     * @param konto     konto ze zmianami
+     * @throws Exception rzucany gdy endytowane konto nie jest kontem obecnie zalogowanego użytkownika
+     */
+    public void zapiszSwojeKontoPoEdycji(Konto konto) throws Exception;
+    
+    /**
+     * Metoda zapisuje konto ze zmienionymi parameterami. Sprawdzana jest
+     * blokada optymistyczna.
+     * @param konto konto ze zmianami
+     */
+    void zapiszKontoPoEdycji(Konto konto);
+
+    /**
+     * Metoda pobierająca konto obecnie zalogowanego użytkownika
+     * @return      konto obecnie zalogowanego użytkownika
+     */
+    public Konto getSwojeKonto();
 }
 

@@ -1,37 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.ejb.EJB;
-import javax.ejb.SessionContext;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 
-/*
- *
- * @author Patryk
+/**
+ * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
 @ManagedBean(name = "uzytkownikSession")
 public class UzytkownikSession implements Serializable {
-    private static final Logger logger = Logger.getLogger(EdytujDaneBean.class.getName());
 
     @EJB
     private MOKEndpointLocal MOKEndpoint;
@@ -42,14 +27,6 @@ public class UzytkownikSession implements Serializable {
     
     private DataModel<Konto> kontaDataModel;
 
-    public DataModel<Konto> getKontaDataModel() {
-        return kontaDataModel;
-    }
-
-    public void setKontaDataModel(DataModel<Konto> kontaDataModel) {
-        this.kontaDataModel = kontaDataModel;
-    }  
-    
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
@@ -57,7 +34,7 @@ public class UzytkownikSession implements Serializable {
     public void rejestrujKontoKlienta(Konto k) {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo(k.getHaslo()); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setHaslo(k.getHaslo());
         kontoRejestracja.setImie(k.getImie());
         kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
@@ -69,7 +46,7 @@ public class UzytkownikSession implements Serializable {
         
     
     /**
-     * Rejestruje konto, nadając mu jeden z poziomów dostępu (klient, agent, menadzer, administrator)
+     * Rejestruje konto, nadając mu wybrane poizomy dostępu
      * @param  k  konto, które ma zostać zarejestrowane
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
      */
@@ -77,7 +54,7 @@ public class UzytkownikSession implements Serializable {
     {
         Konto kontoRejestracja = new Konto();
         kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo(k.getHaslo()); //!!! Hasło powinno być w postaci skrótu np. MD5!
+        kontoRejestracja.setHaslo(k.getHaslo());
         kontoRejestracja.setImie(k.getImie());
         kontoRejestracja.setNazwisko(k.getNazwisko());
         kontoRejestracja.setEmail(k.getEmail());
@@ -88,36 +65,112 @@ public class UzytkownikSession implements Serializable {
     }
     
     /**
-     * Pobiera z endpointa listę kont, których dane pasują do wzorców zawartych w obiekcie Konto, przekazywanym jako parametr
-     * @param  k  konto, które zawiera wzorce
-     * @return lista kont spełniających wymagania dotyczące wzorców
-     */    
-    List<Konto> pobierzWszystkieKonta() {
-        return MOKEndpoint.pobierzWszystkieKonta();
-    }
-        
+     * Metoda zmienia stan konta na potwierdzone
+     * @param konto konto do potwierdzenia
+     */
     public void potwierdzKonto(Konto konto) {
         MOKEndpoint.potwierdzKonto(konto);
     }
-
+    
+    /**
+     * Metoda oblokowuje konto
+     * @param konto konto do odblokowania
+     */
     public void odblokujKonto(Konto konto) {
         MOKEndpoint.odblokujKonto(konto);
     }
 
+    /**
+     * Metoda blokująca konto
+     * @param konto konto do zablokowania
+     */
     public void zablokujKonto(Konto konto) {
         MOKEndpoint.zablokujKonto(konto);
     }
 
     /**
-     * Szuka konta o danym loginie
-     *
+     * Metoda zwraca konto o zadanym loginie
      * @param login login konta
-     * @return Konto
+     * @return szukane konto
      */
     public Konto znajdzPoLoginie(String login) {
         return MOKEndpoint.znajdzPoLoginie(login);
     }
 
+    /**
+     * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
+     * @param konto konto do edycji
+     */
+    public void pobierzKontoDoEdycji(Konto konto) {
+        setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
+    }
+    
+    /**
+     * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
+     * @throws Exception 
+     */
+    void zapiszSwojeKontoPoEdycji() throws Exception {
+        MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
+    }
+    
+    /**
+     * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
+     */
+    public void zapiszKontoPoEdycji() {
+        MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
+    }
+
+    /**
+     * Metoda zmienia hasło obecnie zalogowanego użytkownika. Sprawdzana jest blokada
+     * optymistyczna
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @param stareHaslo stare hasło w postaci jawnej
+     * @throws java.lang.Exception
+     */
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws Exception {           
+        MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
+    }    
+    
+    /**
+     * Metoda zmienia hasło obecnie edytowanego konta. Sprawdzana jest blokada
+     * optymistyczna
+     * @param noweHaslo  nowe hasło w postaci jawnej
+     * @throws java.lang.Exception
+     */
+    public void zmienHaslo(String noweHaslo) throws Exception {
+        MOKEndpoint.zmienHaslo(noweHaslo);
+    }
+    
+    /**
+     * Metoda zwraca liste kont podobnych do danego konta
+     * @param konto konto zawierające kryteria wyszukania
+     * @return  lista kont podobnych
+     */
+    List<Konto> pobierzPodobneKonta(Konto konto) {
+        return MOKEndpoint.pobierzPodobneKonta(konto);
+    }
+
+    /**
+     * Metoda dodająca poziom dostępu do konta
+     * @param konto konto do którego należy dodać poziom dostępu
+     * @param poziom nazwa poziomu dostępu
+     * @throws Exception 
+     */
+    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
+    }
+    /**
+     * Metoda odłączająca poziom dostępu do konta
+     * @param konto konto od którego należy odłączyć poziom dostępu
+     * @param poziom nazwa poziomu dostępu
+     * @throws Exception 
+     */
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
+    }
+
+    // Gettery i Settery
+        
     public void setKontoEdytuj(Konto kontoEdytuj) {
         this.kontoEdytuj = kontoEdytuj;
     }
@@ -126,72 +179,26 @@ public class UzytkownikSession implements Serializable {
         return kontoEdytuj;
 
     }
-
-    /**
-     * pobiera i zapisuje kopię konta do edycji
-     *
-     * @param konto konto do edycji
-     */
-    public void pobierzKontoDoEdycji(Konto konto) {
-        setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
-    }
-
-    /**
-     * zapisuje kopię konta po edycji
-     */
-    public void zapiszKontoPoEdycji() {
-        MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
-    }
-
-    /**
-     * Przekazuje dane w postaci jawnej do endpointa
-     * @param noweHaslo  nowe hasło w postaci jawnej
-     * @param stareHaslo stare hasło w postaci jawnej
-     */
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) {           
-        MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
-    }
-
-    /**
-     * @param konto     konto do zmiany
-     * @param noweHaslo nowe hasło w postaci jawnej
-     * @throws UnsupportedEncodingException
-     * @throws NoSuchAlgorithmException
-     */
     
-    List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {
-        return MOKEndpoint.pobierzWszystkieNiepotwierdzoneKonta();
-    }
-
-    Konto pobierzUrzytkownika(String login) {
-        return MOKEndpoint.pobierzUzytkownika(login);
-    }
-
-    List<Konto> pobierzPodobneKonta(Konto konto) {
-        return MOKEndpoint.pobierzPodobneKonta(konto);
-    }
-
-    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
-        MOKEndpoint.dodajPoziomDostepu(konto, poziom);
-    }
-
-    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
-        MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
-    }
-    /**
-     * Przekazuje konto i hasło do endpointa
-     * @param konto     konto do zmiany
-     * @param noweHaslo nowe hasło w postaci jawnej
-     */
-    public void zmienHaslo(Konto konto, String noweHaslo) {
-        MOKEndpoint.zmienHaslo(konto, noweHaslo);
-    }
-
     public Konto getWybraneKonto() {
-        return MOKEndpoint.pobierzUzytkownika(wybraneKonto.getLogin());
+        return MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
     }
 
     public void setWybraneKonto(Konto wybraneKonto) {
         this.wybraneKonto = wybraneKonto;
     }
+
+    Konto getSwojeKonto() {
+        wybraneKonto = MOKEndpoint.getSwojeKonto();
+        return wybraneKonto;
+    }
+    
+    public DataModel<Konto> getKontaDataModel() {
+        return kontaDataModel;
+    }
+
+    public void setKontaDataModel(DataModel<Konto> kontaDataModel) {
+        this.kontaDataModel = kontaDataModel;
+    }  
+    
 }

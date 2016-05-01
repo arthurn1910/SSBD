@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import java.util.List;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.HashCreator;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
@@ -24,6 +23,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
  * Implementuje interfejs KontoManagaerLocal
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class KontoManager implements KontoManagerLocal {
 
     @EJB
@@ -31,46 +32,39 @@ public class KontoManager implements KontoManagerLocal {
     
     @EJB
     private PoziomDostepuFacadeLocal poziomDostepuFacade;   
-    
-     private static final Logger logger = Logger.getLogger(pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.class.getName());
 
     @Resource
     private SessionContext sessionContext;
-    
-    private Konto kontoDoEdycji;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void zmienMojeHasloJesliPoprawne(String noweHaslo, String stareHasloWpisane) {
-
-        kontoDoEdycji = kontoFacade.findByLogin(sessionContext.getCallerPrincipal().getName());
-        String stareHaslo = kontoDoEdycji.getHaslo();
+    @RolesAllowed("zmienMojeHaslo")
+    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws Exception {
+        if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
+            throw new Exception("Nie moje konto");
+        }
+        String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
 
-        hashedPassword = HashCreator.MD5(noweHaslo);
-        stareHasloWpisane = HashCreator.MD5(stareHasloWpisane);
+        hashedPassword = MD5Generator.generateMD5Hash(noweHaslo);
+        stareHasloWpisane = MD5Generator.generateMD5Hash(stareHasloWpisane);
         if (stareHasloWpisane.equals(stareHaslo)) {
-            kontoDoEdycji.setHaslo(hashedPassword);
-            kontoFacade.edit(kontoDoEdycji);
-            logger.info("haslo zmienione nowy hash: " + kontoDoEdycji.getHaslo());
+            konto.setHaslo(hashedPassword);
+            kontoFacade.edit(konto);
+        } else {
+            throw new Exception("Hasla sie nie zgadzaja");
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
+    @RolesAllowed("zmienHaslo")
     public void zmienHaslo(Konto konto, String noweHaslo) {
-        kontoDoEdycji = kontoFacade.find(konto.getId());
-        String noweZahashowanehaslo = HashCreator.MD5(noweHaslo);
-        kontoDoEdycji.setHaslo(noweZahashowanehaslo);
-        kontoFacade.edit(kontoDoEdycji);
-
+        String noweZahashowanehaslo = MD5Generator.generateMD5Hash(noweHaslo);
+        konto.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(konto);
     }
     
     @Override
+    @PermitAll
     public void rejestrujKontoKlienta(Konto konto) {
         konto.setAktywne(true);
         konto.setPotwierdzone(false);
@@ -86,6 +80,7 @@ public class KontoManager implements KontoManagerLocal {
     }
     
     @Override
+    @RolesAllowed("utworzKonto")
     public void utworzKonto(Konto konto, List<String> poziomyDostepu) {
         if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             konto.setAktywne(true);
@@ -103,6 +98,7 @@ public class KontoManager implements KontoManagerLocal {
     }
     
     @Override
+    @RolesAllowed("pobierzPodobneKonta")
     public List<Konto> znajdzPodobne(Konto konto) {
         Konto kontoWyszukaj = new Konto();
         if (konto.getImie() == null) {
@@ -135,6 +131,7 @@ public class KontoManager implements KontoManagerLocal {
     }
 
     @Override
+    @RolesAllowed("dodajPoziomDostepu")
     public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
         if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
@@ -168,8 +165,9 @@ public class KontoManager implements KontoManagerLocal {
     }
 
     @Override
+    @RolesAllowed("odlaczPoziomDostepu")
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
-        if (PoziomDostepuManager.czyPosiadaAktywnyPoziomDostepu(konto, poziom)) {
+        if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
             
             PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
             
@@ -182,9 +180,8 @@ public class KontoManager implements KontoManagerLocal {
                 throw new Exception("Nie możemy dodać poziomu dostępu");
             }
         } else {            
-            // Jeśli nie udało się odłączyć poziom dostępu zwracamy błąd
+            // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
             throw new Exception("Nie możemy dodać poziomu dostępu");
         }
     }
-    
 }

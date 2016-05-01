@@ -1,31 +1,42 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
-import java.io.Serializable;
 import javax.inject.Named;
 
 /**
- * Created by Kamil Rogowski on 23.04.2016.
  * Obsługa zmiany danych przez admina i użytkownika
  */
 @Named
 @RequestScoped
-public class EdytujDaneBean implements Serializable {
+public class EdytujDaneBean {
 
     @Inject
     private UzytkownikSession uzytkownikSession;
     
     /**
-     * Metoda zapisuje zmiany po edycji konta
+     * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
+     * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     * @throws Exception 
      */
-    public void zapiszKontoPoEdycji() {
-        uzytkownikSession.zapiszKontoPoEdycji();
+    public String zapiszSwojeKontoPoEdycji()  throws Exception {
+        uzytkownikSession.zapiszSwojeKontoPoEdycji();
+        return "wyswietlSzczegolySwojegoKonta";
     }
+    
+    /**
+     * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
+     * i przekierowuje do szczegółów danego konta
+     * @return  przekierowanie do szczegółów konta
+     */
+    public String zapiszKontoPoEdycji() {
+        uzytkownikSession.zapiszKontoPoEdycji();
+        return "wyswietlSzczegolySwojegoKonta";
+    }
+    
+    // Gettery i Settery
     
     public Konto getKontoEdytuj() {
         return uzytkownikSession.getKontoEdytuj();

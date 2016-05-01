@@ -15,14 +15,14 @@
     </ui:define>
     
      <ui:define name="content">         
-        Zmień dane dotycznące użytkownika:
+        Zmień swoje dane:
         <h:form>
             Imie: <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}"/><br/>
             Nazwisko: <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/>
             Email: <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}"/><br/>
             Telefon: <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}"/><br/>
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                                 value="Potwierdz" action="#{edytujDaneBean.zapiszKontoPoEdycji()}"  class="edit_icon">
+                                 value="Potwierdz" action="#{edytujDaneBean.zapiszSwojeKontoPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
             <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot" />
         </h:form>
