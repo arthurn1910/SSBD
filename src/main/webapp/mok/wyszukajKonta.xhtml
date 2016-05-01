@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="top">
         <p>Wyszukanie kont</p>
     </ui:define>
@@ -17,10 +18,14 @@
         Lista kont<br /><br />
         Wyszukiwanie według:<br />
         <h:form id="listaKontForm1">
-            Imie: <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
-            Nazwisko: <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
-            Email: <h:inputText value="#{wyszukajKontaBean.email}"/><br />
-            Telefon: <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
+            Imie:
+            <p:autoComplete id="imie" value="#{wyszukajKontaBean.imie}" completeMethod="#{wyszukajKontaBean.completeImie}" /><br />
+            Nazwisko: 
+            <p:autoComplete id="nazwisko" value="#{wyszukajKontaBean.nazwisko}" completeMethod="#{wyszukajKontaBean.completeNazwisko}" /><br />
+            Email:
+            <p:autoComplete id="email" value="#{wyszukajKontaBean.email}" completeMethod="#{wyszukajKontaBean.completeEmail}" /><br />
+            Telefon: 
+            <p:autoComplete id="telefon" value="#{wyszukajKontaBean.telefon}" completeMethod="#{wyszukajKontaBean.completeTelefon}" /><br />
             Aktywne: <h:selectBooleanCheckbox value="#{wyszukajKontaBean.aktywne}" /><br />
             Potwierdzone <h:selectBooleanCheckbox value="#{wyszukajKontaBean.potwierdzone}" /><br />
             <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.pobierzPodobneKonta()}" />
