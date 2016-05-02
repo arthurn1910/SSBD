@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="ssbd01adminPU" transaction-type="JTA">
-    <jta-data-source>jdbc/ssbd01admin</jta-data-source>
+    <jta-data-source>jdbc/ssbd01adminDatasource</jta-data-source>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.KategoriaWyposazeniaNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto</class>
@@ -20,7 +20,7 @@
     </properties>
   </persistence-unit>
   <persistence-unit name="ssbd01mokPU" transaction-type="JTA">
-    <jta-data-source>jdbc/ssbd01mok</jta-data-source>
+    <jta-data-source>jdbc/ssbd01mokDatasource</jta-data-source>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie</class>
@@ -39,7 +39,7 @@
     </properties>
   </persistence-unit>
   <persistence-unit name="ssbd01mooPU" transaction-type="JTA">
-    <jta-data-source>jdbc/ssbd01moo</jta-data-source>
+    <jta-data-source>jdbc/ssbd01mooDatasource</jta-data-source>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.KategoriaWyposazeniaNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto</class>
@@ -57,7 +57,7 @@
     </properties>
   </persistence-unit>
   <persistence-unit name="ssbd01mosPU" transaction-type="JTA">
-    <jta-data-source>jdbc/ssbd01mos</jta-data-source>
+    <jta-data-source>jdbc/ssbd01mosDatasource</jta-data-source>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie</class>

@@ -2,8 +2,14 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.MessageProvider;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -20,6 +26,8 @@ import java.util.logging.Logger;
  * @author Kamil Rogowski
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class NotyfikacjaService implements NotyfikacjaServiceLocal {
     /**
      * logger
@@ -71,6 +79,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      * {@inheritDoc}
      */
     @Override
+    @PermitAll
     public void wyslijPowiadomienieRejestracji(Konto konto) {
 
         try {
@@ -91,6 +100,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
     /**
      * {@inheritDoc}
      */
+    @RolesAllowed("zablokujKonto")
     @Override
     public void wyslijPowiadomienieZablokowaniaKonta(Konto konto) {
 
@@ -112,6 +122,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
     /**
      * {@inheritDoc}
      */
+    @RolesAllowed("odblokujKonto")
     @Override
     public void wyslijPowiadomienieAktywacjiKonta(Konto konto) {
         try {

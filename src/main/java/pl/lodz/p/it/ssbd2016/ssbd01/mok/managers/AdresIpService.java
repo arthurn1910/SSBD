@@ -2,12 +2,18 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.HistoriaLogowaniaFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.faces.context.FacesContext;
+import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +27,8 @@ import java.util.logging.Logger;
  * @author Kamil Rogowski
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class AdresIpService implements AdresIpServiceLocal {
     /**
      * logger
@@ -57,6 +65,7 @@ public class AdresIpService implements AdresIpServiceLocal {
      * {@inheritDoc}
      */
     @Override
+    @PermitAll
     public String getClientIpAddress() {
         for (String header : HEADERS_TO_CHECK) {
             String ip = request.getHeader(header);
@@ -71,6 +80,7 @@ public class AdresIpService implements AdresIpServiceLocal {
      * {@inheritDoc}
      */
     @Override
+    @PermitAll
     public void processIpAdress(String login) {
         request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         final String clientIpAddress = getClientIpAddress();
@@ -95,6 +105,7 @@ public class AdresIpService implements AdresIpServiceLocal {
      * {@inheritDoc}
      */
     @Override
+    @RolesAllowed("pobierzHistorieLogowanUzytkownikow")
     public List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow() {
         return historiaLogowaniaFacade.findAll();
     }

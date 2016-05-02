@@ -188,11 +188,13 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     }
 
     @Override
+    @RolesAllowed("pobierzHistorieLogowanUzytkownikow")
     public List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow() {
         return adresIpService.pobierzHistorieLogowanUzytkownikow();
     }
 
     @Override
+    @PermitAll
     public void ustawIP(String login){
         adresIpService.processIpAdress(login);
     }

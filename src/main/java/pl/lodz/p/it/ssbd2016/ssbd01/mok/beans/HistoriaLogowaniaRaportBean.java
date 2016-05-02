@@ -11,7 +11,6 @@ import javax.inject.Named;
 import java.util.List;
 
 /**
- * Created by Kamil Rogowski on 01.05.2016.
  * Bean odpowiedzialny za wygenerowanie raportu dla admina
  *
  * @author Kamil Rogowski

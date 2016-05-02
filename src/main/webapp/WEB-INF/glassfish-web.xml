@@ -91,5 +91,8 @@
         <group-name>KLIENT</group-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
-    
+    <security-role-mapping>
+        <role-name>pobierzHistorieLogowanUzytkownikow</role-name>
+        <group-name>ADMINISTRATOR</group-name>
+    </security-role-mapping>
 </glassfish-web-app>
