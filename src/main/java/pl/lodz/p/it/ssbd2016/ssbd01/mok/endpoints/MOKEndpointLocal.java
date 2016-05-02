@@ -69,6 +69,12 @@ public interface MOKEndpointLocal {
      */
     public List<Konto> pobierzPodobneKonta(Konto konto);
     
+        /**
+     * Metoda zwracająca liste wszystkich kont
+     * @return lista wszystkich kont
+     */
+    public List<Konto> pobierzWszystkieKonta();
+    
     /**
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu

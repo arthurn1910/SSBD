@@ -108,6 +108,12 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     }
     
     @Override
+    @RolesAllowed("pobierzWszystkieKonta")
+    public List<Konto> pobierzWszystkieKonta() {
+        return kontoManager.pobierzWszystkie();
+    }
+    
+    @Override
     @RolesAllowed("dodajPoziomDostepu")
     public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
         kontoManager.dodajPoziomDostepu(konto, poziom);

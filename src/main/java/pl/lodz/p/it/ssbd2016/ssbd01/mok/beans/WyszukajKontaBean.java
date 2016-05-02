@@ -64,7 +64,7 @@ public class WyszukajKontaBean {
      */
     public List<String> completeImie(String query) {
         List<String> results = new ArrayList();
-        List<Konto> konta = uzytkownikSession.pobierzPodobneKonta(new Konto());
+        List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getImie().length() >= query.length()) {
                 if(konta.get(i).getImie().substring(0, query.length()).equals(query) == true) {
@@ -90,7 +90,7 @@ public class WyszukajKontaBean {
      */
     public List<String> completeNazwisko(String query) {
         List<String> results = new ArrayList();
-        List<Konto> konta = uzytkownikSession.pobierzPodobneKonta(new Konto());
+        List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getNazwisko().length() >= query.length()) {
                 if(konta.get(i).getNazwisko().substring(0, query.length()).equals(query) == true) {
@@ -116,7 +116,7 @@ public class WyszukajKontaBean {
      */
     public List<String> completeEmail(String query) {
         List<String> results = new ArrayList();
-        List<Konto> konta = uzytkownikSession.pobierzPodobneKonta(new Konto());
+        List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getEmail().length() >= query.length()) {
                 if(konta.get(i).getEmail().substring(0, query.length()).equals(query) == true) {
@@ -142,7 +142,7 @@ public class WyszukajKontaBean {
      */
     public List<String> completeTelefon(String query) {
         List<String> results = new ArrayList();
-        List<Konto> konta = uzytkownikSession.pobierzPodobneKonta(new Konto());
+        List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getTelefon().length() >= query.length()) {
                 if(konta.get(i).getTelefon().substring(0, query.length()).equals(query) == true) {
