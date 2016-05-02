@@ -63,10 +63,10 @@ public class Spotkanie implements Serializable {
     @NotNull
     @Column(name = "dlugosc_spotkania")
     private int dlugoscSpotkania;
-    @JoinColumn(name = "id_uzytkownika", referencedColumnName = "id")
+    @JoinColumn(name = "id_uzytkownika", referencedColumnName = "id", updatable = false)
     @ManyToOne(optional = false)
     private Konto idUzytkownika;
-    @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id")
+    @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id", updatable = false)
     @ManyToOne(optional = false)
     private Ogloszenie idOgloszenia;
 

@@ -65,7 +65,7 @@ public class ElementWyposazeniaNieruchomosci implements Serializable {
         @JoinColumn(name = "id_nieruchomosci", referencedColumnName = "id")})
     @ManyToMany
     private Collection<Nieruchomosc> nieruchomoscWyposazonaCollection = new ArrayList<Nieruchomosc>();
-    @JoinColumn(name = "id_kategorii", referencedColumnName = "id")
+    @JoinColumn(name = "id_kategorii", referencedColumnName = "id", updatable=false)
     @ManyToOne(optional = false)
     private KategoriaWyposazeniaNieruchomosci idKategorii;
 

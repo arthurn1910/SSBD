@@ -66,8 +66,8 @@ public class Konto implements Serializable {
     @Version
     private long version;
     @JoinTable(name = "ulubione_ogloszenie", joinColumns = {
-        @JoinColumn(name = "id_konta", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id")})
+        @JoinColumn(name = "id_konta", referencedColumnName = "id", updatable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id", updatable = false)})
     @ManyToMany
     private Collection<Ogloszenie> ogloszenieUlubioneCollection = new ArrayList<Ogloszenie>();
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idAgenta")
