@@ -1,15 +1,19 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.faces.model.DataModel;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -26,6 +30,16 @@ public class UzytkownikSession implements Serializable {
     private Konto kontoEdytuj;
     
     private DataModel<Konto> kontaDataModel;
+
+    private String login;
+
+    @PostConstruct
+    public void init() {
+        login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        //po naprawniniu problemow z logowaniem zacznie zwracac login uzytkownika
+        if(login == null) login = "ANONYMOUS";
+        MOKEndpoint.ustawIP(login);
+    }
 
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
@@ -168,6 +182,9 @@ public class UzytkownikSession implements Serializable {
         MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
     }
 
+    public List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow(){
+        return MOKEndpoint.pobierzHistorieLogowanUzytkownikow();
+    }
     // Gettery i Settery
         
     public void setKontoEdytuj(Konto kontoEdytuj) {

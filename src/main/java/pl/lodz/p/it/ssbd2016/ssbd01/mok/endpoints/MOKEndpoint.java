@@ -1,27 +1,25 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.AdresIpServiceLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.NotyfikacjaServiceLocal;
+
+import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.*;
+import javax.interceptor.Interceptors;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-import javax.ejb.SessionSynchronization;
-import javax.ejb.Stateful;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.interceptor.Interceptors;
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
 
 /**
  * API servera dla modułu funkcjonalnego MOK
@@ -37,7 +35,10 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     private KontoFacadeLocal kontoFacade;
     @EJB
     private PoziomDostepuFacadeLocal poziomDostepuFacade;
-
+    @EJB
+    private AdresIpServiceLocal adresIpService;
+    @EJB
+    private NotyfikacjaServiceLocal notyfikacjaService;
     @Resource
     private SessionContext sessionContext;
     
@@ -50,6 +51,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @PermitAll
     public void rejestrujKontoKlienta(Konto konto) {
         kontoManager.rejestrujKontoKlienta(konto);
+        notyfikacjaService.wyslijPowiadomienieRejestracji(konto);
     }
     
     @Override
@@ -70,6 +72,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     public void odblokujKonto(Konto konto) {
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(true);
+        notyfikacjaService.wyslijPowiadomienieAktywacjiKonta(konto);
     }
 
     @Override
@@ -77,6 +80,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     public void zablokujKonto(Konto konto) {
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(false);
+        notyfikacjaService.wyslijPowiadomienieZablokowaniaKonta(konto);
     }  
     
     @Override
@@ -182,7 +186,16 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
         String login = sessionContext.getCallerPrincipal().getName();
         return kontoFacade.znajdzPoLoginie(login);
     }
-    
+
+    @Override
+    public List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow() {
+        return adresIpService.pobierzHistorieLogowanUzytkownikow();
+    }
+
+    @Override
+    public void ustawIP(String login){
+        adresIpService.processIpAdress(login);
+    }
     //Implementacja SessionSynchronization
     /**
      * Metoda logująca czas rozpoczęcia transakcji
