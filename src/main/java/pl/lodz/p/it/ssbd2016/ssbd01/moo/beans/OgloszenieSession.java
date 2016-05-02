@@ -60,6 +60,24 @@ public class OgloszenieSession implements Serializable {
     List<Ogloszenie> pobierzWszystkieOgloszenia() {
         return mooEndpoint.pobierzWszytkieOgloszenia();
     }
+    
+    void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) {
+        try {
+            mooEndpoint.edytujOgloszenieDanegoUzytkownika(ogloszenieNowe, ogloszenieStare);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
+        try {
+            mooEndpoint.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     void aktywujOgloszenie(Ogloszenie rowData) {
         mooEndpoint.aktywujOgloszenie(rowData);

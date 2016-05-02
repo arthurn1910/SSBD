@@ -7,7 +7,10 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+
+import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
@@ -37,6 +40,8 @@ public class MOOEndpoint implements MOOEndpointLocal {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    @Resource
+    private SessionContext sessionContext;
     
     @Override
     public Konto getKonto(String login) {
@@ -58,6 +63,31 @@ public class MOOEndpoint implements MOOEndpointLocal {
         
         nieruchomoscFacadeLocal.create(nowaNieruchomosc);
         ogloszenieFacadeLocal.create(noweOgloszenie);
+    }
+    
+    @Override
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) throws Exception {
+        String loginKonta = sessionContext.getCallerPrincipal().getName();
+        if(ogloszenieStare.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+        }
+        else {
+            // kopiuj dane z ogloszenia nowego do starego
+        }
+    }
+    
+    @Override
+    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        String loginKonta = sessionContext.getCallerPrincipal().getName();
+        if(ogloszenie.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+        }
+        else if(ogloszenie.getAktywne() == false) {
+            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+        }
+        else {
+            ogloszenie.setAktywne(false);
+        }
     }
 
     @Override
