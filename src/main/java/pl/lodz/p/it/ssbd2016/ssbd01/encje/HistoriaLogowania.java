@@ -30,6 +30,7 @@ public class HistoriaLogowania {
 
     @Basic
     @Column(name = "data")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataLogowania;
 
     @JoinColumn(name = "id_konta", referencedColumnName = "id")

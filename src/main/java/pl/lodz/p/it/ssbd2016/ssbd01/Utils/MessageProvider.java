@@ -14,7 +14,7 @@ public class MessageProvider {
     /**
      * pole przechowujące nazwę pliku z ustawieniami
      */
-    private static final String MESSAGES_FILE = "i18n\\messages";
+    private static final String MESSAGES_FILE = "i18n.messages";
 
     /**
      * pole przechowujące nazwę pliku słownika

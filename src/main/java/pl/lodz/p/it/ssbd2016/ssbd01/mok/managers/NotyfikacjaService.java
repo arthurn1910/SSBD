@@ -12,7 +12,9 @@ import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -42,7 +44,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
     /**
      * Model wiadomości
      */
-    private Message message;
+    private MimeMessage message;
 
     /**
      * Ujednolicony format daty w wiadomościach
@@ -87,9 +89,14 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(konto.getEmail())); //adres odbiorcy zmienic tutaj wartosc jesli chcecie zamockowac
             message.setSubject(MessageProvider.getMessage("notyfikacja.rejestracja.tytul"));
-            message.setText(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent( MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
                     + " " + MessageProvider.getMessage("notyfikacja.rejestracja.tresc") + " " +
-                    dateFormat.format(konto.getDataUtworzenia()) + ".");
+                    dateFormat.format(konto.getDataUtworzenia()) + ".", "text/html; charset=utf-8" );
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart( messageBodyPart );
+            message.setContent( multipart );
             Transport.send(message);
 
         } catch (MessagingException e) {
@@ -108,10 +115,17 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(konto.getEmail()));
-            message.setSubject(MessageProvider.getMessage("notyfikacja.zablokowane.tytul"));
-            message.setText(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+
+            message.setSubject(MessageProvider.getMessage("notyfikacja.zablokowane.tytul"),"utf-8");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
                     + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
-                    + dateFormat.format(new Date()) + ".");
+                    + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart( messageBodyPart );
+            message.setContent( multipart );
             Transport.send(message);
 
         } catch (MessagingException e) {
@@ -130,9 +144,14 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(konto.getEmail()));
             message.setSubject(MessageProvider.getMessage("notyfikacja.odblokowane.tytul"));
-            message.setText(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
-                    + " " + MessageProvider.getMessage("notyfikacja.odblokowane.tresc") + " "
-                    + dateFormat.format(new Date()) + ".");
+
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+                    + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
+                    + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart( messageBodyPart );
+            message.setContent( multipart );
             Transport.send(message);
 
         } catch (MessagingException e) {
