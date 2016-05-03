@@ -1,6 +1,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -8,6 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Ziarno umożliwiające tworzenie nowych kont o dowolnym poziomie dostępu
@@ -26,13 +31,24 @@ public class UtworzKontoBean {
     private String[] wybranePoziomy;
     
     /**
-     * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu
-     * @throws Exception 
+     * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
      */
-    public void utworzKonto() throws Exception {
+    public String utworzKont(){
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
-            uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
+            try {
+                uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
+            } catch (NieobslugiwaneKodowanie ex) {
+                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
+                return "NieobslugiwaneKodowanie";
+            } catch (BrakAlgorytmuKodowania ex) {
+                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
+                return "BrakAlgorytmuKodowania";
+            } catch (PoziomDostepuNieIstnieje ex) {
+                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
+                return "PoziomDostepuNieIstnieje";
+            }
         }
+        return "sukces";
     }
     
     /**

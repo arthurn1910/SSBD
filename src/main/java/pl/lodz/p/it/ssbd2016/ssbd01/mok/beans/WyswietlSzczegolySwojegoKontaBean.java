@@ -1,11 +1,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o obecnie zalogowanym
@@ -49,8 +53,16 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * @return      przekierowanie do strony z edycją
      */
     public String edytujSwojeKonto() {
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-        return "edytujDane";
+        try {
+            uzytkownikSession.pobierzKontoDoEdycji(konto);
+            return "edytujDane";
+        } catch (BladPliku ex) {
+            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPliku";
+        } catch (BladDeSerializacjiObiektu ex) {
+            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladDeSerializacjiObiektu";
+        }
     }
     
     /**
@@ -59,8 +71,16 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * @return      przekierowanie do strony z edycją
      */
     public String edytujSwojeHasloKonta() {
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-        return "edytujHaslo";
+        try {
+            uzytkownikSession.pobierzKontoDoEdycji(konto);
+            return "edytujHaslo";
+        } catch (BladPliku ex) {
+            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPliku";
+        } catch (BladDeSerializacjiObiektu ex) {
+            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladDeSerializacjiObiektu";
+        }
     }
     
     // Gettery i Settery

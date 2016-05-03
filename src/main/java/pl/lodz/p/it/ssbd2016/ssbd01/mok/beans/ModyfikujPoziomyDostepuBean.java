@@ -1,5 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -8,6 +10,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Klasa ta jest wykorzystywana do modyfikacji poziomów dostępu dla wybranego konta
@@ -28,27 +32,41 @@ public class ModyfikujPoziomyDostepuBean {
      * będą modyfikowane poziomy dostępu
      */
     @PostConstruct
-    private void initModel() {
+    private void initModel(){
         poziomyDostepuDataModel = new ListDataModel<String>(PoziomDostepuManager.getPoziomyDostepu());
         konto = uzytkownikSession.getWybraneKonto();
     }
     
     /**
-     * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta
-     * @throws Exception 
+     * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
      */
-    public void dodajPoziomDostepu() throws Exception {
-        uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-        initModel();
+    public String dodajPoziomDostepu(){
+        try {
+            uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+            initModel();
+        } catch (BladPoziomDostepu ex) {
+            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPoziomDostepu";
+        } catch (PoziomDostepuNieIstnieje ex) {
+            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "PoziomDostepuNieIstnieje";
+        }
+        return "modyfikujPoziomyDostepu";
     }
     
     /**
-     * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta
-     * @throws Exception 
+     * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta 
+     * @return 
      */
-    public void odlaczPoziomDostepu() throws Exception {
-        uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());      
-        initModel();
+    public String odlaczPoziomDostepu(){
+        try {
+            uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+            initModel();
+        } catch (BladPoziomDostepu ex) {
+            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPoziomDostepu";
+        }
+        return "modyfikujPoziomyDostepu";
     }
     
     /**

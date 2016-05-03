@@ -3,6 +3,16 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOK
@@ -13,15 +23,21 @@ public interface MOKEndpointLocal {
     /**
      * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
      * @param konto informacje kontcie do utworzenia
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    void rejestrujKontoKlienta(Konto konto);
+    void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
     
     /**
      * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
      * @param konto informacje kontcie do utworzenia
      * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception;
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje;
     
     /**
      * Metoda zmienia stan konta na potwierdzone
@@ -45,15 +61,23 @@ public interface MOKEndpointLocal {
      * Zmienia hasło dla obecnie zalogowanego użytkownika
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
-     * @throws java.lang.Exception rzucany gdy stare hasła się nie zgadzaja
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws Exception;
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws BrakAlgorytmuKodowania, NiezgodneHasla, 
+            NieobslugiwaneKodowanie, NiezgodnyLogin, PoziomDostepuNieIstnieje  ;
 
     /**
      * Zmienia hasło dla obecnie edytowanego użytkownika
      * @param noweHaslo nowe hasło w postaci jawnej
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    void zmienHaslo(String noweHaslo);
+    void zmienHaslo(String noweHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
 
     /**
      * Wyszukuje konto o podanym loginie
@@ -73,39 +97,44 @@ public interface MOKEndpointLocal {
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @throws java.lang.Exception rzucany gdy nie można dodać poziomu dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception;
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje;
 
     /**
      * Metoda odłączająca dany poziom dostępu do konta
      * @param konto     konto od którego należy odłączyć poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @throws java.lang.Exception rzucany gdy nie można odłączyć poziomu dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      */
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception;
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu;
 
     /**
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
      * @param konto     konto które chcemy edytować
      * @return          głęboka kopia encji Konto
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      */
-    Konto pobierzKontoDoEdycji(Konto konto);
+    Konto pobierzKontoDoEdycji(Konto konto) throws BladPliku, BladDeSerializacjiObiektu ;
     
     /**
      * Metoda zapisuje konto użytkownika obecnie zalogowanego ze zmienionymi 
      * parameterami. Sprawdzana jest blokada optymistyczna.
      * @param konto     konto ze zmianami
-     * @throws Exception rzucany gdy endytowane konto nie jest kontem obecnie zalogowanego użytkownika
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji
      */
-    public void zapiszSwojeKontoPoEdycji(Konto konto) throws Exception;
+    public void zapiszSwojeKontoPoEdycji(Konto konto) throws NiezgodnyLogin, BrakKontaDoEdycji, KontoNiezgodneWczytanym ;
     
     /**
      * Metoda zapisuje konto ze zmienionymi parameterami. Sprawdzana jest
      * blokada optymistyczna.
      * @param konto konto ze zmianami
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji
      */
-    void zapiszKontoPoEdycji(Konto konto);
+    void zapiszKontoPoEdycji(Konto konto) throws BrakKontaDoEdycji, KontoNiezgodneWczytanym ;
 
     /**
      * Metoda pobierająca konto obecnie zalogowanego użytkownika

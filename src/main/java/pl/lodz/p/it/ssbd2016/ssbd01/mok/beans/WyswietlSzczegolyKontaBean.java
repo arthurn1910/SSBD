@@ -1,11 +1,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku 
@@ -81,8 +85,16 @@ public class WyswietlSzczegolyKontaBean {
      * @return      przekierowanie do strony z edycją
      */
     public String edytujKonto() {
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-        return "edytujDaneKonta";
+        try {
+            uzytkownikSession.pobierzKontoDoEdycji(konto);
+            return "edytujDaneKonta";
+        } catch (BladPliku ex) {
+            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPliku";
+        } catch (BladDeSerializacjiObiektu ex) {
+            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladDeSerializacjiObiektu";
+        }
     }
     
     /**
@@ -91,8 +103,16 @@ public class WyswietlSzczegolyKontaBean {
      * @return      przekierowanie do strony z edycją
      */
     public String edytujHasloKonta() {
-        uzytkownikSession.pobierzKontoDoEdycji(konto);
-        return "edytujHasloKonta";
+        try {
+            uzytkownikSession.pobierzKontoDoEdycji(konto);
+            return "edytujHasloKonta";
+        } catch (BladPliku ex) {
+            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BladPliku";
+        } catch (BladDeSerializacjiObiektu ex) {
+            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return "BadDeSerializacjiObiektu";
+        }
     }
         
     // Gettery i Settery
