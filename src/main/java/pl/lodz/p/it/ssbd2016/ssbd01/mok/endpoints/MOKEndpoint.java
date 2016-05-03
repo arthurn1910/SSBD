@@ -28,6 +28,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
@@ -64,7 +65,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
         kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 

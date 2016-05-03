@@ -24,8 +24,7 @@ public class WyjatkiBean {
     private UzytkownikSession uzytkownikSession;
     
     public String getMiejsceBladDeSerializacjiObiektu(){
-        return "aaaaa";
-        //return uzytkownikSession.getBladDeSerializajiObiektu().getMiejsce();
+        return uzytkownikSession.getBladDeSerializajiObiektu().getMiejsce();
     }
     
     public String getMiejsceBladPliku(){
@@ -47,14 +46,14 @@ public class WyjatkiBean {
     public String getStatusBladPoziomDostepu(){
         int a=uzytkownikSession.getBladPoziomDostepu().getStatus();
         if(a==1)
-            return "dołaczanie";
+            return "dołaczania";
         else if(a==0)
-            return "sprawdzanie";
+            return "sprawdzania";
         else
-            return "odłaczanie";
+            return "odłaczania";
     }
     
-    public String getMiejsceBrakAlgorytmuKodowanialadWywolania(){
+    public String getMiejsceBrakAlgorytmuKodowania(){
         return uzytkownikSession.getBrakAlgorytmuKodowania().getMiejsce();
     }
     
@@ -84,5 +83,9 @@ public class WyjatkiBean {
     
     public String getPoziomPoziomDostepuNieIstnieje(){
         return uzytkownikSession.getPoziomDostepuNieIstnieje().getPoziom();
+    }
+    
+    public String getMiejsceNaruszenieUniq(){
+        return uzytkownikSession.getNaruszenieUniq().getMiejsce();
     }
 }

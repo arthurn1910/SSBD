@@ -14,7 +14,9 @@
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">         
-         Nieudana próba deserializacji obiektu w: pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils.deepCloneThroughSerialization()	
-    </ui:define>
+     <ui:define name="content">  
+         <h:form>
+            Nieudana próba otwarcia pliku: <h:outputText value="#{wyjatkiBean.getPlikBladPliku()}" />. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejsceBladPliku()}" />
+         </h:form>
+     </ui:define>
 </ui:composition>

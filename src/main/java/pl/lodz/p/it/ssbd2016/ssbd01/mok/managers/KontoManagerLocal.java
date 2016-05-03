@@ -5,6 +5,7 @@ import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
@@ -22,7 +23,11 @@ public interface KontoManagerLocal {
      * @param konto     konto obecnie zalogowanego użytkownika
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w w postaci jawnej
-     * @throws java.lang.Exception rzucany gdy hasła się nie zgadzają lub konto nie należy do obecnie zalogowanego użytkownika
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin
      */
     void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NiezgodneHasla, NiezgodnyLogin ;
 
@@ -30,12 +35,18 @@ public interface KontoManagerLocal {
      * Metoda zmienia hasło podanego konta
      * @param konto     konto, które ma mieć zmienione hasło
      * @param noweHaslo nowe hasło
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
     void zmienHaslo(Konto konto, String noweHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
     
     /**
      * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
      * @param konto informacje kontcie do utworzenia
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
     void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
     
@@ -43,6 +54,9 @@ public interface KontoManagerLocal {
      * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
      * @param konto informacje kontcie do utworzenia
      * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
     void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje;
     
@@ -58,7 +72,8 @@ public interface KontoManagerLocal {
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @throws java.lang.Exception rzucany gdy nie można dodać poziomu dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
     public void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje;
     
@@ -66,7 +81,7 @@ public interface KontoManagerLocal {
      * Metoda odłączająca dany poziom dostępu do konta
      * @param konto     konto od którego należy odłączyć poziom dostępu
      * @param poziom    nazwa poziomu dostępu
-     * @throws java.lang.Exception rzucany gdy nie można odłączyć poziomu dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      */
     public void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu;
 }

@@ -13,6 +13,7 @@ import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 /**
  *
@@ -27,6 +28,8 @@ public class OgloszenieSession implements Serializable {
     public OgloszenieSession() {
     }
 
+    private OgloszenieDeaktywowaneWczesniej ogloszenieDeaktyowwaneWczesniej;
+    
     void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc) {
         Ogloszenie noweOgloszenie = new Ogloszenie();
         Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
@@ -65,8 +68,13 @@ public class OgloszenieSession implements Serializable {
         mooEndpoint.aktywujOgloszenie(rowData);
     }
 
-    void deaktywujOgloszenie(Ogloszenie rowData) {
-        mooEndpoint.deaktywujOgloszenie(rowData);
+    void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej{
+        try{
+            mooEndpoint.deaktywujOgloszenie(rowData);
+        } catch(OgloszenieDeaktywowaneWczesniej ex){
+            this.ogloszenieDeaktyowwaneWczesniej=ex;
+            throw ex;
+        }
     }
 
     void dodajDoUlubionych(Ogloszenie rowData) {
@@ -75,6 +83,10 @@ public class OgloszenieSession implements Serializable {
 
     List<Ogloszenie> pobierzUlubioneOgloszenia() {
         return mooEndpoint.pobierzUlubioneOgloszenia();
+    }
+
+    public OgloszenieDeaktywowaneWczesniej getOgloszenieDeaktyowwaneWczesniej() {
+        return ogloszenieDeaktyowwaneWczesniej;
     }
     
     

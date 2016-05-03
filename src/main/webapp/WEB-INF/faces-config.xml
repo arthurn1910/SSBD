@@ -42,6 +42,70 @@
     
     <navigation-rule>
         <navigation-case>
+            <from-outcome>brakKontaDoEdycji</from-outcome>
+            <to-view-id>/wyjatki/brakKontaDoEdycji.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+   
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>BrakAlgorytmuKodowania</from-outcome>
+            <to-view-id>/wyjatki/brakAlgorytmuKodowania.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+     
+     <navigation-rule>
+        <navigation-case>
+            <from-outcome>NieobslugiwaneKodowanie</from-outcome>
+            <to-view-id>/wyjatki/nieobslugiwaneKodowanie.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>NaruszenieUniq</from-outcome>
+            <to-view-id>/wyjatki/naruszenieUniq.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+     <navigation-rule>
+        <navigation-case>
+            <from-outcome>NiezgodneHasla</from-outcome>
+            <to-view-id>/wyjatki/niezgodneHasla.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>NiezgodnyLogin</from-outcome>
+            <to-view-id>/wyjatki/niezgodnyLogin.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>PoziomDostepuNieIstnieje</from-outcome>
+            <to-view-id>/wyjatki/poziomDostepuNieIstnieje.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>NiezgodnyLogin</from-outcome>
+            <to-view-id>/wyjatki/niezgodnyLogin.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
             <from-outcome>utworzKonto</from-outcome>
             <to-view-id>/mok/utworzKonto.xhtml</to-view-id>
             <redirect />
@@ -52,6 +116,14 @@
         <navigation-case>
             <from-outcome>logowanie</from-outcome>
             <to-view-id>/mok/logowanie.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>BladPoziomDostepu</from-outcome>
+            <to-view-id>/wyjatki/bladPoziomDostepu</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>

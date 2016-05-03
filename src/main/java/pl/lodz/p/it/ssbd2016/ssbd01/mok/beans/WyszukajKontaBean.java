@@ -51,8 +51,11 @@ public class WyszukajKontaBean {
             konto.setTelefon(telefon);   
         konto.setAktywne(aktywne);
         konto.setPotwierdzone(potwierdzone);
-        
-        uzytkownikSession.setKontaDataModel(new ListDataModel<>(uzytkownikSession.pobierzPodobneKonta(konto)));
+        try{
+            uzytkownikSession.setKontaDataModel(new ListDataModel<>(uzytkownikSession.pobierzPodobneKonta(konto)));
+        }catch(Exception ex){
+            
+        }
     }
     
     /**

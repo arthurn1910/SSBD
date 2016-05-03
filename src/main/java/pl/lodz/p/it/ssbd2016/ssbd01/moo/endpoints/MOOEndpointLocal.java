@@ -12,6 +12,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 /**
  *
@@ -32,7 +33,7 @@ public interface MOOEndpointLocal {
 
     public void aktywujOgloszenie(Ogloszenie rowData);
 
-    public void deaktywujOgloszenie(Ogloszenie rowData);
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej;
 
     public void dodajDoUlubionych(Ogloszenie rowData);
 

@@ -14,7 +14,9 @@
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">         
-         Brak wczytanego konta do modyfikacji w:
+     <ui:define name="content">
+         <h:form>
+             Brak wczytanego konta do modyfikacji. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejsceBrakKontaDoEdycji()}" />
+         </h:form>
      </ui:define>
 </ui:composition>

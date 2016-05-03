@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
@@ -40,6 +41,9 @@ public class RejestracjaKontaKlientaBean {
             } catch (BrakAlgorytmuKodowania ex) {
                 Logger.getLogger(RejestracjaKontaKlientaBean.class.getName()).log(Level.SEVERE, null, ex);
                 return "BrakAlgorytmuKodowania";
+            } catch (NaruszenieUniq ex){
+                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
+                return "NaruszenieUniq";
             }
         }
         return "sukcess";

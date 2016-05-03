@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -21,6 +22,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
@@ -73,7 +75,8 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
+    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
+        try{
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
@@ -85,22 +88,29 @@ public class KontoManager implements KontoManagerLocal {
             poziomDostepuFacade.create(poziomDostepu);
             
             konto.getPoziomDostepuCollection().add(poziomDostepu);
+        }catch(EJBException ex){
+            throw new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.rejestrujKontoKlienta()");
+        }
     }
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
         if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
-            konto.setAktywne(true);
-            konto.setPotwierdzone(false);
-            konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
-            kontoFacade.create(konto);
-            
-            for (String poziomDostepuStr: poziomyDostepu) {
-                PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepu(poziomDostepuStr);     
-                poziomDostepu.setKontoId(konto);
-                poziomDostepuFacade.create(poziomDostepu);
-                konto.getPoziomDostepuCollection().add(poziomDostepu);
+            try{
+                konto.setAktywne(true);
+                konto.setPotwierdzone(false);
+                konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
+                kontoFacade.create(konto);
+
+                for (String poziomDostepuStr: poziomyDostepu) {
+                    PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepu(poziomDostepuStr);     
+                    poziomDostepu.setKontoId(konto);
+                    poziomDostepuFacade.create(poziomDostepu);
+                    konto.getPoziomDostepuCollection().add(poziomDostepu);
+                }
+            }catch(EJBException ex){
+                throw new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.rejestrujKontoKlienta()");
             }
         }
     }

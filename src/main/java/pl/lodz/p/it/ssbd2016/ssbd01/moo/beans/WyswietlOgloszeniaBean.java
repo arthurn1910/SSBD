@@ -13,6 +13,7 @@ import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 /**
  *
@@ -46,9 +47,14 @@ public class WyswietlOgloszeniaBean {
         initModel();
     }
     
-    public void deaktywujOgloszenie() {
-        ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
+    public String deaktywujOgloszenie() {
+        try{
+            ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
+        } catch(OgloszenieDeaktywowaneWczesniej ex){
+            return "OgloszenieDeaktywowaneWczesniej";
+        }
         initModel();
+        return "";
     }
     
     public void dodajDoUlubionych() {

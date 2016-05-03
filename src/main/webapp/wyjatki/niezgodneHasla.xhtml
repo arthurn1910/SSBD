@@ -14,7 +14,9 @@
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">         
-         Wprowadzone hasło jest niezgodne z haslem przypisanym do konta w miejscu:
+     <ui:define name="content">   
+         <h:form>
+             Wprowadzone hasło jest niezgodne z haslem przypisanym do konta. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejsceNiezgodneHasla()}" />
+         </h:form>
      </ui:define>
 </ui:composition>

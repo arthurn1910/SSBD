@@ -14,7 +14,9 @@
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">         
-        Błąd poziomu dostępu
+     <ui:define name="content">   
+         <h:form>
+            Nieudana próba <h:outputText value="#{wyjatkiBean.getStatusBladPoziomDostepu()}" /> poziomu: <h:outputText value="#{wyjatkiBean.getPoziomBladPoziomDostepu()}" />. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejsceBladPoziomDostepu()}" />	
+         </h:form>
      </ui:define>
 </ui:composition>

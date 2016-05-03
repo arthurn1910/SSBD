@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.EJBAccessException;
+import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
@@ -18,6 +20,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
@@ -49,6 +52,7 @@ public class UzytkownikSession implements Serializable {
     private NiezgodnyLogin niezgodnyLogin;
     private PoziomDostepuNieIstnieje poziomDostepuNieIstnieje;
     private KontoNiezgodneWczytanym kontoNiezgodneWczytanym;
+    private NaruszenieUniq naruszenieUniq;
 
     public BladDeSerializacjiObiektu getBladDeSerializajiObiektu() {
         return bladDeSerializajiObiektu;
@@ -89,6 +93,12 @@ public class UzytkownikSession implements Serializable {
     public KontoNiezgodneWczytanym getKontoNiezgodneWczytanym() {
         return kontoNiezgodneWczytanym;
     }
+
+    public NaruszenieUniq getNaruszenieUniq() {
+        return naruszenieUniq;
+    }
+    
+    
     
 
     /**
@@ -98,17 +108,16 @@ public class UzytkownikSession implements Serializable {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    public void rejestrujKontoKlienta(Konto k) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
-        Konto kontoRejestracja = new Konto();
-        kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo(k.getHaslo());
-        kontoRejestracja.setImie(k.getImie());
-        kontoRejestracja.setNazwisko(k.getNazwisko());
-        kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
-        kontoRejestracja.setTelefon(k.getTelefon());
-       
+    public void rejestrujKontoKlienta(Konto k) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
         try {
+            Konto kontoRejestracja = new Konto();
+            kontoRejestracja.setLogin(k.getLogin());
+            kontoRejestracja.setHaslo(k.getHaslo());
+            kontoRejestracja.setImie(k.getImie());
+            kontoRejestracja.setNazwisko(k.getNazwisko());
+            kontoRejestracja.setEmail(k.getEmail());
+            kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
+            kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
         } catch (PoziomDostepuNieIstnieje ex) {
             this.poziomDostepuNieIstnieje=ex;
@@ -119,6 +128,10 @@ public class UzytkownikSession implements Serializable {
         } catch (BrakAlgorytmuKodowania ex) {
             this.brakAlgorytmuKodowania=ex;
             throw ex;  
+        } catch(EJBException ex){
+            NaruszenieUniq exc=new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession.rejestrujKontoKlienta()");
+            this.naruszenieUniq=exc;
+            throw exc;
         }
     }
         
@@ -131,17 +144,17 @@ public class UzytkownikSession implements Serializable {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
-        Konto kontoRejestracja = new Konto();
-        kontoRejestracja.setLogin(k.getLogin());
-        kontoRejestracja.setHaslo(k.getHaslo());
-        kontoRejestracja.setImie(k.getImie());
-        kontoRejestracja.setNazwisko(k.getNazwisko());
-        kontoRejestracja.setEmail(k.getEmail());
-        kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
-        kontoRejestracja.setTelefon(k.getTelefon());
-        
+    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
         try {
+            Konto kontoRejestracja = new Konto();
+            kontoRejestracja.setLogin(k.getLogin());
+            kontoRejestracja.setHaslo(k.getHaslo());
+            kontoRejestracja.setImie(k.getImie());
+            kontoRejestracja.setNazwisko(k.getNazwisko());
+            kontoRejestracja.setEmail(k.getEmail());
+            kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
+            kontoRejestracja.setTelefon(k.getTelefon());
+        
             MOKEndpoint.utworzKonto(kontoRejestracja, poziomyDostepu);
         } catch (NieobslugiwaneKodowanie ex) {
             this.nieobslugiwaneKodowanie=ex;
@@ -152,6 +165,13 @@ public class UzytkownikSession implements Serializable {
         } catch (PoziomDostepuNieIstnieje ex) {
             this.poziomDostepuNieIstnieje=ex;
             throw ex; 
+        } catch(NaruszenieUniq ex){
+            this.naruszenieUniq=ex;
+            throw ex;
+        } catch(EJBException ex){
+            NaruszenieUniq exc=new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession.utworzKonto()");
+            this.naruszenieUniq=exc;
+            throw exc;
         }
     }
     
@@ -375,7 +395,11 @@ public class UzytkownikSession implements Serializable {
     }
 
     public void setKontaDataModel(DataModel<Konto> kontaDataModel) {
-        this.kontaDataModel = kontaDataModel;
+        try{
+            this.kontaDataModel = kontaDataModel;
+        } catch(EJBAccessException ex){
+            
+        }
     }  
     
 }

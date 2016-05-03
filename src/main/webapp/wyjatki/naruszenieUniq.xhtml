@@ -15,6 +15,8 @@
     </ui:define>
     
      <ui:define name="content">         
-         Blad wywolania metody:    w miejscu:
+        <h:form>
+            Wprowadzone dane naruszyły wartości uniq. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejsceNaruszenieUniq()}" />
+        </h:form>
      </ui:define>
 </ui:composition>
