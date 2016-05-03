@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
 import java.io.Serializable;
@@ -15,17 +10,13 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
 
 /**
- *
- * @author java
+ * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
 public class OgloszenieSession implements Serializable {
     
     @EJB
     private MOOEndpointLocal mooEndpoint;
-
-    public OgloszenieSession() {
-    }
 
     void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc) {
         Ogloszenie noweOgloszenie = new Ogloszenie();
@@ -69,12 +60,25 @@ public class OgloszenieSession implements Serializable {
         mooEndpoint.deaktywujOgloszenie(rowData);
     }
 
-    void dodajDoUlubionych(Ogloszenie rowData) {
-        mooEndpoint.dodajDoUlubionych(rowData);
-    }
 
     List<Ogloszenie> pobierzUlubioneOgloszenia() {
         return mooEndpoint.pobierzUlubioneOgloszenia();
+    }
+    
+    /**
+     * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika
+     * @param ogloszenie ogłoszenie, które ma być dodane
+     */
+    void dodajDoUlubionych(Ogloszenie ogloszenie) {
+        mooEndpoint.dodajDoUlubionych(ogloszenie);
+    }
+    
+    /**
+     * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
+     * @param ogloszenie ogłoszenie, które ma być usunięte
+     */
+    void usunZUlubionych(Ogloszenie ogloszenie) {
+        mooEndpoint.usunZUlubionych(ogloszenie);
     }
     
     
