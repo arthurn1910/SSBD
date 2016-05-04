@@ -61,8 +61,8 @@
   text-decoration : underline;
 }
 
-#top p {
+#top h {
+    font-size : 300%;
     color: white;
-  font-weight : bold;
-  text-decoration : underline;    
+  font-weight : bold;   
 }

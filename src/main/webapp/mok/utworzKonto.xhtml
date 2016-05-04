@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Utórz konto</p>
+        <h>${msg["tytulyPrzypadkow.utworzKonto"]}</h>
     </ui:define>
 
     <ui:define name="left">
@@ -14,22 +14,22 @@
     </ui:define>
 
     <ui:define name="content">
-        Utwórz konto
+        <h>${msg["tytulyPrzypadkow.utworzKonto"]}</h>
         <h:form id="form">
-            Imie: <h:inputText value="#{utworzKontoBean.konto.imie}" id="imie"/> <h:message for="imie" styleClass="error"/> <br />
-            Nazwisko: <h:inputText value="#{utworzKontoBean.konto.nazwisko}" id="nazwisko"/> <h:message for="nazwisko" styleClass="error"/><br />
-            Login: <h:inputText value="#{utworzKontoBean.konto.login}" id="login"/> <h:message for="login" styleClass="error"/><br />
-            Email: <h:inputText value="#{utworzKontoBean.konto.email}" id="email"/> <h:message for="email" styleClass="error"/><br />
-            Telefon: <h:inputText value="#{utworzKontoBean.konto.telefon}" id="telefon"/> <h:message for="telefon" styleClass="error"/><br />
+            ${msg["daneKonta.imie"]} <h:inputText value="#{utworzKontoBean.konto.imie}" id="imie"/> <h:message for="imie" styleClass="error"/> <br />
+            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{utworzKontoBean.konto.nazwisko}" id="nazwisko"/> <h:message for="nazwisko" styleClass="error"/><br />
+            ${msg["daneKonta.login"]} <h:inputText value="#{utworzKontoBean.konto.login}" id="login"/> <h:message for="login" styleClass="error"/><br />
+            ${msg["daneKonta.email"]}  <h:inputText value="#{utworzKontoBean.konto.email}" id="email"/> <h:message for="email" styleClass="error"/><br />
+            ${msg["daneKonta.numerTelefonu"]}  <h:inputText value="#{utworzKontoBean.konto.telefon}" id="telefon"/> <h:message for="telefon" styleClass="error"/><br />
             Hasło: <h:inputSecret value="#{utworzKontoBean.konto.haslo}" id="haslo"/> <h:message for="haslo" styleClass="error"/><br />
             Powtórz hasło: <h:inputSecret value="#{utworzKontoBean.potorzoneHaslo}" id="hasloPotworzone"/> <h:message for="hasloPotworzone" styleClass="error"/><br />
             Wybierz poziomy:<br />
             <h:selectManyCheckbox value="#{utworzKontoBean.wybranePoziomy}" layout="pageDirection" id="poziomy">
                 <f:selectItems value="#{utworzKontoBean.pobierzPoziomyDostepu()}" />
             </h:selectManyCheckbox> <h:message for="poziomy" styleClass="error"/><br />
-            <h:commandButton action="powrot" value="Powróć" />
-            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                value="Zarejestruj" action="#{utworzKontoBean.utworzKonto()}"  class="edit_icon" >
+            <h:commandButton action="#{msg['komunikat.powrot']}" value="Powróć" />
+            <h:commandButton onclick="if (! confirm('#{msg['daneKonta.imie']}') return false"
+                value="#{msg['komunikat.zarejestruj']}" action="#{utworzKontoBean.utworzKonto()}"  class="edit_icon" >
             </h:commandButton> 
         </h:form>
     </ui:define>

@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Edytuj dane innego konta</p>
+        <h:outputText value="#{msg["tytulyPrzypadkow.edytujDaneKonta"]} />
     </ui:define>
     
     <ui:define name="left">
@@ -14,16 +14,16 @@
     </ui:define>
     
     <ui:define name="content">
-        Zmien dane dla innego uzytkownika:
+        <h1>${msg["tytulyPrzypadkow.edytujDaneKonta"]}:</h1>
         <h:form>
-            Imie: <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
-            Nazwisko: <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>
-            Email: <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
-            Telefon: <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
+            ${msg["daneKonta.imie"]}  <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
+            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/> <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>
+            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
+            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                                 value="Potwierdz" action="#{edytujDaneBean.zapiszPoEdycji()}"  class="edit_icon">
+                                 value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
-            <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot" />
+            <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}" />
         </h:form>
     </ui:define>
 </ui:composition>
