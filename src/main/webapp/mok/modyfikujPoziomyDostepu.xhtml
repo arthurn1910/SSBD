@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>${msg[tytulyPrzypadkow.modyfikujPoziomyDostepu]}</p>
+        <h>${msg["tytulyPrzypadkow.modyfikujPoziomyDostepu"]}</h>
     </ui:define>
     
     <ui:define name="left">
@@ -17,16 +17,16 @@
         <h:form id="nowePoziomy">            
             <h:dataTable id="listaKont" var="poziom" value="#{modyfikujPoziomyDostepuBean.poziomyDostepuDataModel}">
                 <h:column id="nazwa">
-                    <f:facet name="header">Nazwa poziomu</f:facet>
+                    <f:facet name="header">#{msg['komunikat.nazwaDostepu']}</f:facet>
                     <h:outputText value="#{poziom}" />
                 </h:column>
                 <h:column id="akcja">
-                    <f:facet name="header">Akcja</f:facet>
-                    <h:commandButton value="Dodaj" action="#{modyfikujPoziomyDostepuBean.dodajPoziomDostepu()}" rendered="#{not modyfikujPoziomyDostepuBean.czyPosiadaAktywnyPoziomDostepu()}"/>
-                    <h:commandButton value="Odlacz" action="#{modyfikujPoziomyDostepuBean.odlaczPoziomDostepu()}" rendered="#{modyfikujPoziomyDostepuBean.czyPosiadaAktywnyPoziomDostepu()}" />
+                    <f:facet name="header">#{msg['komunikat.akcja']}</f:facet>
+                    <h:commandButton value="#{msg['komunikat.dodaj']}" action="#{modyfikujPoziomyDostepuBean.dodajPoziomDostepu()}" rendered="#{not modyfikujPoziomyDostepuBean.czyPosiadaAktywnyPoziomDostepu()}"/>
+                    <h:commandButton value="#{msg['komunikat.odlacz']}" action="#{modyfikujPoziomyDostepuBean.odlaczPoziomDostepu()}" rendered="#{modyfikujPoziomyDostepuBean.czyPosiadaAktywnyPoziomDostepu()}" />
                 </h:column>
             </h:dataTable>
-            <h:commandButton value="Powrót" action="wyswietlSzczegolyKonta" />
+            <h:commandButton value="#{msg['komunikat.powrot']}" action="wyswietlSzczegolyKonta" />
         </h:form>
     </ui:define>
 </ui:composition>

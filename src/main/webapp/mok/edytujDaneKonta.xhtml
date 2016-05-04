@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>${msg[tytulyPrzypadkow.edytujDaneKonta]}</p>
+        <h:outputText value="#{msg["tytulyPrzypadkow.edytujDaneKonta"]} />
     </ui:define>
     
     <ui:define name="left">
@@ -14,7 +14,7 @@
     </ui:define>
     
     <ui:define name="content">
-        ${msg[tytulyPrzypadkow.edytujDaneKonta]}:
+        <h1>${msg["tytulyPrzypadkow.edytujDaneKonta"]}:</h1>
         <h:form>
             ${msg["daneKonta.imie"]}  <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
             ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/> <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>

@@ -6,15 +6,15 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>${msg[tytulyPrzypadkow.wyszukajKonta]}</p>
+        <h>${msg["tytulyPrzypadkow.wyszukajKonta"]}</h>
     </ui:define>
 
     <ui:define name="left">
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     <ui:define name="content">
-        #{msg[wyszukiwanie.listaKont]}<br /><br />
-        #{msg[wyszukiwanie.wyszukajWedlug]}<br />
+        <h1>#{msg["wyszukiwanie.listaKont"]}</h1><br /><br />
+        <h1>#{msg["wyszukiwanie.wyszukajWedlug"]}</h1><br />
         <h:form id="listaKontForm1">
             ${msg["daneKonta.imie"]} <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
             ${msg["daneKonta.nazwisko"]} <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
