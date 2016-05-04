@@ -64,7 +64,7 @@ public class TypNieruchomosci implements Serializable {
     @NotNull
     @Column(name = "srednia_cena_metra_kwadratowego")
     private BigDecimal sredniaCenaMetraKwadratowego;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typNieruchomosci")
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "typNieruchomosci")
     private Collection<Nieruchomosc> nieruchomoscCollection = new ArrayList<Nieruchomosc>();
 
     public TypNieruchomosci() {

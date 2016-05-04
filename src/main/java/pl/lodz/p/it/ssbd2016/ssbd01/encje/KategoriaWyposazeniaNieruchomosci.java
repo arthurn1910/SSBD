@@ -57,7 +57,7 @@ public class KategoriaWyposazeniaNieruchomosci implements Serializable {
     @Column(name = "version")
     @Version
     private long version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idKategorii")
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idKategorii")
     private Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection = new ArrayList<ElementWyposazeniaNieruchomosci>();
 
     public KategoriaWyposazeniaNieruchomosci() {
