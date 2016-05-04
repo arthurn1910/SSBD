@@ -5,37 +5,39 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
+
 import javax.ejb.Local;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import java.util.List;
 
 /**
- *
  * @author java
  */
 @Local
 public interface MOOEndpointLocal {
 
-    public Konto getKonto(String login);
+    Konto getKonto(String login);
 
-    public TypOgloszenia getTypOgloszenia(String typ);
+    TypOgloszenia getTypOgloszenia(String typ);
 
-    public TypNieruchomosci getTypNieruchomosci(String typ);
+    TypNieruchomosci getTypNieruchomosci(String typ);
 
-    public void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
+    /**
+     * Dodaje ogłszenie dla nieruchomości MOO. 1, Kamil Rogowski
+     *
+     * @param noweOgloszenie   ogłoszenie
+     * @param nowaNieruchomosc nieruchomości
+     */
+    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
 
-    public List<Ogloszenie> pobierzWszytkieOgloszenia();
+    List<Ogloszenie> pobierzWszytkieOgloszenia();
 
-    public void aktywujOgloszenie(Ogloszenie rowData);
+    void aktywujOgloszenie(Ogloszenie rowData);
 
-    public void deaktywujOgloszenie(Ogloszenie rowData);
+    void deaktywujOgloszenie(Ogloszenie rowData);
 
-    public void dodajDoUlubionych(Ogloszenie rowData);
+    void dodajDoUlubionych(Ogloszenie rowData);
 
-    public List<Ogloszenie> pobierzUlubioneOgloszenia();
-    
+    List<Ogloszenie> pobierzUlubioneOgloszenia();
+
 }

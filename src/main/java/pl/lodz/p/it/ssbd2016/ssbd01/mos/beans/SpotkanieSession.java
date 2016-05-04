@@ -1,13 +1,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
-import java.io.Serializable;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
+
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
-import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import java.io.Serializable;
 import java.util.Date;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import java.util.List;
 
 @SessionScoped
 public class SpotkanieSession implements Serializable {
@@ -33,4 +35,38 @@ public class SpotkanieSession implements Serializable {
         Konto konto = mosEndpoint.pobierzPierwszeKonto();
         return konto;
     }
+
+    /**
+     * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
+     *
+     * @param spotkaniaDlaKonta konto,
+     * @return lista spotkań
+     */
+    public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
+
+        return mosEndpoint.pobierzSpotkania(spotkaniaDlaKonta);
+    }
+
+
+    /**
+     * Anuluje spotkania dla konta, MOS.3, Kamil Rogowski
+     *
+     * @param konto                 konto ze spotkaniami
+     * @param spotkanieDoAnulowania spotkanie do anulowania
+     */
+    public void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania) {
+        mosEndpoint.anulujSpotkanie(konto, spotkanieDoAnulowania);
+    }
+
+    /**
+     * Pobiera spotkania dla ogłoszenia, MOS. 5, Kamil Rogowski
+     *
+     * @param ogloszenie ogłoszenie
+     * @return lista spotkań
+     */
+    public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
+
+        return mosEndpoint.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
+    }
+
 }
