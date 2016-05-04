@@ -38,7 +38,7 @@ public class SpotkanieSession implements Serializable {
 
     /**
      * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
-     *
+     * MOS.4, MOS.2 P. Stepien
      * @param spotkaniaDlaKonta konto,
      * @return lista spotkań
      */
@@ -69,4 +69,30 @@ public class SpotkanieSession implements Serializable {
         return mosEndpoint.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
     }
 
+    /**
+     * rezerwuje spotkanie MOS 1, P. Stepien
+     * @param spotkanie 
+     */
+    public void rezerwujSpotkanie(Spotkanie spotkanie) {
+        mosEndpoint.rezerwujSpotkanie(spotkanie);
+    }
+    
+    /**
+     * pobiera spotkanie do edycji MOS.2 P. Stepien
+     * @param spotkanie
+     * @return 
+     */
+    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) {
+
+        return mosEndpoint.pobierzSpotkanieDoEdycji(spotkanie);
+    }
+    
+    /**
+     * zapisuje spotkanie po edycji MOS.2 P. Stepien
+     * @param spotkanie 
+     */
+    public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
+
+        mosEndpoint.zapiszSpotkaniePoEdycji(spotkanie);
+    }
 }

@@ -42,7 +42,7 @@ public class MOSEndpoint implements MOSEndpointLocal {
     }
     @Override
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
-        return spotkanieManager.pobierzSpotkaniaDlaKonta(spotkaniaDlaKonta);
+        return spotkanieManager.pobierzUmowioneSpotkania(spotkaniaDlaKonta);
     }
 
     @Override
@@ -53,5 +53,25 @@ public class MOSEndpoint implements MOSEndpointLocal {
     @Override
     public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
         return spotkanieManager.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
+    }
+
+    @Override
+    public void rezerwujSpotkanie(Spotkanie spotkanie) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Spotkanie> pobierzUmowioneSpotkania(Konto konto) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -26,7 +26,7 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     }
 
     @Override
-    public List<Spotkanie> pobierzSpotkaniaDlaKonta(Konto spotkaniaDlakonta) {
+    public List<Spotkanie> pobierzUmowioneSpotkania(Konto spotkaniaDlakonta) {
         return null;
     }
 }

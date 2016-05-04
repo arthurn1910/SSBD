@@ -10,7 +10,36 @@ import java.util.List;
 
 @Local
 public interface MOSEndpointLocal {
+    
+    /**
+     * rezerwacja spotkania MOS 1, P. Stepien
+     * @param spotkanie 
+     */
+    void rezerwujSpotkanie(Spotkanie spotkanie);
+    
+    /**
+     * pobiera spotkanie do edycji MOS 2, P. Stepien
+     * @param spotkanie
+     * @return 
+     */
+    Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie);
+    
+    /**
+     * zapisuje edytowane spotkanie po edycji MOS 2, P. Stepien
+     * @param spotkanie 
+     */
+    void zapiszSpotkaniePoEdycji(Spotkanie spotkanie);
+    
+    /**
+     * pobiera liste spotkan dla danego uzytkownika
+     * @param konto
+     * @return 
+     */
+    List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
+    
+    
     void dodajSpotkanie(Spotkanie spotkanie);
+    
     Ogloszenie pobierzPierwszeOgloszenie();
     Konto pobierzPierwszeKonto();
 
