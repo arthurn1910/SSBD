@@ -73,25 +73,21 @@ public class HistoriaLogowania {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        HistoriaLogowania that = (HistoriaLogowania) o;
-
-        if (id != that.id) return false;
-        if (adresIp != null ? !adresIp.equals(that.adresIp) : that.adresIp != null) return false;
-        if (dataLogowania != null ? !dataLogowania.equals(that.dataLogowania) : that.dataLogowania != null)
+    public boolean equals(Object object) {
+        if (!(object instanceof KategoriaWyposazeniaNieruchomosci)) {
             return false;
-
+        }
+        HistoriaLogowania other = (HistoriaLogowania) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (adresIp != null ? adresIp.hashCode() : 0);
-        result = 31 * result + (dataLogowania != null ? dataLogowania.hashCode() : 0);
-        return result;
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 }
