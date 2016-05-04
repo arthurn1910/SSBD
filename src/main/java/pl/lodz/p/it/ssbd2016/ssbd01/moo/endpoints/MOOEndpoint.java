@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -19,14 +13,16 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
 
 /**
- *
- * @author java
+ * API servera dla modułu funkcjonalnego MOO
  */
 @Stateful
 public class MOOEndpoint implements MOOEndpointLocal {
 
+    @EJB
+    private OgloszenieManagerLocal ogloszenieManagerLocal;
     @EJB
     private KontoMOOFacadeLocal kontoFacade;
     @EJB
@@ -37,6 +33,7 @@ public class MOOEndpoint implements MOOEndpointLocal {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    
     
     @Override
     public Konto getKonto(String login) {
@@ -77,18 +74,21 @@ public class MOOEndpoint implements MOOEndpointLocal {
         o.setAktywne(false);
     }
 
-    @Override
-    public void dodajDoUlubionych(Ogloszenie rowData) {
-        Konto k = kontoFacade.znajdzPoLoginie("janusz");
-        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        o.getKontoCollection().add(k);
-        k.getOgloszenieUlubioneCollection().add(o);
-    }
 
     @Override
     public List<Ogloszenie> pobierzUlubioneOgloszenia() {
         Konto l = kontoFacade.znajdzPoLoginie("janusz");
         return (List<Ogloszenie>) l.getOgloszenieUlubioneCollection();
+    }
+
+    @Override
+    public void dodajDoUlubionych(Ogloszenie ogloszenie) {
+        ogloszenieManagerLocal.dodajDoUlubionych(ogloszenie);
+    }
+    
+    @Override
+    public void usunZUlubionych(Ogloszenie ogloszenie) {
+        ogloszenieManagerLocal.usunZUlubionych(ogloszenie);
     }
     
 }

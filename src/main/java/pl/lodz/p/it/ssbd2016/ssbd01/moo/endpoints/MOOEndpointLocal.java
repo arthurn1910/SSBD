@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.util.List;
@@ -14,8 +9,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 
 /**
- *
- * @author java
+ * Interfejs API servera dla modułu funkcjonalnego MOO
  */
 @Local
 public interface MOOEndpointLocal {
@@ -34,8 +28,18 @@ public interface MOOEndpointLocal {
 
     public void deaktywujOgloszenie(Ogloszenie rowData);
 
-    public void dodajDoUlubionych(Ogloszenie rowData);
-
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
+
+    /**
+     * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika
+     * @param ogloszenie ogłoszenie, które ma być dodane
+     */
+    public void dodajDoUlubionych(Ogloszenie ogloszenie);
+    
+    /**
+     * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
+     * @param ogloszenie ogłoszenie, które ma być usunięte
+     */
+    public void usunZUlubionych(Ogloszenie ogloszenie);
     
 }
