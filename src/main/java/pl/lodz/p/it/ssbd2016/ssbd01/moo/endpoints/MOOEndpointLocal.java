@@ -37,5 +37,23 @@ public interface MOOEndpointLocal {
     public void dodajDoUlubionych(Ogloszenie rowData);
 
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
+
+    /***
+     * Metoda przydzielająca konto agenta do ogłoszenia
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 6
+     * @param rowData
+     * @param agent 
+     */
+    public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent);
+    
+    /***
+     * Metoda zmieniająca agenta w ogłoszeniu
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 7
+     * @param rowData
+     * @param agent 
+     */
+    public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent);
     
 }

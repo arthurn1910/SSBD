@@ -10,9 +10,11 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+import sun.management.Agent;
 
 /**
  *
@@ -23,6 +25,7 @@ public class OgloszenieSession implements Serializable {
     
     @EJB
     private MOOEndpointLocal mooEndpoint;
+    private Ogloszenie ogloszenieDoWyswietlenia;
 
     public OgloszenieSession() {
     }
@@ -60,7 +63,7 @@ public class OgloszenieSession implements Serializable {
     List<Ogloszenie> pobierzWszystkieOgloszenia() {
         return mooEndpoint.pobierzWszytkieOgloszenia();
     }
-
+    
     void aktywujOgloszenie(Ogloszenie rowData) {
         mooEndpoint.aktywujOgloszenie(rowData);
     }
@@ -76,6 +79,26 @@ public class OgloszenieSession implements Serializable {
     List<Ogloszenie> pobierzUlubioneOgloszenia() {
         return mooEndpoint.pobierzUlubioneOgloszenia();
     }
+    /***
+     * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w MOOEndpoint przekazując jej parametr Ogloszenie
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 6
+     */
+    void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent){
+        mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
+    }
     
+    /***
+     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w MOOEndpoint przekazując jej parametr Ogloszenie
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 7
+     */
+    void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent){
+        mooEndpoint.zmienAgentaWOgloszeniu(rowData, agent);
+    }
+
+    public Ogloszenie getOgloszenieDoWyswietlenia() {
+        return ogloszenieDoWyswietlenia;
+    }
     
 }
