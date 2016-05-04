@@ -1,13 +1,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -18,6 +19,14 @@ public class OgloszenieSession implements Serializable {
     @EJB
     private MOOEndpointLocal mooEndpoint;
 
+    public OgloszenieSession() {
+    }
+    /**
+     * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
+     *
+     * @param ogloszenie   ogłoszenie do dodania
+     * @param nieruchomosc nieruchomość do dodania
+     */
     void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc) {
         Ogloszenie noweOgloszenie = new Ogloszenie();
         Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
