@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Zmien haslo innego konta</p>
+        <p>${msg[tytulyPrzypadkow.edytujHasloKonta]}</p>
     </ui:define>
    
     <ui:define name="left">
@@ -14,13 +14,13 @@
     </ui:define>
     
      <ui:define name="content">
-        Zmien haslo innego uzytkownika:
+        ${msg[tytulyPrzypadkow.edytujHasloKonta]}:
         <h:form>
-            Nowe haslo:         <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
-            Powtorz nowe haslo: <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />             
+            ${msg["daneKonta.noweHaslo"]} <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
+            ${msg["daneKonta.powtorzNoweHaslo"]} <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />             
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="Potwierdz" action="#{zmienHasloBean.zmienHaslo()}"  class="edit_icon" />
-            <h:commandButton action="wyswietlSzczegolyKonta" value="Powrot" />
+                             value="#{msg['komunikat.otwierdz']}" action="#{zmienHasloBean.zmienHaslo()}"  class="edit_icon" />
+            <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}" />
             
         </h:form>
         </ui:define>

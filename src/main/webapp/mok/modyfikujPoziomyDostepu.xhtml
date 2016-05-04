@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Dołącz poziom dostępu</p>
+        <p>${msg[tytulyPrzypadkow.modyfikujPoziomyDostepu]}</p>
     </ui:define>
     
     <ui:define name="left">
@@ -14,7 +14,6 @@
     </ui:define>
     
      <ui:define name="content">
-        Modyfikuj poziomy dostępu
         <h:form id="nowePoziomy">            
             <h:dataTable id="listaKont" var="poziom" value="#{modyfikujPoziomyDostepuBean.poziomyDostepuDataModel}">
                 <h:column id="nazwa">

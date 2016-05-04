@@ -6,53 +6,52 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Wyszukanie kont</p>
+        <p>${msg[tytulyPrzypadkow.wyszukajKonta]}</p>
     </ui:define>
 
     <ui:define name="left">
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
-
     <ui:define name="content">
-        Lista kont<br /><br />
-        Wyszukiwanie według:<br />
+        #{msg[wyszukiwanie.listaKont]}<br /><br />
+        #{msg[wyszukiwanie.wyszukajWedlug]}<br />
         <h:form id="listaKontForm1">
-            Imie: <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
-            Nazwisko: <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
-            Email: <h:inputText value="#{wyszukajKontaBean.email}"/><br />
-            Telefon: <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
-            Aktywne: <h:selectBooleanCheckbox value="#{wyszukajKontaBean.aktywne}" /><br />
-            Potwierdzone <h:selectBooleanCheckbox value="#{wyszukajKontaBean.potwierdzone}" /><br />
+            ${msg["daneKonta.imie"]} <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
+            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
+            ${msg["daneKonta.email"]}  <h:inputText value="#{wyszukajKontaBean.email}"/><br />
+            ${msg["daneKonta.numerTelefonu"]}  <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
+            ${msg["daneKonta.aktywne"]}  <h:selectBooleanCheckbox value="#{wyszukajKontaBean.aktywne}" /><br />
+            ${msg["daneKonta.potwierdzone"]} <h:selectBooleanCheckbox value="#{wyszukajKontaBean.potwierdzone}" /><br />
             <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.pobierzPodobneKonta()}" />
         </h:form>
         <h:form>
             <h:dataTable id="listaKont1" var="konto" value="#{wyszukajKontaBean.kontaDataModel}">
                 <h:column id="imie">
-                    <f:facet name="header">imię</f:facet>
+                    <f:facet name="header">${msg["daneKonta.imie"]}</f:facet>
                     <h:outputText value="#{konto.imie}" />
                 </h:column>
                 <h:column id="nazwisko">
-                    <f:facet name="header">nazwisko</f:facet>
+                    <f:facet name="header">${msg["daneKonta.nazwisko"]}</f:facet>
                     <h:outputText value="#{konto.nazwisko}" />
                 </h:column>
                 <h:column id="email">
-                    <f:facet name="header">email</f:facet>
+                    <f:facet name="header">${msg["daneKonta.email"]}</f:facet>
                     <h:outputText value="#{konto.email}" />
                 </h:column>
                 <h:column id="telefon">
-                    <f:facet name="header">telefon</f:facet>
+                    <f:facet name="header">${msg["daneKonta.numerTelefonu"]}</f:facet>
                     <h:outputText value="#{konto.telefon}" />
                 </h:column>
                 <h:column id="potwierdzone">
-                    <f:facet name="header">potwierdzone</f:facet>
+                    <f:facet name="header">${msg["daneKonta.potwierdzone"]}</f:facet>
                     <h:outputText value="#{konto.potwierdzone}" />
                 </h:column>
                 <h:column id="aktywne">
-                    <f:facet name="header">aktywne</f:facet>
+                    <f:facet name="header">${msg["daneKonta.aktywne"]}</f:facet>
                     <h:outputText value="#{konto.aktywne}" />
                 </h:column>
                 <h:column id="informacje">
-                    <h:commandButton value="Wyświetl informacje" action="#{wyszukajKontaBean.wyswietlSzczegolyKonta()}">
+                    <h:commandButton value="#{msg['komunikat.wyswietlInformacje']}" action="#{wyszukajKontaBean.wyswietlSzczegolyKonta()}">
                     </h:commandButton>
                 </h:column>
             </h:dataTable>

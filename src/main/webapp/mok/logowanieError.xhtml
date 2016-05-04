@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Logowanie Error</p>
+        <p>${msg[tytulyPrzypadkow.logowanieError]}</p>
     </ui:define>
     
     <ui:define name="left">
@@ -14,6 +14,6 @@
     </ui:define>
     
     <ui:define name="content">
-        <h1>Blad logowania</h1>
+        <h1>${msg["logowanie.bladLogowania"]}</h1>
     </ui:define>
 </ui:composition>

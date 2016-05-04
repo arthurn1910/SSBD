@@ -6,7 +6,7 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <p>Informacje o Użytkowniku</p>
+        <p>${msg[tytulyPrzypadkow.wystwietlSzczegolyKonta]}</p>
     </ui:define>
     
     <ui:define name="left">
@@ -16,28 +16,28 @@
     
      <ui:define name="content">
         <h:form id="form">
-            Imie: <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.imie}"/><br />
-            Nazwisko: <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.nazwisko}"/><br />
-            Login: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.login}"/><br />
-            Email: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.email}"/><br />
-            Telefon: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.telefon}"/><br />
-            Aktywne: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
-            Potwierdzone: <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
+            ${msg["daneKonta.imie"]} <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.imie}"/><br />
+            ${msg["daneKonta.nazwisko"]} <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.nazwisko}"/><br />
+            ${msg["daneKonta.login"]} <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.login}"/><br />
+            ${msg["daneKonta.email"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.email}"/><br />
+            ${msg["daneKonta.numerTelefonu"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.telefon}"/><br />
+            ${msg["daneKonta.aktywne"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
+            ${msg["daneKonta.potwierdzone"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
             Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
-                             value="Odblokuj" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne}">
+                             value="#{msg['komunikat.odblokuj']}" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
-                             value="Zablokuj" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne}">
+                             value="#{msg['komunikat.zablokuj']}" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
-                             value="Potwierdź" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone}">
+                             value="#{msg['komunikat.potwierdz']}" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone}">
             </h:commandButton> 
-            <h:commandButton value="Modyfikuj poziomy" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.modyfikujPoziomy']}" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" >
             </h:commandButton>
-            <h:commandButton value="Zmień hasło" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.zmienHaslo']}" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" >
             </h:commandButton> 
-            <h:commandButton value="Edytuj dane" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.edytujDane']}" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" >
             </h:commandButton> 
         </h:form>
     </ui:define>
