@@ -54,32 +54,15 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
-        <display-name>AdministratorConstr</display-name>
-        <web-resource-collection>
-            <web-resource-name>Strony administratora</web-resource-name>
-            <description/>
-            <url-pattern>/admin/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>ADMINISTRATOR</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <!-- kontrola dostępu do zasobów menedżera -->
-    <security-constraint>
         <display-name>MenadzerConstr</display-name>
         <web-resource-collection>
             <web-resource-name>Strony menadżera</web-resource-name>
             <description/>
-            <url-pattern>/menadzer/*</url-pattern>
+            <url-pattern>/mok/zalogowani/admin/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>MENADZER</role-name>
+            <role-name>ADMINISTRATOR</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description/>
@@ -92,28 +75,12 @@
         <web-resource-collection>
             <web-resource-name>Strony agenta</web-resource-name>
             <description/>
-            <url-pattern>/agent/*</url-pattern>
+            <url-pattern>/mok/zalogowani/adminMenadzer/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>AGENT</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <!-- kontrola dostępu do zasobów klienta -->
-    <security-constraint>
-        <display-name>KlientConstr</display-name>
-        <web-resource-collection>
-            <web-resource-name>Strony klienta</web-resource-name>
-            <description/>
-            <url-pattern>/klient/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>KLIENT</role-name>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>MENADZER</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description/>

@@ -27,7 +27,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>wyszukajKonta</from-outcome>
-            <to-view-id>/mok/wyszukajKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/adminMenadzer/wyszukajKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -43,7 +43,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>utworzKonto</from-outcome>
-            <to-view-id>/mok/utworzKonto.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/admin/utworzKonto.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -59,7 +59,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>wyswietlSzczegolyKonta</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -67,7 +67,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>wyswietlSzczegolySwojegoKonta</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolySwojegoKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolySwojegoKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -75,7 +75,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDane</from-outcome>
-            <to-view-id>/mok/edytujDane.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/edytujDane.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -83,7 +83,7 @@
         <from-view-id>/mok/edytujDane.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -91,15 +91,15 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDaneKonta</from-outcome>
-            <to-view-id>/mok/edytujDaneKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/edytujDaneKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/edytujDaneKonta.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/edytujDaneKonta.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -107,15 +107,15 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujHaslo</from-outcome>
-            <to-view-id>/mok/edytujHaslo.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/edytujHaslo.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/edytujHaslo.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/edytujHaslo.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -123,15 +123,15 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujHasloKonta</from-outcome>
-            <to-view-id>/mok/edytujHasloKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/edytujHasloKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/edytujHasloKonta.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/edytujHasloKonta.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -139,15 +139,15 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>modyfikujPoziomyDostepu</from-outcome>
-            <to-view-id>/mok/modyfikujPoziomyDostepu.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/admin/modyfikujPoziomyDostepu.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/modyfikujPoziomyDostepu.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/adminmodyfikujPoziomyDostepu.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
-            <to-view-id>/mok/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
