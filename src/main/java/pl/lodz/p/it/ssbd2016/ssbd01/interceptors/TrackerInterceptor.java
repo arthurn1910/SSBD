@@ -19,7 +19,7 @@ public class TrackerInterceptor {
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
-    public Object traceInvoke(InvocationContext ictx){
+    public Object traceInvoke(InvocationContext ictx) throws BladWywolania{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
@@ -48,9 +48,7 @@ public class TrackerInterceptor {
         return result;
         } catch (Exception e) {
             BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
-            Logger.getLogger(PoziomDostepuManager.class.getName()).log(Level.SEVERE, null, exc);
-
+            throw exc;
         } 
-        return null;
     }
 }

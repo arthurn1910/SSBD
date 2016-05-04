@@ -23,33 +23,23 @@ public class EdytujDaneBean {
      * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji 
      */
-    public String zapiszSwojeKontoPoEdycji() {
-        try {
+    public String zapiszSwojeKontoPoEdycji() throws NiezgodnyLogin, BrakKontaDoEdycji {
             uzytkownikSession.zapiszSwojeKontoPoEdycji();
             return "wyswietlSzczegolySwojegoKonta";
-        } catch (NiezgodnyLogin ex) {
-            Logger.getLogger(EdytujDaneBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "niezgodnyLogin";
-        } catch (BrakKontaDoEdycji ex) {
-            Logger.getLogger(EdytujDaneBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "brakKontaDoEdycji";
-        }
     }
     
     /**
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji
      */
-    public String zapiszKontoPoEdycji() {
-        try {
+    public String zapiszKontoPoEdycji() throws BrakKontaDoEdycji {
             uzytkownikSession.zapiszKontoPoEdycji();
             return "wyswietlSzczegolySwojegoKonta";
-        } catch (BrakKontaDoEdycji ex) {
-            Logger.getLogger(EdytujDaneBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "brakKontaDoEdycji";
-        }
     }
     
     // Gettery i Settery

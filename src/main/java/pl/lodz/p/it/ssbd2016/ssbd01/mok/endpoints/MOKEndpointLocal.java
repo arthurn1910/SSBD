@@ -7,6 +7,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
@@ -140,6 +141,6 @@ public interface MOKEndpointLocal {
      * Metoda pobierająca konto obecnie zalogowanego użytkownika
      * @return      konto obecnie zalogowanego użytkownika
      */
-    public Konto getSwojeKonto();
+    public Konto getSwojeKonto() throws BrakDostepu;
 }
 

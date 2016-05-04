@@ -47,14 +47,9 @@ public class WyswietlOgloszeniaBean {
         initModel();
     }
     
-    public String deaktywujOgloszenie() {
-        try{
-            ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
-        } catch(OgloszenieDeaktywowaneWczesniej ex){
-            return "OgloszenieDeaktywowaneWczesniej";
-        }
+    public void deaktywujOgloszenie() throws OgloszenieDeaktywowaneWczesniej {
+        ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
         initModel();
-        return "";
     }
     
     public void dodajDoUlubionych() {

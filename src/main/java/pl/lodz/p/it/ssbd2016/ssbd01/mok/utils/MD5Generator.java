@@ -27,7 +27,6 @@ public class MD5Generator {
             bajtyWiadomosci = haslo.getBytes("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             NieobslugiwaneKodowanie exc=new NieobslugiwaneKodowanie("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator.generateMD5Hash()");
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, exc);
             throw exc;
         }
         MessageDigest generatorMD = null;
@@ -35,7 +34,6 @@ public class MD5Generator {
             generatorMD = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
             BrakAlgorytmuKodowania exc=new BrakAlgorytmuKodowania("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator.generateMD5Hash()");
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, exc);
             throw exc;
         }
             

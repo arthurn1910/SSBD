@@ -5,12 +5,14 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
 
+import javax.ejb.ApplicationException;
 import javax.naming.NamingException;
 
 /**
  *
  * @author java
  */
+@ApplicationException(rollback = true)
 public class NiewykonanaOperacja extends NamingException{
     private String miejsce;
     private String operacja;

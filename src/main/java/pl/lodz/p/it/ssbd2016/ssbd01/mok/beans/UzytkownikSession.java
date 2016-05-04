@@ -18,6 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
@@ -53,6 +54,7 @@ public class UzytkownikSession implements Serializable {
     private PoziomDostepuNieIstnieje poziomDostepuNieIstnieje;
     private KontoNiezgodneWczytanym kontoNiezgodneWczytanym;
     private NaruszenieUniq naruszenieUniq;
+    private BrakDostepu brakDostepu;
 
     public BladDeSerializacjiObiektu getBladDeSerializajiObiektu() {
         return bladDeSerializajiObiektu;
@@ -96,6 +98,10 @@ public class UzytkownikSession implements Serializable {
 
     public NaruszenieUniq getNaruszenieUniq() {
         return naruszenieUniq;
+    }
+
+    public BrakDostepu getBrakDostepu() {
+        return brakDostepu;
     }
     
     
@@ -386,8 +392,13 @@ public class UzytkownikSession implements Serializable {
     }
 
     Konto getSwojeKonto() {
-        wybraneKonto = MOKEndpoint.getSwojeKonto();
-        return wybraneKonto;
+        try{
+            wybraneKonto = MOKEndpoint.getSwojeKonto();
+            return wybraneKonto;
+        }catch(BrakDostepu ex){
+            this.brakDostepu=ex;
+            throw ex;
+        }
     }
     
     public DataModel<Konto> getKontaDataModel() {

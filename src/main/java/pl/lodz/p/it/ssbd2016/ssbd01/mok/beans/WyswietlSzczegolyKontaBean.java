@@ -1,7 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -83,36 +81,24 @@ public class WyswietlSzczegolyKontaBean {
      * Handler przyciksu edytuj dane w widoku. Pobiera wybrane konto do edycji
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujKonto() {
-        try {
-            uzytkownikSession.pobierzKontoDoEdycji(konto);
-            return "edytujDaneKonta";
-        } catch (BladPliku ex) {
-            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPliku";
-        } catch (BladDeSerializacjiObiektu ex) {
-            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladDeSerializacjiObiektu";
-        }
+    public String edytujKonto() throws BladDeSerializacjiObiektu, BladPliku{
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujDaneKonta";
     }
     
     /**
      * Handler przyciksu edytuj hasło w widoku. Pobiera wybrane konto do edycji
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujHasloKonta() {
-        try {
-            uzytkownikSession.pobierzKontoDoEdycji(konto);
-            return "edytujHasloKonta";
-        } catch (BladPliku ex) {
-            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPliku";
-        } catch (BladDeSerializacjiObiektu ex) {
-            Logger.getLogger(WyswietlSzczegolyKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BadDeSerializacjiObiektu";
-        }
+    public String edytujHasloKonta() throws BladDeSerializacjiObiektu, BladPliku{
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujHasloKonta";
     }
         
     // Gettery i Settery

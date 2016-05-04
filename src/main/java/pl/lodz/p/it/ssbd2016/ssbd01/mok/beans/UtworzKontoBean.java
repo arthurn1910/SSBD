@@ -33,26 +33,14 @@ public class UtworzKontoBean {
     
     /**
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public String utworzKont(){
+    public void utworzKont() throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
-            try {
-                uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
-            } catch (NieobslugiwaneKodowanie ex) {
-                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NieobslugiwaneKodowanie";
-            } catch (BrakAlgorytmuKodowania ex) {
-                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "BrakAlgorytmuKodowania";
-            } catch (PoziomDostepuNieIstnieje ex) {
-                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "PoziomDostepuNieIstnieje";
-            } catch (NaruszenieUniq ex){
-                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NaruszenieUniq";
-            }
+            uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
         }
-        return "sukces";
     }
     
     /**

@@ -45,28 +45,15 @@ public class EdytujHasloBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje 
      */
-    public String zmienMojeHaslo(){
-        if (checkPasswordMatching()) {
-            try {
-                uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
-            } catch (BrakAlgorytmuKodowania ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "BrakAlgorytmuKodowania";
-            } catch (NieobslugiwaneKodowanie ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NieobslugiwaneKodowanie";
-            } catch (NiezgodneHasla ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NiezgodneHasla";
-            } catch (NiezgodnyLogin ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NiezgodnyLogin";
-            } catch (PoziomDostepuNieIstnieje ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "PoziomDostepuNieIstnieje";
-            }
-        }
+    public String zmienMojeHaslo() throws BrakAlgorytmuKodowania, NieobslugiwaneKodowanie, NiezgodneHasla, NiezgodnyLogin, PoziomDostepuNieIstnieje{
+        if (checkPasswordMatching()) 
+            uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
         return "wyswietlSzczegolyKonta";
     }
 
@@ -74,21 +61,13 @@ public class EdytujHasloBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania 
      */
-    public String zmienHaslo() {
+    public String zmienHaslo() throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania {
         if (checkPasswordMatching()) {
-            try {
-                uzytkownikSession.zmienHaslo(noweHaslo);
-            } catch (PoziomDostepuNieIstnieje ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "PoziomDostepuNieIstnieje";
-            } catch (NieobslugiwaneKodowanie ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NieobslugiwaneKodowanie";
-            } catch (BrakAlgorytmuKodowania ex) {
-                Logger.getLogger(EdytujHasloBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "BrakAlgorytmuKodowania";
-            }
+            uzytkownikSession.zmienHaslo(noweHaslo);
         }
         return "wyswietlSzczegolyKonta";
     }

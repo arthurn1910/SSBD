@@ -5,10 +5,13 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
 
+import javax.ejb.ApplicationException;
+
 /**
  *
  * @author java
  */
+@ApplicationException(rollback = true)
 public class OgloszenieDeaktywowaneWczesniej extends Exception{
     private String miejsce;
 

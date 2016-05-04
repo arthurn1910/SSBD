@@ -24,7 +24,7 @@ public class OgloszenieSession implements Serializable {
     
     @EJB
     private MOOEndpointLocal mooEndpoint;
-
+    private Ogloszenie ogloszenieDoWyswietlenia;
     public OgloszenieSession() {
     }
 
@@ -87,6 +87,10 @@ public class OgloszenieSession implements Serializable {
 
     public OgloszenieDeaktywowaneWczesniej getOgloszenieDeaktyowwaneWczesniej() {
         return ogloszenieDeaktyowwaneWczesniej;
+    }
+
+    Ogloszenie getOgloszenieDoWyswietlenia() {
+        return this.ogloszenieDoWyswietlenia;
     }
     
     

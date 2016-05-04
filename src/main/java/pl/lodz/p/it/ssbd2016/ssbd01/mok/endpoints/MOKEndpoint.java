@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
+import javax.ejb.EJBAccessException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.SessionSynchronization;
@@ -26,6 +27,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
@@ -183,9 +185,15 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("getSwojeKonto")
-    public Konto getSwojeKonto() {
-        String login = sessionContext.getCallerPrincipal().getName();
+    public Konto getSwojeKonto() throws BrakDostepu{
+        String login;
+        try{
+            login = sessionContext.getCallerPrincipal().getName();
+        }catch(EJBAccessException ex){
+            throw new BrakDostepu(" pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.getSwojeKonto()");
+        }
         return kontoFacade.znajdzPoLoginie(login);
+
     }
     
     //Implementacja SessionSynchronization

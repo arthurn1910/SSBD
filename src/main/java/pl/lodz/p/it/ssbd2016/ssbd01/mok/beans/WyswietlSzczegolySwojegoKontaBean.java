@@ -10,6 +10,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o obecnie zalogowanym
@@ -29,7 +30,7 @@ public class WyswietlSzczegolySwojegoKontaBean {
     * konto przez konto użytkownika obecnie zalogowanego
     */
     @PostConstruct
-    public void initModel() {
+    public void initModel() throws BrakDostepu{
         konto = uzytkownikSession.getSwojeKonto();
     }
     
@@ -51,36 +52,24 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * Handler przyciksu edytuj dane w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      */
-    public String edytujSwojeKonto() {
-        try {
-            uzytkownikSession.pobierzKontoDoEdycji(konto);
-            return "edytujDane";
-        } catch (BladPliku ex) {
-            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPliku";
-        } catch (BladDeSerializacjiObiektu ex) {
-            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladDeSerializacjiObiektu";
-        }
+    public String edytujSwojeKonto() throws BladPliku, BladDeSerializacjiObiektu {
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujDane";
     }
     
     /**
      * Handler przyciksu edytuj hasło w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujSwojeHasloKonta() {
-        try {
-            uzytkownikSession.pobierzKontoDoEdycji(konto);
-            return "edytujHaslo";
-        } catch (BladPliku ex) {
-            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPliku";
-        } catch (BladDeSerializacjiObiektu ex) {
-            Logger.getLogger(WyswietlSzczegolySwojegoKontaBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladDeSerializacjiObiektu";
-        }
+    public String edytujSwojeHasloKonta() throws BladDeSerializacjiObiektu, BladPliku {
+        uzytkownikSession.pobierzKontoDoEdycji(konto);
+        return "edytujHaslo";
     }
     
     // Gettery i Settery

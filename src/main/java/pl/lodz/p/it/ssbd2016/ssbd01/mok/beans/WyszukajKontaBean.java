@@ -41,13 +41,13 @@ public class WyszukajKontaBean {
      */
     public void pobierzPodobneKonta() {
         Konto konto = new Konto();
-        if (imie != "")
+        if (!"".equals(imie))
             konto.setImie(imie);
-        if (nazwisko != "")
+        if (!"".equals(nazwisko))
             konto.setNazwisko(nazwisko);
-        if (email != "")
+        if (!"".equals(email))
             konto.setEmail(email);
-        if (telefon != "")
+        if (!"".equals(telefon))
             konto.setTelefon(telefon);   
         konto.setAktywne(aktywne);
         konto.setPotwierdzone(potwierdzone);

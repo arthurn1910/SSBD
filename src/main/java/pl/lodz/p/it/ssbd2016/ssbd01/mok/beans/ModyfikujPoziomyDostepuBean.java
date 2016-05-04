@@ -39,33 +39,24 @@ public class ModyfikujPoziomyDostepuBean {
     
     /**
      * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public String dodajPoziomDostepu(){
-        try {
-            uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-            initModel();
-        } catch (BladPoziomDostepu ex) {
-            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPoziomDostepu";
-        } catch (PoziomDostepuNieIstnieje ex) {
-            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "PoziomDostepuNieIstnieje";
-        }
+    public String dodajPoziomDostepu() throws BladPoziomDostepu, PoziomDostepuNieIstnieje{
+        uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        initModel();
         return "modyfikujPoziomyDostepu";
     }
     
     /**
      * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta 
      * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
      */
-    public String odlaczPoziomDostepu(){
-        try {
-            uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-            initModel();
-        } catch (BladPoziomDostepu ex) {
-            Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex);
-            return "BladPoziomDostepu";
-        }
+    public String odlaczPoziomDostepu() throws BladPoziomDostepu{
+        uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        initModel();
         return "modyfikujPoziomyDostepu";
     }
     

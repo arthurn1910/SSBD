@@ -27,26 +27,14 @@ public class RejestracjaKontaKlientaBean {
     
     /**
      * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    public String rejestrujKontoKlienta(){
+    public void rejestrujKontoKlienta() throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
         if (checkPasswordMatching()) {
-            try {
                 uzytkownikSession.rejestrujKontoKlienta(konto);
-            } catch (PoziomDostepuNieIstnieje ex) {
-                Logger.getLogger(RejestracjaKontaKlientaBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "PoziomDostepuNieIstnieje";
-            } catch (NieobslugiwaneKodowanie ex) {
-                Logger.getLogger(RejestracjaKontaKlientaBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NieobslugiwaneKodowanie";
-            } catch (BrakAlgorytmuKodowania ex) {
-                Logger.getLogger(RejestracjaKontaKlientaBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "BrakAlgorytmuKodowania";
-            } catch (NaruszenieUniq ex){
-                Logger.getLogger(UtworzKontoBean.class.getName()).log(Level.SEVERE, null, ex);
-                return "NaruszenieUniq";
-            }
         }
-        return "sukcess";
     }
     
     /**
