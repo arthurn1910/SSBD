@@ -21,7 +21,10 @@ public class EdytujOgloszenieBean {
     @Inject
     private OgloszenieSession ogloszenieSession;
     
-    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) {
-        ogloszenieSession.edytujOgloszenieDanegoUzytkownika(ogloszenieNowe, ogloszenieStare);
+    /*
+    @param ogloszenieNowe obiekt Ogloszenie o id starego ogłoszenia, ale zawierające nowe dane
+    */
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) {
+        ogloszenieSession.edytujOgloszenieDanegoUzytkownika(ogloszenieNowe);
     }
 }

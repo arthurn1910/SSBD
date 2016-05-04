@@ -5,7 +5,6 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -65,17 +64,23 @@ public class MOOEndpoint implements MOOEndpointLocal {
         ogloszenieFacadeLocal.create(noweOgloszenie);
     }
     
+    /*
+        @param ogloszenieNowe obiekt Ogloszenie o id starego ogłoszenia, ale zawierające nowe dane
+    */
     @Override
-    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) throws Exception {
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        if(ogloszenieStare.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        if(ogloszenieNowe.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new Exception("Nie jestes wlascicielem tego ogloszenia");
         }
         else {
-            // kopiuj dane z ogloszenia nowego do starego
+            // zapisz dane obiektu ogloszenieNowe
         }
     }
     
+    /*
+        @param ogloszenie, które ma zostać deaktywowane
+    */
     @Override
     public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
         String loginKonta = sessionContext.getCallerPrincipal().getName();

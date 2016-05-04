@@ -114,14 +114,17 @@ public class WyswietlOgloszeniaBean {
     
     // w tej metodzie będzie się odbywać sortowanie według wybranych kryteriów
     public void sortujOgloszenia() {
+        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         /*
         ...
         */
+        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
     
     /*
     Stworzył: Maksymilian Zgierski
-    Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika   
+    Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
+    @param ogloszenie, które ma zostać deaktywowane
     */
     public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
         ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
