@@ -250,7 +250,6 @@ public class UzytkownikSession implements Serializable {
         } catch (KontoNiezgodneWczytanym ex) {
             this.kontoNiezgodneWczytanym=ex;
             throw ex; 
-
         }
     }
     

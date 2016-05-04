@@ -27,7 +27,7 @@ public class ExceptionsActionListener extends ActionListenerImpl implements Acti
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
             try {
-                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/brakDostepu.xhtml");
+                facesContext.getExternalContext().redirect("./wyjatki/brakDostepu.xhtml");
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(ExceptionsActionListener.class.getName()).log(Level.SEVERE, null, ex1);
@@ -37,12 +37,12 @@ public class ExceptionsActionListener extends ActionListenerImpl implements Acti
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
             try {
-                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/naruszenieUniq.xhtml");
+                facesContext.getExternalContext().redirect("./wyjatki/naruszenieUniq.xhtml");
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(ExceptionsActionListener.class.getName()).log(Level.SEVERE, null, ex1);
             }   
-        }catch(BladDeSerializacjiObiektu ex){
+        /*}catch(BladDeSerializacjiObiektu ex){
             Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
@@ -161,13 +161,13 @@ public class ExceptionsActionListener extends ActionListenerImpl implements Acti
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(ExceptionsActionListener.class.getName()).log(Level.SEVERE, null, ex1);
-            }   
+            }*/   
         }catch(Exception ex){
             Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
             try {
-                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/naruszenieUniq.xhtml");
+                facesContext.getExternalContext().redirect("./wyjatki/nieobsluzonyWyjatek.xhtml");
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(ExceptionsActionListener.class.getName()).log(Level.SEVERE, null, ex1);
