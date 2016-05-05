@@ -25,10 +25,10 @@ public interface SpotkanieManagerLocal {
 
     /**
      * Pobiera spotkania powiązane z kontem,
-     *
+     * zachowuje, zmienilem nazwe MOS.4, P. Stepien
      * @param konto konto dla którego szukamy spotkań
      * @return ista spotkań
      */
-    List<Spotkanie> pobierzSpotkaniaDlaKonta(Konto konto);
+    List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
 
 }

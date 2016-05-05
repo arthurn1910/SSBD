@@ -7,7 +7,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 /**
  *
- * @author java
+ * zachowuje MOS 4. P. Stepien
  */
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
