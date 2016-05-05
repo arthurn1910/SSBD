@@ -4,7 +4,10 @@ import java.util.Collection;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -40,7 +43,6 @@ public class MOOEndpoint implements MOOEndpointLocal {
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
     @Resource
     private SessionContext sessionContext;
-    
     
     @Override
     public Konto getKonto(String login) {
@@ -153,4 +155,29 @@ public class MOOEndpoint implements MOOEndpointLocal {
         ogloszenieAgentaCollection.remove(o);
         agentStary.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
     } 
+     /**
+        @param ogloszenie innego uzytkownika, które ma zostać deaktywowane
+    */
+    @Override
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        if (ogloszenie == null) 
+        throw new IllegalArgumentException("Brak wczytanego ogloszenia do deaktywacji");
+        
+        if(ogloszenie.getAktywne() == false) {
+            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+        }
+        else {
+            ogloszenie.setAktywne(false);
+        }
+    }
+     /**
+     *
+     * metoda odpowiadajaca za edycje ogloszenia innego uzytkownika 
+    */   
+    @Override
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
+        if (ogloszenieNowe == null) 
+        throw new IllegalArgumentException("Brak wczytanego ogloszenia do edycji");
+            // kopiuj dane z ogloszenia nowego do starego
+        } 
 }

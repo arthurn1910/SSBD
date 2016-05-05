@@ -24,6 +24,25 @@ public class WyswietlOgloszeniaBean {
     
     private List<Ogloszenie> ogloszenia;
     private DataModel<Ogloszenie> ogloszeniaDataModel;
+    
+    /*
+    @param ogloszenie innego użytkownika, które ma zostać deaktywowane
+    Przypadek użycia - MOO5
+    */
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
+        ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+    }
+    
+    // w tej metodzie będzie się odbywać wyswietlenie ogloszen nieposortowanych
+    public void wyswietlOgloszeniaNieposortowane() {
+        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        /*
+        ... ewentualnie kiedy zostanie zaimplementowane MOO9 to można wykorzystać jeden domyślny tryb sortowania dla MOO8
+        */
+        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+    }
+    
+    
 
     public DataModel<Ogloszenie> getOgloszeniaDataModel() {
         return ogloszeniaDataModel;

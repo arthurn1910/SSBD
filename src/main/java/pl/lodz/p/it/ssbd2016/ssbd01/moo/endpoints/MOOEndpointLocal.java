@@ -72,4 +72,16 @@ public interface MOOEndpointLocal {
     public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
     
     public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
+    /**
+    *   metoda odpowiadajaca za deaktywacje danego uzytkownika
+    *   @param ogloszenie do deaktywacji
+    */   
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    
+        /**
+        *    metoda odpowiadajaca za edycje ogloszenia innego uzytkownika 
+        */   
+    
+    
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
 }

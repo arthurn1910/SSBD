@@ -138,6 +138,32 @@ public class OgloszenieSession implements Serializable {
     void usunZUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.usunZUlubionych(ogloszenie);
     }
+     /**
+     *   metoda deaktywująca ogłoszenie innego użytkownika
+     *   @param ogloszenie, które ma zostać deaktywowane
+     */
+    void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
+        try {
+            mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+       /**
+       * metoda umożliwiająca edycje ogłoszenia innego użytkownika
+       * @param ogloszenie, które ma zostać dodane jako nowe
+       */
+    
+    void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) {
+        try {
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     /***
      * Metoda wywołuje metodę zmienAgentaWOgloszeniu w MOOEndpoint przekazując jej parametr Ogloszenie
