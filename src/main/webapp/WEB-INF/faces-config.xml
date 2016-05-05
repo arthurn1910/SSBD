@@ -91,12 +91,12 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujDaneKonta</from-outcome>
-            <to-view-id>/mok/zalogowani/edytujDaneKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/admin/edytujDaneKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/zalogowani/edytujDaneKonta.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/admin/edytujDaneKonta.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
             <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
@@ -123,12 +123,12 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujHasloKonta</from-outcome>
-            <to-view-id>/mok/zalogowani/edytujHasloKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/admin/edytujHasloKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/mok/zalogowani/edytujHasloKonta.xhtml</from-view-id>
+        <from-view-id>/mok/zalogowani/admin/edytujHasloKonta.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>powrot</from-outcome>
             <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
