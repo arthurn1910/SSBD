@@ -50,6 +50,13 @@ public interface KontoManagerLocal {
      */
     public List<Konto> znajdzPodobne(Konto konto);
     
+    
+    /**
+     * Metoda zwracająca liste wszystkich kont
+     * @return          lista wszystkich kont
+     */
+    public List<Konto> pobierzWszystkie();
+    
     /**
      * Metoda dodająca dany poziom dostępu do konta
      * @param konto     konto do którego należy dodać poziom dostępu

@@ -98,6 +98,12 @@ public class KontoManager implements KontoManagerLocal {
     }
     
     @Override
+    @RolesAllowed("pobierzWszystkieKonta")
+    public List<Konto> pobierzWszystkie() {
+        return kontoFacade.findAll();
+    }
+    
+    @Override
     @RolesAllowed("pobierzPodobneKonta")
     public List<Konto> znajdzPodobne(Konto konto) {
         Konto kontoWyszukaj = new Konto();

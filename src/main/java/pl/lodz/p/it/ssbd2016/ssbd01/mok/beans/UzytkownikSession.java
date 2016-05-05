@@ -162,6 +162,10 @@ public class UzytkownikSession implements Serializable {
     List<Konto> pobierzPodobneKonta(Konto konto) {
         return MOKEndpoint.pobierzPodobneKonta(konto);
     }
+    
+    List<Konto> pobierzWszystkieKonta() {
+        return MOKEndpoint.pobierzWszystkieKonta();
+    }
 
     /**
      * Metoda dodająca poziom dostępu do konta
