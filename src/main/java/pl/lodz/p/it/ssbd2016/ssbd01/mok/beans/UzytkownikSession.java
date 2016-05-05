@@ -65,7 +65,6 @@ public class UzytkownikSession implements Serializable {
     private BrakDostepu brakDostepu;
     private BladWywolania bladWywolania;
     private NiewykonanaOperacja niewykonanaOperacja;
-    private OgloszenieDeaktywowaneWczesniej ogloszenieDeaktywowaneWczesniej;
 
     public BladDeSerializacjiObiektu getBladDeSerializajiObiektu() {
         return bladDeSerializajiObiektu;
@@ -77,10 +76,6 @@ public class UzytkownikSession implements Serializable {
 
     public NiewykonanaOperacja getNiewykonanaOperacja() {
         return niewykonanaOperacja;
-    }
-
-    public OgloszenieDeaktywowaneWczesniej getOgloszenieDeaktywowaneWczesniej() {
-        return ogloszenieDeaktywowaneWczesniej;
     }
 
     public BladPliku getBladPliku() {
@@ -132,9 +127,6 @@ public class UzytkownikSession implements Serializable {
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
     public void rejestrujKontoKlienta(Konto k){
         try {
@@ -158,139 +150,186 @@ public class UzytkownikSession implements Serializable {
             naruszenieUniqFunkcja(naruszenieUniq);
         }
     }
-    
+    /***
+     * Metoda obsługująca wyjątek brakDostępu
+     * @param ex 
+     */
     public void brakDostepuFunkcja(BrakDostepu ex){
         this.brakDostepu=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("./wyjatki/brakDostepu.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/brakDostepu.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }
     }
+    /***
+     * Metoda obsługująca wyjątek NaruszenieUniq
+     * @param ex 
+     */
     public void naruszenieUniqFunkcja(NaruszenieUniq ex){
         this.naruszenieUniq=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("./wyjatki/naruszenieUniq.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/naruszenieUniq.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }   
     }
+    /***
+     * Metoda obsługująca wyjątek BladDeSerializacjiObiektu
+     * @param ex 
+     */
     public void bladDeSerializacjiObiektuFunkcja(BladDeSerializacjiObiektu ex){
         this.bladDeSerializajiObiektu=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladDeSerializacjiObiektu.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/bladDeSerializacjiObiektu.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         } 
     }
+    /***
+     * Metoda obsługująca wyjątek BladPoziomDostepu
+     * @param ex 
+     */
     public void bladPoziomDostepuFunkcja(BladPoziomDostepu ex){
         this.bladPoziomDostepu=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladPoziomDostepu.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/bladPoziomDostepu.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }  
     }
+    /***
+     * Metoda obsługująca wyjątek BladWywolania
+     * @param ex 
+     */
     public void bladWywolaniaFunkcja(BladWywolania ex){
         this.bladWywolania=ex;   
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladWywolania.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/bladWywolania.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }   
     }
+    /***
+     * Metoda obsługująca wyjątek BrakAlgorytmuKodowania
+     * @param ex 
+     */
     public void brakAlgorytmuKodowaniaFunkcja(BrakAlgorytmuKodowania ex){
             this.brakAlgorytmuKodowania=ex;
             Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
             try {
-                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/brakAlgorytmuKodowania.xhtml");
+                facesContext.getExternalContext().redirect("../wyjatki/brakAlgorytmuKodowania.xhtml");
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
             }   
     }
+    /***
+     * Metoda obsługująca wyjątek BrakKontaDoEdycji
+     * @param ex 
+     */
     public void brakKontaDoEdycjiFunkcja(BrakKontaDoEdycji ex){
         this.brakKontaDoEdycji=ex;
             Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
             FacesContext facesContext=FacesContext.getCurrentInstance();
             try {
-                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/brakKontaDoEdycji.xhtml");
+                facesContext.getExternalContext().redirect("../wyjatki/brakKontaDoEdycji.xhtml");
                 facesContext.renderResponse();
             } catch (IOException ex1) {
                 Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
             } 
     }
+    /***
+     * Metoda obsługująca wyjątek KontoNiezgodneWczytanym
+     * @param ex 
+     */
     public void kontoNiezgodneWczytanymFunkcja(KontoNiezgodneWczytanym ex){
         this.kontoNiezgodneWczytanym=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatkikontoNiezgodneWczytanym.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatkikontoNiezgodneWczytanym.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         } 
     }
+    /***
+     * Metoda obsługująca wyjątek NieobslugiwaneKodowanie
+     * @param ex 
+     */
     public void nieobslugiwaneKodowanieFunkcja(NieobslugiwaneKodowanie ex){
         this.nieobslugiwaneKodowanie=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/nieobslugiwaneKodowanie.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/nieobslugiwaneKodowanie.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }   
     }
+    /***
+     * Metoda obsługująca wyjątek NiewykonanaOperacja
+     * @param ex 
+     */
     public void niewykonanaOperacjaFunkcja(NiewykonanaOperacja ex){
         this.niewykonanaOperacja=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niewykonanaOperacja.xhtml");
+            facesContext.getExternalContext().redirect(".//wyjatki/niewykonanaOperacja.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }
     }
+    /***
+     * Metoda obsługująca wyjątek NiezgodneHasla
+     * @param ex 
+     */
     public void niezgodneHaslaFunkcja(NiezgodneHasla ex){
         this.niezgodneHasla=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niezgodneHasla.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/niezgodneHasla.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }   
     }
+    /***
+     * Metoda obsługująca wyjątek NiezgodnyLogin
+     * @param ex 
+     */
     public void niezgodnyLoginFunkcja(NiezgodnyLogin ex){
         this.niezgodnyLogin=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
@@ -303,18 +342,10 @@ public class UzytkownikSession implements Serializable {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }  
     }
-    public void ogloszenieDeaktywowaneWczesniejFunkcja(OgloszenieDeaktywowaneWczesniej ex){
-        this.ogloszenieDeaktywowaneWczesniej=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/ogloszenieDeaktywowaneWczesniej.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        } 
-    }
+    /***
+     * Metoda obsługująca wyjątek PoziomDostepuNieIstnieje
+     * @param ex 
+     */
     public void poziomDostepuNieIstniejeFunkcja(PoziomDostepuNieIstnieje ex){
         this.poziomDostepuNieIstnieje=ex;
         this.poziomDostepuNieIstnieje=ex;
@@ -322,30 +353,38 @@ public class UzytkownikSession implements Serializable {
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/poziomDostepuNieIstnieje.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/poziomDostepuNieIstnieje.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }
     }
+    /***
+     * Metoda obsługująca wyjątek Exception
+     * @param ex 
+     */
     public void exceptionFunkcja(Exception ex){
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("./wyjatki/nieobsluzonyWyjatek.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/nieobsluzonyWyjatek.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         }   
     }
+    /***
+     * Metoda obsługująca wyjątek BladPliku
+     * @param ex 
+     */
     public void bladPlikuFunkcja(BladPliku ex){
         this.bladPliku=ex;
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("./wyjatki/bladPliku.xhtml");
+            facesContext.getExternalContext().redirect("../wyjatki/bladPliku.xhtml");
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
@@ -357,7 +396,6 @@ public class UzytkownikSession implements Serializable {
      * Rejestruje konto, nadając mu wybrane poizomy dostępu
      * @param  k  konto, które ma zostać zarejestrowane
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
     public void utworzKonto(Konto k, List<String> poziomyDostepu){
         try {
