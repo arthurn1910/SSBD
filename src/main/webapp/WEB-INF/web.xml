@@ -54,9 +54,9 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
-        <display-name>MenadzerConstr</display-name>
+        <display-name>MokAdminConstr</display-name>
         <web-resource-collection>
-            <web-resource-name>Strony menadżera</web-resource-name>
+            <web-resource-name>Strony admina</web-resource-name>
             <description/>
             <url-pattern>/mok/zalogowani/admin/*</url-pattern>
         </web-resource-collection>
@@ -71,9 +71,9 @@
     </security-constraint>
     <!-- kontrola dostępu do zasobów agenta -->
     <security-constraint>
-        <display-name>AgentConstr</display-name>
+        <display-name>MokAdminMenadzerConstr</display-name>
         <web-resource-collection>
-            <web-resource-name>Strony agenta</web-resource-name>
+            <web-resource-name>Strony Admina i Menadzera</web-resource-name>
             <description/>
             <url-pattern>/mok/zalogowani/adminMenadzer/*</url-pattern>
         </web-resource-collection>
@@ -81,6 +81,25 @@
             <description/>
             <role-name>ADMINISTRATOR</role-name>
             <role-name>MENADZER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>MokZalogowaniConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony zalogowanych</web-resource-name>
+            <description/>
+            <url-pattern>/mok/zalogowani/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>MENADZER</role-name>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
         </auth-constraint>
         <user-data-constraint>
             <description/>
