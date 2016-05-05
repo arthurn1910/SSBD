@@ -16,10 +16,10 @@
      <ui:define name="content">
         <h1>${msg["tytulyPrzypadkow.zmienHaslo"]}:</h1>
         <h:form>
-            ${msg["daneKonta.obecneHaslo"]} <h:inputSecret value="#{zmienHasloBean.stareHaslo}"/><br/>
-            ${msg["daneKonta.noweHaslo"]}  <h:inputSecret value="#{zmienHasloBean.noweHaslo}"/><br />
-            ${msg["daneKonta.powtorzNoweHaslo"]}  <h:inputSecret value="#{zmienHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />           
-            <h:commandButton action="#{zmienHasloBean.zmienMojeHaslo()}" value="#{msg['komunikat.potwierdz']}"/>
+            ${msg["daneKonta.obecneHaslo"]} <h:inputSecret value="#{edytujHasloBean.stareHaslo}"/><br/>
+            ${msg["daneKonta.noweHaslo"]}  <h:inputSecret value="#{edytujHasloBean.noweHaslo}"/><br />
+            ${msg["daneKonta.powtorzNoweHaslo"]}  <h:inputSecret value="#{edytujHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />           
+            <h:commandButton action="#{edytujHasloBean.zmienMojeHaslo()}" value="#{msg['komunikat.potwierdz']}"/>
             <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}"/>
         </h:form>
 </ui:define>

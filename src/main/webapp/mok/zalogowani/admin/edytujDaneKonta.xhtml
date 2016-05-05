@@ -2,26 +2,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns="http://www.w3.org/1999/xhtml"
-                template="../templates/MainTemplate.xhtml"
+                template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="top">
-        <h:outputText value="#{msg["tytulyPrzypadkow.edytujDaneKonta"]} />
+        <h:outputText value="#{msg['tytulyPrzypadkow.edytujDaneKonta']}"/>
     </ui:define>
     
     <ui:define name="left">
-        <ui:include src="../templates/menu.xhtml" />
+        <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
     <ui:define name="content">
         <h1>${msg["tytulyPrzypadkow.edytujDaneKonta"]}:</h1>
         <h:form>
-            ${msg["daneKonta.imie"]}  <h:inputText value="#{edytujDaneBean.uzytkownikSession.imie}"/><br/>
-            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/> <h:inputText value="#{edytujDaneBean.uzytkownikSession.nazwisko}"/><br/>
-            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.uzytkownikSession.email}"/><br/>
-            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.uzytkownikSession.telefon}"/><br/>
+            ${msg["daneKonta.imie"]}  <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}"/><br/>
+            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/> <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/>
+            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}"/><br/>
+            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}"/><br/>
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                                 value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszPoEdycji()}"  class="edit_icon">
+                                 value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszKontoPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
             <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}" />
         </h:form>

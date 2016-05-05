@@ -25,19 +25,19 @@
             ${msg["daneKonta.potwierdzone"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
             Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
            <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
-                             value="#{msg['komunikat.odblokuj']}" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne}">
+                             value="#{msg['komunikat.odblokuj']}" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
-                             value="#{msg['komunikat.zablokuj']}" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne}">
+                             value="#{msg['komunikat.zablokuj']}" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
             </h:commandButton> 
             <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
-                             value="#{msg['komunikat.potwierdz']}" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone}">
+                             value="#{msg['komunikat.potwierdz']}" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
             </h:commandButton> 
-            <h:commandButton value="#{msg['komunikat.modyfikujPoziomy']}" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.modyfikujPoziomy']}" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" rendered="#{autoryzacja.czyAdministrator()}">
             </h:commandButton>
-            <h:commandButton value="#{msg['komunikat.zmienHaslo']}" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.zmienHaslo']}" action="#{wyswietlSzczegolyKontaBean.edytujHasloKonta()}"  class="edit_icon" rendered="#{autoryzacja.czyAdministrator()}">
             </h:commandButton> 
-            <h:commandButton value="#{msg['komunikat.edytujDane']}" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" >
+            <h:commandButton value="#{msg['komunikat.edytujDane']}" action="#{wyswietlSzczegolyKontaBean.edytujKonto()}"  class="edit_icon" rendered="#{autoryzacja.czyAdministrator()}">
             </h:commandButton> 
         </h:form>
     </ui:define>
