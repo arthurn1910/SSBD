@@ -89,4 +89,13 @@ public class OgloszenieSession implements Serializable {
         }
     }
     
+    void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) {
+        try {
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe, ogloszenieStare);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

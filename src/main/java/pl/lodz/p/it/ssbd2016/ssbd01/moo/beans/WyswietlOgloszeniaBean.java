@@ -39,6 +39,15 @@ public class WyswietlOgloszeniaBean {
         ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
     }
     
+    // w tej metodzie będzie się odbywać wyswietlenie ogloszen nieposortowanych
+    public void wyswietlOgloszeniaNieposortowane() {
+        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        /*
+        ... ewentualnie kiedy zostanie zaimplementowane MOO9 to można wykorzystać jeden domyślny tryb sortowania dla MOO8
+        */
+        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+    }
+    
     
 
     public DataModel<Ogloszenie> getOgloszeniaDataModel() {

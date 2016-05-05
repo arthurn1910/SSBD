@@ -110,4 +110,10 @@ public class MOOEndpoint implements MOOEndpointLocal {
         }
     }
     
+    @Override
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) throws Exception {
+            // kopiuj dane z ogloszenia nowego do starego
+        }
+    
+    
 }
