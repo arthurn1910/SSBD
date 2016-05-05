@@ -1,15 +1,11 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 
 /**
@@ -52,10 +48,8 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * Handler przyciksu edytuj dane w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      */
-    public String edytujSwojeKonto() throws BladPliku, BladDeSerializacjiObiektu {
+    public String edytujSwojeKonto(){
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDane";
     }
@@ -64,10 +58,8 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * Handler przyciksu edytuj hasło w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujSwojeHasloKonta() throws BladDeSerializacjiObiektu, BladPliku {
+    public String edytujSwojeHasloKonta(){
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHaslo";
     }

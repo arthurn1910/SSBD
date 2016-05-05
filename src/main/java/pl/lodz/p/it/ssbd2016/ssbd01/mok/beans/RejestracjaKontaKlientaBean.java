@@ -1,7 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,13 +25,10 @@ public class RejestracjaKontaKlientaBean {
     
     /**
      * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    public void rejestrujKontoKlienta() throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
-        if (checkPasswordMatching()) {
-                uzytkownikSession.rejestrujKontoKlienta(konto);
+    public void rejestrujKontoKlienta(){
+        if (checkPasswordMatching()) {    
+            uzytkownikSession.rejestrujKontoKlienta(konto);
         }
     }
     

@@ -1,6 +1,9 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -11,20 +14,25 @@ import javax.ejb.EJBAccessException;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
+import javax.servlet.ServletException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
@@ -55,9 +63,24 @@ public class UzytkownikSession implements Serializable {
     private KontoNiezgodneWczytanym kontoNiezgodneWczytanym;
     private NaruszenieUniq naruszenieUniq;
     private BrakDostepu brakDostepu;
+    private BladWywolania bladWywolania;
+    private NiewykonanaOperacja niewykonanaOperacja;
+    private OgloszenieDeaktywowaneWczesniej ogloszenieDeaktywowaneWczesniej;
 
     public BladDeSerializacjiObiektu getBladDeSerializajiObiektu() {
         return bladDeSerializajiObiektu;
+    }
+
+    public BladWywolania getBladWywolania() {
+        return bladWywolania;
+    }
+
+    public NiewykonanaOperacja getNiewykonanaOperacja() {
+        return niewykonanaOperacja;
+    }
+
+    public OgloszenieDeaktywowaneWczesniej getOgloszenieDeaktywowaneWczesniej() {
+        return ogloszenieDeaktywowaneWczesniej;
     }
 
     public BladPliku getBladPliku() {
@@ -106,7 +129,6 @@ public class UzytkownikSession implements Serializable {
     
     
     
-
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
@@ -114,7 +136,7 @@ public class UzytkownikSession implements Serializable {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    public void rejestrujKontoKlienta(Konto k) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
+    public void rejestrujKontoKlienta(Konto k){
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -126,19 +148,208 @@ public class UzytkownikSession implements Serializable {
             kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
         } catch (PoziomDostepuNieIstnieje ex) {
-            this.poziomDostepuNieIstnieje=ex;
-            throw ex;
+            poziomDostepuNieIstniejeFunkcja(ex);
+
         } catch (NieobslugiwaneKodowanie ex) {
-            this.nieobslugiwaneKodowanie=ex;
-            throw ex;        
+            nieobslugiwaneKodowanieFunkcja(ex);
         } catch (BrakAlgorytmuKodowania ex) {
-            this.brakAlgorytmuKodowania=ex;
-            throw ex;  
+            brakAlgorytmuKodowaniaFunkcja(ex);
         } catch(EJBException ex){
-            NaruszenieUniq exc=new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession.rejestrujKontoKlienta()");
-            this.naruszenieUniq=exc;
-            throw exc;
+            naruszenieUniqFunkcja(naruszenieUniq);
         }
+    }
+    
+    public void brakDostepuFunkcja(BrakDostepu ex){
+        this.brakDostepu=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("./wyjatki/brakDostepu.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    }
+    public void naruszenieUniqFunkcja(NaruszenieUniq ex){
+        this.naruszenieUniq=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("./wyjatki/naruszenieUniq.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
+    }
+    public void bladDeSerializacjiObiektuFunkcja(BladDeSerializacjiObiektu ex){
+        this.bladDeSerializajiObiektu=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladDeSerializacjiObiektu.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        } 
+    }
+    public void bladPoziomDostepuFunkcja(BladPoziomDostepu ex){
+        this.bladPoziomDostepu=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladPoziomDostepu.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }  
+    }
+    public void bladWywolaniaFunkcja(BladWywolania ex){
+        this.bladWywolania=ex;   
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/bladWywolania.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
+    }
+    public void brakAlgorytmuKodowaniaFunkcja(BrakAlgorytmuKodowania ex){
+            this.brakAlgorytmuKodowania=ex;
+            Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+            FacesContext facesContext=FacesContext.getCurrentInstance();
+            try {
+                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/brakAlgorytmuKodowania.xhtml");
+                facesContext.renderResponse();
+            } catch (IOException ex1) {
+                Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+            }   
+    }
+    public void brakKontaDoEdycjiFunkcja(BrakKontaDoEdycji ex){
+        this.brakKontaDoEdycji=ex;
+            Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+            FacesContext facesContext=FacesContext.getCurrentInstance();
+            try {
+                facesContext.getExternalContext().redirect("ssbd201601//wyjatki/brakKontaDoEdycji.xhtml");
+                facesContext.renderResponse();
+            } catch (IOException ex1) {
+                Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+            } 
+    }
+    public void kontoNiezgodneWczytanymFunkcja(KontoNiezgodneWczytanym ex){
+        this.kontoNiezgodneWczytanym=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatkikontoNiezgodneWczytanym.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        } 
+    }
+    public void nieobslugiwaneKodowanieFunkcja(NieobslugiwaneKodowanie ex){
+        this.nieobslugiwaneKodowanie=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/nieobslugiwaneKodowanie.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
+    }
+    public void niewykonanaOperacjaFunkcja(NiewykonanaOperacja ex){
+        this.niewykonanaOperacja=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niewykonanaOperacja.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    }
+    public void niezgodneHaslaFunkcja(NiezgodneHasla ex){
+        this.niezgodneHasla=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niezgodneHasla.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
+    }
+    public void niezgodnyLoginFunkcja(NiezgodnyLogin ex){
+        this.niezgodnyLogin=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niezgodnyLogin.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }  
+    }
+    public void ogloszenieDeaktywowaneWczesniejFunkcja(OgloszenieDeaktywowaneWczesniej ex){
+        this.ogloszenieDeaktywowaneWczesniej=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/ogloszenieDeaktywowaneWczesniej.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        } 
+    }
+    public void poziomDostepuNieIstniejeFunkcja(PoziomDostepuNieIstnieje ex){
+        this.poziomDostepuNieIstnieje=ex;
+        this.poziomDostepuNieIstnieje=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/poziomDostepuNieIstnieje.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    }
+    public void exceptionFunkcja(Exception ex){
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("./wyjatki/nieobsluzonyWyjatek.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
+    }
+    public void bladPlikuFunkcja(BladPliku ex){
+        this.bladPliku=ex;
+        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
+        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
+        FacesContext facesContext=FacesContext.getCurrentInstance();
+        try {
+            facesContext.getExternalContext().redirect("./wyjatki/bladPliku.xhtml");
+            facesContext.renderResponse();
+        } catch (IOException ex1) {
+            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
+        }   
     }
         
     
@@ -146,11 +357,9 @@ public class UzytkownikSession implements Serializable {
      * Rejestruje konto, nadając mu wybrane poizomy dostępu
      * @param  k  konto, które ma zostać zarejestrowane
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
+    public void utworzKonto(Konto k, List<String> poziomyDostepu){
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -163,22 +372,14 @@ public class UzytkownikSession implements Serializable {
         
             MOKEndpoint.utworzKonto(kontoRejestracja, poziomyDostepu);
         } catch (NieobslugiwaneKodowanie ex) {
-            this.nieobslugiwaneKodowanie=ex;
-            throw ex;  
+            nieobslugiwaneKodowanieFunkcja(ex);
         } catch (BrakAlgorytmuKodowania ex) {
-            this.brakAlgorytmuKodowania=ex;
-            throw ex; 
+            brakAlgorytmuKodowaniaFunkcja(ex);
         } catch (PoziomDostepuNieIstnieje ex) {
-            this.poziomDostepuNieIstnieje=ex;
-            throw ex; 
+            poziomDostepuNieIstniejeFunkcja(ex);
         } catch(NaruszenieUniq ex){
-            this.naruszenieUniq=ex;
-            throw ex;
-        } catch(EJBException ex){
-            NaruszenieUniq exc=new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession.utworzKonto()");
-            this.naruszenieUniq=exc;
-            throw exc;
-        }
+            naruszenieUniqFunkcja(ex);
+        } 
     }
     
     /**
@@ -217,18 +418,14 @@ public class UzytkownikSession implements Serializable {
     /**
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
      * @param konto konto do edycji
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      */
-    public void pobierzKontoDoEdycji(Konto konto) throws BladPliku, BladDeSerializacjiObiektu {
+    public void pobierzKontoDoEdycji(Konto konto){
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
         } catch (BladPliku ex) {
-            this.bladPliku=ex;
-            throw ex; 
+            bladPlikuFunkcja(ex);
         } catch (BladDeSerializacjiObiektu ex) {
-            this.bladDeSerializajiObiektu=ex;
-            throw ex; 
+            bladDeSerializacjiObiektuFunkcja(ex);
         }
     }
     
@@ -236,38 +433,30 @@ public class UzytkownikSession implements Serializable {
      * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
      * @throws Exception 
      */
-    void zapiszSwojeKontoPoEdycji() throws NiezgodnyLogin, BrakKontaDoEdycji{
+    void zapiszSwojeKontoPoEdycji(){
         try {
             MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
         } catch (NiezgodnyLogin ex) {
-            this.niezgodnyLogin=ex;
-            throw ex; 
+            niezgodnyLoginFunkcja(ex);
 
         } catch (BrakKontaDoEdycji ex) {
-            this.brakKontaDoEdycji=ex;
-            throw ex; 
+            brakKontaDoEdycjiFunkcja(ex);
 
         } catch (KontoNiezgodneWczytanym ex) {
-            this.kontoNiezgodneWczytanym=ex;
-            throw ex; 
+            kontoNiezgodneWczytanymFunkcja(ex);
         }
     }
     
     /**
      * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji
      */
-    public void zapiszKontoPoEdycji() throws BrakKontaDoEdycji {
+    public void zapiszKontoPoEdycji(){
         try {
             MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
         } catch (BrakKontaDoEdycji ex) {
-            this.brakKontaDoEdycji=ex;
-            throw ex; 
-
+            brakKontaDoEdycjiFunkcja(ex);
         } catch (KontoNiezgodneWczytanym ex) {
-            this.kontoNiezgodneWczytanym=ex;
-            throw ex; 
-
+            kontoNiezgodneWczytanymFunkcja(ex);
         }
     }
 
@@ -276,35 +465,20 @@ public class UzytkownikSession implements Serializable {
      * optymistyczna
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws BrakAlgorytmuKodowania, NieobslugiwaneKodowanie, NiezgodneHasla, NiezgodnyLogin, PoziomDostepuNieIstnieje{           
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo){           
         try {
             MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
         } catch (BrakAlgorytmuKodowania ex) {
-            this.brakAlgorytmuKodowania=ex;
-            throw ex; 
-
+            brakAlgorytmuKodowaniaFunkcja(ex);
         } catch (NiezgodneHasla ex) {
-            this.niezgodneHasla=ex;
-            throw ex; 
-
+            niezgodneHaslaFunkcja(ex);
         } catch (NieobslugiwaneKodowanie ex) {
-            this.nieobslugiwaneKodowanie=ex;
-            throw ex; 
-
+            nieobslugiwaneKodowanieFunkcja(ex);
         } catch (NiezgodnyLogin ex) {
-            this.niezgodnyLogin=ex;
-            throw ex; 
-
+            niezgodnyLoginFunkcja(ex);
         } catch (PoziomDostepuNieIstnieje ex) {
-            this.poziomDostepuNieIstnieje=ex;
-            throw ex; 
-
+            poziomDostepuNieIstniejeFunkcja(ex);
         }
     }    
     
@@ -312,23 +486,16 @@ public class UzytkownikSession implements Serializable {
      * Metoda zmienia hasło obecnie edytowanego konta. Sprawdzana jest blokada
      * optymistyczna
      * @param noweHaslo  nowe hasło w postaci jawnej
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
      */
-
-    public void zmienHaslo(String noweHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
+    public void zmienHaslo(String noweHaslo){
         try {
             MOKEndpoint.zmienHaslo(noweHaslo);
         } catch (PoziomDostepuNieIstnieje ex) {
-            this.poziomDostepuNieIstnieje=ex;
-            throw ex; 
+            poziomDostepuNieIstniejeFunkcja(ex);
         } catch (NieobslugiwaneKodowanie ex) {
-            this.nieobslugiwaneKodowanie=ex;
-            throw ex; 
+            nieobslugiwaneKodowanieFunkcja(ex);
         } catch (BrakAlgorytmuKodowania ex) {
-            this.brakAlgorytmuKodowania=ex;
-            throw ex; 
+            brakAlgorytmuKodowaniaFunkcja(ex);
         }
     }
     
@@ -346,15 +513,13 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do którego należy dodać poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje{
+    void dodajPoziomDostepu(Konto konto, String poziom){
         try {
             MOKEndpoint.dodajPoziomDostepu(konto, poziom);
         } catch (BladPoziomDostepu ex) {
-            this.bladPoziomDostepu=ex;
-            throw ex; 
+            bladPoziomDostepuFunkcja(ex);
         } catch (PoziomDostepuNieIstnieje ex) {
-            this.poziomDostepuNieIstnieje=ex;
-            throw ex; 
+            poziomDostepuNieIstniejeFunkcja(ex);
         }
     }
     /**
@@ -362,12 +527,11 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto od którego należy odłączyć poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu{
+    void odlaczPoziomDostepu(Konto konto, String poziom){
         try {
             MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
         } catch (BladPoziomDostepu ex) {
-            this.bladPoziomDostepu=ex;
-            throw ex; 
+            bladPoziomDostepuFunkcja(ex);
         }
     }
 
@@ -379,7 +543,6 @@ public class UzytkownikSession implements Serializable {
 
     public Konto getKontoEdytuj() {
         return kontoEdytuj;
-
     }
     
     public Konto getWybraneKonto() {
@@ -390,14 +553,13 @@ public class UzytkownikSession implements Serializable {
         this.wybraneKonto = wybraneKonto;
     }
 
-    Konto getSwojeKonto() {
+    public Konto getSwojeKonto() {
         try{
             wybraneKonto = MOKEndpoint.getSwojeKonto();
-            return wybraneKonto;
         }catch(BrakDostepu ex){
-            this.brakDostepu=ex;
-            throw ex;
+            brakDostepuFunkcja(ex);
         }
+        return wybraneKonto;
     }
     
     public DataModel<Konto> getKontaDataModel() {
@@ -408,7 +570,11 @@ public class UzytkownikSession implements Serializable {
         try{
             this.kontaDataModel = kontaDataModel;
         } catch(EJBAccessException ex){
-            
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            String tmp=sw.toString();
+            brakDostepuFunkcja(new BrakDostepu(tmp));
         }
     }  
     

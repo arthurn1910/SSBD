@@ -45,13 +45,8 @@ public class EdytujHasloBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje 
      */
-    public String zmienMojeHaslo() throws BrakAlgorytmuKodowania, NieobslugiwaneKodowanie, NiezgodneHasla, NiezgodnyLogin, PoziomDostepuNieIstnieje{
+    public String zmienMojeHaslo(){
         if (checkPasswordMatching()) 
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
         return "wyswietlSzczegolyKonta";
@@ -61,11 +56,8 @@ public class EdytujHasloBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania 
      */
-    public String zmienHaslo() throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania {
+    public String zmienHaslo(){
         if (checkPasswordMatching()) {
             uzytkownikSession.zmienHaslo(noweHaslo);
         }

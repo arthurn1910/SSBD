@@ -1,13 +1,9 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
 
 /**
  * Obsługa zmiany danych przez admina i użytkownika
@@ -23,10 +19,8 @@ public class EdytujDaneBean {
      * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji 
      */
-    public String zapiszSwojeKontoPoEdycji() throws NiezgodnyLogin, BrakKontaDoEdycji {
+    public String zapiszSwojeKontoPoEdycji(){
             uzytkownikSession.zapiszSwojeKontoPoEdycji();
             return "wyswietlSzczegolySwojegoKonta";
     }
@@ -35,9 +29,8 @@ public class EdytujDaneBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji
      */
-    public String zapiszKontoPoEdycji() throws BrakKontaDoEdycji {
+    public String zapiszKontoPoEdycji(){
             uzytkownikSession.zapiszKontoPoEdycji();
             return "wyswietlSzczegolySwojegoKonta";
     }

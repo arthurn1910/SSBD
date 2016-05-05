@@ -33,11 +33,8 @@ public class UtworzKontoBean {
     
     /**
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void utworzKont() throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
+    public void utworzKont(){
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
             uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
         }
