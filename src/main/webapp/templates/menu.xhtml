@@ -16,9 +16,7 @@
     </ul>
     <h2>Dla admina</h2>
     <ul>
-        <li><h:outputLink value="#{request.contextPath}/mok/utworzKonto.xhtml" >${msg["menu.utorzKonto"]}</h:outputLink></li>
-        <li><h:outputLink value="#{request.contextPath}/mok/wyszukajKonta.xhtml" >${msg["menu.wyszukajKonta"]}</h:outputLink></li>
-         <li><h:outputLink value="#{request.contextPath}/mok/historiaLogowaniaRaport.xhtml" >${msg["menu.generuj.raport"]}</h:outputLink></li>
+        <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/historiaLogowaniaRaport.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.generuj.raport"]}</h:outputLink></li>
         <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/utworzKonto.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.utorzKonto"]}</h:outputLink></li>
         <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/adminMenadzer/wyszukajKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer()}">${msg["menu.wyszukajKonta"]}</h:outputLink></li>
     </ul>

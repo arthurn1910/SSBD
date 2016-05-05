@@ -35,7 +35,7 @@ public class UtworzKontoBean {
     /**
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
      */
-    public void utworzKont(){
+    public void utworzKonto(){
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
             uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
         }
