@@ -11,6 +11,7 @@
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia</class>
+    <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
@@ -29,6 +30,7 @@
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.KategoriaWyposazeniaNieruchomosci</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie</class>
     <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia</class>
+    <class>pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
     <properties>

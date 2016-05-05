@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+>
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.logowanie"]}</h>
     </ui:define>
@@ -12,7 +12,7 @@
     <ui:define name="left">
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
-    
+
     <ui:define name="content">
         <form method="post" action="j_security_check">
             <h:panelGrid columns="1">
@@ -26,8 +26,9 @@
 
                 <h:outputText value="" />
                 <h:panelGrid columns="2">
-                    <input type="submit" name="submit" value="#{msg['komunikat.zaloguj']}" />
-                    <h:button outcome="index" value="#{msg['komunikat.anuluj']}" />
+
+                    <input type="submit" name="submit" value="Login"/>
+                    <h:button outcome="index" value="Cancel" />
                 </h:panelGrid>
             </h:panelGrid>
         </form>
