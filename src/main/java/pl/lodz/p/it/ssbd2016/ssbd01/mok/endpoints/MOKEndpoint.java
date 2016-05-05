@@ -32,6 +32,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
@@ -61,13 +62,13 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
+    public void rejestrujKontoKlienta(Konto konto) throws NiewykonanaOperacja,PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
         kontoManager.rejestrujKontoKlienta(konto);
     }
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NiewykonanaOperacja, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
         kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 
@@ -122,13 +123,13 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu, PoziomDostepuNieIstnieje {
         kontoManager.dodajPoziomDostepu(konto, poziom);
     }
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu {
         kontoManager.odlaczPoziomDostepu(konto, poziom);
     }
 

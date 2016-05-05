@@ -16,7 +16,7 @@
     
      <ui:define name="content">         
         <h:form>
-            Poziom: <h:outputText value="#{wyjatkiBean.getPoziomPoziomDostepuNieIstnieje()}" /> nie istnieje. Wyjątek został rzucony w miejscu: <h:outputText value="#{wyjatkiBean.getMiejscePoziomDostepuNieIstnieje()}" />	
-         </h:form>
+            ${msg["blad.PoziomDostepuNieIstnieje"]}
+        </h:form>
      </ui:define>
 </ui:composition>

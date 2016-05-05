@@ -78,6 +78,62 @@ public class UzytkownikSession implements Serializable {
         return niewykonanaOperacja;
     }
 
+    public void setBladDeSerializajiObiektu(BladDeSerializacjiObiektu bladDeSerializajiObiektu) {
+        this.bladDeSerializajiObiektu = bladDeSerializajiObiektu;
+    }
+
+    public void setBladPliku(BladPliku bladPliku) {
+        this.bladPliku = bladPliku;
+    }
+
+    public void setBladPoziomDostepu(BladPoziomDostepu bladPoziomDostepu) {
+        this.bladPoziomDostepu = bladPoziomDostepu;
+    }
+
+    public void setBrakAlgorytmuKodowania(BrakAlgorytmuKodowania brakAlgorytmuKodowania) {
+        this.brakAlgorytmuKodowania = brakAlgorytmuKodowania;
+    }
+
+    public void setBrakKontaDoEdycji(BrakKontaDoEdycji brakKontaDoEdycji) {
+        this.brakKontaDoEdycji = brakKontaDoEdycji;
+    }
+
+    public void setNieobslugiwaneKodowanie(NieobslugiwaneKodowanie nieobslugiwaneKodowanie) {
+        this.nieobslugiwaneKodowanie = nieobslugiwaneKodowanie;
+    }
+
+    public void setNiezgodneHasla(NiezgodneHasla niezgodneHasla) {
+        this.niezgodneHasla = niezgodneHasla;
+    }
+
+    public void setNiezgodnyLogin(NiezgodnyLogin niezgodnyLogin) {
+        this.niezgodnyLogin = niezgodnyLogin;
+    }
+
+    public void setPoziomDostepuNieIstnieje(PoziomDostepuNieIstnieje poziomDostepuNieIstnieje) {
+        this.poziomDostepuNieIstnieje = poziomDostepuNieIstnieje;
+    }
+
+    public void setKontoNiezgodneWczytanym(KontoNiezgodneWczytanym kontoNiezgodneWczytanym) {
+        this.kontoNiezgodneWczytanym = kontoNiezgodneWczytanym;
+    }
+
+    public void setNaruszenieUniq(NaruszenieUniq naruszenieUniq) {
+        this.naruszenieUniq = naruszenieUniq;
+    }
+
+    public void setBrakDostepu(BrakDostepu brakDostepu) {
+        this.brakDostepu = brakDostepu;
+    }
+
+    public void setBladWywolania(BladWywolania bladWywolania) {
+        this.bladWywolania = bladWywolania;
+    }
+
+    public void setNiewykonanaOperacja(NiewykonanaOperacja niewykonanaOperacja) {
+        this.niewykonanaOperacja = niewykonanaOperacja;
+    }
+
     public BladPliku getBladPliku() {
         return bladPliku;
     }
@@ -140,255 +196,42 @@ public class UzytkownikSession implements Serializable {
             kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
         } catch (PoziomDostepuNieIstnieje ex) {
-            poziomDostepuNieIstniejeFunkcja(ex);
+            this.poziomDostepuNieIstnieje=ex;
+            obslugaWyjatkow(ex,"../wyjatki/poziomDostepuNieIstnieje.xhtml");
 
         } catch (NieobslugiwaneKodowanie ex) {
-            nieobslugiwaneKodowanieFunkcja(ex);
+            this.nieobslugiwaneKodowanie=ex;
+            obslugaWyjatkow(ex,"../wyjatki/nieobslugiwaneKodowanie.xhtml");
         } catch (BrakAlgorytmuKodowania ex) {
-            brakAlgorytmuKodowaniaFunkcja(ex);
-        } catch(EJBException ex){
-            naruszenieUniqFunkcja(naruszenieUniq);
-        }
-    }
-    /***
-     * Metoda obsługująca wyjątek brakDostępu
-     * @param ex 
-     */
-    public void brakDostepuFunkcja(BrakDostepu ex){
-        this.brakDostepu=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/brakDostepu.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-    }
-    /***
-     * Metoda obsługująca wyjątek NaruszenieUniq
-     * @param ex 
-     */
-    public void naruszenieUniqFunkcja(NaruszenieUniq ex){
-        this.naruszenieUniq=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/naruszenieUniq.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
-    }
-    /***
-     * Metoda obsługująca wyjątek BladDeSerializacjiObiektu
-     * @param ex 
-     */
-    public void bladDeSerializacjiObiektuFunkcja(BladDeSerializacjiObiektu ex){
-        this.bladDeSerializajiObiektu=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/bladDeSerializacjiObiektu.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        } 
-    }
-    /***
-     * Metoda obsługująca wyjątek BladPoziomDostepu
-     * @param ex 
-     */
-    public void bladPoziomDostepuFunkcja(BladPoziomDostepu ex){
-        this.bladPoziomDostepu=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/bladPoziomDostepu.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }  
-    }
-    /***
-     * Metoda obsługująca wyjątek BladWywolania
-     * @param ex 
-     */
-    public void bladWywolaniaFunkcja(BladWywolania ex){
-        this.bladWywolania=ex;   
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/bladWywolania.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
-    }
-    /***
-     * Metoda obsługująca wyjątek BrakAlgorytmuKodowania
-     * @param ex 
-     */
-    public void brakAlgorytmuKodowaniaFunkcja(BrakAlgorytmuKodowania ex){
             this.brakAlgorytmuKodowania=ex;
-            Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-            FacesContext facesContext=FacesContext.getCurrentInstance();
-            try {
-                facesContext.getExternalContext().redirect("../wyjatki/brakAlgorytmuKodowania.xhtml");
-                facesContext.renderResponse();
-            } catch (IOException ex1) {
-                Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-            }   
+            obslugaWyjatkow(ex,"../wyjatki/brakAlgorytmuKodowania.xhtml");
+        } catch(EJBException ex){
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            ex.printStackTrace(pw);
+            String tmp=sw.toString();
+            NaruszenieUniq a=new NaruszenieUniq(tmp);
+            this.naruszenieUniq=a;
+            obslugaWyjatkow(a,"../wyjatki/naruszenieUniq.xhtml");
+        } catch (NiewykonanaOperacja ex) {
+            this.niewykonanaOperacja=ex;
+            obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
     }
     /***
-     * Metoda obsługująca wyjątek BrakKontaDoEdycji
+     * Metoda obsługująca wyjąteki
      * @param ex 
      */
-    public void brakKontaDoEdycjiFunkcja(BrakKontaDoEdycji ex){
-        this.brakKontaDoEdycji=ex;
-            Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-            FacesContext facesContext=FacesContext.getCurrentInstance();
-            try {
-                facesContext.getExternalContext().redirect("../wyjatki/brakKontaDoEdycji.xhtml");
-                facesContext.renderResponse();
-            } catch (IOException ex1) {
-                Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-            } 
-    }
-    /***
-     * Metoda obsługująca wyjątek KontoNiezgodneWczytanym
-     * @param ex 
-     */
-    public void kontoNiezgodneWczytanymFunkcja(KontoNiezgodneWczytanym ex){
-        this.kontoNiezgodneWczytanym=ex;
+    public void obslugaWyjatkow(Exception ex, String path){
         Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
         lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
         FacesContext facesContext=FacesContext.getCurrentInstance();
         try {
-            facesContext.getExternalContext().redirect("../wyjatkikontoNiezgodneWczytanym.xhtml");
+            facesContext.getExternalContext().redirect(path);
             facesContext.renderResponse();
         } catch (IOException ex1) {
             Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
         } 
-    }
-    /***
-     * Metoda obsługująca wyjątek NieobslugiwaneKodowanie
-     * @param ex 
-     */
-    public void nieobslugiwaneKodowanieFunkcja(NieobslugiwaneKodowanie ex){
-        this.nieobslugiwaneKodowanie=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/nieobslugiwaneKodowanie.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
-    }
-    /***
-     * Metoda obsługująca wyjątek NiewykonanaOperacja
-     * @param ex 
-     */
-    public void niewykonanaOperacjaFunkcja(NiewykonanaOperacja ex){
-        this.niewykonanaOperacja=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect(".//wyjatki/niewykonanaOperacja.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-    }
-    /***
-     * Metoda obsługująca wyjątek NiezgodneHasla
-     * @param ex 
-     */
-    public void niezgodneHaslaFunkcja(NiezgodneHasla ex){
-        this.niezgodneHasla=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/niezgodneHasla.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
-    }
-    /***
-     * Metoda obsługująca wyjątek NiezgodnyLogin
-     * @param ex 
-     */
-    public void niezgodnyLoginFunkcja(NiezgodnyLogin ex){
-        this.niezgodnyLogin=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("ssbd201601//wyjatki/niezgodnyLogin.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }  
-    }
-    /***
-     * Metoda obsługująca wyjątek PoziomDostepuNieIstnieje
-     * @param ex 
-     */
-    public void poziomDostepuNieIstniejeFunkcja(PoziomDostepuNieIstnieje ex){
-        this.poziomDostepuNieIstnieje=ex;
-        this.poziomDostepuNieIstnieje=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/poziomDostepuNieIstnieje.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-    }
-    /***
-     * Metoda obsługująca wyjątek Exception
-     * @param ex 
-     */
-    public void exceptionFunkcja(Exception ex){
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/nieobsluzonyWyjatek.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
-    }
-    /***
-     * Metoda obsługująca wyjątek BladPliku
-     * @param ex 
-     */
-    public void bladPlikuFunkcja(BladPliku ex){
-        this.bladPliku=ex;
-        Logger lg=Logger.getLogger("javax.enterprise.system.container.web.faces");
-        lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ", ex);
-        FacesContext facesContext=FacesContext.getCurrentInstance();
-        try {
-            facesContext.getExternalContext().redirect("../wyjatki/bladPliku.xhtml");
-            facesContext.renderResponse();
-        } catch (IOException ex1) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, ex1);
-        }   
     }
         
     
@@ -410,14 +253,21 @@ public class UzytkownikSession implements Serializable {
         
             MOKEndpoint.utworzKonto(kontoRejestracja, poziomyDostepu);
         } catch (NieobslugiwaneKodowanie ex) {
-            nieobslugiwaneKodowanieFunkcja(ex);
+            this.nieobslugiwaneKodowanie=ex;
+            obslugaWyjatkow(ex,"../wyjatki/nieobslugiwaneKodowanie.xhtml");
         } catch (BrakAlgorytmuKodowania ex) {
-            brakAlgorytmuKodowaniaFunkcja(ex);
+            this.brakAlgorytmuKodowania=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakAlgorytmuKodowania.xhtml");
         } catch (PoziomDostepuNieIstnieje ex) {
-            poziomDostepuNieIstniejeFunkcja(ex);
+            this.poziomDostepuNieIstnieje=ex;
+            obslugaWyjatkow(ex,"../wyjatki/poziomDostepuNieIstnieje.xhtml");
         } catch(NaruszenieUniq ex){
-            naruszenieUniqFunkcja(ex);
-        } 
+            this.naruszenieUniq=ex;
+            obslugaWyjatkow(ex,"../wyjatki/naruszenieUniq.xhtml");
+        } catch (NiewykonanaOperacja ex) {
+            this.niewykonanaOperacja=ex;
+            obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
     }
     
     /**
@@ -461,9 +311,11 @@ public class UzytkownikSession implements Serializable {
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
         } catch (BladPliku ex) {
-            bladPlikuFunkcja(ex);
+            this.bladPliku=ex;
+            obslugaWyjatkow(ex, "../wyjatki/bladPliku.xhtml");
         } catch (BladDeSerializacjiObiektu ex) {
-            bladDeSerializacjiObiektuFunkcja(ex);
+            this.bladDeSerializajiObiektu=ex;
+            obslugaWyjatkow(ex,"../wyjatki/bladDeSerializacjiObiektu.xhtml");
         }
     }
     
@@ -475,13 +327,16 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
         } catch (NiezgodnyLogin ex) {
-            niezgodnyLoginFunkcja(ex);
+            this.niezgodnyLogin=ex;
+            obslugaWyjatkow(ex,"ssbd201601//wyjatki/niezgodnyLogin.xhtml");
 
         } catch (BrakKontaDoEdycji ex) {
-            brakKontaDoEdycjiFunkcja(ex);
+            this.brakKontaDoEdycji=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakKontaDoEdycji.xhtml");
 
         } catch (KontoNiezgodneWczytanym ex) {
-            kontoNiezgodneWczytanymFunkcja(ex);
+            this.kontoNiezgodneWczytanym=ex;
+            obslugaWyjatkow(ex,"../wyjatkikontoNiezgodneWczytanym.xhtml");
         }
     }
     
@@ -492,9 +347,11 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
         } catch (BrakKontaDoEdycji ex) {
-            brakKontaDoEdycjiFunkcja(ex);
+            this.brakKontaDoEdycji=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakKontaDoEdycji.xhtml");
         } catch (KontoNiezgodneWczytanym ex) {
-            kontoNiezgodneWczytanymFunkcja(ex);
+            this.kontoNiezgodneWczytanym=ex;
+            obslugaWyjatkow(ex,"../wyjatkikontoNiezgodneWczytanym.xhtml");
         }
     }
 
@@ -508,15 +365,20 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
         } catch (BrakAlgorytmuKodowania ex) {
-            brakAlgorytmuKodowaniaFunkcja(ex);
+            this.brakAlgorytmuKodowania=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakAlgorytmuKodowania.xhtml");
         } catch (NiezgodneHasla ex) {
-            niezgodneHaslaFunkcja(ex);
+            this.niezgodneHasla=ex;
+            obslugaWyjatkow(ex, "../wyjatki/niezgodneHasla.xhtml");
         } catch (NieobslugiwaneKodowanie ex) {
-            nieobslugiwaneKodowanieFunkcja(ex);
+            this.nieobslugiwaneKodowanie=ex;
+            obslugaWyjatkow(ex,"../wyjatki/nieobslugiwaneKodowanie.xhtml");
         } catch (NiezgodnyLogin ex) {
-            niezgodnyLoginFunkcja(ex);
+            this.niezgodnyLogin=ex;
+            obslugaWyjatkow(ex, "ssbd201601//wyjatki/niezgodnyLogin.xhtml");
         } catch (PoziomDostepuNieIstnieje ex) {
-            poziomDostepuNieIstniejeFunkcja(ex);
+            this.poziomDostepuNieIstnieje=ex;
+            obslugaWyjatkow(ex,"../wyjatki/poziomDostepuNieIstnieje.xhtml");
         }
     }    
     
@@ -529,11 +391,14 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.zmienHaslo(noweHaslo);
         } catch (PoziomDostepuNieIstnieje ex) {
-            poziomDostepuNieIstniejeFunkcja(ex);
+            this.poziomDostepuNieIstnieje=ex;
+            obslugaWyjatkow(ex,"../wyjatki/poziomDostepuNieIstnieje.xhtml");
         } catch (NieobslugiwaneKodowanie ex) {
-            nieobslugiwaneKodowanieFunkcja(ex);
+            this.nieobslugiwaneKodowanie=ex;
+            obslugaWyjatkow(ex,"../wyjatki/nieobslugiwaneKodowanie.xhtml");
         } catch (BrakAlgorytmuKodowania ex) {
-            brakAlgorytmuKodowaniaFunkcja(ex);
+            this.brakAlgorytmuKodowania=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakAlgorytmuKodowania.xhtml");
         }
     }
     
@@ -555,9 +420,14 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.dodajPoziomDostepu(konto, poziom);
         } catch (BladPoziomDostepu ex) {
-            bladPoziomDostepuFunkcja(ex);
+            this.bladPoziomDostepu=ex;
+            obslugaWyjatkow(ex,"../wyjatki/bladPoziomDostepu.xhtml");
         } catch (PoziomDostepuNieIstnieje ex) {
-            poziomDostepuNieIstniejeFunkcja(ex);
+            this.poziomDostepuNieIstnieje=ex;
+            obslugaWyjatkow(ex, "../wyjatki/poziomDostepuNieIstnieje.xhtml");
+        }catch (NiewykonanaOperacja ex) {
+            this.niewykonanaOperacja=ex;
+            obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
         }
     }
     /**
@@ -569,7 +439,11 @@ public class UzytkownikSession implements Serializable {
         try {
             MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
         } catch (BladPoziomDostepu ex) {
-            bladPoziomDostepuFunkcja(ex);
+            this.bladPoziomDostepu=ex;
+            obslugaWyjatkow(ex,"../wyjatki/bladPoziomDostepu.xhtml");
+        }catch (NiewykonanaOperacja ex) {
+            this.niewykonanaOperacja=ex;
+            obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
         }
     }
 
@@ -595,7 +469,8 @@ public class UzytkownikSession implements Serializable {
         try{
             wybraneKonto = MOKEndpoint.getSwojeKonto();
         }catch(BrakDostepu ex){
-            brakDostepuFunkcja(ex);
+            this.brakDostepu=ex;
+            obslugaWyjatkow(ex,"../wyjatki/brakDostepu.xhtml");
         }
         return wybraneKonto;
     }
@@ -612,7 +487,9 @@ public class UzytkownikSession implements Serializable {
             PrintWriter pw = new PrintWriter(sw);
             ex.printStackTrace(pw);
             String tmp=sw.toString();
-            brakDostepuFunkcja(new BrakDostepu(tmp));
+            BrakDostepu exc=new BrakDostepu(tmp);
+            this.brakDostepu=exc;
+            obslugaWyjatkow(exc, "../wyjatki/brakDostepu.xhtml");
         }
     }  
     

@@ -11,6 +11,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
@@ -28,7 +29,7 @@ public interface MOKEndpointLocal {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      */
-    void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
+    void rejestrujKontoKlienta(Konto konto) throws NiewykonanaOperacja, PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania;
     
     /**
      * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
@@ -38,7 +39,7 @@ public interface MOKEndpointLocal {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje;
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NiewykonanaOperacja,NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje;
     
     /**
      * Metoda zmienia stan konta na potwierdzone
@@ -101,7 +102,7 @@ public interface MOKEndpointLocal {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje;
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu, PoziomDostepuNieIstnieje;
 
     /**
      * Metoda odłączająca dany poziom dostępu do konta
@@ -109,7 +110,7 @@ public interface MOKEndpointLocal {
      * @param poziom    nazwa poziomu dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      */
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu;
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu;
 
     /**
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.

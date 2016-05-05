@@ -11,6 +11,7 @@ import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
@@ -33,8 +34,14 @@ public class ModyfikujPoziomyDostepuBean {
      */
     @PostConstruct
     private void initModel(){
-        poziomyDostepuDataModel = new ListDataModel<String>(PoziomDostepuManager.getPoziomyDostepu());
-        konto = uzytkownikSession.getWybraneKonto();
+        try {
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
+            konto = uzytkownikSession.getWybraneKonto();
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
     }
     
     /**
@@ -66,7 +73,14 @@ public class ModyfikujPoziomyDostepuBean {
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      */
     public boolean czyPosiadaAktywnyPoziomDostepu() {
-        return PoziomDostepuManager.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        try {
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
+        return false;
     }
     
     // Gettery i Settery    

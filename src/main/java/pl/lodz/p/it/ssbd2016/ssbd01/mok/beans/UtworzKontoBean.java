@@ -13,6 +13,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
@@ -46,18 +47,26 @@ public class UtworzKontoBean {
      * @return  decyzja czy można nadać dane poziomy dostępu
      */
     public boolean sprawdzPoziomyDostepu(){
-        if (wybranePoziomy.length == 0) {
+        PoziomDostepuManager tmp;
+        try {
+            tmp = new PoziomDostepuManager();
+            if (wybranePoziomy.length == 0) {
             FacesMessage message = new FacesMessage("Wybierz conajmniej 1");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("form:poziomy", message);
             return false;
-        } else if (wybranePoziomy.length > 0 && !PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(Arrays.asList(wybranePoziomy))) {
+        } else if (wybranePoziomy.length > 0 && !tmp.czyPoprawnaKombinacjaPoziomowDostepu(Arrays.asList(wybranePoziomy))) {
             FacesMessage message = new FacesMessage("Poziomy sie wykluczaja");
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage("form:poziomy", message);
             return false;
         }
-        return true;
+            return true;
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja()");
+        }
+        return false;
     }
     
     /**
@@ -98,6 +107,13 @@ public class UtworzKontoBean {
     }
     
     public String[] pobierzPoziomyDostepu() {
-        return PoziomDostepuManager.getPoziomyDostepu().toArray(new String[0]);
+        try {
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            return tmp.getPoziomyDostepu().toArray(new String[0]);
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja()");
+        }
+        return null;
     }            
 }

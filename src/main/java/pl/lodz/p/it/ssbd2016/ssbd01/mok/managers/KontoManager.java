@@ -24,6 +24,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
@@ -75,14 +76,14 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
+    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje,NiewykonanaOperacja, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
         try{
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
             kontoFacade.create(konto);
-            
-            PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepuKlient();
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepuKlient();
             poziomDostepu.setKontoId(konto);
             
             poziomDostepuFacade.create(poziomDostepu);
@@ -95,8 +96,9 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
-        if (PoziomDostepuManager.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, NiewykonanaOperacja, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        if (tmp.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             try{
                 konto.setAktywne(true);
                 konto.setPotwierdzone(false);
@@ -104,7 +106,7 @@ public class KontoManager implements KontoManagerLocal {
                 kontoFacade.create(konto);
 
                 for (String poziomDostepuStr: poziomyDostepu) {
-                    PoziomDostepu poziomDostepu = PoziomDostepuManager.stworzPoziomDostepu(poziomDostepuStr);     
+                    PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepu(poziomDostepuStr);     
                     poziomDostepu.setKontoId(konto);
                     poziomDostepuFacade.create(poziomDostepu);
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
@@ -150,12 +152,13 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu, PoziomDostepuNieIstnieje {
-        if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu, PoziomDostepuNieIstnieje {
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
-            PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
+            PoziomDostepu aktualnyPoziom = tmp.pobierzPoziomDostepu(konto, poziom);
             // Sprawdzamy czy poziom jest aktywny i czy możemy dołączyć dany poziom
-            if (!aktualnyPoziom.getAktywny() && PoziomDostepuManager.czyMoznaDodacPoziom(konto, poziom)) {
+            if (!aktualnyPoziom.getAktywny() && tmp.czyMoznaDodacPoziom(konto, poziom)) {
                 // Jeśli tak aktywujemy posiadany już poziom
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(true);
@@ -166,10 +169,10 @@ public class KontoManager implements KontoManagerLocal {
         } else {
             // Nie posiadamy danego poziomu dostępu
             // Sprawdzamy czy możemy taki poziom dodać
-            if (PoziomDostepuManager.czyMoznaDodacPoziom(konto, poziom)) {
+            if (tmp.czyMoznaDodacPoziom(konto, poziom)) {
                 Konto aktualneKonto = kontoFacade.znajdzPoLoginie(konto.getLogin());
                 //Tworzymy i dodajemy nowy poziom dostępu
-                PoziomDostepu nowyPoziom = PoziomDostepuManager.stworzPoziomDostepu(poziom);
+                PoziomDostepu nowyPoziom = tmp.stworzPoziomDostepu(poziom);
                 nowyPoziom.setKontoId(aktualneKonto);
                 nowyPoziom.setAktywny(true);
                 poziomDostepuFacade.create(nowyPoziom);
@@ -184,10 +187,11 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws BladPoziomDostepu {
-        if (PoziomDostepuManager.czyPosiadaPoziomDostepu(konto, poziom)) {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja,BladPoziomDostepu {
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             
-            PoziomDostepu aktualnyPoziom = PoziomDostepuManager.pobierzPoziomDostepu(konto, poziom);
+            PoziomDostepu aktualnyPoziom = tmp.pobierzPoziomDostepu(konto, poziom);
             
             if (aktualnyPoziom.getAktywny()) {
                 // Jeśli poziom jest aktywny to go dezaktywujemy
