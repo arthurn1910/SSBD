@@ -97,11 +97,14 @@ public class MOOEndpoint implements MOOEndpointLocal {
         return (List<Ogloszenie>) l.getOgloszenieUlubioneCollection();
     }
     
-     /*
+     /**
         @param ogloszenie innego uzytkownika, które ma zostać deaktywowane
     */
     @Override
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        if (ogloszenie == null) 
+        throw new IllegalArgumentException("Brak wczytanego ogloszenia do deaktywacji");
+        
         if(ogloszenie.getAktywne() == false) {
             throw new Exception("Ogloszenie juz zostalo deaktywowane");
         }
@@ -109,9 +112,14 @@ public class MOOEndpoint implements MOOEndpointLocal {
             ogloszenie.setAktywne(false);
         }
     }
-    
+     /**
+     *
+     * metoda odpowiadajaca za edycje ogloszenia innego uzytkownika 
+    */   
     @Override
-    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) throws Exception {
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
+        if (ogloszenieNowe == null) 
+        throw new IllegalArgumentException("Brak wczytanego ogloszenia do edycji");
             // kopiuj dane z ogloszenia nowego do starego
         }
     

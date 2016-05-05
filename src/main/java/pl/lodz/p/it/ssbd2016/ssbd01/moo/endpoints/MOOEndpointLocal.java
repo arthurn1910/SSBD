@@ -38,9 +38,18 @@ public interface MOOEndpointLocal {
 
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
     
+    /**
+    *   metoda odpowiadajaca za deaktywacje danego uzytkownika
+    *   @param ogloszenie do deaktywacji
+    */   
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
     
-    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) throws Exception;
+        /**
+        *    metoda odpowiadajaca za edycje ogloszenia innego uzytkownika 
+        */   
+    
+    
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
 
 
 }

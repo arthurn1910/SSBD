@@ -77,9 +77,10 @@ public class OgloszenieSession implements Serializable {
         return mooEndpoint.pobierzUlubioneOgloszenia();
     }
     
-     /*
-        @param ogloszenie, które ma zostać deaktywowane
-    */
+     /**
+     *   metoda deaktywująca ogłoszenie innego użytkownika
+     *   @param ogloszenie, które ma zostać deaktywowane
+     */
     void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
         try {
             mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
@@ -89,9 +90,14 @@ public class OgloszenieSession implements Serializable {
         }
     }
     
-    void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) {
+       /**
+       * metoda umożliwiająca edycje ogłoszenia innego użytkownika
+       * @param ogloszenie, które ma zostać dodane jako nowe
+       */
+    
+    void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) {
         try {
-            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe, ogloszenieStare);
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe);
         }
         catch(Exception e) {
             e.printStackTrace();

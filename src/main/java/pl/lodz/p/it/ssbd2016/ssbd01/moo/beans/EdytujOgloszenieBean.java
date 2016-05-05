@@ -14,8 +14,12 @@ public class EdytujOgloszenieBean {
     
     @Inject
     private OgloszenieSession ogloszenieSession;
+    /*
+    *   metoda odpowiadajaca za edycje ogloszenia danego uzytkownika
+    *   @param nowe ogloszenie
+    */   
     
-    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe, Ogloszenie ogloszenieStare) {
-        ogloszenieSession.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe, ogloszenieStare);
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) {
+        ogloszenieSession.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe);
     }
 }
