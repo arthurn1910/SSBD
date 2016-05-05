@@ -5,9 +5,13 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
@@ -37,6 +41,8 @@ public class MOOEndpoint implements MOOEndpointLocal {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    @Resource
+    private SessionContext sessionContext;
     
     @Override
     public Konto getKonto(String login) {
@@ -89,6 +95,19 @@ public class MOOEndpoint implements MOOEndpointLocal {
     public List<Ogloszenie> pobierzUlubioneOgloszenia() {
         Konto l = kontoFacade.znajdzPoLoginie("janusz");
         return (List<Ogloszenie>) l.getOgloszenieUlubioneCollection();
+    }
+    
+     /*
+        @param ogloszenie innego uzytkownika, które ma zostać deaktywowane
+    */
+    @Override
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        if(ogloszenie.getAktywne() == false) {
+            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+        }
+        else {
+            ogloszenie.setAktywne(false);
+        }
     }
     
 }

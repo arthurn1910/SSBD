@@ -77,5 +77,16 @@ public class OgloszenieSession implements Serializable {
         return mooEndpoint.pobierzUlubioneOgloszenia();
     }
     
+     /*
+        @param ogloszenie, które ma zostać deaktywowane
+    */
+    void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
+        try {
+            mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
     
 }

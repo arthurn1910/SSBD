@@ -30,6 +30,16 @@ public class WyswietlOgloszeniaBean {
     
     private List<Ogloszenie> ogloszenia;
     private DataModel<Ogloszenie> ogloszeniaDataModel;
+    
+    /*
+    @param ogloszenie innego użytkownika, które ma zostać deaktywowane
+    Przypadek użycia - MOO5
+    */
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
+        ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+    }
+    
+    
 
     public DataModel<Ogloszenie> getOgloszeniaDataModel() {
         return ogloszeniaDataModel;

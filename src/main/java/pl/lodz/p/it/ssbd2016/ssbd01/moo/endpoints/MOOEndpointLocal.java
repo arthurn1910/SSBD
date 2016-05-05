@@ -38,4 +38,6 @@ public interface MOOEndpointLocal {
 
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
     
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
+
 }
