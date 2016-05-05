@@ -6,11 +6,8 @@ import javax.ejb.Local;
 import java.util.List;
 
 /**
-<<<<<<< HEAD
  * Interfejs API servera dla modułu funkcjonalnego MOO
-=======
  * @author java
->>>>>>> origin/feature/SSBD201601-99-2-przypisane-przypadki-uzycia
  */
 @Local
 public interface MOOEndpointLocal {
@@ -42,6 +39,24 @@ public interface MOOEndpointLocal {
      * @param ogloszenie ogłoszenie, które ma być dodane
      */
     public void dodajDoUlubionych(Ogloszenie ogloszenie);
+
+    /***
+     * Metoda przydzielająca konto agenta do ogłoszenia
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 6
+     * @param rowData
+     * @param agent 
+     */
+    public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent);
+    
+    /***
+     * Metoda zmieniająca agenta w ogłoszeniu
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 7
+     * @param rowData
+     * @param agent 
+     */
+    public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent);
     
     /**
      * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika

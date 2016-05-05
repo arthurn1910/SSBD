@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
@@ -90,5 +91,26 @@ public class MOOEndpoint implements MOOEndpointLocal {
     public void usunZUlubionych(Ogloszenie ogloszenie) {
         ogloszenieManagerLocal.usunZUlubionych(ogloszenie);
     }
-    
+   
+    @Override
+    public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
+        o.setIdAgenta(agent);
+        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
+        ogloszenieAgentaCollection.add(o);
+        agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+    }
+
+    @Override
+    public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
+        Konto agentStary=o.getIdAgenta();
+        o.setIdAgenta(agent);
+        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
+        ogloszenieAgentaCollection.add(o);
+        agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+        ogloszenieAgentaCollection=agentStary.getOgloszenieAgentaCollection();
+        ogloszenieAgentaCollection.remove(o);
+        agentStary.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+    } 
 }
