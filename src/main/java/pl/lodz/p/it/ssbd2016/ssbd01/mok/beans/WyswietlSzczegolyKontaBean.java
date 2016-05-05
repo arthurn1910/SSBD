@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o wybranym uzytkowniku 
@@ -79,8 +81,10 @@ public class WyswietlSzczegolyKontaBean {
      * Handler przyciksu edytuj dane w widoku. Pobiera wybrane konto do edycji
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujKonto() {
+    public String edytujKonto() throws BladDeSerializacjiObiektu, BladPliku{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDaneKonta";
     }
@@ -89,8 +93,10 @@ public class WyswietlSzczegolyKontaBean {
      * Handler przyciksu edytuj hasło w widoku. Pobiera wybrane konto do edycji
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujHasloKonta() {
+    public String edytujHasloKonta() throws BladDeSerializacjiObiektu, BladPliku{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHasloKonta";
     }

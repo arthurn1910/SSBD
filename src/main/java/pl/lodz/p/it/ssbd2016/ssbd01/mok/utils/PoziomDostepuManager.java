@@ -10,6 +10,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Klasa użytkowa definiująca dostępne poziomy dostępu. Udostępnia metody tworzenia,
@@ -17,17 +19,19 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
  */
 public class PoziomDostepuManager {
     
-    private static List<String> poziomyDostepu = dodajPoziomyDostepu();
-    private static List<List<String>> poprawneKombinacjePoziomowDostepu = dodajPoprawneKombinacjePoziomowDostepu();
+    private List<String> poziomyDostepu;
+    private List<List<String>> poprawneKombinacjePoziomowDostepu;
 
-    private PoziomDostepuManager() {        
+    public PoziomDostepuManager() throws NiewykonanaOperacja{    
+        poziomyDostepu = dodajPoziomyDostepu();
+        poprawneKombinacjePoziomowDostepu = dodajPoprawneKombinacjePoziomowDostepu();
     }
     
     /**
      * Metoda definiująca poziomy dostępu
      * @return      lista nazw poziomu dostepu
      */
-    private static List<String> dodajPoziomyDostepu() {
+    private List<String> dodajPoziomyDostepu() throws NiewykonanaOperacja{
         List<String> nowePoziomy;
         String poziomyDostepuDoParsowania = null;
         
@@ -35,7 +39,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
         } catch (NamingException ex) {
-            Logger.getLogger(PoziomDostepuManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NiewykonanaOperacja("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.dodajPoziomyDostepu()", "ctx.lookup()");
         }
         
         nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
@@ -47,7 +51,7 @@ public class PoziomDostepuManager {
      * Metoda defniująca dostępne kombinacje poziomów dostępu
      * @return lista poprawnych kombinacji poziomów dostępu
      */
-    private static List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() {
+    private List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() throws NiewykonanaOperacja{
         List<List<String>> nowePoprawneKombinacjePoziomowDostepu = new ArrayList<List<String>>();
         String kombinacjePoziomowDostepuDoParsowania = null;
         List<String> pojedynczaKombinacjaDoParsowania = null;
@@ -56,7 +60,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
         } catch (NamingException ex) {
-            Logger.getLogger(PoziomDostepuManager.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NiewykonanaOperacja("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.dodajPoziomyDostepu()", "ctx.lookup()");
         }
         
         for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
@@ -70,11 +74,11 @@ public class PoziomDostepuManager {
      * Metoda tworząca poziomy dostępu z określonego zbioru wartości
      * @param poziom    nazwa poziomu dostepu
      * @return          nowy obiekt o określonej nazwie
-     * @throws java.lang.Exception rzuca gdy dany poziom nie istnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public static PoziomDostepu stworzPoziomDostepu(String poziom) throws Exception {
+    public PoziomDostepu stworzPoziomDostepu(String poziom) throws PoziomDostepuNieIstnieje{
         if (!poziomyDostepu.contains(poziom)) {
-            throw new Exception("Dany poziom dostępu nie istnieje");
+            throw new PoziomDostepuNieIstnieje("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.stworzPoziomDostepu()",poziom);
         }
 
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();
@@ -89,7 +93,7 @@ public class PoziomDostepuManager {
      * @param nowyPoziom    nazwa poziomu, który chcemy dodać
      * @return              boolean określający decyzję czy można dodać poziom
      */
-    public static boolean czyMoznaDodacPoziom(Konto konto, String nowyPoziom) {
+    public boolean czyMoznaDodacPoziom(Konto konto, String nowyPoziom) {
         List<String> poziomyAktywne = new ArrayList<String>();
         
         for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
@@ -117,7 +121,7 @@ public class PoziomDostepuManager {
      * @param poziomyDostepu lista poziomów dostępu
      * @return decyzja czy lista jest poprawna
      */
-    public static boolean czyPoprawnaKombinacjaPoziomowDostepu(List<String> poziomyDostepu) {
+    public boolean czyPoprawnaKombinacjaPoziomowDostepu(List<String> poziomyDostepu) {
         if (poziomyDostepu.size() == 1) {
             return true;
         } else if (poziomyDostepu.size() > 1) {
@@ -134,7 +138,7 @@ public class PoziomDostepuManager {
      * Tworzy poziom dostepu Klient
      * @return zwraca poziom dostepu
      */
-    public static PoziomDostepu stworzPoziomDostepuKlient() {
+    public PoziomDostepu stworzPoziomDostepuKlient() {
         
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();
         nowyPoziomDostepu.setPoziom(poziomyDostepu.get(3));
@@ -148,7 +152,7 @@ public class PoziomDostepuManager {
      * @param poziom        nazwa poziomu dostępu
      * @return              boolean określający czy posiadamy dany poziom dostępu
      */
-    public static boolean czyPosiadaPoziomDostepu(Konto konto, String poziom) {
+    public boolean czyPosiadaPoziomDostepu(Konto konto, String poziom) {
         for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
             if (obecnyPoziom.getPoziom().equals(poziom)) {
                 return true;
@@ -164,7 +168,7 @@ public class PoziomDostepuManager {
      * @param poziom        nazwa poziomu dostępu
      * @return              boolean określający czy posiadamy aktywny poziom dostępu
      */
-    public static boolean czyPosiadaAktywnyPoziomDostepu(Konto konto, String poziom) {
+    public boolean czyPosiadaAktywnyPoziomDostepu(Konto konto, String poziom) {
         for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
             if (obecnyPoziom.getPoziom().equals(poziom)) {
                 return obecnyPoziom.getAktywny();
@@ -180,7 +184,7 @@ public class PoziomDostepuManager {
      * @param poziom        nazwa poziomu dostępu
      * @return              obiekt poziomu dostępu
      */
-    public static PoziomDostepu pobierzPoziomDostepu(Konto konto, String poziom) {
+    public PoziomDostepu pobierzPoziomDostepu(Konto konto, String poziom) {
         for (PoziomDostepu obecnyPoziom:konto.getPoziomDostepuCollection()) {
             if (obecnyPoziom.getPoziom().equals(poziom)) {
                 return obecnyPoziom;
@@ -191,7 +195,7 @@ public class PoziomDostepuManager {
     
     // Gettery i Settery
         
-    public static List<String> getPoziomyDostepu() {
+    public List<String> getPoziomyDostepu() {
         return new ArrayList<String>(poziomyDostepu);
     }
 }

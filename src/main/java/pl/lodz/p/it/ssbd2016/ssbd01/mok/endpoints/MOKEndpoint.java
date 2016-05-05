@@ -1,5 +1,13 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import javax.ejb.EJB;
+import javax.ejb.EJBAccessException;
+import javax.ejb.EJBException;
+import javax.ejb.SessionContext;
+import javax.ejb.SessionSynchronization;
+import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -13,13 +21,23 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.NotyfikacjaServiceLocal;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.*;
 import javax.interceptor.Interceptors;
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * API servera dla modułu funkcjonalnego MOK
@@ -49,14 +67,14 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) {
+    public void rejestrujKontoKlienta(Konto konto) throws NiewykonanaOperacja,PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
         kontoManager.rejestrujKontoKlienta(konto);
         notyfikacjaService.wyslijPowiadomienieRejestracji(konto);
     }
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws Exception {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NiewykonanaOperacja, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje{
         kontoManager.utworzKonto(konto, poziomyDostepu);
     }
 
@@ -85,7 +103,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("zmienMojeHaslo")
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws Exception{        
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws BrakAlgorytmuKodowania, NiezgodneHasla, NieobslugiwaneKodowanie, NiezgodnyLogin, PoziomDostepuNieIstnieje {        
         kontoManager.zmienMojeHaslo(kontoStan, noweHaslo, stareHaslo);
         
         kontoStan = null;
@@ -93,7 +111,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("zmienHaslo")
-    public void zmienHaslo(String noweHaslo) {
+    public void zmienHaslo(String noweHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
         kontoManager.zmienHaslo(kontoStan, noweHaslo);
         
         kontoStan = null;
@@ -119,41 +137,35 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws Exception {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu, PoziomDostepuNieIstnieje {
         kontoManager.dodajPoziomDostepu(konto, poziom);
     }
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu {
         kontoManager.odlaczPoziomDostepu(konto, poziom);
     }
 
     @Override
     @RolesAllowed("pobierzKontoDoEdycji")
-    public Konto pobierzKontoDoEdycji(Konto konto) {
+    public Konto pobierzKontoDoEdycji(Konto konto) throws BladPliku, BladDeSerializacjiObiektu  {
         kontoStan = kontoFacade.find(konto.getId());
-        try {
-            return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
     }
 
     @Override
     @RolesAllowed("zapiszSwojeKontoPoEdycji")
-    public void zapiszSwojeKontoPoEdycji(Konto konto) throws Exception {
+    public void zapiszSwojeKontoPoEdycji(Konto konto) throws NiezgodnyLogin, BrakKontaDoEdycji, KontoNiezgodneWczytanym {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new Exception("Nie moje konto");
+            throw new NiezgodnyLogin("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
         }
         
         if (kontoStan == null) {
-            throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
+            throw new BrakKontaDoEdycji("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
         }
         if (!kontoStan.equals(konto)) {
-            throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
+            throw new KontoNiezgodneWczytanym("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -168,12 +180,12 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("zapiszKontoPoEdycji")
-    public void zapiszKontoPoEdycji(Konto konto) {
+    public void zapiszKontoPoEdycji(Konto konto)  throws BrakKontaDoEdycji, KontoNiezgodneWczytanym {
         if (kontoStan == null) {
-            throw new IllegalArgumentException("Brak wczytanego konta do modyfikacji");
+            throw new BrakKontaDoEdycji("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
         }
         if (!kontoStan.equals(konto)) {
-            throw new IllegalArgumentException("Modyfikowane konto niezgodne z wczytanym");
+            throw new KontoNiezgodneWczytanym("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -188,9 +200,15 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("getSwojeKonto")
-    public Konto getSwojeKonto() {
-        String login = sessionContext.getCallerPrincipal().getName();
+    public Konto getSwojeKonto() throws BrakDostepu{
+        String login;
+        try{
+            login = sessionContext.getCallerPrincipal().getName();
+        }catch(EJBAccessException ex){
+            throw new BrakDostepu(" pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.getSwojeKonto()");
+        }
         return kontoFacade.znajdzPoLoginie(login);
+
     }
 
     @Override

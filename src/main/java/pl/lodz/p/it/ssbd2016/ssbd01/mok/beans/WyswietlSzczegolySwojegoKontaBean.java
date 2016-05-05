@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o obecnie zalogowanym
@@ -25,7 +26,7 @@ public class WyswietlSzczegolySwojegoKontaBean {
     * konto przez konto użytkownika obecnie zalogowanego
     */
     @PostConstruct
-    public void initModel() {
+    public void initModel() throws BrakDostepu{
         konto = uzytkownikSession.getSwojeKonto();
     }
     
@@ -48,7 +49,7 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
      */
-    public String edytujSwojeKonto() {
+    public String edytujSwojeKonto(){
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDane";
     }
@@ -58,7 +59,7 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
      */
-    public String edytujSwojeHasloKonta() {
+    public String edytujSwojeHasloKonta(){
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHaslo";
     }

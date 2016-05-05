@@ -18,12 +18,11 @@ public class EdytujDaneBean {
     /**
      * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
-     * @return  przekierowanie do szczegółów konta
-     * @throws Exception 
+     * @return  przekierowanie do szczegółów konta 
      */
-    public String zapiszSwojeKontoPoEdycji()  throws Exception {
-        uzytkownikSession.zapiszSwojeKontoPoEdycji();
-        return "wyswietlSzczegolySwojegoKonta";
+    public String zapiszSwojeKontoPoEdycji(){
+            uzytkownikSession.zapiszSwojeKontoPoEdycji();
+            return "wyswietlSzczegolySwojegoKonta";
     }
     
     /**
@@ -31,9 +30,9 @@ public class EdytujDaneBean {
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta
      */
-    public String zapiszKontoPoEdycji() {
-        uzytkownikSession.zapiszKontoPoEdycji();
-        return "wyswietlSzczegolySwojegoKonta";
+    public String zapiszKontoPoEdycji(){
+            uzytkownikSession.zapiszKontoPoEdycji();
+            return "wyswietlSzczegolySwojegoKonta";
     }
     
     // Gettery i Settery

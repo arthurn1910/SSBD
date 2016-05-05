@@ -18,6 +18,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 /**
  * API servera dla modułu funkcjonalnego MOO
@@ -106,9 +107,12 @@ public class MOOEndpoint implements MOOEndpointLocal {
     }
 
     @Override
-    public void deaktywujOgloszenie(Ogloszenie rowData) {
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej{
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        o.setAktywne(false);
+        if(o.getAktywne())
+            o.setAktywne(false);
+        else 
+            throw new OgloszenieDeaktywowaneWczesniej("pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpoint.deaktywujOgloszenie()"); 
     }
 
 

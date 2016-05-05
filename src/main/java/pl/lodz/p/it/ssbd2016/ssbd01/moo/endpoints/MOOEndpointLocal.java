@@ -4,6 +4,12 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
 
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOO
@@ -29,8 +35,7 @@ public interface MOOEndpointLocal {
     List<Ogloszenie> pobierzWszytkieOgloszenia();
 
     void aktywujOgloszenie(Ogloszenie rowData);
-
-    void deaktywujOgloszenie(Ogloszenie rowData);
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej;
 
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
 

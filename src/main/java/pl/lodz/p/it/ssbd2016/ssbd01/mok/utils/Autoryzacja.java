@@ -16,6 +16,7 @@ import javax.inject.Named;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 
 /**
  *
@@ -26,24 +27,28 @@ import javax.naming.NamingException;
 public class Autoryzacja {
     
     
-    public boolean czyAdministrator()
+    public boolean czyAdministrator() throws NiewykonanaOperacja
     {
-        return sprawdzRole(PoziomDostepuManager.getPoziomyDostepu().get(0));
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        return sprawdzRole(tmp.getPoziomyDostepu().get(0));
     }
     
-    public boolean czyAgent()
+    public boolean czyAgent() throws NiewykonanaOperacja
     {
-        return sprawdzRole(PoziomDostepuManager.getPoziomyDostepu().get(2));
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        return sprawdzRole(tmp.getPoziomyDostepu().get(2));
     }
     
-    public boolean czyKlient()
+    public boolean czyKlient() throws NiewykonanaOperacja
     {
-        return sprawdzRole(PoziomDostepuManager.getPoziomyDostepu().get(3));
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        return sprawdzRole(tmp.getPoziomyDostepu().get(3));
     }
     
-    public boolean czyMenadzer()
+    public boolean czyMenadzer() throws NiewykonanaOperacja
     {
-        return sprawdzRole(PoziomDostepuManager.getPoziomyDostepu().get(1));
+        PoziomDostepuManager tmp=new PoziomDostepuManager();
+        return sprawdzRole(tmp.getPoziomyDostepu().get(1));
     }
     
     private boolean sprawdzRole(String role) {

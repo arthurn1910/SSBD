@@ -1,5 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -8,6 +10,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Klasa ta jest wykorzystywana do modyfikacji poziomów dostępu dla wybranego konta
@@ -28,27 +33,38 @@ public class ModyfikujPoziomyDostepuBean {
      * będą modyfikowane poziomy dostępu
      */
     @PostConstruct
-    private void initModel() {
-        poziomyDostepuDataModel = new ListDataModel<String>(PoziomDostepuManager.getPoziomyDostepu());
-        konto = uzytkownikSession.getWybraneKonto();
+    private void initModel(){
+        try {
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
+            konto = uzytkownikSession.getWybraneKonto();
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
     }
     
     /**
-     * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta
-     * @throws Exception 
+     * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public void dodajPoziomDostepu() throws Exception {
+    public String dodajPoziomDostepu() throws BladPoziomDostepu, PoziomDostepuNieIstnieje{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
+        return "modyfikujPoziomyDostepu";
     }
     
     /**
-     * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta
-     * @throws Exception 
+     * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta 
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
      */
-    public void odlaczPoziomDostepu() throws Exception {
-        uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());      
+    public String odlaczPoziomDostepu() throws BladPoziomDostepu{
+        uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
+        return "modyfikujPoziomyDostepu";
     }
     
     /**
@@ -57,7 +73,14 @@ public class ModyfikujPoziomyDostepuBean {
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      */
     public boolean czyPosiadaAktywnyPoziomDostepu() {
-        return PoziomDostepuManager.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        try {
+            PoziomDostepuManager tmp=new PoziomDostepuManager();
+            return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
+        } catch (NiewykonanaOperacja ex) {
+            uzytkownikSession.setNiewykonanaOperacja(ex);
+            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+        }
+        return false;
     }
     
     // Gettery i Settery    

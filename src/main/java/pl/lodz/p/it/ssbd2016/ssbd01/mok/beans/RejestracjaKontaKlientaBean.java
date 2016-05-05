@@ -6,6 +6,10 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Ziarno umożliwiające tworzenie nowych kont dla klientów
@@ -20,11 +24,10 @@ public class RejestracjaKontaKlientaBean {
     private String potorzoneHaslo;
     
     /**
-     * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta
-     * @throws Exception 
+     * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta 
      */
-    public void rejestrujKontoKlienta() throws Exception {
-        if (checkPasswordMatching()) {
+    public void rejestrujKontoKlienta(){
+        if (checkPasswordMatching()) {    
             uzytkownikSession.rejestrujKontoKlienta(konto);
         }
     }

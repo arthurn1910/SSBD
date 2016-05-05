@@ -4,6 +4,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -23,6 +24,7 @@ public class OgloszenieSession implements Serializable {
 
     public OgloszenieSession() {
     }
+    private OgloszenieDeaktywowaneWczesniej ogloszenieDeaktyowwaneWczesniej;
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
      *
@@ -91,8 +93,13 @@ public class OgloszenieSession implements Serializable {
         mooEndpoint.aktywujOgloszenie(rowData);
     }
 
-    void deaktywujOgloszenie(Ogloszenie rowData) {
-        mooEndpoint.deaktywujOgloszenie(rowData);
+    void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej{
+        try{
+            mooEndpoint.deaktywujOgloszenie(rowData);
+        } catch(OgloszenieDeaktywowaneWczesniej ex){
+            this.ogloszenieDeaktyowwaneWczesniej=ex;
+            throw ex;
+        }
     }
 
 
@@ -115,6 +122,14 @@ public class OgloszenieSession implements Serializable {
     void dodajDoUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.dodajDoUlubionych(ogloszenie);
     }
+
+    public OgloszenieDeaktywowaneWczesniej getOgloszenieDeaktyowwaneWczesniej() {
+        return ogloszenieDeaktyowwaneWczesniej;
+    }
+
+    Ogloszenie getOgloszenieDoWyswietlenia() {
+        return this.ogloszenieDoWyswietlenia;
+    }
     
     /**
      * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
@@ -131,9 +146,5 @@ public class OgloszenieSession implements Serializable {
      */
     void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent){
         mooEndpoint.zmienAgentaWOgloszeniu(rowData, agent);
-    }
-
-    public Ogloszenie getOgloszenieDoWyswietlenia() {
-        return ogloszenieDoWyswietlenia;
-    }    
+    }  
 }
