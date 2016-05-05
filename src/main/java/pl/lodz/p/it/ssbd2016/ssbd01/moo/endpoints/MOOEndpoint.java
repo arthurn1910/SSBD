@@ -2,7 +2,10 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.util.Collection;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
+
+import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
@@ -34,6 +37,8 @@ public class MOOEndpoint implements MOOEndpointLocal {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    @Resource
+    private SessionContext sessionContext;
     
     
     @Override
@@ -56,6 +61,37 @@ public class MOOEndpoint implements MOOEndpointLocal {
         
         nieruchomoscFacadeLocal.create(nowaNieruchomosc);
         ogloszenieFacadeLocal.create(noweOgloszenie);
+    }
+    
+    /*
+        @param ogloszenieNowe obiekt Ogloszenie o id starego ogłoszenia, ale zawierające nowe dane
+    */
+    @Override
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
+        String loginKonta = sessionContext.getCallerPrincipal().getName();
+        if(ogloszenieNowe.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+        }
+        else {
+            // zapisz dane obiektu ogloszenieNowe
+        }
+    }
+    
+    /*
+        @param ogloszenie, które ma zostać deaktywowane
+    */
+    @Override
+    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        String loginKonta = sessionContext.getCallerPrincipal().getName();
+        if(ogloszenie.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+        }
+        else if(ogloszenie.getAktywne() == false) {
+            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+        }
+        else {
+            ogloszenie.setAktywne(false);
+        }
     }
 
     @Override

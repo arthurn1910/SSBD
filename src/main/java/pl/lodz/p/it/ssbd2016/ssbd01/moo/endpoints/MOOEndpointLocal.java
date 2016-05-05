@@ -64,4 +64,7 @@ public interface MOOEndpointLocal {
      */
     public void usunZUlubionych(Ogloszenie ogloszenie);
 
+    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
 }

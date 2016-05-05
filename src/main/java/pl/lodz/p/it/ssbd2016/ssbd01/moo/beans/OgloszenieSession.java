@@ -63,6 +63,30 @@ public class OgloszenieSession implements Serializable {
         return mooEndpoint.pobierzWszytkieOgloszenia();
     }
     
+    /*
+        @param ogloszenieNowe obiekt Ogloszenie o id starego ogłoszenia, ale zawierające nowe dane
+    */
+    void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) {
+        try {
+            mooEndpoint.edytujOgloszenieDanegoUzytkownika(ogloszenieNowe);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /*
+        @param ogloszenie, które ma zostać deaktywowane
+    */
+    void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
+        try {
+            mooEndpoint.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     void aktywujOgloszenie(Ogloszenie rowData) {
         mooEndpoint.aktywujOgloszenie(rowData);
     }
