@@ -9,6 +9,7 @@ import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
+import javax.ejb.AccessLocalException;
 
 /**
  * Bean odpowiedzialny za wygenerowanie raportu dla admina
@@ -32,7 +33,7 @@ public class HistoriaLogowaniaRaportBean {
      * historiaLogowanKont wszystkimi kontami
      */
     @PostConstruct
-    public void init() {
+    public void init() throws AccessLocalException{
         List<HistoriaLogowania> historiaLogowan = uzytkownikSession.pobierzHistorieLogowanUzytkownikow();
         historiaLogowanKont = new ListDataModel(historiaLogowan);
     }
