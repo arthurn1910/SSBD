@@ -15,6 +15,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
@@ -34,7 +35,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
  * Implementuje interfejs KontoManagaerLocal
  */
 @Stateless
-@Interceptors({TrackerInterceptor.class})
+@Interceptors({ExteriorInterceptor.class,TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class KontoManager implements KontoManagerLocal {
 

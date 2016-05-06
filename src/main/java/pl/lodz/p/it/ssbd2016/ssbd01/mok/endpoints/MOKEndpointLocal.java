@@ -27,6 +27,7 @@ public interface MOKEndpointLocal {
     /**
      * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
      * @param konto informacje kontcie do utworzenia
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania
