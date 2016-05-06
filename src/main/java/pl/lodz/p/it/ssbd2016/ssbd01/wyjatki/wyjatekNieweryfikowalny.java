@@ -5,17 +5,15 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
 
-import javax.ejb.ApplicationException;
-import javax.ejb.EJBAccessException;
-
 /**
  *
  * @author java
  */
-@ApplicationException(rollback = true)
-public class BrakDostepu extends EJBAccessException{
+public class wyjatekNieweryfikowalny extends Exception{
 
-    public BrakDostepu(String message) {
-        super(message);
+    public wyjatekNieweryfikowalny(Throwable cause) {
+        super(cause);
     }
+    
+    
 }

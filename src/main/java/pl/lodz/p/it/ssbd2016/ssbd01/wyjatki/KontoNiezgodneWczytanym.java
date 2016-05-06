@@ -13,15 +13,9 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class KontoNiezgodneWczytanym extends IllegalArgumentException{
-    private String miejsce;
 
-    public KontoNiezgodneWczytanym(String miejsce) {
-        this.miejsce = miejsce;
+    public KontoNiezgodneWczytanym() {
+        super();
     }
 
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
 }

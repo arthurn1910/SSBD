@@ -13,14 +13,9 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class NiezgodneHasla extends Exception{
-    private String miejsce;
 
-    public NiezgodneHasla(String miejsce) {
-        this.miejsce = miejsce;
+    public NiezgodneHasla() {
+        super();
     }
 
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
 }

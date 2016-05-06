@@ -13,16 +13,9 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class OgloszenieDeaktywowaneWczesniej extends Exception{
-    private String miejsce;
 
-    public OgloszenieDeaktywowaneWczesniej(String miejsce) {
+    public OgloszenieDeaktywowaneWczesniej() {
         super();
-        this.miejsce = miejsce;
     }
 
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
 }

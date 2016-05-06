@@ -84,7 +84,7 @@ public class WyswietlSzczegolyKontaBean {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujKonto() throws BladDeSerializacjiObiektu, BladPliku{
+    public String edytujKonto() throws BladDeSerializacjiObiektu, BladPliku, Exception{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDaneKonta";
     }
@@ -96,7 +96,7 @@ public class WyswietlSzczegolyKontaBean {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku
      */
-    public String edytujHasloKonta() throws BladDeSerializacjiObiektu, BladPliku{
+    public String edytujHasloKonta() throws BladDeSerializacjiObiektu, BladPliku, Exception{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHasloKonta";
     }

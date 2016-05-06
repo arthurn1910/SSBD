@@ -1,8 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -10,11 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Ziarno umożliwiające tworzenie nowych kont o dowolnym poziomie dostępu
@@ -35,7 +29,7 @@ public class UtworzKontoBean {
     /**
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
      */
-    public void utworzKont(){
+    public void utworzKont() throws Exception{
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
             uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
         }
@@ -46,7 +40,7 @@ public class UtworzKontoBean {
      * conajmniej 1, czy poziomy się nie wykluczają
      * @return  decyzja czy można nadać dane poziomy dostępu
      */
-    public boolean sprawdzPoziomyDostepu(){
+    public boolean sprawdzPoziomyDostepu() throws NiewykonanaOperacja{
         PoziomDostepuManager tmp;
         try {
             tmp = new PoziomDostepuManager();
@@ -63,10 +57,9 @@ public class UtworzKontoBean {
         }
             return true;
         } catch (NiewykonanaOperacja ex) {
-            uzytkownikSession.setNiewykonanaOperacja(ex);
-            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja()");
+            uzytkownikSession.setException(ex);
+            throw ex;
         }
-        return false;
     }
     
     /**
@@ -106,14 +99,13 @@ public class UtworzKontoBean {
         this.powtorzoneHaslo = powtorzoneHaslo;
     }
     
-    public String[] pobierzPoziomyDostepu() {
+    public String[] pobierzPoziomyDostepu() throws NiewykonanaOperacja {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.getPoziomyDostepu().toArray(new String[0]);
         } catch (NiewykonanaOperacja ex) {
-            uzytkownikSession.setNiewykonanaOperacja(ex);
-            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja()");
+            uzytkownikSession.setException(ex);
+            throw ex;
         }
-        return null;
     }            
 }

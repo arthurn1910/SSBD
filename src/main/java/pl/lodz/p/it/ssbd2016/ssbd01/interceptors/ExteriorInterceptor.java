@@ -26,14 +26,29 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
- * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
+ * Interceptor zewnętrzny 
  */
 public class ExteriorInterceptor {
     
     @Resource
     private SessionContext sctx;
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
-    
+    /***
+     * Funkcja przechwytująca wywołania wyjatków, opakowywania wyjątków nieweryfikowalnych,
+     * logująca ich wywołania oraz przesyłająca wyjątek dalej.
+     * @param ictx
+     * @return
+     * @throws BladWywolania
+     * @throws BrakAlgorytmuKodowania
+     * @throws BladPoziomDostepu
+     * @throws BladPliku
+     * @throws BladDeSerializacjiObiektu
+     * @throws NiewykonanaOperacja
+     * @throws PoziomDostepuNieIstnieje
+     * @throws NieobslugiwaneKodowanie
+     * @throws NiezgodneHasla
+     * @throws NiezgodnyLogin 
+     */
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws BladWywolania, BrakAlgorytmuKodowania, BladPoziomDostepu, BladPliku, BladDeSerializacjiObiektu, NiewykonanaOperacja, PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, NiezgodneHasla, NiezgodnyLogin{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
@@ -67,25 +82,29 @@ public class ExteriorInterceptor {
                 PoziomDostepuNieIstnieje | NiewykonanaOperacja e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
             throw e;
+        }catch (NullPointerException e) {
+            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            BladWywolania exc=new BladWywolania("nullPointerException", e);
+            throw exc;
         }catch (EJBAccessException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
+            BladWywolania exc=new BladWywolania("accessException", e);
             throw exc;
         }catch (EJBTransactionRequiredException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
+            BladWywolania exc=new BladWywolania("transactionRequiredException", e);
             throw exc;
         }catch (EJBTransactionRolledbackException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
+            BladWywolania exc=new BladWywolania("transactionRolledbackException", e);
             throw exc;
         } catch (EJBException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
+            BladWywolania exc=new BladWywolania("EJBException", e);
             throw exc;
         }catch (Exception e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
+            BladWywolania exc=new BladWywolania("exception", e);
             throw exc;
         } 
     }

@@ -114,7 +114,7 @@ public class MOOEndpoint implements MOOEndpointLocal {
         if(o.getAktywne())
             o.setAktywne(false);
         else 
-            throw new OgloszenieDeaktywowaneWczesniej("pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpoint.deaktywujOgloszenie()"); 
+            throw new OgloszenieDeaktywowaneWczesniej(); 
     }
 
 

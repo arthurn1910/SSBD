@@ -13,19 +13,13 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class BladPoziomDostepu extends Exception{
-    private String miejsce;
     private String poziom;
     private int status;
-
-    public BladPoziomDostepu(String miejsce, String poziom, int status) {
+      
+    public BladPoziomDostepu(String poziom, int status) {
         super();
-        this.miejsce = miejsce;
         this.poziom = poziom;
         this.status=status;
-    }
-
-    public String getMiejsce() {
-        return miejsce;
     }
 
     public String getPoziom() {
@@ -35,7 +29,4 @@ public class BladPoziomDostepu extends Exception{
     public int getStatus() {
         return status;
     }
-    
-    
-    
 }

@@ -39,7 +39,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
         } catch (NamingException ex) {
-            throw new NiewykonanaOperacja("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.dodajPoziomyDostepu()", "ctx.lookup()");
+            throw new NiewykonanaOperacja("ctx.lookup()");
         }
         
         nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
@@ -60,7 +60,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
         } catch (NamingException ex) {
-            throw new NiewykonanaOperacja("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.dodajPoziomyDostepu()", "ctx.lookup()");
+            throw new NiewykonanaOperacja("ctx.lookup()");
         }
         
         for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
@@ -78,7 +78,7 @@ public class PoziomDostepuManager {
      */
     public PoziomDostepu stworzPoziomDostepu(String poziom) throws PoziomDostepuNieIstnieje{
         if (!poziomyDostepu.contains(poziom)) {
-            throw new PoziomDostepuNieIstnieje("pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager.stworzPoziomDostepu()",poziom);
+            throw new PoziomDostepuNieIstnieje(poziom);
         }
 
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();

@@ -13,15 +13,8 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class BladDeSerializacjiObiektu extends ClassNotFoundException{
-    private String miejsce;
-    private String opis;
-    public BladDeSerializacjiObiektu(String miejsce) {
-        super();
-        this.miejsce=miejsce;
-        this.opis="BladDeSerializacjiObiektu";
-    }
 
-    public String getMiejsce() {
-        return miejsce;
-    }
+    public BladDeSerializacjiObiektu(String s, Throwable ex) {
+        super(s, ex);
+    }   
 }

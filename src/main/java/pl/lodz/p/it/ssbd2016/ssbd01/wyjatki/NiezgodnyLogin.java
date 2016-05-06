@@ -13,15 +13,9 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class NiezgodnyLogin extends Exception{
-    private String miejsce;
 
-    public NiezgodnyLogin(String miejsce) {
-        this.miejsce = miejsce;
+    public NiezgodnyLogin() {
+        super();
     }
 
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
 }

@@ -1,7 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -39,8 +37,7 @@ public class ModyfikujPoziomyDostepuBean {
             poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
             konto = uzytkownikSession.getWybraneKonto();
         } catch (NiewykonanaOperacja ex) {
-            uzytkownikSession.setNiewykonanaOperacja(ex);
-            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+            uzytkownikSession.setException(ex);
         }
     }
     
@@ -50,7 +47,7 @@ public class ModyfikujPoziomyDostepuBean {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public String dodajPoziomDostepu() throws BladPoziomDostepu, PoziomDostepuNieIstnieje{
+    public String dodajPoziomDostepu() throws BladPoziomDostepu, PoziomDostepuNieIstnieje, Exception{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -61,7 +58,7 @@ public class ModyfikujPoziomyDostepuBean {
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
      */
-    public String odlaczPoziomDostepu() throws BladPoziomDostepu{
+    public String odlaczPoziomDostepu() throws BladPoziomDostepu, Exception{
         uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -71,16 +68,16 @@ public class ModyfikujPoziomyDostepuBean {
      * Metoda dla widoku definiująca czy konto posiada dany poziom dostępu. 
      * Zmienia dostępne klawisze między dołącz i odłącz
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
      */
-    public boolean czyPosiadaAktywnyPoziomDostepu() {
+    public boolean czyPosiadaAktywnyPoziomDostepu() throws NiewykonanaOperacja {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         } catch (NiewykonanaOperacja ex) {
-            uzytkownikSession.setNiewykonanaOperacja(ex);
-            uzytkownikSession.obslugaWyjatkow(ex, "../wyjatki/niewykonanaOperacja.xhtml");
+            uzytkownikSession.setException(ex);
+            throw ex;
         }
-        return false;
     }
     
     // Gettery i Settery    

@@ -1,17 +1,10 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Obsługa zmiany hasła przez użytkownika i admina
@@ -46,7 +39,7 @@ public class EdytujHasloBean {
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
      */
-    public String zmienMojeHaslo(){
+    public String zmienMojeHaslo() throws Exception{
         if (checkPasswordMatching()) 
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
         return "wyswietlSzczegolyKonta";
@@ -57,7 +50,7 @@ public class EdytujHasloBean {
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
      */
-    public String zmienHaslo(){
+    public String zmienHaslo() throws Exception{
         if (checkPasswordMatching()) {
             uzytkownikSession.zmienHaslo(noweHaslo);
         }

@@ -10,21 +10,23 @@ package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
  * @author java
  */
 public class BladWywolania extends Exception {
-    private String miejsce;
-    private String metoda;
-    public BladWywolania(String miejsce, String metoda) {
-        super();
-        this.metoda=metoda;
-        this.miejsce=miejsce;
+    private String blad;
+
+    public BladWywolania(String blad, String message) {
+        super(message);
+        this.blad = blad;
     }
 
-    public String getMiejsce() {
-        return miejsce;
+    public BladWywolania(String blad, String message, Throwable cause) {
+        super(message, cause);
+        this.blad = blad;
     }
 
-    public String getMetoda() {
-        return metoda;
+    public BladWywolania(String blad, Throwable cause) {
+        super(cause);
+        this.blad = blad;
     }
+
     
     
 }

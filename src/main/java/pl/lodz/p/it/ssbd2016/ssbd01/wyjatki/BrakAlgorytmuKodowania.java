@@ -12,15 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * @author java
  */
 public class BrakAlgorytmuKodowania extends NoSuchAlgorithmException{
-    private String miejsce;
-    public BrakAlgorytmuKodowania(String miejsce) {
-        super();
-        this.miejsce=miejsce;
-    }
-
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
+    public BrakAlgorytmuKodowania(Throwable cause) {
+        super(cause);
+    }  
 }

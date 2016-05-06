@@ -47,7 +47,7 @@ public class TrackerInterceptor {
         
         return result;
         } catch (Exception e) {
-            Logger.getLogger(UzytkownikSession.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(TrackerInterceptor.class.getName()).log(Level.SEVERE, null, e);
             throw e;
         } 
     }

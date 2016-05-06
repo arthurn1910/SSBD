@@ -12,15 +12,7 @@ import java.io.UnsupportedEncodingException;
  * @author java
  */
 public class NieobslugiwaneKodowanie extends UnsupportedEncodingException{
-    private String miejsce;
-    public NieobslugiwaneKodowanie(String miejsce) {
+    public NieobslugiwaneKodowanie() {
         super();
-        this.miejsce=miejsce;
-    }
-
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
+    }    
 }

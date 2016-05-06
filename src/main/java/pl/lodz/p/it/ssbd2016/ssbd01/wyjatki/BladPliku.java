@@ -13,18 +13,8 @@ import java.io.IOException;
  */
 public class BladPliku extends IOException {
 
-    private String miejsce, plik;
-    public BladPliku(String miejsce, String plik) {
-        super();
-        this.miejsce=miejsce;
-        this.plik=plik;
+    public BladPliku(Throwable cause) {
+        super(cause);
     }
     
-    public String getMiejsce(){
-        return miejsce;
-    }
-    
-    public String getPlik(){
-        return plik;
-    } 
 }

@@ -32,9 +32,9 @@ public class CloneUtils {
             ObjectInputStream in = new ObjectInputStream(bis);
             return in.readObject();
         } catch(IOException ex){
-            throw new BladPliku("pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils.deepCloneThroughSerialization", "source");
+            throw new BladPliku(ex);
         } catch(ClassNotFoundException ex){
-            throw new BladDeSerializacjiObiektu("pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils.deepCloneThroughSerialization");
+            throw new BladDeSerializacjiObiektu("blad pliku", ex);
         }
     }    
 }

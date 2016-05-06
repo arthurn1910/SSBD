@@ -14,16 +14,7 @@ import javax.ejb.EJBException;
  */
 @ApplicationException(rollback = true)
 public class NaruszenieUniq extends EJBException{
-    private String miejsce;
-
-    public NaruszenieUniq(String miejsce) {
-        super();
-        this.miejsce = miejsce;
+    public NaruszenieUniq(Exception ex) {
+        super(ex);
     }
-
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
 }

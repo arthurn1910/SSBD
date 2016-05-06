@@ -13,15 +13,7 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class BrakKontaDoEdycji extends Exception{
-    private String miejsce;
-
-    public BrakKontaDoEdycji(String miejsce) {
-        this.miejsce = miejsce;
-    }
-
-    public String getMiejsce() {
-        return miejsce;
-    }
-    
-    
+    public BrakKontaDoEdycji() {
+        super();
+    }   
 }

@@ -48,8 +48,9 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * Handler przyciksu edytuj dane w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws java.lang.Exception
      */
-    public String edytujSwojeKonto(){
+    public String edytujSwojeKonto() throws Exception{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDane";
     }
@@ -58,8 +59,9 @@ public class WyswietlSzczegolySwojegoKontaBean {
      * Handler przyciksu edytuj hasło w widoku. Ustawia konto obecnie zalogowanego
      * użytkownika do edycji i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws java.lang.Exception
      */
-    public String edytujSwojeHasloKonta(){
+    public String edytujSwojeHasloKonta() throws Exception{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHaslo";
     }

@@ -13,16 +13,11 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class PoziomDostepuNieIstnieje extends Exception{
-    private String miejsce;
     private String poziom;
 
-    public PoziomDostepuNieIstnieje(String miejsce, String poziom) {
-        this.miejsce = miejsce;
-        this.poziom=poziom;
-    }
-
-    public String getMiejsce() {
-        return miejsce;
+    public PoziomDostepuNieIstnieje(String poziom) {
+        super();
+        this.poziom = poziom;
     }
 
     public String getPoziom() {

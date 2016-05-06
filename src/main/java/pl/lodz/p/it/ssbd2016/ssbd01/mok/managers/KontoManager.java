@@ -52,7 +52,7 @@ public class KontoManager implements KontoManagerLocal {
     @RolesAllowed("zmienMojeHaslo")
     public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NiezgodneHasla, NiezgodnyLogin {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new NiezgodnyLogin("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.ZmienMojeHaslo()");
+            throw new NiezgodnyLogin();
         }
         String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
@@ -63,7 +63,7 @@ public class KontoManager implements KontoManagerLocal {
             konto.setHaslo(hashedPassword);
             kontoFacade.edit(konto);
         } else {
-            throw new NiezgodneHasla("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.ZmienMojeHaslo()");
+            throw new NiezgodneHasla();
         }
     }
 
@@ -91,7 +91,7 @@ public class KontoManager implements KontoManagerLocal {
             
             konto.getPoziomDostepuCollection().add(poziomDostepu);
         }catch(EJBException ex){
-            throw new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.rejestrujKontoKlienta()");
+            throw new NaruszenieUniq(ex);
         }
     }
     
@@ -113,7 +113,7 @@ public class KontoManager implements KontoManagerLocal {
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
                 }
             }catch(EJBException ex){
-                throw new NaruszenieUniq("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager.rejestrujKontoKlienta()");
+                throw new NaruszenieUniq(ex);
             }
         }
     }
@@ -171,7 +171,7 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(true);
             } else {
                 // Jeśli nie zwracamy błąd
-                throw new BladPoziomDostepu("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.dodajPoziomDostepu()", poziom, 1);
+                throw new BladPoziomDostepu(poziom, 1);
             }
         } else {
             // Nie posiadamy danego poziomu dostępu
@@ -187,7 +187,7 @@ public class KontoManager implements KontoManagerLocal {
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
             } else {                
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-                throw new BladPoziomDostepu("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.dodajPoziomDostepu()", poziom, 1);
+                throw new BladPoziomDostepu(poziom, 1);
             }
         }
     }
@@ -206,12 +206,12 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(false);
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                throw new BladPoziomDostepu("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.dodajPoziomDostepu()", poziom, -1);
+                throw new BladPoziomDostepu(poziom, -1);
 
             }
         } else {            
             // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
-            throw new BladPoziomDostepu("pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.dodajPoziomDostepu()", poziom, -1);
+            throw new BladPoziomDostepu(poziom, -1);
         }
     }
 }

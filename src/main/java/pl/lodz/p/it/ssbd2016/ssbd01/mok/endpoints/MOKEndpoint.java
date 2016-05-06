@@ -158,14 +158,14 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszSwojeKontoPoEdycji")
     public void zapiszSwojeKontoPoEdycji(Konto konto) throws NiezgodnyLogin, BrakKontaDoEdycji, KontoNiezgodneWczytanym {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new NiezgodnyLogin("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
+            throw new NiezgodnyLogin();
         }
         
         if (kontoStan == null) {
-            throw new BrakKontaDoEdycji("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
+            throw new BrakKontaDoEdycji();
         }
         if (!kontoStan.equals(konto)) {
-            throw new KontoNiezgodneWczytanym("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
+            throw new KontoNiezgodneWczytanym();
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -182,10 +182,10 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszKontoPoEdycji")
     public void zapiszKontoPoEdycji(Konto konto)  throws BrakKontaDoEdycji, KontoNiezgodneWczytanym {
         if (kontoStan == null) {
-            throw new BrakKontaDoEdycji("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
+            throw new BrakKontaDoEdycji();
         }
         if (!kontoStan.equals(konto)) {
-            throw new KontoNiezgodneWczytanym("pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint.ZapiszSwojeKontoPoEdycji()");
+            throw new KontoNiezgodneWczytanym();
         }
 
         kontoStan.setEmail(konto.getEmail());

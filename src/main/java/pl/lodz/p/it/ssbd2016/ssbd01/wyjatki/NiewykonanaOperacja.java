@@ -14,23 +14,10 @@ import javax.naming.NamingException;
  */
 @ApplicationException(rollback = true)
 public class NiewykonanaOperacja extends NamingException{
-    private String miejsce;
-    private String operacja;
 
-    public NiewykonanaOperacja(String miejsce, String operacja) {
-        super();
-        this.miejsce = miejsce;
-        this.operacja=operacja;
+    public NiewykonanaOperacja(String explanation) {
+        super(explanation);
     }
-
-    public String getMiejsce() {
-        return miejsce;
-    }
-
-    public String getOperacja() {
-        return operacja;
-    }
-    
     
 
 }
