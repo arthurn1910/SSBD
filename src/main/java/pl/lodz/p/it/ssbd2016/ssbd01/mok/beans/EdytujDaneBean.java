@@ -21,8 +21,8 @@ public class EdytujDaneBean {
      * @return  przekierowanie do szczegółów konta 
      */
     public String zapiszSwojeKontoPoEdycji(){
-            uzytkownikSession.zapiszSwojeKontoPoEdycji();
-            return "wyswietlSzczegolySwojegoKonta";
+        uzytkownikSession.zapiszSwojeKontoPoEdycji();
+        return "wyswietlSzczegolySwojegoKonta";
     }
     
     /**
@@ -31,8 +31,8 @@ public class EdytujDaneBean {
      * @return  przekierowanie do szczegółów konta
      */
     public String zapiszKontoPoEdycji(){
-            uzytkownikSession.zapiszKontoPoEdycji();
-            return "wyswietlSzczegolySwojegoKonta";
+        uzytkownikSession.zapiszKontoPoEdycji();
+        return "wyswietlSzczegolyKonta";
     }
     
     // Gettery i Settery

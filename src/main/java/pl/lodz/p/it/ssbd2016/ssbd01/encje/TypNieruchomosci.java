@@ -50,18 +50,18 @@ public class TypNieruchomosci implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Size(min = 1, max = 50)
     @Column(name = "nazwa", updatable = false)
     private String nazwa;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "srednia_cena_metra_kwadratowego")
     private BigDecimal sredniaCenaMetraKwadratowego;
     @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "typNieruchomosci")

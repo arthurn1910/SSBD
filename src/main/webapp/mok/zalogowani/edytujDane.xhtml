@@ -17,14 +17,14 @@
      <ui:define name="content">         
          <h1>${msg["tytulyPrzypadkow.edytujDane"]}:</h1>
         <h:form>
-            ${msg["daneKonta.imie"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}"/><br/>
-            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}"/><br/>
-            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}"/><br/>
-            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}"/><br/>
-            <h:commandButton onclick="if (! confirm(#{msg['daneKonta.imie']})) return false"
+            ${msg["daneKonta.imie"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}" id="imie"/><h:message for="imie" styleClass="error"/><br/>
+            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}" id="nazwisko"/><h:message for="nazwisko" styleClass="error"/><br/>
+            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}" id="email"/><h:message for="email" styleClass="error"/><br/>
+            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}" id="telefon"/><h:message for="telefon" styleClass="error"/><br/>
+            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
                                  value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszSwojeKontoPoEdycji()}"  class="edit_icon">
             </h:commandButton> 
-            <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}" />
+            <h:button outcome="wyswietlSzczegolySwojegoKonta" value="#{msg['komunikat.powrot']}" />
         </h:form>
     </ui:define>
 </ui:composition>

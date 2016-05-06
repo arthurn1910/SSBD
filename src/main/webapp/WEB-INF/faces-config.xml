@@ -13,7 +13,7 @@
             <base-name>i18n.messages</base-name>
             <var>msg</var>
         </resource-bundle>
-        <message-bundle>i18n.jsf_messages</message-bundle>
+        <message-bundle>ValidationMessages</message-bundle>
     </application>
         
     <navigation-rule>

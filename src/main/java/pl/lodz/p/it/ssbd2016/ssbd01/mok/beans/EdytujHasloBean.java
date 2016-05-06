@@ -1,17 +1,11 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ResourceBundle;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Obsługa zmiany hasła przez użytkownika i admina
@@ -33,9 +27,10 @@ public class EdytujHasloBean {
      */
     public boolean checkPasswordMatching() {
         if (!(noweHaslo.equals(nowePowtorzoneHaslo))) {
-            FacesMessage message = new FacesMessage("passwords dont match");
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("form:powtorzoneHaslo", message);
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zlePotworzoneHaslo"));
+            context.addMessage("form:hasloPotworzone", message);
             return false;
         }
         return true;

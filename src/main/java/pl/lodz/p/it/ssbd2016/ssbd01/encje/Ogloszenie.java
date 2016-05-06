@@ -59,30 +59,30 @@ public class Ogloszenie implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Size(min = 1, max = 80)
     @Column(name = "tytul")
     private String tytul;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "cena")
     private int cena;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "rynek_pierwotny")
     private boolean rynekPierwotny;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "data_dodania")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDodania;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "aktywne")
     private boolean aktywne;
     @ManyToMany(mappedBy = "ogloszenieUlubioneCollection")

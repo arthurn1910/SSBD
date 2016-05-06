@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.ResourceBundle;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -26,10 +27,12 @@ public class RejestracjaKontaKlientaBean {
     /**
      * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta 
      */
-    public void rejestrujKontoKlienta(){
+    public String rejestrujKontoKlienta(){
         if (checkPasswordMatching()) {    
             uzytkownikSession.rejestrujKontoKlienta(konto);
+            return "index";
         }
+        return null;
     }
     
     /**
@@ -38,8 +41,9 @@ public class RejestracjaKontaKlientaBean {
      */
     public boolean checkPasswordMatching(){
         if (!(konto.getHaslo().equals(potorzoneHaslo))) {
-            FacesMessage message = new FacesMessage("passwords dont match");
             FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zlePotworzoneHaslo"));
             context.addMessage("form:hasloPotworzone", message);
             return false;
         }

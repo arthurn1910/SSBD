@@ -4,23 +4,23 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html">
 
-    <h2>Dla kazdego</h2>
-    <ul>
-        <li><h:outputLink value="#{request.contextPath}/index.xhtml" >${msg["menu.stronaGlowna"]}</h:outputLink></li>
-        <li><h:outputLink value="#{request.contextPath}/mok/logowanie.xhtml" >${msg["menu.logowanie"]}</h:outputLink></li>
-        <li><h:outputLink value="#{request.contextPath}/mok/rejestracjaKontaKlienta.xhtml" >${msg["menu.rejestracjaKontaKlienta"]}</h:outputLink></li>
-    </ul>
-    <h2>Dla klienta</h2>
-    <ul>
-        <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/wyswietlSzczegolySwojegoKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer() or autoryzacja.czyKlient() or autoryzacja.czyAgent()}">${msg["menu.szczegolyKonta"]}</h:outputLink></li>
-    </ul>
-    <h2>Dla admina</h2>
-    <ul>
-        <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/historiaLogowaniaRaport.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.generuj.raport"]}</h:outputLink></li>
-        <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/utworzKonto.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.utorzKonto"]}</h:outputLink></li>
-        <li><h:outputLink value="#{request.contextPath}/mok/zalogowani/adminMenadzer/wyszukajKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer()}">${msg["menu.wyszukajKonta"]}</h:outputLink></li>
-    </ul>
     <h:form>
-        <h:commandButton value="Wyloguj" action="#{wylogujBean.wyloguj()}" />
+        <p>${msg['komunikat.powitanie']} ${menuBean.login}</p>
+        <p>${menuBean.poziomyDostepu}</p>
+
+        <h:outputLink value="#{request.contextPath}/mok/logowanie.xhtml" rendered="#{not menuBean.zalogowany}">${msg["menu.logowanie"]}</h:outputLink><br />
+        <h:outputLink value="#{request.contextPath}/mok/rejestracjaKontaKlienta.xhtml" rendered="#{not menuBean.zalogowany}">${msg["menu.rejestracjaKontaKlienta"]}</h:outputLink><br />
+        
+        <h:outputLink value="#{request.contextPath}/index.xhtml" >${msg["menu.stronaGlowna"]}</h:outputLink><br />
+        
+
+        <h:outputLink value="#{request.contextPath}/mok/zalogowani/wyswietlSzczegolySwojegoKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer() or autoryzacja.czyKlient() or autoryzacja.czyAgent()}">${msg["menu.szczegolyKonta"]}</h:outputLink><br />
+
+        <h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/utworzKonto.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.utorzKonto"]}</h:outputLink><br />
+        <h:outputLink value="#{request.contextPath}/mok/zalogowani/adminMenadzer/wyszukajKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer()}">${msg["menu.wyszukajKonta"]}</h:outputLink><br />
+        
+        <h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/historiaLogowaniaRaport.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.generuj.raport"]}</h:outputLink><br />
+
+        <h:commandButton value="#{msg['komunikat.wyloguj']}" action="#{menuBean.wyloguj()}" rendered="#{menuBean.zalogowany}"/>
     </h:form>
 </ui:composition>

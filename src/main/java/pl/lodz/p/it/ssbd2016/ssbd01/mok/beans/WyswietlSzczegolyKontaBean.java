@@ -39,7 +39,9 @@ public class WyswietlSzczegolyKontaBean {
         String poziomy = "";
         
         for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
-            poziomy += poziom.getPoziom() + ", ";
+            if (poziom.getAktywny()) {
+                poziomy += poziom.getPoziom() + ", ";
+            }
         }
         
         return poziomy;

@@ -1,8 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -82,9 +80,12 @@ public class KontoManager implements KontoManagerLocal {
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
             kontoFacade.create(konto);
-            PoziomDostepuManager tmp=new PoziomDostepuManager();
-            PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepuKlient();
+            
+            PoziomDostepuManager poziomDostepuManager =new PoziomDostepuManager();
+            
+            PoziomDostepu poziomDostepu = poziomDostepuManager.stworzPoziomDostepuKlient();
             poziomDostepu.setKontoId(konto);
+            poziomDostepu.setAktywny(true);
             
             poziomDostepuFacade.create(poziomDostepu);
             
@@ -108,6 +109,7 @@ public class KontoManager implements KontoManagerLocal {
                 for (String poziomDostepuStr: poziomyDostepu) {
                     PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepu(poziomDostepuStr);     
                     poziomDostepu.setKontoId(konto);
+                    poziomDostepu.setAktywny(true);
                     poziomDostepuFacade.create(poziomDostepu);
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
                 }

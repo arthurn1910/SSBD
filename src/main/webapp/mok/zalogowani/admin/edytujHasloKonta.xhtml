@@ -16,10 +16,13 @@
      <ui:define name="content">
         <h1>${msg["tytulyPrzypadkow.zmienHasloKonta"]}:</h1>
         <h:form>
-            ${msg["daneKonta.noweHaslo"]} <h:inputSecret value="#{edytujHasloBean.noweHaslo}"/><br />
-            ${msg["daneKonta.powtorzNoweHaslo"]} <h:inputSecret value="#{edytujHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />             
+            ${msg["daneKonta.noweHaslo"]}* <h:inputSecret value="#{edytujHasloBean.noweHaslo}"/><br />
+            ${msg["daneKonta.powtorzNoweHaslo"]}* <h:inputSecret value="#{edytujHasloBean.nowePowtorzoneHaslo}" id="powtorzoneHaslo"/> <h:message for="powtorzoneHaslo" styleClass="error"/><br />             
+            ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
+            
             <h:commandButton onclick="if (! confirm('Czy na pewno chcesz zmienic haslo?')) return false"
-                             value="#{msg['komunikat.potwierdz']}" action="#{edytujHasloBean.zmienHaslo()}"  class="edit_icon" />
+                             value="#{msg['komunikat.potwierdz']}" action="#{edytujHasloBean.zmienHaslo()}"  class="edit_icon">
+            </h:commandButton>
             <h:commandButton action="wyswietlSzczegolyKonta" value="#{msg['komunikat.powrot']}" />
             
         </h:form>

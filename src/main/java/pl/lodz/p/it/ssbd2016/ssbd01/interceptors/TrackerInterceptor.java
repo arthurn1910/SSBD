@@ -48,9 +48,8 @@ public class TrackerInterceptor {
             } else {
                 message.append(result.toString() + " ");
             }
-            loger.severe(message.toString());
-        
-        return result;
+            loger.severe(message.toString());        
+            return result;
         } catch (Exception e) {
             BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
             throw exc;

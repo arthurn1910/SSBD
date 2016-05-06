@@ -18,19 +18,19 @@
         <h>${msg["tytulyPrzypadkow.kontoKlienta"]}</h>
         
         <h:form id="form">
-            ${msg["daneKonta.imie"]} <h:inputText value="#{rejestracjaKontaKlientaBean.konto.imie}" id="imie"/> <h:message for="imie" styleClass="error"/> <br />
-            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{rejestracjaKontaKlientaBean.konto.nazwisko}" id="nazwisko"/> <h:message for="nazwisko" styleClass="error"/><br />
-            ${msg["daneKonta.login"]} <h:inputText value="#{rejestracjaKontaKlientaBean.konto.login}" id="login"/> <h:message for="login" styleClass="error"/><br />
-            ${msg["daneKonta.email"]} <h:inputText value="#{rejestracjaKontaKlientaBean.konto.email}" id="email"/> <h:message for="email" styleClass="error"/><br />
-            ${msg["daneKonta.numerTelefonu"]}  <h:inputText value="#{rejestracjaKontaKlientaBean.konto.telefon}" id="telefon"/> <h:message for="telefon" styleClass="error"/><br />
-            ${msg["daneKonta.haslo"]} <h:inputSecret value="#{rejestracjaKontaKlientaBean.konto.haslo}" id="haslo"/> <h:message for="haslo" styleClass="error"/><br />
-            ${msg["daneKonta.powtorzHaslo"]} <h:inputSecret value="#{rejestracjaKontaKlientaBean.potorzoneHaslo}" id="hasloPotworzone"/> <h:message for="hasloPotworzone" styleClass="error"/><br />
+            ${msg["daneKonta.imie"]}* <h:inputText value="#{rejestracjaKontaKlientaBean.konto.imie}" id="imie"/> <h:message for="imie" styleClass="error"/> <br />
+            ${msg["daneKonta.nazwisko"]}* <h:inputText value="#{rejestracjaKontaKlientaBean.konto.nazwisko}" id="nazwisko"/> <h:message for="nazwisko" styleClass="error"/><br />
+            ${msg["daneKonta.login"]}* <h:inputText value="#{rejestracjaKontaKlientaBean.konto.login}" id="login"/> <h:message for="login" styleClass="error"/><br />
+            ${msg["daneKonta.email"]}* <h:inputText value="#{rejestracjaKontaKlientaBean.konto.email}" id="email"/> <h:message for="email" styleClass="error"/><br />
+            ${msg["daneKonta.numerTelefonu"]}* <h:inputText value="#{rejestracjaKontaKlientaBean.konto.telefon}" id="telefon"/> <h:message for="telefon" styleClass="error"/><br />
+            ${msg["daneKonta.haslo"]}* <h:inputSecret value="#{rejestracjaKontaKlientaBean.konto.haslo}" id="haslo"/> <h:message for="haslo" styleClass="error"/><br />
+            ${msg["daneKonta.powtorzHaslo"]}* <h:inputSecret value="#{rejestracjaKontaKlientaBean.potorzoneHaslo}" id="hasloPotworzone"/> <h:message for="hasloPotworzone" styleClass="error"/><br />
+            ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
-            
-            <h:commandButton action="powrot" value="#{msg['komunikat.powrot']}"  />
-             <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                value="Zarejestruj" action="#{rejestracjaKontaKlientaBean.rejestrujKontoKlienta()}"  class="edit_icon" >
+            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
+                value="#{msg['komunikat.zarejestruj']}" action="#{rejestracjaKontaKlientaBean.rejestrujKontoKlienta()}"  class="edit_icon" >
             </h:commandButton> 
+            <h:button outcome="index" value="#{msg['komunikat.powrot']}"  />
         </h:form>
     </ui:define>
 </ui:composition>
