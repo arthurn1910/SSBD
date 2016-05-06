@@ -37,30 +37,24 @@ public interface MOSEndpointLocal {
      */
     List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
     
-    
-    void dodajSpotkanie(Spotkanie spotkanie);
-    
-    Ogloszenie pobierzPierwszeOgloszenie();
-    Konto pobierzPierwszeKonto();
-
-    /**
-     * @return lista spotkań
-     * Pobiera wszystkie spotkania, stworzona dla MOS.3, Kamil Rogowski
-     * @author Kamil Rogowski
-     */
-    List<Spotkanie> pobierzSpotkania(Konto spotkanieDlaKonta);
 
     /**
      * Anuluje spotkanie powiąane z kontem, stworzona dla MOS.3, Kamil Rogowski
-     *
      * @param konto                 konto z którego mamy usunąć spotkania
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */
     void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania);
 
     /**
+     * Pobiera wszystkie spotkania, stworzona dla MOS.4, Kamil Rogowski
+     * @param spotkanieDlaKonta
+     * @return lista spotkań
+     * @author Kamil Rogowski
+     */
+    List<Spotkanie> pobierzSpotkania(Konto spotkanieDlaKonta);
+    
+    /**
      * Pobiera spotkania dla ogłoszenia, MOS.5, Kamil Rogowski
-     *
      * @param ogloszenie ogloszenie
      * @return lista spotkan
      */

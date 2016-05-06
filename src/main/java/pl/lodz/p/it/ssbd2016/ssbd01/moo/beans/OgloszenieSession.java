@@ -70,7 +70,7 @@ public class OgloszenieSession implements Serializable {
     */
     void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) {
         try {
-            mooEndpoint.edytujOgloszenieDanegoUzytkownika(ogloszenieNowe);
+            mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieNowe);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -82,30 +82,13 @@ public class OgloszenieSession implements Serializable {
     */
     void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
         try {
-            mooEndpoint.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+            mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
         }
         catch(Exception e) {
             e.printStackTrace();
         }
     }
 
-    void aktywujOgloszenie(Ogloszenie rowData) {
-        mooEndpoint.aktywujOgloszenie(rowData);
-    }
-
-    void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej{
-        try{
-            mooEndpoint.deaktywujOgloszenie(rowData);
-        } catch(OgloszenieDeaktywowaneWczesniej ex){
-            this.ogloszenieDeaktyowwaneWczesniej=ex;
-            throw ex;
-        }
-    }
-
-
-    List<Ogloszenie> pobierzUlubioneOgloszenia() {
-        return mooEndpoint.pobierzUlubioneOgloszenia();
-    }
     /***
      * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w MOOEndpoint przekazując jej parametr Ogloszenie
      * Stowrzył Radosław Pawlaczyk

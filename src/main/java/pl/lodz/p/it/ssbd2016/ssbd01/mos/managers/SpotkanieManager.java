@@ -7,6 +7,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
 /**
  * @author Kamil Rogowski
@@ -20,12 +21,14 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     SpotkanieFacadeLocal spotkanieFacade;
 
     @Override
+    @RolesAllowed("pobierzSpotkaniaDlaOgloszenia")
     public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
 
         return null;
     }
 
     @Override
+    @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzUmowioneSpotkania(Konto spotkaniaDlakonta) {
         return null;
     }
