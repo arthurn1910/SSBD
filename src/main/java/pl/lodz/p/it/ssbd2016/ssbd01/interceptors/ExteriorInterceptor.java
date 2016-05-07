@@ -2,6 +2,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
 
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -12,18 +13,7 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interceptor zewnętrzny 
@@ -37,20 +27,11 @@ public class ExteriorInterceptor {
      * Funkcja przechwytująca wywołania wyjatków, opakowywania wyjątków nieweryfikowalnych,
      * logująca ich wywołania oraz przesyłająca wyjątek dalej.
      * @param ictx
-     * @return
-     * @throws BladWywolania
-     * @throws BrakAlgorytmuKodowania
-     * @throws BladPoziomDostepu
-     * @throws BladPliku
-     * @throws BladDeSerializacjiObiektu
-     * @throws NiewykonanaOperacja
-     * @throws PoziomDostepuNieIstnieje
-     * @throws NieobslugiwaneKodowanie
-     * @throws NiezgodneHasla
-     * @throws NiezgodnyLogin 
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
     @AroundInvoke
-    public Object traceInvoke(InvocationContext ictx) throws BladWywolania, BrakAlgorytmuKodowania, BladPoziomDostepu, BladPliku, BladDeSerializacjiObiektu, NiewykonanaOperacja, PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, NiezgodneHasla, NiezgodnyLogin{
+    public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
@@ -77,34 +58,35 @@ public class ExteriorInterceptor {
             loger.severe(message.toString());
         
             return result;
-        }catch (BrakDostepu | KontoNiezgodneWczytanym | NiezgodnyLogin | NiezgodneHasla | BladPoziomDostepu
-                | BrakAlgorytmuKodowania | BladPliku | BladDeSerializacjiObiektu | NieobslugiwaneKodowanie |
-                PoziomDostepuNieIstnieje | NiewykonanaOperacja e) {
+        }catch (WyjatekSystemu e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
             throw e;
+        }catch(RemoteException e){
+            WyjatekSystemu ex=new WyjatekSystemu("RemoteException", e);
+            throw ex;
         }catch (NullPointerException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("nullPointerException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("nullPointerException", e);
             throw exc;
         }catch (EJBAccessException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("accessException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("accessException", e);
             throw exc;
         }catch (EJBTransactionRequiredException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("transactionRequiredException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("transactionRequiredException", e);
             throw exc;
         }catch (EJBTransactionRolledbackException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("transactionRolledbackException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("transactionRolledbackException", e);
             throw exc;
         } catch (EJBException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("EJBException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("EJBException", e);
             throw exc;
         }catch (Exception e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            BladWywolania exc=new BladWywolania("exception", e);
+            WyjatekSystemu exc=new WyjatekSystemu("exception", e);
             throw exc;
         } 
     }

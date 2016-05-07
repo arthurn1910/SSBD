@@ -5,18 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  *
@@ -27,25 +19,25 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 public class Autoryzacja {
     
     
-    public boolean czyAdministrator() throws NiewykonanaOperacja
+    public boolean czyAdministrator() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(0));
     }
     
-    public boolean czyAgent() throws NiewykonanaOperacja
+    public boolean czyAgent() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(2));
     }
     
-    public boolean czyKlient() throws NiewykonanaOperacja
+    public boolean czyKlient() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(3));
     }
     
-    public boolean czyMenadzer() throws NiewykonanaOperacja
+    public boolean czyMenadzer() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(1));

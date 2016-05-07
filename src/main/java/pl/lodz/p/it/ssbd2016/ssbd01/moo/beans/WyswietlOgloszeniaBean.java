@@ -9,8 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
-
 
 /**
  * 
@@ -154,7 +152,7 @@ public class WyswietlOgloszeniaBean {
         initModel();
     }
     
-    public void deaktywujOgloszenie() throws OgloszenieDeaktywowaneWczesniej {
+    public void deaktywujOgloszenie() throws Exception {
         ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
         initModel();
     }

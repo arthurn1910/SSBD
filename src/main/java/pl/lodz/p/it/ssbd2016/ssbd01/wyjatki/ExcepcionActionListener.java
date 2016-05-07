@@ -30,7 +30,7 @@ public class ExcepcionActionListener extends ActionListenerImpl implements Actio
             FacesContext fC=FacesContext.getCurrentInstance();
             Application app=fC.getApplication();
             NavigationHandler nH=app.getNavigationHandler();
-            nH.handleNavigation(fC, null, "/wyjatki/brakKontaDoEdycji.xhtml");
+            nH.handleNavigation(fC, null, "/wyjatki/niezgodnyLogin.xhtml");
             fC.renderResponse();
         }
     }

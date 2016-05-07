@@ -7,7 +7,7 @@ import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
@@ -19,7 +19,7 @@ public class TrackerInterceptor {
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
-    public Object traceInvoke(InvocationContext ictx) throws BladWywolania, Exception{
+    public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());

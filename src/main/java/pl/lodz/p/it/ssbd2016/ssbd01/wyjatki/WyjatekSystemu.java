@@ -6,16 +6,26 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
 
 import javax.ejb.ApplicationException;
-import javax.ejb.EJBAccessException;
 
 /**
  *
  * @author java
  */
 @ApplicationException(rollback = true)
-public class BrakDostepu extends EJBAccessException{
+public class WyjatekSystemu extends Exception {
 
-    public BrakDostepu(String message) {
+    public WyjatekSystemu(String message) {
         super(message);
     }
+
+    public WyjatekSystemu(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public WyjatekSystemu(Throwable cause) {
+        super(cause);
+    }
+
+    
+    
 }

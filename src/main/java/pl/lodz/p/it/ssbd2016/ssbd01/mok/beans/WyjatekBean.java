@@ -10,17 +10,25 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
- *
+ * Obsługa widoku wyjatek.xhtml
  * @author java
  */
 @Named
 @RequestScoped
-public class WyjatkiBean {
-    private String miejsce, plik, poziom, operacja, metoda;
-    private int status;
-    
-    
+public class WyjatekBean {
+    private String aaa="bladPliku";
     @Inject
     private UzytkownikSession uzytkownikSession;
+
+    public String getWiadomosc() {
+        return "aa";//uzytkownikSession.getException().getMessage();
+    }
+
+    public String getAaa() {
+        return aaa;
+    }
+    
+    
+    
    
 }

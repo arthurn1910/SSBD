@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno umożliwiające tworzenie nowych kont o dowolnym poziomie dostępu
@@ -28,8 +28,9 @@ public class UtworzKontoBean {
     
     /**
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void utworzKont() throws Exception{
+    public void utworzKont() throws WyjatekSystemu{
         if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
             uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
         }
@@ -39,24 +40,25 @@ public class UtworzKontoBean {
      * Metoda sprawdzająca poprawność wybranych poziomów dostępu:
      * conajmniej 1, czy poziomy się nie wykluczają
      * @return  decyzja czy można nadać dane poziomy dostępu
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public boolean sprawdzPoziomyDostepu() throws NiewykonanaOperacja{
+    public boolean sprawdzPoziomyDostepu() throws WyjatekSystemu{
         PoziomDostepuManager tmp;
         try {
             tmp = new PoziomDostepuManager();
             if (wybranePoziomy.length == 0) {
-            FacesMessage message = new FacesMessage("Wybierz conajmniej 1");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("form:poziomy", message);
-            return false;
-        } else if (wybranePoziomy.length > 0 && !tmp.czyPoprawnaKombinacjaPoziomowDostepu(Arrays.asList(wybranePoziomy))) {
-            FacesMessage message = new FacesMessage("Poziomy sie wykluczaja");
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("form:poziomy", message);
-            return false;
-        }
+                FacesMessage message = new FacesMessage("Wybierz conajmniej 1");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("form:poziomy", message);
+                return false;
+            } else if (wybranePoziomy.length > 0 && !tmp.czyPoprawnaKombinacjaPoziomowDostepu(Arrays.asList(wybranePoziomy))) {
+                FacesMessage message = new FacesMessage("Poziomy sie wykluczaja");
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage("form:poziomy", message);
+                return false;
+            }
             return true;
-        } catch (NiewykonanaOperacja ex) {
+        } catch (WyjatekSystemu ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }
@@ -99,11 +101,11 @@ public class UtworzKontoBean {
         this.powtorzoneHaslo = powtorzoneHaslo;
     }
     
-    public String[] pobierzPoziomyDostepu() throws NiewykonanaOperacja {
+    public String[] pobierzPoziomyDostepu() throws WyjatekSystemu {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.getPoziomyDostepu().toArray(new String[0]);
-        } catch (NiewykonanaOperacja ex) {
+        } catch (WyjatekSystemu ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }

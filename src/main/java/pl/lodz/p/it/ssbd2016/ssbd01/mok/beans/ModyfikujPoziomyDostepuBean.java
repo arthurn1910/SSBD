@@ -8,9 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa ta jest wykorzystywana do modyfikacji poziomów dostępu dla wybranego konta
@@ -36,7 +34,7 @@ public class ModyfikujPoziomyDostepuBean {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
             konto = uzytkownikSession.getWybraneKonto();
-        } catch (NiewykonanaOperacja ex) {
+        } catch (WyjatekSystemu ex) {
             uzytkownikSession.setException(ex);
         }
     }
@@ -47,7 +45,7 @@ public class ModyfikujPoziomyDostepuBean {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
      */
-    public String dodajPoziomDostepu() throws BladPoziomDostepu, PoziomDostepuNieIstnieje, Exception{
+    public String dodajPoziomDostepu() throws WyjatekSystemu{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -58,7 +56,7 @@ public class ModyfikujPoziomyDostepuBean {
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
      */
-    public String odlaczPoziomDostepu() throws BladPoziomDostepu, Exception{
+    public String odlaczPoziomDostepu() throws WyjatekSystemu, Exception{
         uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -70,11 +68,11 @@ public class ModyfikujPoziomyDostepuBean {
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
      */
-    public boolean czyPosiadaAktywnyPoziomDostepu() throws NiewykonanaOperacja {
+    public boolean czyPosiadaAktywnyPoziomDostepu() throws WyjatekSystemu {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-        } catch (NiewykonanaOperacja ex) {
+        } catch (WyjatekSystemu ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }

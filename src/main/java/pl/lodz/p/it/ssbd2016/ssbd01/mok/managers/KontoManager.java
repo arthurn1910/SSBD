@@ -21,14 +21,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa pośrednicząca miedzy MOKEndpoint a fasadami. Przetwarza niezbędne dane.
@@ -50,9 +43,9 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("zmienMojeHaslo")
-    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NiezgodneHasla, NiezgodnyLogin {
+    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu{
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new NiezgodnyLogin();
+            throw new WyjatekSystemu("niezgodnyLogin");
         }
         String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
@@ -63,13 +56,13 @@ public class KontoManager implements KontoManagerLocal {
             konto.setHaslo(hashedPassword);
             kontoFacade.edit(konto);
         } else {
-            throw new NiezgodneHasla();
+            throw new WyjatekSystemu("niezgodneHasla");
         }
     }
 
     @Override
     @RolesAllowed("zmienHaslo")
-    public void zmienHaslo(Konto konto, String noweHaslo) throws PoziomDostepuNieIstnieje, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania{
+    public void zmienHaslo(Konto konto, String noweHaslo) throws WyjatekSystemu{
             String noweZahashowanehaslo = MD5Generator.generateMD5Hash(noweHaslo);
             konto.setHaslo(noweZahashowanehaslo);
             kontoFacade.edit(konto);
@@ -77,7 +70,7 @@ public class KontoManager implements KontoManagerLocal {
     
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws PoziomDostepuNieIstnieje,NiewykonanaOperacja, NieobslugiwaneKodowanie, BrakAlgorytmuKodowania, NaruszenieUniq{
+    public void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu{
         try{
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
@@ -91,13 +84,13 @@ public class KontoManager implements KontoManagerLocal {
             
             konto.getPoziomDostepuCollection().add(poziomDostepu);
         }catch(EJBException ex){
-            throw new NaruszenieUniq(ex);
+            throw new WyjatekSystemu("naruszenieUniq",ex);
         }
     }
     
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NieobslugiwaneKodowanie, NiewykonanaOperacja, BrakAlgorytmuKodowania, PoziomDostepuNieIstnieje, NaruszenieUniq{
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws WyjatekSystemu{
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         if (tmp.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             try{
@@ -113,7 +106,7 @@ public class KontoManager implements KontoManagerLocal {
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
                 }
             }catch(EJBException ex){
-                throw new NaruszenieUniq(ex);
+                throw new WyjatekSystemu("naruszenieUniq",ex);
             }
         }
     }
@@ -159,7 +152,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja, BladPoziomDostepu, PoziomDostepuNieIstnieje {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
@@ -171,7 +164,7 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(true);
             } else {
                 // Jeśli nie zwracamy błąd
-                throw new BladPoziomDostepu(poziom, 1);
+                throw new WyjatekSystemu("bladPoziomDostepu"+poziom+"dodanie");
             }
         } else {
             // Nie posiadamy danego poziomu dostępu
@@ -187,14 +180,14 @@ public class KontoManager implements KontoManagerLocal {
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
             } else {                
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-                throw new BladPoziomDostepu(poziom, 1);
+                throw new WyjatekSystemu("bladPoziomDostepu"+poziom+"dodanie");
             }
         }
     }
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws NiewykonanaOperacja,BladPoziomDostepu {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             
@@ -206,12 +199,12 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(false);
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                throw new BladPoziomDostepu(poziom, -1);
+                throw new WyjatekSystemu("bladPoziomDostepu"+poziom+"odlaczenie");
 
             }
         } else {            
             // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
-            throw new BladPoziomDostepu(poziom, -1);
+            throw new WyjatekSystemu("bladPoziomDostepu"+poziom+"odlaczenie");
         }
     }
 }

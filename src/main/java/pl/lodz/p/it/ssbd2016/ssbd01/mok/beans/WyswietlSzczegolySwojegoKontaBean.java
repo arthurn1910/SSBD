@@ -1,12 +1,18 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.Application;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
 
 /**
  * Klasa ta jest wykorzystywana do wyświetlania informacji o obecnie zalogowanym
@@ -24,10 +30,22 @@ public class WyswietlSzczegolySwojegoKontaBean {
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika obecnie zalogowanego
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
     */
     @PostConstruct
-    public void initModel() throws BrakDostepu{
-        konto = uzytkownikSession.getSwojeKonto();
+    public void initModel(){
+        try{
+            konto = uzytkownikSession.getSwojeKonto();
+        }catch(WyjatekSystemu ex){
+            uzytkownikSession.setException(ex);
+            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
+            FacesContext fC=FacesContext.getCurrentInstance();
+            Application app=fC.getApplication();
+            NavigationHandler nH=app.getNavigationHandler();
+            nH.handleNavigation(fC, null, "/wyjatki/wyjatek.xhtml");
+            fC.renderResponse();
+        }
     }
     
     /***

@@ -1,48 +1,19 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.StringWriter;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBAccessException;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import javax.servlet.ServletException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPliku;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakKontaDoEdycji;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.KontoNiezgodneWczytanym;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -74,8 +45,9 @@ public class UzytkownikSession implements Serializable {
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void rejestrujKontoKlienta(Konto k) throws Exception{
+    public void rejestrujKontoKlienta(Konto k) throws WyjatekSystemu{
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -87,7 +59,7 @@ public class UzytkownikSession implements Serializable {
             kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
         } catch(EJBException ex){
-            NaruszenieUniq a=new NaruszenieUniq(ex);
+            WyjatekSystemu a=new WyjatekSystemu("EJBException");
             this.exception=a;
             throw a;
         } catch (Exception ex){
@@ -100,8 +72,9 @@ public class UzytkownikSession implements Serializable {
      * Rejestruje konto, nadając mu wybrane poizomy dostępu
      * @param  k  konto, które ma zostać zarejestrowane
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws Exception{
+    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws WyjatekSystemu{
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -155,8 +128,9 @@ public class UzytkownikSession implements Serializable {
     /**
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
      * @param konto konto do edycji
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void pobierzKontoDoEdycji(Konto konto) throws Exception{
+    public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu{
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
         } catch (Exception ex){
@@ -169,7 +143,7 @@ public class UzytkownikSession implements Serializable {
      * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
      * @throws Exception 
      */
-    void zapiszSwojeKontoPoEdycji() throws Exception{
+    void zapiszSwojeKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
         } catch (Exception ex){
@@ -180,8 +154,9 @@ public class UzytkownikSession implements Serializable {
     
     /**
      * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void zapiszKontoPoEdycji() throws Exception{
+    public void zapiszKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
         } catch (Exception ex){
@@ -195,8 +170,9 @@ public class UzytkownikSession implements Serializable {
      * optymistyczna
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w postaci jawnej
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws Exception{           
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu{           
         try {
             MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
         } catch (Exception ex){
@@ -209,8 +185,9 @@ public class UzytkownikSession implements Serializable {
      * Metoda zmienia hasło obecnie edytowanego konta. Sprawdzana jest blokada
      * optymistyczna
      * @param noweHaslo  nowe hasło w postaci jawnej
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void zmienHaslo(String noweHaslo) throws Exception{
+    public void zmienHaslo(String noweHaslo) throws WyjatekSystemu{
         try {
             MOKEndpoint.zmienHaslo(noweHaslo);
         } catch (Exception ex){
@@ -237,7 +214,7 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do którego należy dodać poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void dodajPoziomDostepu(Konto konto, String poziom) throws Exception{
+    void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         try {
             MOKEndpoint.dodajPoziomDostepu(konto, poziom);
         } catch (Exception ex){
@@ -250,7 +227,7 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto od którego należy odłączyć poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void odlaczPoziomDostepu(Konto konto, String poziom) throws Exception{
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         try {
             MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
         } catch (Exception ex){
@@ -280,10 +257,10 @@ public class UzytkownikSession implements Serializable {
         this.wybraneKonto = wybraneKonto;
     }
 
-    public Konto getSwojeKonto() {
+    public Konto getSwojeKonto() throws WyjatekSystemu{
         try{
             wybraneKonto = MOKEndpoint.getSwojeKonto();
-        }catch (Exception ex){
+        }catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -294,11 +271,13 @@ public class UzytkownikSession implements Serializable {
         return kontaDataModel;
     }
 
-    public void setKontaDataModel(DataModel<Konto> kontaDataModel) {
+    public void setKontaDataModel(DataModel<Konto> kontaDataModel) throws WyjatekSystemu{
         try{
             this.kontaDataModel = kontaDataModel;
         } catch(EJBAccessException ex){
-            BrakDostepu exc=new BrakDostepu("brak dostepu");
+            WyjatekSystemu exc=new WyjatekSystemu("EJBAccessExcpetion");
+            this.exception=ex;
+            throw ex;
         }
     }  
     

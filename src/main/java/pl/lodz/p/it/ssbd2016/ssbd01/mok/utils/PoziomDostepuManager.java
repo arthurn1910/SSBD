@@ -10,8 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa użytkowa definiująca dostępne poziomy dostępu. Udostępnia metody tworzenia,
@@ -22,7 +21,7 @@ public class PoziomDostepuManager {
     private List<String> poziomyDostepu;
     private List<List<String>> poprawneKombinacjePoziomowDostepu;
 
-    public PoziomDostepuManager() throws NiewykonanaOperacja{    
+    public PoziomDostepuManager() throws WyjatekSystemu{    
         poziomyDostepu = dodajPoziomyDostepu();
         poprawneKombinacjePoziomowDostepu = dodajPoprawneKombinacjePoziomowDostepu();
     }
@@ -31,7 +30,7 @@ public class PoziomDostepuManager {
      * Metoda definiująca poziomy dostępu
      * @return      lista nazw poziomu dostepu
      */
-    private List<String> dodajPoziomyDostepu() throws NiewykonanaOperacja{
+    private List<String> dodajPoziomyDostepu() throws WyjatekSystemu{
         List<String> nowePoziomy;
         String poziomyDostepuDoParsowania = null;
         
@@ -39,7 +38,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
         } catch (NamingException ex) {
-            throw new NiewykonanaOperacja("ctx.lookup()");
+            throw new WyjatekSystemu("niewykonanaOperacja");
         }
         
         nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
@@ -51,7 +50,7 @@ public class PoziomDostepuManager {
      * Metoda defniująca dostępne kombinacje poziomów dostępu
      * @return lista poprawnych kombinacji poziomów dostępu
      */
-    private List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() throws NiewykonanaOperacja{
+    private List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() throws WyjatekSystemu{
         List<List<String>> nowePoprawneKombinacjePoziomowDostepu = new ArrayList<List<String>>();
         String kombinacjePoziomowDostepuDoParsowania = null;
         List<String> pojedynczaKombinacjaDoParsowania = null;
@@ -60,7 +59,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
         } catch (NamingException ex) {
-            throw new NiewykonanaOperacja("ctx.lookup()");
+            throw new WyjatekSystemu("niewykonanaOperacja");
         }
         
         for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
@@ -74,11 +73,11 @@ public class PoziomDostepuManager {
      * Metoda tworząca poziomy dostępu z określonego zbioru wartości
      * @param poziom    nazwa poziomu dostepu
      * @return          nowy obiekt o określonej nazwie
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public PoziomDostepu stworzPoziomDostepu(String poziom) throws PoziomDostepuNieIstnieje{
+    public PoziomDostepu stworzPoziomDostepu(String poziom) throws WyjatekSystemu{
         if (!poziomyDostepu.contains(poziom)) {
-            throw new PoziomDostepuNieIstnieje(poziom);
+            throw new WyjatekSystemu("poziomDostepuNieIstnieje"+poziom);
         }
 
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();

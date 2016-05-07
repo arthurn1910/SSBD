@@ -9,7 +9,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOO
@@ -35,7 +35,7 @@ public interface MOOEndpointLocal {
     List<Ogloszenie> pobierzWszytkieOgloszenia();
 
     void aktywujOgloszenie(Ogloszenie rowData);
-    public void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej;
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu;
 
     public List<Ogloszenie> pobierzUlubioneOgloszenia();
 
