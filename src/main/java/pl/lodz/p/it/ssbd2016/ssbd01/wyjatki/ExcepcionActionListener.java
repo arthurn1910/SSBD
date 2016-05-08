@@ -20,17 +20,19 @@ import javax.faces.event.ActionListener;
  * @author java
  */
 public class ExcepcionActionListener extends ActionListenerImpl implements ActionListener{
+    
+    
     @Override
     public void processAction(ActionEvent event){
         try{
             super.processAction(event);
         }catch(FacesException fe){
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
-            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",fe);
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",fe.getCause());
             FacesContext fC=FacesContext.getCurrentInstance();
             Application app=fC.getApplication();
             NavigationHandler nH=app.getNavigationHandler();
-            nH.handleNavigation(fC, null, "/wyjatki/niezgodnyLogin.xhtml");
+            nH.handleNavigation(fC, null, "/wyjatki/wyjatek.xhtml");
             fC.renderResponse();
         }
     }

@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.internet.AddressException;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa odpowiedzialna za wysyłanie komunikatów mailowych
@@ -82,10 +84,8 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @Override
     @PermitAll
-    public void wyslijPowiadomienieRejestracji(Konto konto) {
-
+    public void wyslijPowiadomienieRejestracji(Konto konto) throws WyjatekSystemu{
         try {
-            message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(konto.getEmail())); //adres odbiorcy zmienic tutaj wartosc jesli chcecie zamockowac
             message.setSubject(MessageProvider.getMessage("notyfikacja.rejestracja.tytul"));
@@ -98,9 +98,8 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             multipart.addBodyPart( messageBodyPart );
             message.setContent( multipart );
             Transport.send(message);
-
-        } catch (MessagingException e) {
-            LOGGER.log(Level.INFO, "Błąd podczas wysyłania wiadomości", e);
+        } catch (MessagingException ex) {
+            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex);
         }
     }
 

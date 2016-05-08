@@ -38,7 +38,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
         } catch (NamingException ex) {
-            throw new WyjatekSystemu("niewykonanaOperacja");
+            throw new WyjatekSystemu("blad.niewykonanaOperacja");
         }
         
         nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
@@ -59,7 +59,7 @@ public class PoziomDostepuManager {
             Context ctx = new InitialContext();
             kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
         } catch (NamingException ex) {
-            throw new WyjatekSystemu("niewykonanaOperacja");
+            throw new WyjatekSystemu("blad.niewykonanaOperacja");
         }
         
         for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
@@ -77,7 +77,7 @@ public class PoziomDostepuManager {
      */
     public PoziomDostepu stworzPoziomDostepu(String poziom) throws WyjatekSystemu{
         if (!poziomyDostepu.contains(poziom)) {
-            throw new WyjatekSystemu("poziomDostepuNieIstnieje"+poziom);
+            throw new WyjatekSystemu("blad.poziomDostepuNieIstnieje"+poziom);
         }
 
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();

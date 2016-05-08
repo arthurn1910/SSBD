@@ -69,7 +69,7 @@ public class MOOEndpoint implements MOOEndpointLocal {
     public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         if(ogloszenieNowe.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
-            throw new WyjatekSystemu("nieJestesWlascielemOgloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
         else {
             // zapisz dane obiektu ogloszenieNowe
@@ -83,10 +83,10 @@ public class MOOEndpoint implements MOOEndpointLocal {
     public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         if(ogloszenie.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
-            throw new WyjatekSystemu("nieJestesWlascicielemOgloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
         else if(ogloszenie.getAktywne() == false) {
-            throw new WyjatekSystemu("ogloszenieDeaktywowaneWczesniej");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
             ogloszenie.setAktywne(false);
@@ -110,7 +110,7 @@ public class MOOEndpoint implements MOOEndpointLocal {
         if(o.getAktywne())
             o.setAktywne(false);
         else 
-            throw new WyjatekSystemu("ogloszenieDeaktywowaneWczesniej"); 
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej"); 
     }
 
 
@@ -158,10 +158,10 @@ public class MOOEndpoint implements MOOEndpointLocal {
     @Override
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         if (ogloszenie == null) 
-        throw new WyjatekSystemu("brakWczytanegoOgloszeniaDoDeaktywacji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
         
         if(ogloszenie.getAktywne() == false) {
-            throw new WyjatekSystemu("ogloszenieDeaktywowaneWczesniej");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
             ogloszenie.setAktywne(false);
@@ -174,7 +174,7 @@ public class MOOEndpoint implements MOOEndpointLocal {
     @Override
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         if (ogloszenieNowe == null) 
-        throw new WyjatekSystemu("brakWczytanegoOgloszeniaDoEdycji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
         } 
 }

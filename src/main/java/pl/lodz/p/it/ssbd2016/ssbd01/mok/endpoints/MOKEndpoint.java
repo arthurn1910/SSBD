@@ -26,6 +26,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -194,7 +195,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
         try{
             login = sessionContext.getCallerPrincipal().getName();
         }catch(EJBAccessException ex){
-            throw new WyjatekSystemu("brakDostepu");
+            throw new WyjatekSystemu("blad.brakDostepu");
         }
         return kontoFacade.znajdzPoLoginie(login);
 

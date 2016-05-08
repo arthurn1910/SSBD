@@ -3,6 +3,8 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 import javax.ejb.Local;
+import javax.mail.MessagingException;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interfejs serwisu odpwoedzialnego za komunikaty mailowe
@@ -18,7 +20,7 @@ public interface NotyfikacjaServiceLocal {
      *
      * @param konto
      */
-    void wyslijPowiadomienieRejestracji(Konto konto);
+    void wyslijPowiadomienieRejestracji(Konto konto) throws WyjatekSystemu;
 
     /**
      * metoda odpowiedzialna za wysłania powiadomienia o zablokowaniu konta

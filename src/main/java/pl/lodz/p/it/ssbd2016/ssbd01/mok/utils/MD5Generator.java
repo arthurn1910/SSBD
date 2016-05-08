@@ -22,13 +22,13 @@ public class MD5Generator {
         try {
             bajtyWiadomosci = haslo.getBytes("UTF-8");
         } catch (UnsupportedEncodingException ex) {
-            throw new WyjatekSystemu("nieobslugiwaneKodowanie", ex);
+            throw new WyjatekSystemu("blad.nieobslugiwaneKodowanie", ex);
         }
         MessageDigest generatorMD = null;
         try {
             generatorMD = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
-            throw new WyjatekSystemu("brakAlgorytmuKodowania",ex);
+            throw new WyjatekSystemu("blad.brakAlgorytmuKodowania",ex);
         }
             
         byte[] zaszyfrowaneBajty = generatorMD.digest(bajtyWiadomosci);

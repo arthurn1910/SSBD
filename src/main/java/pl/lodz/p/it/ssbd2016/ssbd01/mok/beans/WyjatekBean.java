@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,19 +17,18 @@ import javax.inject.Named;
 @Named
 @RequestScoped
 public class WyjatekBean {
-    private String aaa="bladPliku";
+    private String wiadomosc;
     @Inject
     private UzytkownikSession uzytkownikSession;
+    
+    @PostConstruct
+    public void initModel() {
+        this.wiadomosc = uzytkownikSession.getException().getMessage();
+        if(this.wiadomosc==null || "".equals(this.wiadomosc))
+            this.wiadomosc="blad.brakUprawnien";
+    }
 
     public String getWiadomosc() {
-        return "aa";//uzytkownikSession.getException().getMessage();
-    }
-
-    public String getAaa() {
-        return aaa;
-    }
-    
-    
-    
-   
+        return wiadomosc;
+    } 
 }

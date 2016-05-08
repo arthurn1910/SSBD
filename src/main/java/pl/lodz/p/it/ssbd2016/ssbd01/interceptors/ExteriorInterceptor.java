@@ -3,6 +3,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
 
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -13,6 +14,7 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
+import javax.mail.MessagingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -62,32 +64,42 @@ public class ExteriorInterceptor {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
             throw e;
         }catch(RemoteException e){
-            WyjatekSystemu ex=new WyjatekSystemu("RemoteException", e);
+            WyjatekSystemu ex=new WyjatekSystemu("blad.RemoteException", e);
             throw ex;
         }catch (NullPointerException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("nullPointerException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException", e);
             throw exc;
         }catch (EJBAccessException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("accessException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBAccessException", e);
             throw exc;
         }catch (EJBTransactionRequiredException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("transactionRequiredException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", e);
             throw exc;
         }catch (EJBTransactionRolledbackException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("transactionRolledbackException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
             throw exc;
-        } catch (EJBException e) {
+        }catch (SQLException e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("EJBException", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
+            throw exc;
+        }catch (MessagingException e) {
+            WyjatekSystemu exc=new WyjatekSystemu("blad.wysylanieWidaomosci",e);
+            throw exc;
+        
+        }catch (EJBException e) {
+            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBException", e);
             throw exc;
         }catch (Exception e) {
             Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
-            WyjatekSystemu exc=new WyjatekSystemu("exception", e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", e);
             throw exc;
         } 
     }
+    
+    //LOGGER.log(Level.INFO, "Błąd podczas wysyłania wiadomości", e);
 }
