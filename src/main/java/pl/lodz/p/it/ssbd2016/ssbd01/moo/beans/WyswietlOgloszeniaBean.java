@@ -149,15 +149,6 @@ public class WyswietlOgloszeniaBean {
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
     
-    public void aktywujOgloszenie() {
-        ogloszenieSession.aktywujOgloszenie(ogloszeniaDataModel.getRowData());
-        initModel();
-    }
-    
-    public void deaktywujOgloszenie() throws OgloszenieDeaktywowaneWczesniej {
-        ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
-        initModel();
-    }
     /***
      * Metoda wywołuje metodę zmienAgentaWOgloszeniu w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
      * Stowrzył Radosław Pawlaczyk

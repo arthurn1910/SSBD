@@ -59,13 +59,13 @@ public class Nieruchomosc implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 64, message = "{walidacja.size}")
     @Column(name = "miejscowosc")
     private String miejscowosc;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 64, message = "{walidacja.size}")
     @Column(name = "ulica")
     private String ulica;
     @Column(name = "liczba_pokoi")
@@ -73,7 +73,7 @@ public class Nieruchomosc implements Serializable {
     @Column(name = "liczba_pieter")
     private Integer liczbaPieter;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "rok_budowy")
     @Temporal(TemporalType.DATE)
     private Date rokBudowy;
@@ -82,7 +82,7 @@ public class Nieruchomosc implements Serializable {
     @Column(name = "powierzchnia_nieruchomosci")
     private Integer powierzchniaNieruchomosci;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;

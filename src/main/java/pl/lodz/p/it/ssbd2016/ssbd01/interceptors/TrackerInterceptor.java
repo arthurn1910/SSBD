@@ -1,13 +1,18 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
+import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 
 /**
  * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
@@ -42,13 +47,12 @@ public class TrackerInterceptor {
                 message.append("null ");
             } else {
                 message.append(result.toString() + " ");
-        }
-        loger.severe(message.toString());
-        
-        return result;
+            }
+            loger.severe(message.toString());        
+            return result;
         } catch (Exception e) {
             BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
             throw exc;
-        } 
+        }
     }
 }

@@ -48,12 +48,12 @@ public class TypOgloszenia implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Size(min = 1, max = 50)
     @Column(name = "nazwa", updatable = false)
     private String nazwa;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;

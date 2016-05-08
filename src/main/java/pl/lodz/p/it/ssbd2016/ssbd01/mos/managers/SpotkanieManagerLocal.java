@@ -16,19 +16,19 @@ import java.util.List;
 public interface SpotkanieManagerLocal {
 
     /**
+     * Pobiera spotkania powiązane z kontem,
+     * zachowuje, zmienilem nazwe MOS.3
+     * @param konto konto dla którego szukamy spotkań
+     * @return ista spotkań
+     */
+    List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
+    
+    /**
      * Pobiera listę spotkań dla ogłosznia MOS.5, Kamil Rogowski
      *
      * @param ogloszenie ogłoszenie dla którego szukamy spotkań
      * @return lista spotkań
      */
     List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie);
-
-    /**
-     * Pobiera spotkania powiązane z kontem,
-     * zachowuje, zmienilem nazwe MOS.4, P. Stepien
-     * @param konto konto dla którego szukamy spotkań
-     * @return ista spotkań
-     */
-    List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
 
 }

@@ -1,17 +1,11 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ResourceBundle;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakAlgorytmuKodowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
  * Obsługa zmiany hasła przez użytkownika i admina
@@ -33,10 +27,61 @@ public class EdytujHasloBean {
      */
     public boolean checkPasswordMatching() {
         if (!(noweHaslo.equals(nowePowtorzoneHaslo))) {
-            FacesMessage message = new FacesMessage("passwords dont match");
             FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zlePotworzoneHaslo"));
             context.addMessage("form:powtorzoneHaslo", message);
             return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Sprawdza dlugosc pol noweHaslo i nowePotworzoneHaslo w przypadku
+     * edycji hasla przez admina
+     * @return  true - jeśli hasłą mają conajmniej 8 znaków
+     */
+    public boolean sprawdzDlugoscHasla() {
+        if (noweHaslo == null || noweHaslo.length() < 8) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zaKrotkieHaslo"));
+            context.addMessage("form:noweHaslo", message);
+            return false;             
+        } else if (nowePowtorzoneHaslo == null || nowePowtorzoneHaslo.length() < 8) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zaKrotkieHaslo"));
+            context.addMessage("form:powtorzoneHaslo", message);
+            return false;             
+        }
+        return true;
+    }
+    
+    /**
+     * Sprawdza dlugosc pol stareHaslo, noweHaslo i nowePotworzoneHaslo w przypadku
+     * edycji własnego hasla przez uzytkownika
+     * @return  true - jeśli hasłą mają conajmniej 8 znaków
+     */
+    public boolean sprawdzDlugoscHaslaMojego() {
+        if (stareHaslo == null || stareHaslo.length() < 8) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zaKrotkieHaslo"));
+            context.addMessage("form:obecneHaslo", message);
+            return false;            
+        } else if (noweHaslo == null || noweHaslo.length() < 8) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zaKrotkieHaslo"));
+            context.addMessage("form:noweHaslo", message);
+            return false;             
+        } else if (nowePowtorzoneHaslo == null || nowePowtorzoneHaslo.length() < 8) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            ResourceBundle bundle = ResourceBundle.getBundle("i18n.messages", context.getViewRoot().getLocale());
+            FacesMessage message = new FacesMessage(bundle.getString("walidacja.zaKrotkieHaslo"));
+            context.addMessage("form:powtorzoneHaslo", message);
+            return false;             
         }
         return true;
     }
@@ -47,9 +92,11 @@ public class EdytujHasloBean {
      * @return  przekierowanie do szczegółów konta 
      */
     public String zmienMojeHaslo(){
-        if (checkPasswordMatching()) 
+        if (sprawdzDlugoscHaslaMojego() && checkPasswordMatching()) {
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
-        return "wyswietlSzczegolyKonta";
+            return "wyswietlSzczegolySwojegoKonta";
+        }
+        return null;
     }
 
     /**
@@ -58,10 +105,11 @@ public class EdytujHasloBean {
      * @return  przekierowanie do szczegółów konta 
      */
     public String zmienHaslo(){
-        if (checkPasswordMatching()) {
+        if (sprawdzDlugoscHasla() && checkPasswordMatching()) {
             uzytkownikSession.zmienHaslo(noweHaslo);
-        }
         return "wyswietlSzczegolyKonta";
+        }
+        return null;
     }
 
     // Gettery i Settery

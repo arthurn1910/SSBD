@@ -20,6 +20,7 @@
         <group-name>MENADZER</group-name>
     </security-role-mapping>
     
+    <!-- role MOK -->
     <security-role-mapping>
         <role-name>utworzKonto</role-name>
         <group-name>ADMINISTRATOR</group-name>
@@ -101,4 +102,84 @@
         <role-name>pobierzHistorieLogowanUzytkownikow</role-name>
         <group-name>ADMINISTRATOR</group-name>
     </security-role-mapping>
+    
+    <!-- role MOO -->
+    <security-role-mapping>
+        <role-name>dodajOgloszenie</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>edytujOgloszenieDotyczaceUzytkownika</role-name>
+        <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>deaktywujOgloszenieDotyczaceUzytkownika</role-name>
+        <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>dodajDoUlubionych</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>usunZUlubionych</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>przydzielAgentaDoOgloszenia</role-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zmienAgentaWOgloszeniu</role-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>deaktywujOgloszenieInnegoUzytkownika</role-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>edytujOgloszenieInnegoUzytkownika</role-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    
+    <!-- role MOO -->
+    <security-role-mapping>
+        <role-name>pobierzSpotkania</role-name>
+        <group-name>MENADZER</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>anulujSpotkanie</role-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzSpotkaniaDlaOgloszenia</role-name>
+        <group-name>MENADZER</group-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>rezerwujSpotkanie</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzSpotkanieDoEdycji</role-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zapiszSpotkaniePoEdycji</role-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzUmowioneSpotkania</role-name>
+        <group-name>AGENT</group-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    
+    
 </glassfish-web-app>

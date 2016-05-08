@@ -32,23 +32,39 @@ public interface MOOEndpointLocal {
      */
     void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
 
-    List<Ogloszenie> pobierzWszytkieOgloszenia();
-
-    void aktywujOgloszenie(Ogloszenie rowData);
-    public void deaktywujOgloszenie(Ogloszenie rowData) throws OgloszenieDeaktywowaneWczesniej;
-
-    public List<Ogloszenie> pobierzUlubioneOgloszenia();
-
     /**
-     * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika
-     * @param ogloszenie ogłoszenie, które ma być dodane
+     * Metoda edytuje ogloszenie dotyczace klienta MOO.2
+     * @param ogloszenieNowe
+     * @throws Exception 
      */
-    public void dodajDoUlubionych(Ogloszenie ogloszenie);
-
+    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;    
+    
+    /**
+     * Metoda odpowiadajaca za edycje ogloszenia danego uzytkownika MOO.3
+     * @param ogloszenieNowe
+     * @throws java.lang.Exception
+    */   
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;    
+    
+    /**
+     * Metoda deaktywuje ogłoszenie dotyczace użytkownika MOO.4
+     * @param ogloszenie
+     * @throws Exception 
+     */
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    
+    
+    /**
+    * Metoda odpowiadajaca za deaktywacje ogłoszenia innego uzytkownika MOO.5
+    * @param ogloszenie do deaktywacji
+    * @throws java.lang.Exception
+    */   
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    
     /***
      * Metoda przydzielająca konto agenta do ogłoszenia
      * Stowrzył Radosław Pawlaczyk
-     * MOO 6
+     * MOO.6
      * @param rowData
      * @param agent 
      */
@@ -57,31 +73,34 @@ public interface MOOEndpointLocal {
     /***
      * Metoda zmieniająca agenta w ogłoszeniu
      * Stowrzył Radosław Pawlaczyk
-     * MOO 7
+     * MOO.7
      * @param rowData
      * @param agent 
      */
     public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent);
     
     /**
-     * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
+     * Metoda pobiera wszystkie ogłoszenia MOO.8 i 9
+     * @return lista ogłoszeń
+     */
+    List<Ogloszenie> pobierzWszytkieOgloszenia();
+    
+    /**
+     * Metoda pobiera dane ogłoszenie MOO.10
+     * @param ogloszenie
+     * @return 
+     */
+    Ogloszenie pobierzOgłoszenie(Ogloszenie ogloszenie);
+    
+    /**
+     * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika MOO.11
+     * @param ogloszenie ogłoszenie, które ma być dodane
+     */
+    public void dodajDoUlubionych(Ogloszenie ogloszenie);
+    
+    /**
+     * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika MOO.12
      * @param ogloszenie ogłoszenie, które ma być usunięte
      */
-    public void usunZUlubionych(Ogloszenie ogloszenie);
-
-    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
-    
-    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
-    /**
-    *   metoda odpowiadajaca za deaktywacje danego uzytkownika
-    *   @param ogloszenie do deaktywacji
-    */   
-    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception;
-    
-        /**
-        *    metoda odpowiadajaca za edycje ogloszenia innego uzytkownika 
-        */   
-    
-    
-    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;
+    public void usunZUlubionych(Ogloszenie ogloszenie);    
 }

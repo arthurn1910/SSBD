@@ -27,8 +27,6 @@ public class PrzegladanieSpotkan implements Serializable {
     
     @PostConstruct
     public void init() {
-        konto = spotkanieSession.pobierzPierwszeKonto();
-        spotkania = new ArrayList(konto.getSpotkanieCollection());
     }
     
     public List<Spotkanie> getSpotkania() {

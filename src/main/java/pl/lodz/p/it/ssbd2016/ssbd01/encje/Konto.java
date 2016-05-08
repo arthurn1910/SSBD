@@ -43,25 +43,25 @@ public class Konto implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 32)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 32, message = "{walidacja.size}")
     @Column(name = "login", updatable = false)
     private String login;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 8, max = 64, message = "{walidacja.size}")
     @Column(name = "haslo")
     private String haslo;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "potwierdzone")
     private boolean potwierdzone;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "aktywne")
     private boolean aktywne;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;
@@ -81,33 +81,34 @@ public class Konto implements Serializable {
 
     // Dane z tabeli dane_personalne
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 32)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 32, message = "{walidacja.size}")
     @Column(name = "imie", table="dane_personalne")
     private String imie;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 32)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 32, message = "{walidacja.size}")
     @Column(name = "nazwisko", table="dane_personalne")
     private String nazwisko;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="{walidacja.pattern}")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 1, max = 64, message = "{walidacja.size}")
     @Column(name = "email", table="dane_personalne")
     private String email;
+    @Pattern(regexp = "^[0-9]*$", message="{walidacja.pattern}")
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
+    @NotNull(message="{walidacja.notNull}")
+    @Size(min = 9, max = 9, message = "{walidacja.size}")
     @Column(name = "telefon", table="dane_personalne")
     private String telefon;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "data_utworzenia", table="dane_personalne")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataUtworzenia;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version", table="dane_personalne")
     private long versionA;
     public String getImie() {

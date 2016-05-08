@@ -53,14 +53,11 @@ public class WyszukajKontaBean {
             konto.setTelefon(telefon);   
         konto.setAktywne(aktywne);
         konto.setPotwierdzone(potwierdzone);
-        try{
-            uzytkownikSession.setKontaDataModel(new ListDataModel<>(uzytkownikSession.pobierzPodobneKonta(konto)));
-        }catch(Exception ex){
-            
-        }
+        
+        uzytkownikSession.setKontaDataModel(new ListDataModel<>(uzytkownikSession.pobierzPodobneKonta(konto)));
     }
     
-        /**
+    /**
      * Metoda odpowiada za automatyczne uzupełnianie pola imie w formularzu
      * @param query dane, które aktualnie są wpisane w formularzu
      * @return lista imion, które rozpoczynają się od frazy wpisanej w formularzu

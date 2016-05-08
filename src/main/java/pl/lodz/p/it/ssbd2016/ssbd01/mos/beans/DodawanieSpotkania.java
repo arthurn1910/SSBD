@@ -57,9 +57,4 @@ public class DodawanieSpotkania implements Serializable {
     public void setDlugosc(String dlugosc) {
         this.dlugosc = dlugosc;
     }
-
-    public String dodajSpotkanie() {
-        spotkanieSession.dodajSpotkanie(konto, ogloszenie, rok, miesiac, dzien, dlugosc);
-        return "success";
-    }
 }

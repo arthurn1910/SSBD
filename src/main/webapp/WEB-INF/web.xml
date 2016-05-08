@@ -4,10 +4,10 @@
 	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	 version="3.1">
-    <error-page>
+    <!--error-page>
         <error-code>500</error-code>
         <location>/wyjatki/bladSerwera.xhtml</location>
-    </error-page>
+    </error-page-->
     <error-page>
         <error-code>404</error-code>
         <location>/wyjatki/brakStrony.xhtml</location>
@@ -56,10 +56,24 @@
         <env-entry-type>java.lang.String</env-entry-type>
         <env-entry-value>MENADZER,AGENT;</env-entry-value> 
     </env-entry>
-    <!-- kontrola dostępu do zasobów administratora -->
+    <!-- definicja strony domowej -->
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+    <!-- https do uwierzytelniania -->
+    <security-constraint>
+        <display-name>UwierzytelnienieConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony uwierzytelniania</web-resource-name>
+            <description/>
+            <url-pattern>/mok/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <!-- kontrola dostepu do zasobow -->
     <security-constraint>
         <display-name>MokAdminConstr</display-name>
         <web-resource-collection>
@@ -76,7 +90,6 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <!-- kontrola dostępu do zasobów agenta -->
     <security-constraint>
         <display-name>MokAdminMenadzerConstr</display-name>
         <web-resource-collection>

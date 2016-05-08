@@ -11,6 +11,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mos.managers.SpotkanieManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
 
 @Stateful
@@ -25,52 +26,43 @@ public class MOSEndpoint implements MOSEndpointLocal {
     private SpotkanieManagerLocal spotkanieManager;
 
     @Override
-    public void dodajSpotkanie(Spotkanie spotkanie) {
-        spotkanieFacade.create(spotkanie);
-    }
-
-    @Override
-    public Konto pobierzPierwszeKonto() {
-        List<Konto> konta = kontoFacade.findAll();
-        return konta.get(0);
-    }
-
-    @Override
-    public Ogloszenie pobierzPierwszeOgloszenie() {
-        List<Ogloszenie> ogloszenia = ogloszenieFacade.findAll();
-        return ogloszenia.get(0);
-    }
-    @Override
+    @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
         return spotkanieManager.pobierzUmowioneSpotkania(spotkaniaDlaKonta);
     }
 
     @Override
+    @RolesAllowed("anulujSpotkanie")
     public void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania) {
         spotkanieFacade.remove(spotkanieDoAnulowania);
     }
 
     @Override
+    @RolesAllowed("pobierzSpotkaniaDlaOgloszenia")
     public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
         return spotkanieManager.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
     }
 
     @Override
+    @RolesAllowed("rezerwujSpotkanie")
     public void rezerwujSpotkanie(Spotkanie spotkanie) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    @RolesAllowed("pobierzSpotkanieDoEdycji")
     public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    @RolesAllowed("zapiszSpotkaniePoEdycji")
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
+    @RolesAllowed("pobierzUmowioneSpotkania")
     public List<Spotkanie> pobierzUmowioneSpotkania(Konto konto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

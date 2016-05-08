@@ -50,17 +50,17 @@ public class Spotkanie implements Serializable {
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "data_spotkania")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataSpotkania;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message="{walidacja.notNull}")
     @Column(name = "dlugosc_spotkania")
     private int dlugoscSpotkania;
     @JoinColumn(name = "id_uzytkownika", referencedColumnName = "id", updatable = false)

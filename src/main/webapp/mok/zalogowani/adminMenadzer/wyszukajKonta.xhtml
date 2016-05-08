@@ -17,13 +17,13 @@
         <h1>#{msg["wyszukiwanie.listaKont"]}</h1><br /><br />
         <h1>#{msg["wyszukiwanie.wyszukajWedlug"]}</h1><br />
         <h:form id="listaKontForm1">
-            ${msg["daneKonta.imie"]} <h:inputText value="#{wyszukajKontaBean.imie}"/><br />
-            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{wyszukajKontaBean.nazwisko}"/><br />
-            ${msg["daneKonta.email"]}  <h:inputText value="#{wyszukajKontaBean.email}"/><br />
-            ${msg["daneKonta.numerTelefonu"]}  <h:inputText value="#{wyszukajKontaBean.telefon}"/><br />
+            ${msg["daneKonta.imie"]} <p:autoComplete id="imie" value="#{wyszukajKontaBean.imie}" completeMethod="#{wyszukajKontaBean.completeImie}" /><br />
+            ${msg["daneKonta.nazwisko"]} <p:autoComplete id="nazwisko" value="#{wyszukajKontaBean.nazwisko}" completeMethod="#{wyszukajKontaBean.completeNazwisko}" /><br />
+            ${msg["daneKonta.email"]}  <p:autoComplete id="email" value="#{wyszukajKontaBean.email}" completeMethod="#{wyszukajKontaBean.completeEmail}" /><br />
+            ${msg["daneKonta.numerTelefonu"]}  <p:autoComplete id="telefon" value="#{wyszukajKontaBean.telefon}" completeMethod="#{wyszukajKontaBean.completeTelefon}" /><br />
             ${msg["daneKonta.aktywne"]}  <h:selectBooleanCheckbox value="#{wyszukajKontaBean.aktywne}" /><br />
             ${msg["daneKonta.potwierdzone"]} <h:selectBooleanCheckbox value="#{wyszukajKontaBean.potwierdzone}" /><br />
-            <h:commandButton value="Wyszukaj" action="#{wyszukajKontaBean.pobierzPodobneKonta()}" />
+            <h:commandButton value="#{msg['komunikat.wyszukaj']}" action="#{wyszukajKontaBean.pobierzPodobneKonta()}" />
         </h:form>
         <h:form>
             <h:dataTable id="listaKont1" var="konto" value="#{wyszukajKontaBean.kontaDataModel}">

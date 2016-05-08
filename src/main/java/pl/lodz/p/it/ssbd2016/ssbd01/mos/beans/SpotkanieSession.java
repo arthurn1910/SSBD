@@ -16,26 +16,6 @@ public class SpotkanieSession implements Serializable {
     @Inject
     private MOSEndpointLocal mosEndpoint;
     
-    public void dodajSpotkanie(Konto k, Ogloszenie o, String rok, String miesiac, String dzien, String dlugosc) {
-        Konto konto = mosEndpoint.pobierzPierwszeKonto();
-        
-        Ogloszenie ogloszenie = mosEndpoint.pobierzPierwszeOgloszenie();
-        Spotkanie spotkanie = new Spotkanie();
-        spotkanie.setDataSpotkania(new Date(Integer.parseInt(rok) - 1900, Integer.parseInt(miesiac), Integer.parseInt(dzien)));
-        spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
-        spotkanie.setIdUzytkownika(konto);
-        spotkanie.setIdOgloszenia(ogloszenie);
-        mosEndpoint.dodajSpotkanie(spotkanie);
-        
-        konto.getSpotkanieCollection().add(spotkanie);
-        ogloszenie.getSpotkanieCollection().add(spotkanie);        
-    }
-    
-    public Konto pobierzPierwszeKonto() {
-        Konto konto = mosEndpoint.pobierzPierwszeKonto();
-        return konto;
-    }
-
     /**
      * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
      * MOS.4, MOS.2 P. Stepien

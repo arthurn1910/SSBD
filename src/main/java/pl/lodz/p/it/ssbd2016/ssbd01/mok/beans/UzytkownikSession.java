@@ -1,17 +1,11 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.io.StringWriter;
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -25,7 +19,6 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import javax.servlet.ServletException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladDeSerializacjiObiektu;
@@ -41,7 +34,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NieobslugiwaneKodowanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodneHasla;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiezgodnyLogin;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje;
 
 /**
@@ -112,9 +104,10 @@ public class UzytkownikSession implements Serializable {
     @PostConstruct
     public void init() {
         login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-        //po naprawniniu problemow z logowaniem zacznie zwracac login uzytkownika
-        if(login == null) login = "ANONYMOUS";
-        MOKEndpoint.ustawIP(login);
+        
+        if (login != null) {
+            MOKEndpoint.ustawIP(login);
+        }
     }
 
     public void setNieobslugiwaneKodowanie(NieobslugiwaneKodowanie nieobslugiwaneKodowanie) {
