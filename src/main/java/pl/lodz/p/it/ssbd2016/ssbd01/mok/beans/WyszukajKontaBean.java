@@ -9,6 +9,7 @@ import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import java.util.ArrayList;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Obiekty tej klasy są wykorzystywane do wyszukiwania kont użytkowników
@@ -40,8 +41,9 @@ public class WyszukajKontaBean {
     /**
      * Metoda wyszukująca konta według podanego kryterium i ustawia otrzymaną listę
      * w uzytkownikSession umożliwiając wyświetlenie kont.
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void pobierzPodobneKonta() {
+    public void pobierzPodobneKonta() throws WyjatekSystemu {
         Konto konto = new Konto();
         if (!"".equals(imie))
             konto.setImie(imie);

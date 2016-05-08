@@ -12,16 +12,20 @@ import javax.ejb.ApplicationException;
  * @author java
  */
 @ApplicationException(rollback = true)
-public class NiezgodnyLogin extends Exception{
-    private String miejsce;
+public class WyjatekSystemu extends Exception {
 
-    public NiezgodnyLogin(String miejsce) {
-        this.miejsce = miejsce;
+    public WyjatekSystemu(String message) {
+        super(message);
     }
 
-    public String getMiejsce() {
-        return miejsce;
+    public WyjatekSystemu(String message, Throwable cause) {
+        super(message, cause);
     }
+
+    public WyjatekSystemu(Throwable cause) {
+        super(cause);
+    }
+
     
     
 }

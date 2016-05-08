@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BrakDostepu;
 
 /**
  * Ziarno odpowiedzialne za wylogowanie/zakończenie sesji

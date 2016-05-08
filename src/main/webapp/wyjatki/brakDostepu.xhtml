@@ -7,16 +7,16 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="top">
-        <p>Wyjątek</p>
+        <p>${msg["blad.wyjatek"]}</p>
     </ui:define>
     
     <ui:define name="left">
         <ui:include src="/templates/menu.xhtml" />
     </ui:define>
     
-     <ui:define name="content">    
-        <h:form>
-            ${msg["blad.brakAlgorytmuKodowania"]}
-        </h:form>
+     <ui:define name="content">
+         <h:form>
+             ${msg["blad.brakUprawnien"]}
+         </h:form>
      </ui:define>
 </ui:composition>

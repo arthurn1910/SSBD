@@ -10,26 +10,24 @@ import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladWywolania;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NaruszenieUniq;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
  */
 public class TrackerInterceptor {
-    
+    Logger logger;
     @Resource
     private SessionContext sctx;
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
-    public Object traceInvoke(InvocationContext ictx) throws BladWywolania{
+    public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
         message.append(" wartości parametrów: ");
-        
+
         if (ictx.getParameters() != null) {
             for (Object param : ictx.getParameters()) {
                 if (null == param) {
@@ -51,8 +49,8 @@ public class TrackerInterceptor {
             loger.severe(message.toString());        
             return result;
         } catch (Exception e) {
-            BladWywolania exc=new BladWywolania("pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor.traceInvoke()", "ictx.proceed()");
-            throw exc;
-        }
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
+            throw e;
+        } 
     }
 }

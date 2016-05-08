@@ -19,7 +19,7 @@ public class wyjatkiMOOBean {
     @Inject
     private OgloszenieSession ogloszenieSession;
     
-    private String getMiejsceOgloszenieDeaktywowaneWczesniej(){
-        return ogloszenieSession.getOgloszenieDeaktyowwaneWczesniej().getMiejsce();
+    private void getMiejsceOgloszenieDeaktywowaneWczesniej(){
+        
     }
 }

@@ -22,7 +22,7 @@ public class EdytujOgloszenieBean {
     *   @param nowe ogloszenie
     */   
     
-    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) {
+    public void edytujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception{
         ogloszenieSession.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe);
     }
 }

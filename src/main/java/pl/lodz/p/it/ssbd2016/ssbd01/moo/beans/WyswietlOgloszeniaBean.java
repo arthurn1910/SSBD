@@ -9,8 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
-
 
 /**
  * 
@@ -149,6 +147,15 @@ public class WyswietlOgloszeniaBean {
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
     
+    public void aktywujOgloszenie() {
+        ogloszenieSession.aktywujOgloszenie(ogloszeniaDataModel.getRowData());
+        initModel();
+    }
+    
+    public void deaktywujOgloszenie() throws Exception {
+        ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
+        initModel();
+    }
     /***
      * Metoda wywołuje metodę zmienAgentaWOgloszeniu w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
      * Stowrzył Radosław Pawlaczyk

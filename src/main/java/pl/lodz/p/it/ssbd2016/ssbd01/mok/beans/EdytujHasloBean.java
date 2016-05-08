@@ -91,7 +91,7 @@ public class EdytujHasloBean {
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
      */
-    public String zmienMojeHaslo(){
+    public String zmienMojeHaslo()throws Exception{
         if (sprawdzDlugoscHaslaMojego() && checkPasswordMatching()) {
             uzytkownikSession.zmienMojeHaslo(noweHaslo, stareHaslo);
             return "wyswietlSzczegolySwojegoKonta";
@@ -104,7 +104,7 @@ public class EdytujHasloBean {
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
      */
-    public String zmienHaslo(){
+    public String zmienHaslo() throws Exception{
         if (sprawdzDlugoscHasla() && checkPasswordMatching()) {
             uzytkownikSession.zmienHaslo(noweHaslo);
         return "wyswietlSzczegolyKonta";

@@ -19,8 +19,9 @@ public class EdytujDaneBean {
      * Handler dla przyciku potwierdź. Metoda zmienia dane dla obecnie
      * zalogowanego użytkownika i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta 
+     * @throws java.lang.Exception 
      */
-    public String zapiszSwojeKontoPoEdycji(){
+    public String zapiszSwojeKontoPoEdycji() throws Exception{
         uzytkownikSession.zapiszSwojeKontoPoEdycji();
         return "wyswietlSzczegolySwojegoKonta";
     }
@@ -29,8 +30,9 @@ public class EdytujDaneBean {
      * Handler dla przyciku potwierdź. Metoda zmienia hasło dla wybranego konta
      * i przekierowuje do szczegółów danego konta
      * @return  przekierowanie do szczegółów konta
+     * @throws java.lang.Exception
      */
-    public String zapiszKontoPoEdycji(){
+    public String zapiszKontoPoEdycji() throws Exception{
         uzytkownikSession.zapiszKontoPoEdycji();
         return "wyswietlSzczegolyKonta";
     }

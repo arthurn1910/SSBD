@@ -19,6 +19,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * API servera dla modułu funkcjonalnego MOO
@@ -52,10 +53,10 @@ public class MOOEndpoint implements MOOEndpointLocal {
     
     @Override
     @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
-    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
+    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         if(ogloszenieNowe.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
-            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
         else {
             // zapisz dane obiektu ogloszenieNowe
@@ -64,13 +65,13 @@ public class MOOEndpoint implements MOOEndpointLocal {
     
     @Override
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
-    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws Exception {
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         if(ogloszenie.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
-            throw new Exception("Nie jestes wlascicielem tego ogloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
         else if(ogloszenie.getAktywne() == false) {
-            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
             ogloszenie.setAktywne(false);
@@ -82,7 +83,11 @@ public class MOOEndpoint implements MOOEndpointLocal {
     public List<Ogloszenie> pobierzWszytkieOgloszenia() {
         return ogloszenieFacadeLocal.findAll();
     }
-
+    public void aktywujOgloszenie(Ogloszenie rowData) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
+        o.setAktywne(true);
+    }
+    
     @Override
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
@@ -121,12 +126,12 @@ public class MOOEndpoint implements MOOEndpointLocal {
     
     @Override
     @RolesAllowed("deaktywujOgloszenieInnegoUzytkownika")
-    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         if (ogloszenie == null) 
-        throw new IllegalArgumentException("Brak wczytanego ogloszenia do deaktywacji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
         
         if(ogloszenie.getAktywne() == false) {
-            throw new Exception("Ogloszenie juz zostalo deaktywowane");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
             ogloszenie.setAktywne(false);
@@ -135,9 +140,9 @@ public class MOOEndpoint implements MOOEndpointLocal {
     
     @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
-    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception {
+    public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         if (ogloszenieNowe == null) 
-        throw new IllegalArgumentException("Brak wczytanego ogloszenia do edycji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
     }
     
@@ -162,5 +167,10 @@ public class MOOEndpoint implements MOOEndpointLocal {
     @Override
     public TypNieruchomosci getTypNieruchomosci(String typ) {
         return typNieruchomosciFacade.znajdzPoNazwie(typ);
+    }
+
+    @Override
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu {
+        
     }
 }
