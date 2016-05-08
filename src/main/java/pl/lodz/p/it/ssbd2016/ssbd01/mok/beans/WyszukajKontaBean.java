@@ -67,7 +67,7 @@ public class WyszukajKontaBean {
         List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getImie().length() >= query.length()) {
-                if(konta.get(i).getImie().substring(0, query.length()).equals(query) == true) {
+                if(konta.get(i).getImie().substring(0, query.length()).toUpperCase().equals(query.toUpperCase()) == true) {
                     boolean istnieje = false;
                     for(int j = 0; j < results.size(); j++)
                         if(results.get(j).equals(konta.get(i).getImie()) == true)
@@ -93,7 +93,7 @@ public class WyszukajKontaBean {
         List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getNazwisko().length() >= query.length()) {
-                if(konta.get(i).getNazwisko().substring(0, query.length()).equals(query) == true) {
+                if(konta.get(i).getNazwisko().substring(0, query.length()).toUpperCase().equals(query.toUpperCase()) == true) {
                     boolean istnieje = false;
                     for(int j = 0; j < results.size(); j++)
                         if(results.get(j).equals(konta.get(i).getNazwisko()) == true)
@@ -119,7 +119,7 @@ public class WyszukajKontaBean {
         List<Konto> konta = uzytkownikSession.pobierzWszystkieKonta();
         for(int i = 0; i < konta.size(); i++) {
             if(konta.get(i).getEmail().length() >= query.length()) {
-                if(konta.get(i).getEmail().substring(0, query.length()).equals(query) == true) {
+                if(konta.get(i).getEmail().substring(0, query.length()).toLowerCase().equals(query.toLowerCase()) == true) {
                     boolean istnieje = false;
                     for(int j = 0; j < results.size(); j++)
                         if(results.get(j).equals(konta.get(i).getEmail()) == true)
