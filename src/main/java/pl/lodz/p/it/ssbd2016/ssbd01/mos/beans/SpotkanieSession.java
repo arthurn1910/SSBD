@@ -4,13 +4,14 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
+ */
 @SessionScoped
 public class SpotkanieSession implements Serializable {
     @Inject
@@ -23,19 +24,26 @@ public class SpotkanieSession implements Serializable {
      * @return lista spotkań
      */
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
-
         return mosEndpoint.pobierzSpotkania(spotkaniaDlaKonta);
+    }
+      
+    /**
+     * Pobiera listę spotkań dla konta, 
+     * @return lista spotkań
+     */
+    List<Spotkanie> pobierzSwojeSpotkania() {
+        Konto konto = new Konto();
+        return mosEndpoint.pobierzSpotkania(konto);
     }
 
 
     /**
      * Anuluje spotkania dla konta, MOS.3, Kamil Rogowski
      *
-     * @param konto                 konto ze spotkaniami
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */
-    public void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania) {
-        mosEndpoint.anulujSpotkanie(konto, spotkanieDoAnulowania);
+    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
+        mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
     }
 
     /**

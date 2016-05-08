@@ -7,13 +7,11 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.OgloszenieDeaktywowaneWczesniej;
 
 
 /**
- * 
+ * Obsługuje widok wyświetlania ogłoszeń
  */
 @Named
 @RequestScoped
@@ -25,15 +23,19 @@ public class WyswietlOgloszeniaBean {
     private List<Ogloszenie> ogloszenia;
     private DataModel<Ogloszenie> ogloszeniaDataModel;
     
-    /*
-    @param ogloszenie innego użytkownika, które ma zostać deaktywowane
-    Przypadek użycia - MOO5
-    */
-    public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
-        ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
-    }
     
-    // w tej metodzie będzie się odbywać wyswietlenie ogloszen nieposortowanych
+    /**
+     * Inijcalizuje dane
+     */
+    @PostConstruct
+    private void initModel() {
+        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+    }
+        
+    /**
+     * Wyświetla ogłoszenia nieposortowane
+     */
     public void wyswietlOgloszeniaNieposortowane() {
         ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         /*
@@ -124,52 +126,14 @@ public class WyswietlOgloszeniaBean {
         this.rynekPierwotnyNajpierw = r;
     }
     
-    // w tej metodzie będzie się odbywać sortowanie według wybranych kryteriów
+    /**
+     * Wyświetla ogłoszenia posortowane
+     */
     public void sortujOgloszenia() {
         ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         /*
         ...
         */
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-    
-    /*
-    Stworzył: Maksymilian Zgierski
-    Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
-    @param ogloszenie, które ma zostać deaktywowane
-    */
-    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
-    }
-    
-    
-    @PostConstruct
-    private void initModel() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-    
-    /***
-     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 7
-     */
-    public void zmienAgentaWOgloszeniu(){
-        Konto k=new Konto();
-        ogloszenieSession.zmienAgentaWOgloszeniu(ogloszeniaDataModel.getRowData(), k);
-    }
-    
-    /***
-     * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 6
-     */
-    void przydzielAgentaDoOgloszenia(){
-        Konto agent=new Konto();
-        ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszeniaDataModel.getRowData(), agent);
-    }
-    
-    public void dodajDoUlubionych() {
-        ogloszenieSession.dodajDoUlubionych(ogloszeniaDataModel.getRowData());
     }
 }

@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
+import java.rmi.RemoteException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
@@ -11,11 +12,23 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mos.managers.SpotkanieManagerLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
+import javax.ejb.EJBException;
+import javax.ejb.SessionSynchronization;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 
-
+/**
+ * API servera dla modułu funkcjonalnego MOS
+ */
 @Stateful
-public class MOSEndpoint implements MOSEndpointLocal {
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @EJB
     private SpotkanieFacadeLocal spotkanieFacade;
     @EJB
@@ -25,6 +38,10 @@ public class MOSEndpoint implements MOSEndpointLocal {
     @EJB
     private SpotkanieManagerLocal spotkanieManager;
 
+    
+    private long txId;
+    private static final Logger loger = Logger.getLogger(MOSEndpoint.class.getName()); 
+    
     @Override
     @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
@@ -33,7 +50,7 @@ public class MOSEndpoint implements MOSEndpointLocal {
 
     @Override
     @RolesAllowed("anulujSpotkanie")
-    public void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania) {
+    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
         spotkanieFacade.remove(spotkanieDoAnulowania);
     }
 
@@ -65,5 +82,38 @@ public class MOSEndpoint implements MOSEndpointLocal {
     @RolesAllowed("pobierzUmowioneSpotkania")
     public List<Spotkanie> pobierzUmowioneSpotkania(Konto konto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    //Implementacja SessionSynchronization
+    /**
+     * Metoda logująca czas rozpoczęcia transakcji
+     * @throws EJBException
+     * @throws RemoteException 
+     */
+    @Override
+    public void afterBegin() throws EJBException, RemoteException {
+        txId = System.currentTimeMillis();
+        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala rozpoczeta");
+    }
+
+    /**
+     * Metoda logująca czas przed zakończeniem transakcji
+     * @throws EJBException
+     * @throws RemoteException 
+     */
+    @Override
+    public void beforeCompletion() throws EJBException, RemoteException {
+        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " przed zakonczeniem");
+    }
+    
+    /**
+     * Metoda logująca stan zakończonej transakcji
+     * @param committed     stan zakończonej transakcji
+     * @throws EJBException
+     * @throws RemoteException 
+     */
+    @Override
+    public void afterCompletion(boolean committed) throws EJBException, RemoteException {
+        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala zakonczona przez: " + (committed?"zatwierdzenie":"wycofanie"));
     }
 }

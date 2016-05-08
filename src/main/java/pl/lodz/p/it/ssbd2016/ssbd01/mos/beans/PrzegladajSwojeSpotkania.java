@@ -6,27 +6,33 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import java.util.List;
-import java.util.ArrayList;
 
+/**
+ * Obsługuje widok przeglądania swoich spotkań
+ */
 @Named
 @RequestScoped
-public class PrzegladanieSpotkan implements Serializable {
+public class PrzegladajSwojeSpotkania implements Serializable {
     @Inject
     private SpotkanieSession spotkanieSession;
     
     private List<Spotkanie> spotkania;
-    private Konto konto;
-    public Konto getKonto() {
-        return konto;
-    }
-    public void setKonto(Konto konto) {
-        this.konto = konto;
-    }
     
+    /**
+     * Inicjalizuje listę spotkań dla swojego konta
+     */
     @PostConstruct
     public void init() {
+        spotkania = spotkanieSession.pobierzSwojeSpotkania();
+    }
+    
+    /**
+     * Anuluje spotkania powiązane z kontem MOS.3, Kamil Rogowski
+     * @param spotkanie spotkanie do anulowania
+     */
+    public void anulujSpotkanie(Spotkanie spotkanie) {
+        spotkanieSession.anulujSpotkanie(spotkanie);
     }
     
     public List<Spotkanie> getSpotkania() {

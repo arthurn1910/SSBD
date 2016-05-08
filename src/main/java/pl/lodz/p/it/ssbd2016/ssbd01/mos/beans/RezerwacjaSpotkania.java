@@ -1,34 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
-/**
- *
- * zachowuje MOS 4. P. Stepien
- */
 import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
+/**
+ * Obsługuje widok rezerwacji spotkania
+ */
 @Named
 @RequestScoped
-public class DodawanieSpotkania implements Serializable {
+public class RezerwacjaSpotkania implements Serializable {
     @Inject
     private SpotkanieSession spotkanieSession;
     
-    private final Ogloszenie ogloszenie = new Ogloszenie();
-    private final Konto konto = new Konto();
+    Spotkanie spotkanie = new Spotkanie();
     
     private String rok;
     private String miesiac;
     private String dzien;
     private String dlugosc;
+    
+    /**
+     * Pobiera listę spotkań dla swojego konta
+     */
+    public void rezerwujSpotkanie() {
+        spotkanieSession.rezerwujSpotkanie(spotkanie);
+    }
 
     public String getRok() {
         return rok;
