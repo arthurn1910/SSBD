@@ -21,7 +21,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
  * Interceptor zewnętrzny 
  */
 public class ExteriorInterceptor {
-    
     @Resource
     private SessionContext sctx;
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
@@ -61,45 +60,45 @@ public class ExteriorInterceptor {
         
             return result;
         }catch (WyjatekSystemu e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek WyjatekSystemu w "+ExteriorInterceptor.class.getName(), e);
             throw e;
         }catch(RemoteException e){
+            loger.log(Level.SEVERE, "Złapany wyjątek RemoteException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu ex=new WyjatekSystemu("blad.RemoteException", e);
             throw ex;
         }catch (NullPointerException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek NullPointerException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException", e);
             throw exc;
         }catch (EJBAccessException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek EJBAccessException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBAccessException", e);
             throw exc;
         }catch (EJBTransactionRequiredException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek EJBTransactionRequiredException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", e);
             throw exc;
         }catch (EJBTransactionRolledbackException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek EJBTransactionRolledbackException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
             throw exc;
         }catch (SQLException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek SQLException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
             throw exc;
         }catch (MessagingException e) {
+            loger.log(Level.SEVERE, "Złapany wyjątek MessagingException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.wysylanieWidaomosci",e);
             throw exc;
         
         }catch (EJBException e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek EJBException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBException", e);
             throw exc;
         }catch (Exception e) {
-            Logger.getLogger(ExteriorInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            loger.log(Level.SEVERE, "Złapany wyjątek Exception w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", e);
             throw exc;
         } 
     }
-    
-    //LOGGER.log(Level.INFO, "Błąd podczas wysyłania wiadomości", e);
 }

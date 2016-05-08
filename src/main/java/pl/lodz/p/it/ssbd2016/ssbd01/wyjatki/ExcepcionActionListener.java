@@ -14,21 +14,21 @@ import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 
 /**
  *
  * @author java
  */
 public class ExcepcionActionListener extends ActionListenerImpl implements ActionListener{
-    
+    Logger logger;
     
     @Override
     public void processAction(ActionEvent event){
         try{
             super.processAction(event);
         }catch(FacesException fe){
-            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
-            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",fe.getCause());
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), fe.getCause());
             FacesContext fC=FacesContext.getCurrentInstance();
             Application app=fC.getApplication();
             NavigationHandler nH=app.getNavigationHandler();

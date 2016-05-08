@@ -6,14 +6,13 @@ import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
  */
 public class TrackerInterceptor {
-    
+    Logger logger;
     @Resource
     private SessionContext sctx;
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
@@ -47,7 +46,7 @@ public class TrackerInterceptor {
         
         return result;
         } catch (Exception e) {
-            Logger.getLogger(TrackerInterceptor.class.getName()).log(Level.SEVERE, null, e);
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
             throw e;
         } 
     }
