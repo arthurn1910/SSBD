@@ -12,10 +12,12 @@ import javax.ejb.EJBException;
 import javax.ejb.EJBTransactionRequiredException;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.SessionContext;
+import javax.ejb.TransactionRolledbackLocalException;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.mail.MessagingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+import java.lang.NullPointerException;
 
 /**
  * Interceptor zewnętrzny 
@@ -80,6 +82,10 @@ public class ExteriorInterceptor {
             throw exc;
         }catch (EJBTransactionRolledbackException e) {
             loger.log(Level.SEVERE, "Złapany wyjątek EJBTransactionRolledbackException w "+ExteriorInterceptor.class.getName(), e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
+            throw exc;
+        }catch (TransactionRolledbackLocalException e) {
+            loger.log(Level.SEVERE, "Złapany wyjątek TransactionRolledbackLocalException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
             throw exc;
         }catch (SQLException e) {

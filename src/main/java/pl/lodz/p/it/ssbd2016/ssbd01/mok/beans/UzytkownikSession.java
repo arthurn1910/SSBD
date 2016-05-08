@@ -77,11 +77,7 @@ public class UzytkownikSession implements Serializable {
             kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
             kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
-        } catch(EJBException ex){
-            WyjatekSystemu a=new WyjatekSystemu("EJBException");
-            this.exception=a;
-            throw a;
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -152,7 +148,7 @@ public class UzytkownikSession implements Serializable {
     public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu{
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -165,7 +161,7 @@ public class UzytkownikSession implements Serializable {
     void zapiszSwojeKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -178,7 +174,7 @@ public class UzytkownikSession implements Serializable {
     public void zapiszKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -194,7 +190,7 @@ public class UzytkownikSession implements Serializable {
     public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu{           
         try {
             MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -209,7 +205,7 @@ public class UzytkownikSession implements Serializable {
     public void zmienHaslo(String noweHaslo) throws WyjatekSystemu{
         try {
             MOKEndpoint.zmienHaslo(noweHaslo);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -236,7 +232,7 @@ public class UzytkownikSession implements Serializable {
     void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         try {
             MOKEndpoint.dodajPoziomDostepu(konto, poziom);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -249,7 +245,7 @@ public class UzytkownikSession implements Serializable {
     void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
         try {
             MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
-        } catch (Exception ex){
+        } catch (WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
         }
@@ -294,9 +290,9 @@ public class UzytkownikSession implements Serializable {
         try{
             this.kontaDataModel = kontaDataModel;
         } catch(EJBAccessException ex){
-            WyjatekSystemu exc=new WyjatekSystemu("EJBAccessExcpetion");
-            this.exception=ex;
-            throw ex;
+            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBAccessExcpetion");
+            this.exception=exc;
+            throw exc;
         }
     }  
     

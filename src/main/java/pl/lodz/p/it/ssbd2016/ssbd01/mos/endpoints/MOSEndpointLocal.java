@@ -1,13 +1,14 @@
-
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
-
 import javax.ejb.Local;
 import java.util.List;
 
+/**
+ * Interfejs API servera dla modułu funkcjonalnego MOS
+ */
 @Local
 public interface MOSEndpointLocal {
     
@@ -40,10 +41,9 @@ public interface MOSEndpointLocal {
 
     /**
      * Anuluje spotkanie powiąane z kontem, stworzona dla MOS.3, Kamil Rogowski
-     * @param konto                 konto z którego mamy usunąć spotkania
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */
-    void anulujSpotkanie(Konto konto, Spotkanie spotkanieDoAnulowania);
+    void anulujSpotkanie(Spotkanie spotkanieDoAnulowania);
 
     /**
      * Pobiera wszystkie spotkania, stworzona dla MOS.4, Kamil Rogowski

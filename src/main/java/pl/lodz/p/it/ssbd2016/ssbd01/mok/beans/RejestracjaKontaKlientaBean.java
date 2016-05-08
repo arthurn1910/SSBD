@@ -7,6 +7,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno umożliwiające tworzenie nowych kont dla klientów
@@ -22,9 +23,10 @@ public class RejestracjaKontaKlientaBean {
     
     /**
      * Handler dla przycisku rejestruj. Metoda tworzy nowe konto klienta 
-     * @throws java.lang.Exception
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public String rejestrujKontoKlienta() throws Exception{
+    public String rejestrujKontoKlienta() throws WyjatekSystemu{
         if (checkPasswordMatching()) {    
             uzytkownikSession.rejestrujKontoKlienta(konto);
             return "index";

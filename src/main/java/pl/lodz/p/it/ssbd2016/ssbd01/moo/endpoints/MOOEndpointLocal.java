@@ -1,7 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
-
 import javax.ejb.Local;
 import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -13,7 +11,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOO
- * @author java
  */
 @Local
 public interface MOOEndpointLocal {
@@ -106,4 +103,19 @@ public interface MOOEndpointLocal {
      * @param ogloszenie ogłoszenie, które ma być usunięte
      */
     public void usunZUlubionych(Ogloszenie ogloszenie);    
+
+    /**
+     * Metoda pobierająca ogłoszenie do edycji. Zapewnia blokade optymistyczną.
+     * @param ogloszenie ogloszenie do edycji
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     */
+    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
+
+    
+    /**
+     * Pobiera liste agentów
+     * @return lista agentow
+     */
+    public List<Konto> pobierzListeAgentow();
 }

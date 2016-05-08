@@ -20,10 +20,13 @@ public class OgloszenieSession implements Serializable {
     @EJB
     private MOOEndpointLocal mooEndpoint;
     private Ogloszenie ogloszenieDoWyswietlenia;
+    
+    private Ogloszenie ogloszenieEdytuj;
 
     public OgloszenieSession() {
     }
     private WyjatekSystemu wyjatek;
+    
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
      *
@@ -64,6 +67,10 @@ public class OgloszenieSession implements Serializable {
         return wyjatek;
     }  
 
+    /**
+     * Pobiera wszystkie ogłoszenia
+     * @return lista ogłoszeń
+     */
     List<Ogloszenie> pobierzWszystkieOgloszenia() {
         return mooEndpoint.pobierzWszytkieOgloszenia();
     }
@@ -80,17 +87,20 @@ public class OgloszenieSession implements Serializable {
             throw ex;
         }
     }
+
+    /**
+     * Edytuje dane ogłoszenie
+     */
+    void edytujOgloszenieDanegoUzytkownika() throws Exception {
+        mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
+    }
     
-    /*
-        @param ogloszenie, które ma zostać deaktywowane
-    */
-    void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) {
-        try {
-            mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+    /**
+     * Deaktywuje ogłoszenie
+     * @param ogloszenie ogłoszenie do deaktywacji
+     */
+    void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
+        mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
     }
 
     void aktywujOgloszenie(Ogloszenie rowData) {
@@ -134,13 +144,34 @@ public class OgloszenieSession implements Serializable {
     void usunZUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.usunZUlubionych(ogloszenie);
     }
-     /**
+    
+    /**
      *   metoda deaktywująca ogłoszenie innego użytkownika
      *   @param ogloszenie, które ma zostać deaktywowane
      */
     void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
         try {
             mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /**
+     * Metoda pobierająca ogłoszenie do edycji. Zapewnia blokade optymistyczną.
+     * @param ogloszenie ogloszenie do edycji
+     */
+    void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
+        setOgloszenieEdytuj(mooEndpoint.pobierzOgloszenieDoEdycji(ogloszenie));
+    }
+    
+    /**
+     * metoda umożliwiająca edycje ogłoszenia innego użytkownika
+     */    
+    void edytujOgloszenieInnegoUzytkownika() {
+        try {
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -155,4 +186,20 @@ public class OgloszenieSession implements Serializable {
     void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent){
         mooEndpoint.zmienAgentaWOgloszeniu(rowData, agent);
     }  
+    
+    /**
+     * Pobiera liste agentów
+     * @return lista agentow
+     */
+    List<Konto> pobierzListeAgentow() {
+        return mooEndpoint.pobierzListeAgentow();
+    }
+
+    public Ogloszenie getOgloszenieEdytuj() {
+        return ogloszenieEdytuj;
+    }
+
+    public void setOgloszenieEdytuj(Ogloszenie ogloszenieEdytuj) {
+        this.ogloszenieEdytuj = ogloszenieEdytuj;
+    }
 }

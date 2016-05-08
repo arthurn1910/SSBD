@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * Interfejs dla menadżera spotkań
- *
- * @author Kamil Rogowski
  */
 @Local
 public interface SpotkanieManagerLocal {
