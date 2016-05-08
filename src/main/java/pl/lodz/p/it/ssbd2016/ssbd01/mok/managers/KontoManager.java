@@ -132,19 +132,19 @@ public class KontoManager implements KontoManagerLocal {
         if (konto.getImie() == null) {
             kontoWyszukaj.setImie("%%");
         } else {
-            kontoWyszukaj.setImie("%" + konto.getImie() + "%");
+            kontoWyszukaj.setImie("%" + konto.getImie().toLowerCase() + "%");
         }
         
         if (konto.getNazwisko()== null) {
             kontoWyszukaj.setNazwisko("%%");
         } else {
-            kontoWyszukaj.setNazwisko("%" + konto.getNazwisko()+ "%");
+            kontoWyszukaj.setNazwisko("%" + konto.getNazwisko().toLowerCase() + "%");
         }
         
         if (konto.getEmail()== null) {
             kontoWyszukaj.setEmail("%%");
         } else {
-            kontoWyszukaj.setEmail("%" + konto.getEmail()+ "%");
+            kontoWyszukaj.setEmail("%" + konto.getEmail().toLowerCase()+ "%");
         }
         
         if (konto.getTelefon()== null) {
