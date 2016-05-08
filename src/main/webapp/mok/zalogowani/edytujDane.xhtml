@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.edytujDane"]}</h>
@@ -17,13 +18,20 @@
      <ui:define name="content">         
          <h1>${msg["tytulyPrzypadkow.edytujDane"]}:</h1>
         <h:form>
-            ${msg["daneKonta.imie"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}" id="imie"/><h:message for="imie" styleClass="error"/><br/>
-            ${msg["daneKonta.nazwisko"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}" id="nazwisko"/><h:message for="nazwisko" styleClass="error"/><br/>
-            ${msg["daneKonta.email"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}" id="email"/><h:message for="email" styleClass="error"/><br/>
-            ${msg["daneKonta.numerTelefonu"]} <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}" id="telefon"/><h:message for="telefon" styleClass="error"/><br/>
-            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja')) return false"
-                                 value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszSwojeKontoPoEdycji()}"  class="edit_icon">
-            </h:commandButton> 
+            ${msg["daneKonta.imie"]}* <h:inputText value="#{edytujDaneBean.kontoEdytuj.imie}" id="imie"/><p:messages for="imie" autoUpdate="true"/><br/>
+            ${msg["daneKonta.nazwisko"]}* <h:inputText value="#{edytujDaneBean.kontoEdytuj.nazwisko}" id="nazwisko"/><p:messages for="nazwisko" autoUpdate="true"/><br/>
+            ${msg["daneKonta.email"]}* <h:inputText value="#{edytujDaneBean.kontoEdytuj.email}" id="email"/><p:messages for="email" autoUpdate="true"/><br/>
+            ${msg["daneKonta.numerTelefonu"]}* <h:inputText value="#{edytujDaneBean.kontoEdytuj.telefon}" id="telefon"/><p:messages for="telefon" autoUpdate="true"/><br/>
+            ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
+            
+            <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujDaneBean.zapiszSwojeKontoPoEdycji()}">
+                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog> 
             <h:button outcome="wyswietlSzczegolySwojegoKonta" value="#{msg['komunikat.powrot']}" />
         </h:form>
     </ui:define>

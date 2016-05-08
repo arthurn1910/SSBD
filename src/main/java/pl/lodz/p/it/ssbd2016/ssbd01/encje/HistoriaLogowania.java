@@ -2,6 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
 import javax.persistence.*;
 import java.util.Date;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by Kamil Rogowski on 01.05.2016.
@@ -23,17 +24,16 @@ public class HistoriaLogowania {
             generator = "historia_logowania_id_seq")
     @Column(name = "id")
     private Long id;
-
+    @NotNull(message="{walidacja.notNull}")
     @Basic
     @Column(name = "adres_ip")
     private String adresIp;
-
+    @NotNull(message="{walidacja.notNull}")
     @Basic
     @Column(name = "data")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataLogowania;
-
-    @JoinColumn(name = "id_konta", referencedColumnName = "id")
+    @JoinColumn(name = "id_konta", referencedColumnName = "id",  updatable = false)
     @ManyToOne(optional = false)
     private Konto idKonta;
 
@@ -45,7 +45,6 @@ public class HistoriaLogowania {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public String getAdresIp() {
         return adresIp;

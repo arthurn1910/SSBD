@@ -4,7 +4,9 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.utworzKonto"]}</h>
     </ui:define>
@@ -16,22 +18,27 @@
     <ui:define name="content">
         <h>${msg["tytulyPrzypadkow.utworzKonto"]}</h>
         <h:form id="form">
-            ${msg["daneKonta.imie"]}* <h:inputText value="#{utworzKontoBean.konto.imie}" id="imie"/> <h:message for="imie" styleClass="error"/> <br />
-            ${msg["daneKonta.nazwisko"]}* <h:inputText value="#{utworzKontoBean.konto.nazwisko}" id="nazwisko"/> <h:message for="nazwisko" styleClass="error"/><br />
-            ${msg["daneKonta.login"]}* <h:inputText value="#{utworzKontoBean.konto.login}" id="login"/> <h:message for="login" styleClass="error"/><br />
-            ${msg["daneKonta.email"]}*  <h:inputText value="#{utworzKontoBean.konto.email}" id="email"/> <h:message for="email" styleClass="error"/><br />
-            ${msg["daneKonta.numerTelefonu"]}*  <h:inputText value="#{utworzKontoBean.konto.telefon}" id="telefon"/> <h:message for="telefon" styleClass="error"/><br />
-            ${msg["daneKonta.haslo"]}* <h:inputSecret value="#{utworzKontoBean.konto.haslo}" id="haslo"/> <h:message for="haslo" styleClass="error"/><br />
-            ${msg["daneKonta.powtorzHaslo"]}* <h:inputSecret value="#{utworzKontoBean.potorzoneHaslo}" id="hasloPotworzone"/> <h:message for="hasloPotworzone" styleClass="error"/><br />
+            ${msg["daneKonta.imie"]}* <h:inputText value="#{utworzKontoBean.konto.imie}" id="imie"/> <p:messages for="imie" autoUpdate="true"/> <br />
+            ${msg["daneKonta.nazwisko"]}* <h:inputText value="#{utworzKontoBean.konto.nazwisko}" id="nazwisko"/> <p:messages for="nazwisko" autoUpdate="true"/><br />
+            ${msg["daneKonta.login"]}* <h:inputText value="#{utworzKontoBean.konto.login}" id="login"/> <p:messages for="login" autoUpdate="true"/><br />
+            ${msg["daneKonta.email"]}* <h:inputText value="#{utworzKontoBean.konto.email}" id="email"/> <p:messages for="email" autoUpdate="true"/><br />
+            ${msg["daneKonta.numerTelefonu"]}* <h:inputText value="#{utworzKontoBean.konto.telefon}" id="telefon"/> <p:messages for="telefon" autoUpdate="true"/><br />
+            ${msg["daneKonta.haslo"]}* <h:inputSecret value="#{utworzKontoBean.konto.haslo}" id="haslo"/> <p:messages for="haslo" autoUpdate="true"/><br />
+            ${msg["daneKonta.powtorzHaslo"]}* <h:inputSecret value="#{utworzKontoBean.potorzoneHaslo}" id="hasloPotworzone"/> <p:messages for="hasloPotworzone" autoUpdate="true"/><br />
             ${msg["komunikat.wybierzPoziomy"]}*<br />
             <h:selectManyCheckbox value="#{utworzKontoBean.wybranePoziomy}" layout="pageDirection" id="poziomy">
                 <f:selectItems value="#{utworzKontoBean.pobierzPoziomyDostepu()}" />
-            </h:selectManyCheckbox> <h:message for="poziomy" styleClass="error"/><br />
+            </h:selectManyCheckbox> <p:messages for="poziomy" autoUpdate="true"/><br />
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
-            <h:commandButton onclick="if (! confirm('Czy dane się zgadzaja') return false"
-                value="#{msg['komunikat.zarejestruj']}" action="#{utworzKontoBean.utworzKonto()}"  class="edit_icon" >
-            </h:commandButton> 
+            <p:commandButton value="#{msg['komunikat.zarejestruj']}" action="#{utworzKontoBean.utworzKonto()}">
+                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>  
             <h:button outcome="index" value="#{msg['komunikat.powrot']}" />
         </h:form>
     </ui:define>
