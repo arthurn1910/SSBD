@@ -27,13 +27,13 @@ public interface NotyfikacjaServiceLocal {
      *
      * @param konto
      */
-    void wyslijPowiadomienieZablokowaniaKonta(Konto konto);
+    void wyslijPowiadomienieZablokowaniaKonta(Konto konto) throws WyjatekSystemu;
 
     /**
      * metoda odpowiedzialna za wysłania powiadomienia o aktywacji konta
      *
      * @param konto
      */
-    void wyslijPowiadomienieAktywacjiKonta(Konto konto);
+    void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu;
 
 }

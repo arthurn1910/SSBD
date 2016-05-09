@@ -38,13 +38,13 @@ public interface MOKEndpointLocal {
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane
      */
-     void odblokujKonto(Konto konto);
+     void odblokujKonto(Konto konto) throws WyjatekSystemu;
 
     /**
      * Metoda zmienia stan konta na nieaktywne
      * @param konto konto które ma zostać zablokowane
      */
-     void zablokujKonto(Konto konto);
+     void zablokujKonto(Konto konto) throws WyjatekSystemu;
 
     /**
      * Zmienia hasło dla obecnie zalogowanego użytkownika

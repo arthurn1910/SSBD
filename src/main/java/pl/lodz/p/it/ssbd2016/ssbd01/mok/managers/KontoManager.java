@@ -85,7 +85,7 @@ public class KontoManager implements KontoManagerLocal {
             
             konto.getPoziomDostepuCollection().add(poziomDostepu);
         }catch(EJBException ex){
-            throw new WyjatekSystemu("blad.naruszenieUniq",ex);
+            throw new WyjatekSystemu("blad.naruszenieUniq",ex.getCause());
         }
     }
     
@@ -108,7 +108,7 @@ public class KontoManager implements KontoManagerLocal {
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
                 }
             }catch(EJBException ex){
-                throw new WyjatekSystemu("blad.naruszenieUniq",ex);
+                throw new WyjatekSystemu("blad.naruszenieUniq",ex.getCause());
             }
         }
     }

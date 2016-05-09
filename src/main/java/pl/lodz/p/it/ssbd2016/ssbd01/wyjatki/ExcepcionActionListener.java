@@ -22,7 +22,11 @@ public class ExcepcionActionListener extends ActionListenerImpl implements Actio
         try{
             super.processAction(event);
         }catch(FacesException fe){
-            logger.log(Level.SEVERE, "Złapany wyjątek w "+ExcepcionActionListener.class.getName(), fe.getCause());
+            Throwable tmp=fe.getCause();
+            while(tmp.getCause()!=null){
+                tmp=tmp.getCause();
+            }
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+ExcepcionActionListener.class.getName(), tmp.getCause());
             FacesContext fC=FacesContext.getCurrentInstance();
             Application app=fC.getApplication();
             NavigationHandler nH=app.getNavigationHandler();

@@ -77,7 +77,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("odblokujKonto")
-    public void odblokujKonto(Konto konto) {
+    public void odblokujKonto(Konto konto) throws WyjatekSystemu{
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(true);
         notyfikacjaService.wyslijPowiadomienieAktywacjiKonta(konto);
@@ -85,7 +85,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("zablokujKonto")
-    public void zablokujKonto(Konto konto) {
+    public void zablokujKonto(Konto konto) throws WyjatekSystemu{
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(false);
         notyfikacjaService.wyslijPowiadomienieZablokowaniaKonta(konto);
@@ -148,14 +148,14 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszSwojeKontoPoEdycji")
     public void zapiszSwojeKontoPoEdycji(Konto konto) throws WyjatekSystemu{
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new WyjatekSystemu("niezgodnyLogin");
+            throw new WyjatekSystemu("blad.niezgodnyLogin");
         }
         
         if (kontoStan == null) {
-            throw new WyjatekSystemu("brakKontaDoEdycji");
+            throw new WyjatekSystemu("blad.brakKontaDoEdycji");
         }
         if (!kontoStan.equals(konto)) {
-            throw new WyjatekSystemu("kontoNiezgodneZWczytanym");
+            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym");
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -171,11 +171,11 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("zapiszKontoPoEdycji")
     public void zapiszKontoPoEdycji(Konto konto)  throws WyjatekSystemu{
-        if (kontoStan == null) {
-            throw new WyjatekSystemu("brakKontaDoEdycji");
-        }
+        /*if (kontoStan == null) {
+            throw new WyjatekSystemu("blad.brakKontaDoEdycji");
+        }*/
         if (!kontoStan.equals(konto)) {
-            throw new WyjatekSystemu("kontoNiezgodneZWczytanym");
+            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym");
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -195,7 +195,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
         try{
             login = sessionContext.getCallerPrincipal().getName();
         }catch(EJBAccessException ex){
-            throw new WyjatekSystemu("blad.brakDostepu");
+            throw new WyjatekSystemu("blad.brakDostepu", ex.getCause());
         }
         return kontoFacade.znajdzPoLoginie(login);
 

@@ -49,7 +49,7 @@ public class WyswietlSzczegolyKontaBean {
     /**
      * Handler przycisku zablokuj w widoku. Blokuje wybrane konto oraz odświeża widok
      */
-    public void zablokuj(){
+    public void zablokuj() throws WyjatekSystemu{
         uzytkownikSession.zablokujKonto(konto);
         initModel();
     }
@@ -57,7 +57,7 @@ public class WyswietlSzczegolyKontaBean {
     /**
      * Handler przycisku odblokuj w widoku. Odblokowuje wybrane konto oraz odświeża widok
      */
-    public void odblokuj(){
+    public void odblokuj() throws WyjatekSystemu{
         uzytkownikSession.odblokujKonto(konto);
         initModel();
     }

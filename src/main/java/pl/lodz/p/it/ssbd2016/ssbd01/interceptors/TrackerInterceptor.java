@@ -44,7 +44,11 @@ public class TrackerInterceptor {
             logger.severe(message.toString());        
             return result;
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
+            Throwable tmp=e.getCause();
+            while(tmp.getCause()!=null){
+                tmp=tmp.getCause();
+            }
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), tmp.getCause());
             throw e;
         } 
     }

@@ -99,7 +99,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setContent( multipart );
             Transport.send(message);
         } catch (MessagingException ex) {
-            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex);
+            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
         }
     }
 
@@ -108,7 +108,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @RolesAllowed("zablokujKonto")
     @Override
-    public void wyslijPowiadomienieZablokowaniaKonta(Konto konto) {
+    public void wyslijPowiadomienieZablokowaniaKonta(Konto konto) throws WyjatekSystemu{
 
         try {
             message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
@@ -127,8 +127,8 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setContent( multipart );
             Transport.send(message);
 
-        } catch (MessagingException e) {
-            LOGGER.log(Level.INFO, "Błąd podczas wysyłania wiadomości", e);
+        } catch (MessagingException ex) {
+            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
         }
     }
 
@@ -137,7 +137,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @RolesAllowed("odblokujKonto")
     @Override
-    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) {
+    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu{
         try {
             message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
             message.setRecipients(Message.RecipientType.TO,
@@ -153,8 +153,8 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
             message.setContent( multipart );
             Transport.send(message);
 
-        } catch (MessagingException e) {
-            LOGGER.log(Level.INFO, "Błąd podczas wysyłania wiadomości", e);
+        } catch (MessagingException ex) {
+            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
         }
     }
 }

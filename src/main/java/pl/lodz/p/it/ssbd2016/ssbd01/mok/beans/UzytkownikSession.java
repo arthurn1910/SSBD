@@ -110,17 +110,28 @@ public class UzytkownikSession implements Serializable {
     /**
      * Metoda oblokowuje konto
      * @param konto konto do odblokowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void odblokujKonto(Konto konto) {
-        MOKEndpoint.odblokujKonto(konto);
+    public void odblokujKonto(Konto konto) throws WyjatekSystemu{
+        try{
+            MOKEndpoint.odblokujKonto(konto);
+        }catch(WyjatekSystemu ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
 
     /**
      * Metoda blokująca konto
      * @param konto konto do zablokowania
      */
-    public void zablokujKonto(Konto konto) {
-        MOKEndpoint.zablokujKonto(konto);
+    public void zablokujKonto(Konto konto) throws WyjatekSystemu {
+        try{
+            MOKEndpoint.zablokujKonto(konto);
+        }catch(WyjatekSystemu ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
 
     /**
