@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import javax.ejb.AccessLocalException;
 import javax.ejb.EJBAccessException;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
@@ -49,11 +51,12 @@ public class HistoriaLogowaniaRaportBean {
             uzytkownikSession.setException(e);
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
-            FacesContext fC=FacesContext.getCurrentInstance();
-            Application app=fC.getApplication();
-            NavigationHandler nH=app.getNavigationHandler();
-            nH.handleNavigation(fC, null, "/wyjatki/wyjatek.xhtml");
-            fC.renderResponse();
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                externalContext.redirect("/ssbd201601/wyjatki/wyjatek.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             
         }
         

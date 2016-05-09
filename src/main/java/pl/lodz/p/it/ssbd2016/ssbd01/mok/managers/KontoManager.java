@@ -43,7 +43,8 @@ public class KontoManager implements KontoManagerLocal {
     @RolesAllowed("zmienMojeHaslo")
     public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu{
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new WyjatekSystemu("blad.niezgodnyLogin");
+            WyjatekSystemu ex= new WyjatekSystemu("blad.niezgodnyLogin");
+            throw new WyjatekSystemu("blad.niezgodnyLogin", ex);
         }
         String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
@@ -54,7 +55,8 @@ public class KontoManager implements KontoManagerLocal {
             konto.setHaslo(hashedPassword);
             kontoFacade.edit(konto);
         } else {
-            throw new WyjatekSystemu("blad.niezgodneHasla");
+            WyjatekSystemu ex= new WyjatekSystemu("blad.niezgodneHasla");
+            throw new WyjatekSystemu("blad.niezgodneHasla", ex);
         }
     }
 
@@ -84,8 +86,9 @@ public class KontoManager implements KontoManagerLocal {
             poziomDostepuFacade.create(poziomDostepu);
             
             konto.getPoziomDostepuCollection().add(poziomDostepu);
-        }catch(EJBException ex){
-            throw new WyjatekSystemu("blad.naruszenieUniq",ex.getCause());
+        }catch(Exception ex){
+            WyjatekSystemu exc=new WyjatekSystemu("blad.naruszenieUniq",ex);
+            throw new WyjatekSystemu("blad.naruszenieUniq",exc);
         }
     }
     
@@ -107,8 +110,9 @@ public class KontoManager implements KontoManagerLocal {
                     poziomDostepuFacade.create(poziomDostepu);
                     konto.getPoziomDostepuCollection().add(poziomDostepu);
                 }
-            }catch(EJBException ex){
-                throw new WyjatekSystemu("blad.naruszenieUniq",ex.getCause());
+            }catch(Exception ex){
+                WyjatekSystemu exc=new WyjatekSystemu("blad.naruszenieUniq",ex);
+            throw new WyjatekSystemu("blad.naruszenieUniq",exc);
             }
         }
     }
@@ -166,7 +170,8 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(true);
             } else {
                 // Jeśli nie zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                WyjatekSystemu ex= new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
             }
         } else {
             // Nie posiadamy danego poziomu dostępu
@@ -182,7 +187,8 @@ public class KontoManager implements KontoManagerLocal {
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
             } else {                
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                WyjatekSystemu ex= new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
             }
         }
     }
@@ -201,12 +207,14 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(false);
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+                WyjatekSystemu ex= new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
 
             }
         } else {            
             // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
-            throw new WyjatekSystemu("blad.PoziomDostepuOdlaczenie");
+            WyjatekSystemu ex= new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
         }
     }
 }

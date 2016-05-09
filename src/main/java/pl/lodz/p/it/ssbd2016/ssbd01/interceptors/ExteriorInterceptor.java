@@ -68,9 +68,9 @@ public class ExteriorInterceptor {
                 tmp2=tmp1;
                 tmp1=tmp1.getCause();
             }
+            tmp2=tmp2.getCause();
             loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), tmp2.getCause());//checkCeuse(e));
             WyjatekSystemu exc=null;
-            tmp2=tmp2.getCause();
             if(tmp2 instanceof WyjatekSystemu){
                 throw (WyjatekSystemu) e;
             } if(tmp2 instanceof RemoteException){
