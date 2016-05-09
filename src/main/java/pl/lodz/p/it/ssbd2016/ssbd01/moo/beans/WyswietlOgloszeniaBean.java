@@ -7,9 +7,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
 
 /**
  * Obsługuje widok wyświetlania ogłoszeń
@@ -136,48 +135,5 @@ public class WyswietlOgloszeniaBean {
         ...
         */
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-
-    /*
-    Stworzył: Maksymilian Zgierski
-    Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
-    @param ogloszenie, które ma zostać deaktywowane
-    */
-    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
-    }
-
-    
-    public void aktywujOgloszenie() {
-        ogloszenieSession.aktywujOgloszenie(ogloszeniaDataModel.getRowData());
-        initModel();
-    }
-    
-    public void deaktywujOgloszenie() throws Exception {
-        ogloszenieSession.deaktywujOgloszenie(ogloszeniaDataModel.getRowData());
-        initModel();
-    }
-    /***
-     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 7
-     */
-    public void zmienAgentaWOgloszeniu(){
-        Konto k=new Konto();
-        ogloszenieSession.zmienAgentaWOgloszeniu(ogloszeniaDataModel.getRowData(), k);
-    }
-    
-    /***
-     * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 6
-     */
-    void przydzielAgentaDoOgloszenia(){
-        Konto agent=new Konto();
-        ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszeniaDataModel.getRowData(), agent);
-    }
-    
-    public void dodajDoUlubionych() {
-        ogloszenieSession.dodajDoUlubionych(ogloszeniaDataModel.getRowData());
     }
 }

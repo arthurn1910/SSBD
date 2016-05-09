@@ -17,7 +17,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.mail.MessagingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
-import java.lang.NullPointerException;
+import org.postgresql.util.PSQLException;
 
 /**
  * Interceptor zewnętrzny 
@@ -88,6 +88,10 @@ public class ExteriorInterceptor {
             loger.log(Level.SEVERE, "Złapany wyjątek TransactionRolledbackLocalException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
             throw exc;
+        }catch (PSQLException e) {
+            loger.log(Level.SEVERE, "Złapany wyjątek PSQLException w "+ExteriorInterceptor.class.getName(), e);
+            WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
+            throw exc;
         }catch (SQLException e) {
             loger.log(Level.SEVERE, "Złapany wyjątek SQLException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
@@ -95,8 +99,7 @@ public class ExteriorInterceptor {
         }catch (MessagingException e) {
             loger.log(Level.SEVERE, "Złapany wyjątek MessagingException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.wysylanieWidaomosci",e);
-            throw exc;
-        
+            throw exc;        
         }catch (EJBException e) {
             loger.log(Level.SEVERE, "Złapany wyjątek EJBException w "+ExteriorInterceptor.class.getName(), e);
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBException", e);
