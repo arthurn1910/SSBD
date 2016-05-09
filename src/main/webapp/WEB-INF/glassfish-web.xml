@@ -162,11 +162,6 @@
         <group-name>MENADZER</group-name>
     </security-role-mapping>
     <security-role-mapping>
-        <role-name>deaktywujOgloszenieDotyczaceUzytkownika</role-name>
-        <group-name>AGENT</group-name>
-        <group-name>KLIENT</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
         <role-name>zapiszOgloszeniePoEdycji</role-name>
         <group-name>MENADZER</group-name>
         <group-name>KLIENT</group-name>

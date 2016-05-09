@@ -136,12 +136,4 @@ public class WyswietlOgloszeniaBean {
         */
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
-    
-    /**
-     * Stworzył: Maksymilian Zgierski
-     * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
-     */
-    public void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszeniaDataModel.getRowData());
-    }
 }

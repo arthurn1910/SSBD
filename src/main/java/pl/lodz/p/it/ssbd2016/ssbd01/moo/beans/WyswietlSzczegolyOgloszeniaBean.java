@@ -94,12 +94,16 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * MOO.2
      * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
      */
-    public String edytujOgloszenieDanegoUzytkownika() {
-        try {
-            ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
+    public String edytujOgloszenieDanegoUzytkownika() throws Exception {
+        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
         return "edytujOgloszenieDanegoUzytkownika";
+    }
+    
+    /**
+     * Stworzył: Maksymilian Zgierski
+     * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
+     */
+    public void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
     }
 }
