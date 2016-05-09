@@ -25,7 +25,4 @@ public class WyjatekSystemu extends Exception {
     public WyjatekSystemu(Throwable cause) {
         super(cause);
     }
-
-    
-    
 }

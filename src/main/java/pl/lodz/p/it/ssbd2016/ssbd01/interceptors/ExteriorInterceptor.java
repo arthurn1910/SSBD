@@ -16,6 +16,7 @@ import javax.ejb.TransactionRolledbackLocalException;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.mail.MessagingException;
+import org.eclipse.persistence.exceptions.OptimisticLockException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import org.postgresql.util.PSQLException;
 
@@ -34,7 +35,7 @@ public class ExteriorInterceptor {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
     @AroundInvoke
-    public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu{
+    public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
         StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
@@ -61,62 +62,43 @@ public class ExteriorInterceptor {
             loger.severe(message.toString());
         
             return result;
-        }catch (WyjatekSystemu e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek WyjatekSystemu w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            throw e;
-        }catch(RemoteException e){
-            loger.log(Level.SEVERE, "Złapany wyjątek RemoteException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu ex=new WyjatekSystemu("blad.RemoteException", e);
-            throw ex;
-        }catch (NullPointerException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek NullPointerException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException", e);
-            throw exc;
-        }catch (EJBAccessException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek EJBAccessException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBAccessException", e);
-            throw exc;
-        }catch (EJBTransactionRequiredException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek EJBTransactionRequiredException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", e);
-            throw exc;
-        }catch (EJBTransactionRolledbackException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek EJBTransactionRolledbackException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
-            throw exc;
-        }catch (TransactionRolledbackLocalException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek TransactionRolledbackLocalException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", e);
-            throw exc;
-        }catch (PSQLException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek PSQLException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
-            throw exc;
-        }catch (SQLException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek SQLException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.SQLException", e);
-            throw exc;
-        }catch (MessagingException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek MessagingException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.wysylanieWidaomosci",e);
-            throw exc;        
-        }catch (EJBException e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek EJBException w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.EJBException", e);
-            throw exc;
         }catch (Exception e) {
-            loger.log(Level.SEVERE, "Złapany wyjątek Exception w "+ExteriorInterceptor.class.getName(), checkCeuse(e));
-            WyjatekSystemu exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", e);
+            Throwable tmp1=e, tmp2=e;
+            while(tmp1.getCause()!=null){
+                tmp2=tmp1;
+                tmp1=tmp1.getCause();
+            }
+            loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), tmp2.getCause());//checkCeuse(e));
+            WyjatekSystemu exc=null;
+            tmp2=tmp2.getCause();
+            if(tmp2 instanceof WyjatekSystemu){
+                throw (WyjatekSystemu) e;
+            } if(tmp2 instanceof RemoteException){
+                exc=new WyjatekSystemu("blad.RemoteException", tmp2.getCause());
+            } else if(tmp2 instanceof NullPointerException){
+                exc=new WyjatekSystemu("blad.NullPointerException", tmp2.getCause());
+            } else if(tmp2 instanceof OptimisticLockException){
+                exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2.getCause());
+            } else if(tmp2 instanceof EJBAccessException){
+                exc=new WyjatekSystemu("blad.EJBAccessException", tmp2.getCause());
+            } else if(tmp2 instanceof EJBTransactionRequiredException){
+                exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", tmp2.getCause());
+            } else if(tmp2 instanceof EJBTransactionRolledbackException){
+                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2.getCause());
+            } else if(tmp2 instanceof TransactionRolledbackLocalException){
+                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2.getCause());
+            } else if(tmp2 instanceof PSQLException){
+                exc=new WyjatekSystemu("blad.SQLException", tmp2.getCause());
+            } else if(tmp2 instanceof SQLException){
+                exc=new WyjatekSystemu("blad.SQLException", tmp2.getCause());
+            } else if(tmp2 instanceof MessagingException){
+                exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2.getCause());
+            } else if(tmp2 instanceof EJBException){
+                exc=new WyjatekSystemu("blad.EJBException", tmp2.getCause());
+            } else{
+                exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", tmp2);
+            }
             throw exc;
         } 
-    }
-    
-    public Throwable checkCeuse(Exception e){
-        Throwable tmp1=e, tmp2=e;
-        while(tmp1.getCause()!=null){
-            tmp2=tmp1;
-            tmp1=tmp1.getCause();
-        }
-        return tmp2.getCause();
     }
 }

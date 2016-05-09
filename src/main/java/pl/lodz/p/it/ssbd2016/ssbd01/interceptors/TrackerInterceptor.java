@@ -14,7 +14,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 public class TrackerInterceptor {
     @Resource
     private SessionContext sctx;
-    private static final Logger logger = Logger.getLogger(TrackerInterceptor.class.getName());
+    private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
@@ -41,15 +41,16 @@ public class TrackerInterceptor {
             } else {
                 message.append(result.toString() + " ");
             }
-            logger.severe(message.toString());        
+            loger.severe(message.toString());        
             return result;
-        } catch (Exception e) {
+        }catch (Exception e) {
             Throwable tmp1=e, tmp2=e;
             while(tmp1.getCause()!=null){
                 tmp2=tmp1;
                 tmp1=tmp1.getCause();
             }
-            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), tmp2.getCause());
+
+            loger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), tmp2.getCause());
             throw e;
         } 
     }
