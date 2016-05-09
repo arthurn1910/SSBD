@@ -15,9 +15,12 @@ public class EdytujOgloszenieBean {
     private OgloszenieSession ogloszenieSession;
     
     /**
-     * metoda odpowiadajaca za edycje ogloszenia danego uzytkownika
-     */       
-    public void edytujOgloszenieDanegoUzytkownika() {
-        ogloszenieSession.edytujOgloszenieInnegoUzytkownika();
+     * Metoda ma za zadanie zapisanie ogłoszenia po zakończeniu edycji
+     * @return zwraca łańcuch, który przekierowuje do widoku wyświetlającego ogłoszenia
+     * @throws Exception 
+     */
+    public String zapiszOgloszeniePoEdycji() throws Exception{
+        ogloszenieSession.zapiszOgloszeniePoEdycji();
+        return "wyswietlOgloszenia";
     }
 }

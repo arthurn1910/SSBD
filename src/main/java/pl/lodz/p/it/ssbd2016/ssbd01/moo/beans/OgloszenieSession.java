@@ -23,6 +23,16 @@ public class OgloszenieSession implements Serializable {
     private Ogloszenie ogloszenieDoWyswietlenia;
     
     private Ogloszenie ogloszenieEdytuj;
+    
+    private Exception exception;
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
 
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
@@ -127,6 +137,19 @@ public class OgloszenieSession implements Serializable {
      */
     void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
         setOgloszenieEdytuj(mooEndpoint.pobierzOgloszenieDoEdycji(ogloszenie));
+    }
+    
+    /**
+     * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     */
+    public void zapiszOgloszeniePoEdycji() throws WyjatekSystemu{
+        try {
+            mooEndpoint.zapiszOgloszeniePoEdycji(ogloszenieEdytuj);
+        } catch (WyjatekSystemu ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
     
     /**

@@ -17,6 +17,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -185,8 +186,26 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
     public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu{
+ //       if(sessionContext.getCallerPrincipal().getName().equals(ogloszenie.getIdWlasciciela().getLogin()) == false) {
+ //           throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+ //       }
         ogloszenieStan = ogloszenieFacadeLocal.find(ogloszenie.getId());
         return (Ogloszenie) CloneUtils.deepCloneThroughSerialization(ogloszenieStan);
+    }
+    
+    @Override
+    @RolesAllowed("zapiszOgloszeniePoEdycji")
+    public void zapiszOgloszeniePoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
+//        if (ogloszenieStan == null) {
+//            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
+//        }
+//        if (!ogloszenieStan.equals(ogloszenie)) {
+//            throw new WyjatekSystemu("blad.ogloszenieNiezgodneZWczytanym");
+//        }
+        /*
+        zapis ogloszenia po edycji
+        */
+//        ogloszenieStan = null;
     }
     
     //Implementacja SessionSynchronization
