@@ -3,14 +3,8 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBAccessException;
-import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
@@ -38,8 +32,7 @@ public class UzytkownikSession implements Serializable {
     private Konto kontoEdytuj;
     
     private DataModel<Konto> kontaDataModel;
-    
-
+   
     private String login;
 
     @PostConstruct
@@ -59,8 +52,7 @@ public class UzytkownikSession implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-    
+        
     /**
      * Rejestruje konto, nadając mu poziom dostępu klienta
      * @param  k  konto, które ma zostać zarejestrowane

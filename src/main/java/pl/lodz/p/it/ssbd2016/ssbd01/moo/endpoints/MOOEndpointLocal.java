@@ -28,8 +28,18 @@ public interface MOOEndpointLocal {
      * @param nowaNieruchomosc nieruchomości
      */
     void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
-
+    
+    /**
+     * Metoda aktywuje ogłoszenie
+     * @param rowData 
+     */
     void aktywujOgloszenie(Ogloszenie rowData);
+    
+    /**
+     * Metoda deaktywuje ogłoszenie
+     * @param rowData
+     * @throws WyjatekSystemu 
+     */
     public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu;
 
     /**
@@ -52,8 +62,7 @@ public interface MOOEndpointLocal {
      * @throws Exception 
      */
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws Exception;
-    
-    
+        
     /**
     * Metoda odpowiadajaca za deaktywacje ogłoszenia innego uzytkownika MOO.5
     * @param ogloszenie do deaktywacji
@@ -111,7 +120,6 @@ public interface MOOEndpointLocal {
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
     public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
-
     
     /**
      * Pobiera liste agentów

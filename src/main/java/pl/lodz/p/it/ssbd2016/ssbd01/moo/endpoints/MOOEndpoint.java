@@ -93,13 +93,26 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             ogloszenie.setAktywne(false);
         }
     }
+        
+    @Override
+    @RolesAllowed("deaktywujOgloszenie")
+    public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu {
+    }
+       
+    @Override
+    @RolesAllowed("pobierzListeAgentow")
+    public List<Konto> pobierzListeAgentow() {
+        return kontoFacade.findAll();
+    }
 
     @Override
     @PermitAll
     public List<Ogloszenie> pobierzWszytkieOgloszenia() {
         return ogloszenieFacadeLocal.findAll();
     }
+    
     @Override
+    @RolesAllowed("aktywujOgloszenie")
     public void aktywujOgloszenie(Ogloszenie rowData) {
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
         o.setAktywne(true);
@@ -224,14 +237,5 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     public TypNieruchomosci getTypNieruchomosci(String typ) {
         return typNieruchomosciFacade.znajdzPoNazwie(typ);
-    }
-
-    @Override
-    public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu {
-    }
-        
-    @Override
-    public List<Konto> pobierzListeAgentow() {
-        return kontoFacade.findAll();
     }
 }

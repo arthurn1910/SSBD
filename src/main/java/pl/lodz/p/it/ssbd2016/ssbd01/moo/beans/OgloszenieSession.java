@@ -4,6 +4,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,10 +24,6 @@ public class OgloszenieSession implements Serializable {
     
     private Ogloszenie ogloszenieEdytuj;
 
-    public OgloszenieSession() {
-    }
-    private WyjatekSystemu wyjatek;
-    
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
      *
@@ -63,10 +60,6 @@ public class OgloszenieSession implements Serializable {
         mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc);
     }
 
-    public WyjatekSystemu getWyjatek() {
-        return wyjatek;
-    }  
-
     /**
      * Pobiera wszystkie ogłoszenia
      * @return lista ogłoszeń
@@ -75,19 +68,6 @@ public class OgloszenieSession implements Serializable {
         return mooEndpoint.pobierzWszytkieOgloszenia();
     }
     
-    /*
-        @param ogloszenieNowe obiekt Ogloszenie o id starego ogłoszenia, ale zawierające nowe dane
-    */
-    void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws Exception{
-        
-        try{
-            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieNowe);
-        } catch(WyjatekSystemu ex){
-            this.wyjatek=ex;
-            throw ex;
-        }
-    }
-
     /**
      * Edytuje dane ogłoszenie
      */
@@ -101,19 +81,6 @@ public class OgloszenieSession implements Serializable {
      */
     void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
         mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
-    }
-
-    void aktywujOgloszenie(Ogloszenie rowData) {
-        mooEndpoint.aktywujOgloszenie(rowData);
-    }
-
-    void deaktywujOgloszenie(Ogloszenie rowData) throws Exception{
-        try{
-            mooEndpoint.deaktywujOgloszenie(rowData);
-        } catch(WyjatekSystemu ex){
-            this.wyjatek=ex;
-            throw ex;
-        }
     }
 
     /***
@@ -131,10 +98,6 @@ public class OgloszenieSession implements Serializable {
      */
     void dodajDoUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.dodajDoUlubionych(ogloszenie);
-    }
-
-    Ogloszenie getOgloszenieDoWyswietlenia() {
-        return this.ogloszenieDoWyswietlenia;
     }
     
     /**
@@ -193,6 +156,10 @@ public class OgloszenieSession implements Serializable {
      */
     List<Konto> pobierzListeAgentow() {
         return mooEndpoint.pobierzListeAgentow();
+    }
+    
+    Ogloszenie getOgloszenieDoWyswietlenia() {
+        return this.ogloszenieDoWyswietlenia;
     }
 
     public Ogloszenie getOgloszenieEdytuj() {

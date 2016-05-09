@@ -1,25 +1,20 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interceptor przechwytujący wywołania metod i logujący ich wywołania.
  */
 public class TrackerInterceptor {
-    Logger logger;
     @Resource
     private SessionContext sctx;
-    private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
+    private static final Logger logger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
@@ -46,7 +41,7 @@ public class TrackerInterceptor {
             } else {
                 message.append(result.toString() + " ");
             }
-            loger.severe(message.toString());        
+            logger.severe(message.toString());        
             return result;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
