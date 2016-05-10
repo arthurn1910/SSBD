@@ -22,6 +22,7 @@ import javax.naming.NamingException;
 import org.eclipse.persistence.exceptions.OptimisticLockException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import org.postgresql.util.PSQLException;
+import sun.security.provider.certpath.SunCertPathBuilderException;
 
 /**
  * Interceptor zewnętrzny 
@@ -73,6 +74,7 @@ public class ExteriorInterceptor {
             }
             tmp2=tmp2.getCause();
             loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), e);
+            loger.log(Level.INFO, "!!!***"+tmp2+"***!!!");
             loger.log(Level.INFO, "!!!***"+tmp2.getMessage()+"***!!!", tmp2);
             WyjatekSystemu exc=null;
             if(tmp2 instanceof WyjatekSystemu){
@@ -89,7 +91,9 @@ public class ExteriorInterceptor {
                 exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2.getCause());
             }else if(tmp2 instanceof NoSuchAlgorithmException){
                 exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2.getCause());
-            }else if(tmp2 instanceof MessagingException ){
+            }else if(tmp2 instanceof MessagingException){
+                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2.getCause());
+            }else if(tmp2 instanceof SunCertPathBuilderException){
                 exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2.getCause());
             }else if(tmp2 instanceof EJBAccessException){
                 exc=new WyjatekSystemu("blad.EJBAccessException", tmp2.getCause());
