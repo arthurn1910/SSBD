@@ -12,7 +12,7 @@ import javax.faces.event.ActionListener;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
+ * Funkcja actionListener której założeniem jest przechwyt wyjątku, zapisanie jego logów oraz wyświetlenie strony wyjątku.
  * @author java
  */
 public class ExcepcionActionListener extends ActionListenerImpl implements ActionListener{
