@@ -70,13 +70,13 @@ public class Konto implements Serializable {
         @JoinColumn(name = "id_ogloszenia", referencedColumnName = "id", updatable = false)})
     @ManyToMany
     private Collection<Ogloszenie> ogloszenieUlubioneCollection = new ArrayList<Ogloszenie>();
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idAgenta")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idAgenta")
     private Collection<Ogloszenie> ogloszenieAgentaCollection = new ArrayList<Ogloszenie>();
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idWlasciciela")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idWlasciciela")
     private Collection<Ogloszenie> ogloszenieWlascicielaCollection = new ArrayList<Ogloszenie>();
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "kontoId")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "kontoId")
     private Collection<PoziomDostepu> poziomDostepuCollection = new ArrayList<PoziomDostepu>();
-    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idUzytkownika")
+    @OneToMany(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "idUzytkownika")
     private Collection<Spotkanie> spotkanieCollection = new ArrayList<Spotkanie>();
 
     // Dane z tabeli dane_personalne
