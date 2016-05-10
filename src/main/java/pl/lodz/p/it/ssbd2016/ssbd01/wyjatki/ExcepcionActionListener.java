@@ -18,6 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 public class ExcepcionActionListener extends ActionListenerImpl implements ActionListener{
     Logger logger = Logger.getLogger(ExcepcionActionListener.class.getName());;
     
+    /***
+     * Metoda wyłapująca i obsługująca zdarzenia
+     * @param event 
+     */
     @Override
     public void processAction(ActionEvent event){
         try{
