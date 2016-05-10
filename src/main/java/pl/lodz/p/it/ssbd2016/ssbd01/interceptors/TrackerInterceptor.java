@@ -18,7 +18,7 @@ public class TrackerInterceptor {
     
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
-        StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
+        StringBuilder message = new StringBuilder("********Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
         message.append(" wartości parametrów: ");
@@ -44,13 +44,7 @@ public class TrackerInterceptor {
             loger.severe(message.toString());        
             return result;
         }catch (Exception e) {
-            Throwable tmp1=e, tmp2=e;
-           /* while(tmp1.getCause()!=null){
-                tmp2=tmp1;
-                tmp1=tmp1.getCause();
-            }*/
-
-            loger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), tmp2.getCause());
+            loger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
             throw e;
         } 
     }
