@@ -15,6 +15,9 @@ public class WyjatekBean {
     @Inject
     private UzytkownikSession uzytkownikSession;
     
+    /**
+     * Inicjalizujemy wiadomość na stronie
+     */
     @PostConstruct
     public void initModel() {
         Exception ex = uzytkownikSession.getException();

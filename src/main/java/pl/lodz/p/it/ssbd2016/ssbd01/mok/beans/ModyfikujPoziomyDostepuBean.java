@@ -42,8 +42,7 @@ public class ModyfikujPoziomyDostepuBean {
     /**
      * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
      * @return 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
     public String dodajPoziomDostepu() throws WyjatekSystemu{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
@@ -54,9 +53,9 @@ public class ModyfikujPoziomyDostepuBean {
     /**
      * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta 
      * @return 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
-    public String odlaczPoziomDostepu() throws WyjatekSystemu, Exception{
+    public String odlaczPoziomDostepu() throws WyjatekSystemu {
         uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -66,7 +65,7 @@ public class ModyfikujPoziomyDostepuBean {
      * Metoda dla widoku definiująca czy konto posiada dany poziom dostępu. 
      * Zmienia dostępne klawisze między dołącz i odłącz
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
     public boolean czyPosiadaAktywnyPoziomDostepu() throws WyjatekSystemu {
         try {

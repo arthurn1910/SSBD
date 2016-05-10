@@ -38,7 +38,6 @@ public interface MOSEndpointLocal {
      */
     List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
     
-
     /**
      * Anuluje spotkanie powiąane z kontem, stworzona dla MOS.3, Kamil Rogowski
      * @param spotkanieDoAnulowania spotkanie do anulowania

@@ -30,7 +30,6 @@ public class WyswietlSzczegolySwojegoKontaBean {
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika obecnie zalogowanego
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
     */
     @PostConstruct
     public void initModel(){

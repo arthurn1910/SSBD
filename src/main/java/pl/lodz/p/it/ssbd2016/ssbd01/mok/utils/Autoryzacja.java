@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 
 import javax.enterprise.context.RequestScoped;
@@ -11,42 +6,65 @@ import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
- *
- * @author java
+ * Klasa wykorzystana do identyfikacji roli użytkownika
  */
 @Named
 @RequestScoped
 public class Autoryzacja {
     
-    
+    /**
+     * Sprawdza czy użytkownik jest administratorem
+     * @return
+     * @throws WyjatekSystemu 
+     */
     public boolean czyAdministrator() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(0));
     }
     
+    /**
+     * Sprawdza czy użytkownik jest agentem
+     * @return
+     * @throws WyjatekSystemu 
+     */
     public boolean czyAgent() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(2));
     }
     
+    /**
+     * Sprawdza czy użytkownik jest klientem
+     * @return
+     * @throws WyjatekSystemu 
+     */
     public boolean czyKlient() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(3));
     }
     
+    /**
+     * Sprawdza czy użytkownik jest menadżerem
+     * @return
+     * @throws WyjatekSystemu 
+     */
     public boolean czyMenadzer() throws WyjatekSystemu
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(1));
     }
     
+    /**
+     * Metoda sprawdza czy użytkownik ma daną rolę
+     * @return
+     * @throws WyjatekSystemu 
+     */
     private boolean sprawdzRole(String role) {
-            if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role)) {
-                return true;
-            }
+        if (FacesContext.getCurrentInstance().getExternalContext().isUserInRole(role)) {
+            return true;
+        }
         return false;
     }
 }

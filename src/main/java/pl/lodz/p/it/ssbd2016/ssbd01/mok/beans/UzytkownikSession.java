@@ -34,7 +34,10 @@ public class UzytkownikSession implements Serializable {
     private DataModel<Konto> kontaDataModel;
    
     private String login;
-
+    
+    /**
+     * MOK.16 logujemy zalogowanego użytkownika w historii logowania
+     */
     @PostConstruct
     public void init() {
         login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
@@ -243,11 +246,12 @@ public class UzytkownikSession implements Serializable {
         }
     }
 
+    // Gettery i Settery
+    
     public List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow(){
         return MOKEndpoint.pobierzHistorieLogowanUzytkownikow();
-    }
-    // Gettery i Settery
-        
+    }    
+    
     public void setKontoEdytuj(Konto kontoEdytuj) {
         this.kontoEdytuj = kontoEdytuj;
     }
@@ -286,6 +290,5 @@ public class UzytkownikSession implements Serializable {
             this.exception=exc;
             throw exc;
         }
-    }  
-    
+    }     
 }
