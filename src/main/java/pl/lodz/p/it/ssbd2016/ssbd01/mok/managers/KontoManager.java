@@ -71,25 +71,20 @@ public class KontoManager implements KontoManagerLocal {
     @Override
     @PermitAll
     public void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu {
-        try {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
-            kontoFacade.create(konto);
 
             PoziomDostepuManager poziomDostepuManager = new PoziomDostepuManager();
 
             PoziomDostepu poziomDostepu = poziomDostepuManager.stworzPoziomDostepuKlient();
             poziomDostepu.setKontoId(konto);
             poziomDostepu.setAktywny(true);
-
-            poziomDostepuFacade.create(poziomDostepu);
+            kontoFacade.create(konto);
+            kontoFacade.flush();
+            //poziomDostepuFacade.create(poziomDostepu);
 
             konto.getPoziomDostepuCollection().add(poziomDostepu);
-        } catch (Exception ex) {
-            WyjatekSystemu exc = new WyjatekSystemu("blad.naruszenieUniq", ex);
-            throw new WyjatekSystemu("blad.naruszenieUniq", exc);
-        }
     }
 
     @Override

@@ -88,9 +88,9 @@ public class ExteriorInterceptor {
             } else if(tmp2 instanceof TransactionRolledbackLocalException){
                 exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2.getCause());
             } else if(tmp2 instanceof PSQLException){
+                loger.log(Level.INFO, "!!!**"+ tmp2.getMessage().substring(0, 62)+"**!!!");
                 String mes="blad.PSQLException";
-                if(tmp2.getMessage().equals("BŁĄD: podwójna wartość klucza narusza ograniczenie unikalności \"konto_login_key\"\n" +
-                        "  Szczegóły: Klucz (login)=(asd) już istnieje."))
+                if(tmp2.getMessage().substring(0, 62).equals("BŁĄD: podwójna wartość klucza narusza ograniczenie unikalności"))
                     mes="blad.naruszenieUniq";
                 exc=new WyjatekSystemu(mes, tmp2.getCause());
             } else if(tmp2 instanceof SQLException){
