@@ -74,47 +74,44 @@ public class ExteriorInterceptor {
             }
             tmp2=tmp2.getCause();
             loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), e);
-            loger.log(Level.INFO, "!!!***"+tmp2+"***!!!");
-            loger.log(Level.INFO, "!!!***"+tmp2.getMessage()+"***!!!", tmp2);
             WyjatekSystemu exc=null;
             if(tmp2 instanceof WyjatekSystemu){
                 throw (WyjatekSystemu) e;
             } else if(tmp2 instanceof RemoteException){
-                exc=new WyjatekSystemu("blad.RemoteException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.RemoteException", tmp2);
             } else if(tmp2 instanceof NamingException){
-                exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2);
             }else if(tmp2 instanceof NullPointerException){
-                exc=new WyjatekSystemu("blad.NullPointerException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.NullPointerException", tmp2);
             } else if(tmp2 instanceof OptimisticLockException){
-                exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2);
             } else if(tmp2 instanceof UnsupportedEncodingException){
-                exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2);
             }else if(tmp2 instanceof NoSuchAlgorithmException){
-                exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2);
             }else if(tmp2 instanceof MessagingException){
-                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2);
             }else if(tmp2 instanceof SunCertPathBuilderException){
-                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2);
             }else if(tmp2 instanceof EJBAccessException){
-                exc=new WyjatekSystemu("blad.EJBAccessException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.EJBAccessException", tmp2);
             } else if(tmp2 instanceof EJBTransactionRequiredException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", tmp2);
             } else if(tmp2 instanceof EJBTransactionRolledbackException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2);
             } else if(tmp2 instanceof TransactionRolledbackLocalException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2);
             } else if(tmp2 instanceof PSQLException){
-                loger.log(Level.INFO, "!!!**"+ tmp2.getMessage().substring(0, 62)+"**!!!");
                 String mes="blad.PSQLException";
                 if(tmp2.getMessage().substring(0, 62).equals("BŁĄD: podwójna wartość klucza narusza ograniczenie unikalności"))
                     mes="blad.naruszenieUniq";
-                exc=new WyjatekSystemu(mes, tmp2.getCause());
+                exc=new WyjatekSystemu(mes, tmp2);
             } else if(tmp2 instanceof SQLException){
-                exc=new WyjatekSystemu("blad.SQLException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.SQLException", tmp2);
             } else if(tmp2 instanceof MessagingException){
-                exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2.getCause());
+                exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2);
             } else if(tmp2 instanceof EJBException){
-                exc=new WyjatekSystemu("blad.EJBException", tmp2.getCause());
+                exc=new WyjatekSystemu("blad.EJBException", tmp2);
             } else{
                 exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", tmp2);
             }

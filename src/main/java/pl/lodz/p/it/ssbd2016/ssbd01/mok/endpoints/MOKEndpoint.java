@@ -164,10 +164,10 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());
-        kontoStan.setEmail(konto.getEmail());
+        kontoStan.setTelefon(konto.getTelefon());
         kontoStan.setNazwisko(konto.getNazwisko());
-        
         kontoFacade.edit(kontoStan);
+        kontoFacade.flush();
         
         kontoStan = null;
     }
@@ -181,14 +181,12 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
         if (!kontoStan.equals(konto)) {
             throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym");
         }
-
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());
-        kontoStan.setEmail(konto.getEmail());
+        kontoStan.setTelefon(konto.getTelefon());
         kontoStan.setNazwisko(konto.getNazwisko());
-        
         kontoFacade.edit(kontoStan);
-        
+        kontoFacade.flush();
         kontoStan = null;
     }
 
