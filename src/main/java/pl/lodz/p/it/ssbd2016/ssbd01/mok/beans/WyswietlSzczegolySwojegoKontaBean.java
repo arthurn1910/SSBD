@@ -1,14 +1,17 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.Application;
 import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -30,7 +33,6 @@ public class WyswietlSzczegolySwojegoKontaBean {
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika obecnie zalogowanego
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
     */
     @PostConstruct
     public void initModel(){
@@ -40,11 +42,13 @@ public class WyswietlSzczegolySwojegoKontaBean {
             uzytkownikSession.setException(ex);
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
-            FacesContext fC=FacesContext.getCurrentInstance();
-            Application app=fC.getApplication();
-            NavigationHandler nH=app.getNavigationHandler();
-            nH.handleNavigation(fC, null, "/wyjatki/wyjatek.xhtml");
-            fC.renderResponse();
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            try {
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     

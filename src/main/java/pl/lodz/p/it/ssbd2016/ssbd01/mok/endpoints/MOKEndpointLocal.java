@@ -1,10 +1,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 import javax.ejb.Local;
 import java.util.List;
+import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -18,7 +23,7 @@ public interface MOKEndpointLocal {
      * @param konto informacje kontcie do utworzenia
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu;
+    void rejestrujKontoKlienta(Konto konto) throws NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, MessagingException;
     
     /**
      * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
@@ -26,7 +31,7 @@ public interface MOKEndpointLocal {
      * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws WyjatekSystemu;
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, WyjatekSystemu;
     
     /**
      * Metoda zmienia stan konta na potwierdzone
@@ -38,13 +43,13 @@ public interface MOKEndpointLocal {
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane
      */
-     void odblokujKonto(Konto konto);
+     void odblokujKonto(Konto konto) throws MessagingException;
 
     /**
      * Metoda zmienia stan konta na nieaktywne
      * @param konto konto które ma zostać zablokowane
      */
-     void zablokujKonto(Konto konto);
+     void zablokujKonto(Konto konto) throws MessagingException;
 
     /**
      * Zmienia hasło dla obecnie zalogowanego użytkownika
@@ -52,13 +57,13 @@ public interface MOKEndpointLocal {
      * @param stareHaslo stare hasło w postaci jawnej
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu;
+    void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException;
 
     /**
      * Zmienia hasło dla obecnie edytowanego użytkownika
      * @param noweHaslo nowe hasło w postaci jawnej
      */
-    void zmienHaslo(String noweHaslo) throws WyjatekSystemu;
+    void zmienHaslo(String noweHaslo) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException;
 
     /**
      * Wyszukuje konto o podanym loginie
@@ -87,7 +92,7 @@ public interface MOKEndpointLocal {
      * @param poziom    nazwa poziomu dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu;
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu,NamingException;
 
     /**
      * Metoda odłączająca dany poziom dostępu do konta
@@ -95,15 +100,16 @@ public interface MOKEndpointLocal {
      * @param poziom    nazwa poziomu dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu;
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu,NamingException;
 
     /**
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
      * @param konto     konto które chcemy edytować
      * @return          głęboka kopia encji Konto
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
-    Konto pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu;
+    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
     
     /**
      * Metoda zapisuje konto użytkownika obecnie zalogowanego ze zmienionymi

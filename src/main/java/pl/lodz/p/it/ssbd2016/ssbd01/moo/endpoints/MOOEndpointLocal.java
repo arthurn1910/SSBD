@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
+import java.io.IOException;
 import javax.ejb.Local;
 import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -119,7 +120,7 @@ public interface MOOEndpointLocal {
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
-    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
+    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException;
     
     /**
      * Pobiera liste agentów

@@ -8,6 +8,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -19,25 +20,25 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 public class Autoryzacja {
     
     
-    public boolean czyAdministrator() throws WyjatekSystemu
+    public boolean czyAdministrator() throws WyjatekSystemu, NamingException
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(0));
     }
     
-    public boolean czyAgent() throws WyjatekSystemu
+    public boolean czyAgent() throws WyjatekSystemu, NamingException
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(2));
     }
     
-    public boolean czyKlient() throws WyjatekSystemu
+    public boolean czyKlient() throws WyjatekSystemu, NamingException
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(3));
     }
     
-    public boolean czyMenadzer() throws WyjatekSystemu
+    public boolean czyMenadzer() throws WyjatekSystemu, NamingException
     {
         PoziomDostepuManager tmp=new PoziomDostepuManager();
         return sprawdzRole(tmp.getPoziomyDostepu().get(1));

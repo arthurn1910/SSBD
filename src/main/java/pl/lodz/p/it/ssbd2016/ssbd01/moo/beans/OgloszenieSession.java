@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -125,7 +126,7 @@ public class OgloszenieSession implements Serializable {
      * Metoda pobierająca ogłoszenie do edycji. Zapewnia blokade optymistyczną.
      * @param ogloszenie ogloszenie do edycji
      */
-    void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
+    void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException {
         setOgloszenieEdytuj(mooEndpoint.pobierzOgloszenieDoEdycji(ogloszenie));
     }
     

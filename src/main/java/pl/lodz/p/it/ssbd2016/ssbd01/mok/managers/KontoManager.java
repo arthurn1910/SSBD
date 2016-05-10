@@ -1,19 +1,20 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
@@ -26,24 +27,25 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
  * Implementuje interfejs KontoManagaerLocal
  */
 @Stateless
-@Interceptors({ExteriorInterceptor.class,TrackerInterceptor.class})
+@Interceptors({TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class KontoManager implements KontoManagerLocal {
 
     @EJB
     private KontoFacadeLocal kontoFacade;
-    
+
     @EJB
-    private PoziomDostepuFacadeLocal poziomDostepuFacade;   
+    private PoziomDostepuFacadeLocal poziomDostepuFacade;
 
     @Resource
     private SessionContext sessionContext;
 
     @Override
     @RolesAllowed("zmienMojeHaslo")
-    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu{
+    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new WyjatekSystemu("blad.niezgodnyLogin");
+            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodnyLogin");
+            throw new WyjatekSystemu("blad.niezgodnyLogin", ex);
         }
         String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
@@ -54,71 +56,65 @@ public class KontoManager implements KontoManagerLocal {
             konto.setHaslo(hashedPassword);
             kontoFacade.edit(konto);
         } else {
-            throw new WyjatekSystemu("blad.niezgodneHasla");
+            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodneHasla");
+            throw new WyjatekSystemu("blad.niezgodneHasla", ex);
         }
     }
 
     @Override
     @RolesAllowed("zmienHaslo")
-    public void zmienHaslo(Konto konto, String noweHaslo) throws WyjatekSystemu{
-            String noweZahashowanehaslo = MD5Generator.generateMD5Hash(noweHaslo);
-            konto.setHaslo(noweZahashowanehaslo);
-            kontoFacade.edit(konto);
+    public void zmienHaslo(Konto konto, String noweHaslo) throws NoSuchAlgorithmException,UnsupportedEncodingException  {
+        String noweZahashowanehaslo = MD5Generator.generateMD5Hash(noweHaslo);
+        konto.setHaslo(noweZahashowanehaslo);
+        kontoFacade.edit(konto);
     }
-    
+
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu{
-        try{
+    public void rejestrujKontoKlienta(Konto konto) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
-            kontoFacade.create(konto);
-            
-            PoziomDostepuManager poziomDostepuManager =new PoziomDostepuManager();
-            
+
+            PoziomDostepuManager poziomDostepuManager = new PoziomDostepuManager();
+
             PoziomDostepu poziomDostepu = poziomDostepuManager.stworzPoziomDostepuKlient();
             poziomDostepu.setKontoId(konto);
             poziomDostepu.setAktywny(true);
-            
-            poziomDostepuFacade.create(poziomDostepu);
-            
+            kontoFacade.create(konto);
+            kontoFacade.flush();
+            //poziomDostepuFacade.create(poziomDostepu);
+
             konto.getPoziomDostepuCollection().add(poziomDostepu);
-        }catch(EJBException ex){
-            throw new WyjatekSystemu("blad.naruszenieUniq",ex);
-        }
     }
-    
+
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws WyjatekSystemu{
-        PoziomDostepuManager tmp=new PoziomDostepuManager();
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException, WyjatekSystemu {
+        PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
-            try{
-                konto.setAktywne(true);
-                konto.setPotwierdzone(false);
-                konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
-                kontoFacade.create(konto);
+            //try{
+            konto.setAktywne(true);
+            konto.setPotwierdzone(false);
+            konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
 
-                for (String poziomDostepuStr: poziomyDostepu) {
-                    PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepu(poziomDostepuStr);     
-                    poziomDostepu.setKontoId(konto);
-                    poziomDostepu.setAktywny(true);
-                    poziomDostepuFacade.create(poziomDostepu);
-                    konto.getPoziomDostepuCollection().add(poziomDostepu);
-                }
-            }catch(EJBException ex){
-                throw new WyjatekSystemu("blad.naruszenieUniq",ex);
+            for (String poziomDostepuStr : poziomyDostepu) {
+                PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepu(poziomDostepuStr);
+                poziomDostepu.setKontoId(konto);
+                poziomDostepu.setAktywny(true);
+                konto.getPoziomDostepuCollection().add(poziomDostepu);
             }
+            kontoFacade.create(konto);
+            kontoFacade.flush();
         }
     }
-    
+
     @Override
     @RolesAllowed("pobierzWszystkieKonta")
     public List<Konto> pobierzWszystkie() {
         return kontoFacade.findAll();
     }
-    
+
     @Override
     @RolesAllowed("pobierzPodobneKonta")
     public List<Konto> znajdzPodobne(Konto konto) {
@@ -128,34 +124,34 @@ public class KontoManager implements KontoManagerLocal {
         } else {
             kontoWyszukaj.setImie("%" + konto.getImie().toLowerCase() + "%");
         }
-        
-        if (konto.getNazwisko()== null) {
+
+        if (konto.getNazwisko() == null) {
             kontoWyszukaj.setNazwisko("%%");
         } else {
             kontoWyszukaj.setNazwisko("%" + konto.getNazwisko().toLowerCase() + "%");
         }
-        
-        if (konto.getEmail()== null) {
+
+        if (konto.getEmail() == null) {
             kontoWyszukaj.setEmail("%%");
         } else {
-            kontoWyszukaj.setEmail("%" + konto.getEmail().toLowerCase()+ "%");
+            kontoWyszukaj.setEmail("%" + konto.getEmail().toLowerCase() + "%");
         }
-        
-        if (konto.getTelefon()== null) {
+
+        if (konto.getTelefon() == null) {
             kontoWyszukaj.setTelefon("%%");
         } else {
-            kontoWyszukaj.setTelefon("%" + konto.getTelefon()+ "%");
+            kontoWyszukaj.setTelefon("%" + konto.getTelefon() + "%");
         }
         kontoWyszukaj.setAktywne(konto.getAktywne());
         kontoWyszukaj.setPotwierdzone(konto.getPotwierdzone());
-        
+
         return kontoFacade.znajdzPodobne(kontoWyszukaj);
     }
 
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
-        PoziomDostepuManager tmp=new PoziomDostepuManager();
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException {
+        PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
             PoziomDostepu aktualnyPoziom = tmp.pobierzPoziomDostepu(konto, poziom);
@@ -166,11 +162,12 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(true);
             } else {
                 // Jeśli nie zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
             }
-        } else {
-            // Nie posiadamy danego poziomu dostępu
-            // Sprawdzamy czy możemy taki poziom dodać
+        } else // Nie posiadamy danego poziomu dostępu
+        // Sprawdzamy czy możemy taki poziom dodać
+        {
             if (tmp.czyMoznaDodacPoziom(konto, poziom)) {
                 Konto aktualneKonto = kontoFacade.znajdzPoLoginie(konto.getLogin());
                 //Tworzymy i dodajemy nowy poziom dostępu
@@ -180,33 +177,36 @@ public class KontoManager implements KontoManagerLocal {
                 poziomDostepuFacade.create(nowyPoziom);
 
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
-            } else {                
+            } else {
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
             }
         }
     }
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
-        PoziomDostepuManager tmp=new PoziomDostepuManager();
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException {
+        PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
-            
+
             PoziomDostepu aktualnyPoziom = tmp.pobierzPoziomDostepu(konto, poziom);
-            
+
             if (aktualnyPoziom.getAktywny()) {
                 // Jeśli poziom jest aktywny to go dezaktywujemy
                 PoziomDostepu odlaczanyPoziom = poziomDostepuFacade.find(aktualnyPoziom.getId());
                 odlaczanyPoziom.setAktywny(false);
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
 
             }
-        } else {            
+        } else {
             // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
-            throw new WyjatekSystemu("blad.PoziomDostepuOdlaczenie");
+            WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
+            throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
         }
     }
 }

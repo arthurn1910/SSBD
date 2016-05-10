@@ -8,7 +8,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.wyjatki;
 import javax.ejb.ApplicationException;
 
 /**
- *
+ * Klasa wyjątku aplikacyjnego który obsługuje wyjątki aplikacyjne i systemowe
  * @author java
  */
 @ApplicationException(rollback = true)
@@ -25,7 +25,4 @@ public class WyjatekSystemu extends Exception {
     public WyjatekSystemu(Throwable cause) {
         super(cause);
     }
-
-    
-    
 }

@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.List;
@@ -184,7 +185,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
-    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu{
+    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException{
         ogloszenieStan = ogloszenieFacadeLocal.find(ogloszenie.getId());
         return (Ogloszenie) CloneUtils.deepCloneThroughSerialization(ogloszenieStan);
     }

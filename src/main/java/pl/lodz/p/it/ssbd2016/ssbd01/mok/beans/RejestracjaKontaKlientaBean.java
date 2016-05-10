@@ -1,11 +1,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
@@ -26,7 +30,7 @@ public class RejestracjaKontaKlientaBean {
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public String rejestrujKontoKlienta() throws WyjatekSystemu{
+    public String rejestrujKontoKlienta() throws WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, MessagingException{
         if (checkPasswordMatching()) {    
             uzytkownikSession.rejestrujKontoKlienta(konto);
             return "index";

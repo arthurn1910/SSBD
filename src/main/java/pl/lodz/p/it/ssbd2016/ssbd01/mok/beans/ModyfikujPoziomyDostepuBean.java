@@ -1,13 +1,22 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.Application;
+import javax.faces.application.NavigationHandler;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.ExcepcionActionListener;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -34,18 +43,25 @@ public class ModyfikujPoziomyDostepuBean {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
             konto = uzytkownikSession.getWybraneKonto();
-        } catch (WyjatekSystemu ex) {
+        } catch (Exception ex) {
             uzytkownikSession.setException(ex);
+            Logger logger = Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName());;
+            logger.log(Level.SEVERE, "Złapany wyjątek w "+ModyfikujPoziomyDostepuBean.class.getName(), ex.getCause());
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                externalContext.redirect("/ssbd201601/wyjatki/wyjatek.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
     
     /**
      * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
      * @return 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.PoziomDostepuNieIstnieje
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public String dodajPoziomDostepu() throws WyjatekSystemu{
+    public String dodajPoziomDostepu() throws WyjatekSystemu, NamingException{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -54,7 +70,7 @@ public class ModyfikujPoziomyDostepuBean {
     /**
      * Handler dla przycisku odłącz. Metoda odłączająca poziom dostępu do konta 
      * @return 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.BladPoziomDostepu 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
     public String odlaczPoziomDostepu() throws WyjatekSystemu, Exception{
         uzytkownikSession.odlaczPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
@@ -68,11 +84,11 @@ public class ModyfikujPoziomyDostepuBean {
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
      */
-    public boolean czyPosiadaAktywnyPoziomDostepu() throws WyjatekSystemu {
+    public boolean czyPosiadaAktywnyPoziomDostepu() throws NamingException {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }

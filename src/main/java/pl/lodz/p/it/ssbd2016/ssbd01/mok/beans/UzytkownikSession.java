@@ -1,18 +1,22 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.EJBAccessException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import javax.faces.context.FacesContext;
+import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -58,7 +62,7 @@ public class UzytkownikSession implements Serializable {
      * @param  k  konto, które ma zostać zarejestrowane
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void rejestrujKontoKlienta(Konto k) throws WyjatekSystemu{
+    public void rejestrujKontoKlienta(Konto k) throws /*WyjatekSystemu,*/ NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, MessagingException{
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -69,7 +73,7 @@ public class UzytkownikSession implements Serializable {
             kontoRejestracja.setDataUtworzenia(Date.from(Instant.now()));
             kontoRejestracja.setTelefon(k.getTelefon());
             MOKEndpoint.rejestrujKontoKlienta(kontoRejestracja);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -81,7 +85,7 @@ public class UzytkownikSession implements Serializable {
      * @param  poziomyDostepu  poziomy dostępu, który ma mieć nowo tworzone konto
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws WyjatekSystemu{
+    public void utworzKonto(Konto k, List<String> poziomyDostepu) throws WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException, NamingException{
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -110,17 +114,28 @@ public class UzytkownikSession implements Serializable {
     /**
      * Metoda oblokowuje konto
      * @param konto konto do odblokowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void odblokujKonto(Konto konto) {
-        MOKEndpoint.odblokujKonto(konto);
+    public void odblokujKonto(Konto konto) throws WyjatekSystemu, MessagingException{
+        try{
+            MOKEndpoint.odblokujKonto(konto);
+        }catch(Exception ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
 
     /**
      * Metoda blokująca konto
      * @param konto konto do zablokowania
      */
-    public void zablokujKonto(Konto konto) {
-        MOKEndpoint.zablokujKonto(konto);
+    public void zablokujKonto(Konto konto) throws WyjatekSystemu, MessagingException {
+        try{
+            MOKEndpoint.zablokujKonto(konto);
+        }catch(Exception ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
 
     /**
@@ -137,10 +152,10 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu{
+    public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu, IOException, ClassNotFoundException{
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
-        } catch (WyjatekSystemu ex){
+        } catch (IOException | ClassNotFoundException ex){
             this.exception=ex;
             throw ex;
         }
@@ -153,7 +168,7 @@ public class UzytkownikSession implements Serializable {
     void zapiszSwojeKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszSwojeKontoPoEdycji(kontoEdytuj);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -166,7 +181,7 @@ public class UzytkownikSession implements Serializable {
     public void zapiszKontoPoEdycji() throws WyjatekSystemu{
         try {
             MOKEndpoint.zapiszKontoPoEdycji(kontoEdytuj);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -179,10 +194,10 @@ public class UzytkownikSession implements Serializable {
      * @param stareHaslo stare hasło w postaci jawnej
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu{           
+    public void zmienMojeHaslo(String noweHaslo, String stareHaslo) throws WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException{           
         try {
             MOKEndpoint.zmienMojeHaslo(noweHaslo, stareHaslo);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -194,10 +209,10 @@ public class UzytkownikSession implements Serializable {
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void zmienHaslo(String noweHaslo) throws WyjatekSystemu{
+    public void zmienHaslo(String noweHaslo) throws WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException{
         try {
             MOKEndpoint.zmienHaslo(noweHaslo);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -221,10 +236,10 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do którego należy dodać poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
+    void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException{
         try {
             MOKEndpoint.dodajPoziomDostepu(konto, poziom);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -234,10 +249,10 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto od którego należy odłączyć poziom dostępu
      * @param poziom nazwa poziomu dostępu
      */
-    void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu{
+    void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException{
         try {
             MOKEndpoint.odlaczPoziomDostepu(konto, poziom);
-        } catch (WyjatekSystemu ex){
+        } catch (Exception ex){
             this.exception=ex;
             throw ex;
         }
@@ -252,12 +267,24 @@ public class UzytkownikSession implements Serializable {
         this.kontoEdytuj = kontoEdytuj;
     }
 
-    public Konto getKontoEdytuj() {
+    public Konto getKontoEdytuj() throws WyjatekSystemu{
+        if (kontoEdytuj == null){
+            WyjatekSystemu ex=new WyjatekSystemu("blad.brakKontaDoEdycji");
+            this.setException(ex);
+            throw ex;
+        }
+            
         return kontoEdytuj;
     }
     
-    public Konto getWybraneKonto() {
-        return MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
+    public Konto getWybraneKonto() throws WyjatekSystemu{
+        Konto tmp= MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
+        if(tmp.getId()==null){
+            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException1");
+            this.setException(ex);
+            throw ex;
+        }
+        return tmp;
     }
 
     public void setWybraneKonto(Konto wybraneKonto) {
@@ -281,7 +308,7 @@ public class UzytkownikSession implements Serializable {
     public void setKontaDataModel(DataModel<Konto> kontaDataModel) throws WyjatekSystemu{
         try{
             this.kontaDataModel = kontaDataModel;
-        } catch(EJBAccessException ex){
+        } catch(Exception ex){
             WyjatekSystemu exc=new WyjatekSystemu("blad.EJBAccessExcpetion");
             this.exception=exc;
             throw exc;

@@ -20,20 +20,20 @@ public interface NotyfikacjaServiceLocal {
      *
      * @param konto
      */
-    void wyslijPowiadomienieRejestracji(Konto konto) throws WyjatekSystemu;
+    void wyslijPowiadomienieRejestracji(Konto konto) throws MessagingException;
 
     /**
      * metoda odpowiedzialna za wysłania powiadomienia o zablokowaniu konta
      *
      * @param konto
      */
-    void wyslijPowiadomienieZablokowaniaKonta(Konto konto);
+    void wyslijPowiadomienieZablokowaniaKonta(Konto konto) throws MessagingException;
 
     /**
      * metoda odpowiedzialna za wysłania powiadomienia o aktywacji konta
      *
      * @param konto
      */
-    void wyslijPowiadomienieAktywacjiKonta(Konto konto);
+    void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws MessagingException;
 
 }

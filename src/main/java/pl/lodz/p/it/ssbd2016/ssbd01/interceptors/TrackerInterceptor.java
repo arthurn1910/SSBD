@@ -14,11 +14,11 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 public class TrackerInterceptor {
     @Resource
     private SessionContext sctx;
-    private static final Logger logger = Logger.getLogger(TrackerInterceptor.class.getName());
+    private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
-        StringBuilder message = new StringBuilder("Przechwycone wywołanie metody: ");
+        StringBuilder message = new StringBuilder("********Przechwycone wywołanie metody: ");
         message.append(ictx.getMethod().toString());
         message.append(" użytkownik: " + sctx.getCallerPrincipal().getName());
         message.append(" wartości parametrów: ");
@@ -41,10 +41,10 @@ public class TrackerInterceptor {
             } else {
                 message.append(result.toString() + " ");
             }
-            logger.severe(message.toString());        
+            loger.severe(message.toString());        
             return result;
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
+        }catch (Exception e) {
+            loger.log(Level.SEVERE, "Złapany wyjątek w "+TrackerInterceptor.class.getName(), e);
             throw e;
         } 
     }

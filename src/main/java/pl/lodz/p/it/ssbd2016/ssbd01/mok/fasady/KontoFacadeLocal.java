@@ -23,6 +23,8 @@ public interface KontoFacadeLocal {
 
     void remove(Konto konto);
 
+    void flush();
+
     Konto find(Object id);
 
     List<Konto> findAll();
