@@ -80,7 +80,7 @@ public interface MOKEndpointLocal {
 
     public List<Konto> pobierzPodobneKonta(Konto konto);
     
-        /**
+    /**
      * Metoda zwracająca liste wszystkich kont
      * @return lista wszystkich kont
      */
@@ -140,7 +140,11 @@ public interface MOKEndpointLocal {
      * @return 
      */
     List<HistoriaLogowania> pobierzHistorieLogowanUzytkownikow();
-
+    
+    /**
+     * MOK.16 loguje historie logowanie uzytkownika
+     * @param login 
+     */
     void ustawIP(String login);
 }
 

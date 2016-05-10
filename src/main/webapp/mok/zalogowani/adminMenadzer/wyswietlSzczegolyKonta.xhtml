@@ -4,7 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.wyswietlSzczegolyKonta"]}</h>
     </ui:define>
@@ -22,16 +23,22 @@
             ${msg["daneKonta.email"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.email}"/><br />
             ${msg["daneKonta.numerTelefonu"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.telefon}"/><br />
             ${msg["daneKonta.aktywne"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
-            ${msg["daneKonta.potwierdzone"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
+            ${msg["daneKonta.potwierdzone"]}  <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
             Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
-           <h:commandButton onclick="if (! confirm('Czy napewno chcesz odblokować konto?')) return false"
-                             value="#{msg['komunikat.odblokuj']}" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
+            
+            
+            <p:commandButton value="#{msg['komunikat.potwierdz']}" update="form" actionListener="#{wyswietlSzczegolyKontaBean.potwierdz()}" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
+                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog> 
+            
+            <h:commandButton value="#{msg['komunikat.odblokuj']}" action="#{wyswietlSzczegolyKontaBean.odblokuj()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
             </h:commandButton> 
-            <h:commandButton onclick="if (! confirm('Czy napewno chcesz zablokować konto?')) return false"
-                             value="#{msg['komunikat.zablokuj']}" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
-            </h:commandButton> 
-            <h:commandButton onclick="if (! confirm('Czy napewno chcesz potwierdzić konto?')) return false"
-                             value="#{msg['komunikat.potwierdz']}" action="#{wyswietlSzczegolyKontaBean.potwierdz()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
+            <h:commandButton value="#{msg['komunikat.zablokuj']}" action="#{wyswietlSzczegolyKontaBean.zablokuj()}"  class="edit_icon" rendered="#{wyswietlSzczegolyKontaBean.konto.aktywne and autoryzacja.czyAdministrator()}">
             </h:commandButton> 
             <h:commandButton value="#{msg['komunikat.modyfikujPoziomy']}" action="#{wyswietlSzczegolyKontaBean.modyfikujPoziomyDostepu()}"  class="edit_icon" rendered="#{autoryzacja.czyAdministrator()}">
             </h:commandButton>

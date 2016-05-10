@@ -22,6 +22,9 @@ public class WyswietlSzczegolyOgloszeniaBean {
     private Ogloszenie ogloszenie; 
     List<Konto> listaAgentów;   
     
+    /**
+     * Pobiera wybrane ogłoszenie
+     */
     @PostConstruct
     private void initModel() {
         ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
