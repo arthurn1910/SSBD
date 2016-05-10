@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
 
 import javax.annotation.PostConstruct;
@@ -61,7 +62,7 @@ public class UzytkownikSession implements Serializable {
      * @param  k  konto, które ma zostać zarejestrowane
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void rejestrujKontoKlienta(Konto k) throws WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, MessagingException{
+    public void rejestrujKontoKlienta(Konto k) throws /*WyjatekSystemu,*/ NoSuchAlgorithmException, UnsupportedEncodingException, NamingException, MessagingException{
         try {
             Konto kontoRejestracja = new Konto();
             kontoRejestracja.setLogin(k.getLogin());
@@ -151,10 +152,10 @@ public class UzytkownikSession implements Serializable {
      * @param konto konto do edycji
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu{
+    public void pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu, IOException, ClassNotFoundException{
         try {
             setKontoEdytuj(MOKEndpoint.pobierzKontoDoEdycji(konto));
-        } catch (Exception ex){
+        } catch (IOException | ClassNotFoundException ex){
             this.exception=ex;
             throw ex;
         }

@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa użytkowa umożliwia wykonanie głębokiej kopii obiektów
@@ -19,8 +18,7 @@ public class CloneUtils {
      * @return kopia obiektu 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
-    public static Object deepCloneThroughSerialization(Serializable source) throws WyjatekSystemu{
-        try{
+    public static Object deepCloneThroughSerialization(Serializable source) throws IOException, ClassNotFoundException{
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(bos);
             out.writeObject(source);
@@ -29,10 +27,5 @@ public class CloneUtils {
             ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
             ObjectInputStream in = new ObjectInputStream(bis);
             return in.readObject();
-        } catch(IOException ex){
-            throw new WyjatekSystemu("bladPliku",ex);
-        } catch(ClassNotFoundException ex){
-            throw new WyjatekSystemu("bladDeSerializacjiObiektu", ex);
-        }
     }    
 }

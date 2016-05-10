@@ -3,13 +3,10 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
-import javax.ejb.EJBException;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -18,7 +15,6 @@ import javax.interceptor.Interceptors;
 import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
@@ -106,15 +102,10 @@ public class KontoManager implements KontoManagerLocal {
                 PoziomDostepu poziomDostepu = tmp.stworzPoziomDostepu(poziomDostepuStr);
                 poziomDostepu.setKontoId(konto);
                 poziomDostepu.setAktywny(true);
-//                    poziomDostepuFacade.create(poziomDostepu);
                 konto.getPoziomDostepuCollection().add(poziomDostepu);
             }
             kontoFacade.create(konto);
             kontoFacade.flush();
-            /*}catch(EJBException ex){
-                WyjatekSystemu exc=new WyjatekSystemu("blad.naruszenieUniq",ex.getCause());
-            throw new WyjatekSystemu("blad.naruszenieUniq",exc);
-            }*/
         }
     }
 

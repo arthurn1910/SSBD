@@ -34,6 +34,6 @@ public interface NotyfikacjaServiceLocal {
      *
      * @param konto
      */
-    void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu, MessagingException;
+    void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws MessagingException;
 
 }

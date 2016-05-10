@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import javax.ejb.EJB;
 import javax.ejb.EJBAccessException;
@@ -81,7 +82,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("odblokujKonto")
-    public void odblokujKonto(Konto konto) throws MessagingException, WyjatekSystemu{
+    public void odblokujKonto(Konto konto) throws MessagingException{
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(true);
         notyfikacjaService.wyslijPowiadomienieAktywacjiKonta(konto);
@@ -89,7 +90,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("zablokujKonto")
-    public void zablokujKonto(Konto konto) throws MessagingException, WyjatekSystemu{
+    public void zablokujKonto(Konto konto) throws MessagingException{
         Konto o = kontoFacade.find(konto.getId());
         o.setAktywne(false);
         notyfikacjaService.wyslijPowiadomienieZablokowaniaKonta(konto);
@@ -143,7 +144,7 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("pobierzKontoDoEdycji")
-    public Konto pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu{
+    public Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException{
         kontoStan = kontoFacade.find(konto.getId());
         return (Konto) CloneUtils.deepCloneThroughSerialization(kontoStan);
     }

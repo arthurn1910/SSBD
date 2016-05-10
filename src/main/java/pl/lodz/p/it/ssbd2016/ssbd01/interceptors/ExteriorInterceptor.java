@@ -2,6 +2,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
@@ -89,8 +90,6 @@ public class ExteriorInterceptor {
                 exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2);
             }else if(tmp2 instanceof NoSuchAlgorithmException){
                 exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2);
-            }else if(tmp2 instanceof MessagingException){
-                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2);
             }else if(tmp2 instanceof SunCertPathBuilderException){
                 exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2);
             }else if(tmp2 instanceof EJBAccessException){
@@ -110,6 +109,10 @@ public class ExteriorInterceptor {
                 exc=new WyjatekSystemu("blad.SQLException", tmp2);
             } else if(tmp2 instanceof MessagingException){
                 exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2);
+            }else if(tmp2 instanceof ClassNotFoundException){
+                exc=new WyjatekSystemu("blad.klasaNieznaleziona",tmp2);
+            }else if(tmp2 instanceof IOException){
+                exc=new WyjatekSystemu("blad.bladPliku",tmp2);
             } else if(tmp2 instanceof EJBException){
                 exc=new WyjatekSystemu("blad.EJBException", tmp2);
             } else{

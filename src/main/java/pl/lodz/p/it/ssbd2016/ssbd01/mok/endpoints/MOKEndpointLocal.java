@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
@@ -42,13 +43,13 @@ public interface MOKEndpointLocal {
      * Metoda zmienia stan konta na aktywne
      * @param konto konto które ma zostać odblokowane
      */
-     void odblokujKonto(Konto konto) throws MessagingException, WyjatekSystemu;
+     void odblokujKonto(Konto konto) throws MessagingException;
 
     /**
      * Metoda zmienia stan konta na nieaktywne
      * @param konto konto które ma zostać zablokowane
      */
-     void zablokujKonto(Konto konto) throws MessagingException, WyjatekSystemu;
+     void zablokujKonto(Konto konto) throws MessagingException;
 
     /**
      * Zmienia hasło dla obecnie zalogowanego użytkownika
@@ -105,9 +106,10 @@ public interface MOKEndpointLocal {
      * Metoda pobierająca konto do edycji. Zapewnia blokadę optymistyczną.
      * @param konto     konto które chcemy edytować
      * @return          głęboka kopia encji Konto
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
-    Konto pobierzKontoDoEdycji(Konto konto) throws WyjatekSystemu;
+    Konto pobierzKontoDoEdycji(Konto konto) throws IOException, ClassNotFoundException;
     
     /**
      * Metoda zapisuje konto użytkownika obecnie zalogowanego ze zmienionymi

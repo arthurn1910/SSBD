@@ -5,14 +5,11 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.FacesException;
-import javax.faces.application.Application;
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -34,7 +31,8 @@ public class ExcepcionActionListener extends ActionListenerImpl implements Actio
                 }
                 logger.log(Level.SEVERE, "Złapany wyjątek w "+ExcepcionActionListener.class.getName(), fe.getCause());
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-                externalContext.redirect("/ssbd201601/wyjatki/wyjatek.xhtml");
+                HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ExcepcionActionListener.class.getName()).log(Level.SEVERE, null, ex);
             }

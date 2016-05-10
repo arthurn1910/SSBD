@@ -18,10 +18,7 @@ import javax.mail.internet.MimeMultipart;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.internet.AddressException;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Klasa odpowiedzialna za wysyłanie komunikatów mailowych
@@ -128,7 +125,7 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @RolesAllowed("odblokujKonto")
     @Override
-    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu, MessagingException{
+    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws MessagingException{
         message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
         message.setRecipients(Message.RecipientType.TO,
                 InternetAddress.parse(konto.getEmail()));

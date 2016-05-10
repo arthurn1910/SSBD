@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -39,8 +40,9 @@ public class WyswietlSzczegolyKontaBean {
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
             try {
-                externalContext.redirect("/ssbd201601/wyjatki/wyjatek.xhtml");
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
             } catch (IOException ex1) {
                 Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
             }
@@ -99,9 +101,11 @@ public class WyswietlSzczegolyKontaBean {
      * Handler przyciksu edytuj dane w widoku. Pobiera wybrane konto do edycji
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
+     * @throws java.io.IOException
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.lang.ClassNotFoundException
      */
-    public String edytujKonto() throws WyjatekSystemu{
+    public String edytujKonto() throws IOException, WyjatekSystemu, ClassNotFoundException{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujDaneKonta";
     }
@@ -111,8 +115,10 @@ public class WyswietlSzczegolyKontaBean {
      * i przechodzi do odpowiendiej strony z edycją
      * @return      przekierowanie do strony z edycją
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
-    public String edytujHasloKonta() throws WyjatekSystemu{
+    public String edytujHasloKonta() throws WyjatekSystemu, IOException, ClassNotFoundException{
         uzytkownikSession.pobierzKontoDoEdycji(konto);
         return "edytujHasloKonta";
     }
