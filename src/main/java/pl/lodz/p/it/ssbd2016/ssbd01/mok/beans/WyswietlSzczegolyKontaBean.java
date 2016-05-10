@@ -1,7 +1,12 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.MessagingException;
@@ -27,8 +32,19 @@ public class WyswietlSzczegolyKontaBean {
     * konto przez konto użytkownika którego chcemy wyświetlić
     */
     @PostConstruct
-    public void initModel() {
-        konto = uzytkownikSession.getWybraneKonto();
+    public void initModel(){
+        try {
+            konto = uzytkownikSession.getWybraneKonto();
+        } catch (WyjatekSystemu ex) {
+            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            try {
+                externalContext.redirect("/ssbd201601/wyjatki/wyjatek.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
     
     /**

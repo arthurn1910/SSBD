@@ -4,6 +4,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Obsługa zmiany danych przez admina i użytkownika
@@ -39,7 +40,7 @@ public class EdytujDaneBean {
     
     // Gettery i Settery
     
-    public Konto getKontoEdytuj() {
+    public Konto getKontoEdytuj() throws WyjatekSystemu {
         return uzytkownikSession.getKontoEdytuj();
     }
 }

@@ -43,7 +43,7 @@ public class ModyfikujPoziomyDostepuBean {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
             konto = uzytkownikSession.getWybraneKonto();
-        } catch (NamingException ex) {
+        } catch (Exception ex) {
             uzytkownikSession.setException(ex);
             Logger logger = Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName());;
             logger.log(Level.SEVERE, "Złapany wyjątek w "+ModyfikujPoziomyDostepuBean.class.getName(), ex.getCause());

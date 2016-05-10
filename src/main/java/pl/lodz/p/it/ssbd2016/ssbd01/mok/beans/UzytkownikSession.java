@@ -266,12 +266,24 @@ public class UzytkownikSession implements Serializable {
         this.kontoEdytuj = kontoEdytuj;
     }
 
-    public Konto getKontoEdytuj() {
+    public Konto getKontoEdytuj() throws WyjatekSystemu{
+        if (kontoEdytuj == null){
+            WyjatekSystemu ex=new WyjatekSystemu("blad.brakKontaDoEdycji");
+            this.setException(ex);
+            throw ex;
+        }
+            
         return kontoEdytuj;
     }
     
-    public Konto getWybraneKonto() {
-        return MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
+    public Konto getWybraneKonto() throws WyjatekSystemu{
+        Konto tmp= MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
+        if(tmp.getId()==null){
+            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException1");
+            this.setException(ex);
+            throw ex;
+        }
+        return tmp;
     }
 
     public void setWybraneKonto(Konto wybraneKonto) {
