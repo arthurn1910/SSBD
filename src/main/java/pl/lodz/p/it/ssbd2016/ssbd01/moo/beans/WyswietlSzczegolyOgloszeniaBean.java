@@ -49,15 +49,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
         ogloszenieSession.usunZUlubionych(ogloszenie);
     }    
     
-    /*
-     * Stworzył: Maksymilian Zgierski
-     * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
-     * @param ogloszenie, które ma zostać deaktywowane
-     */
-    public void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
-    }
-        
+          
     /**
      * Deaktywuje ogłoszenie innego użytkownika
      * @param ogloszenie innego użytkownika, które ma zostać deaktywowane
@@ -94,5 +86,24 @@ public class WyswietlSzczegolyOgloszeniaBean {
         pobierzListAgentow();
         Konto agent=new Konto();
         ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agent);
+    }
+    
+    /***
+     * Metoda odpowiada za pobranie ogłoszenia do edycji
+     * Stowrzył Maksymilian Zgierski
+     * MOO.2
+     * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
+     */
+    public String edytujOgloszenieDanegoUzytkownika() throws Exception {
+        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
+        return "edytujOgloszenieDanegoUzytkownika";
+    }
+    
+    /**
+     * Stworzył: Maksymilian Zgierski
+     * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
+     */
+    public void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
     }
 }

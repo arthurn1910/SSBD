@@ -161,8 +161,14 @@
         <role-name>deaktywujOgloszenie</role-name>
         <group-name>MENADZER</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>zapiszOgloszeniePoEdycji</role-name>
+        <group-name>MENADZER</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
+    </security-role-mapping>
     
-    <!-- role MOO -->
+    <!-- role MOS -->
     <security-role-mapping>
         <role-name>pobierzSpotkania</role-name>
         <group-name>MENADZER</group-name>

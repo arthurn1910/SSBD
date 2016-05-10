@@ -131,6 +131,14 @@ public class OgloszenieSession implements Serializable {
     }
     
     /**
+     * Metoda zapisuje zmienione konto. Sprawdzana jest blokada optymistyczna
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     */
+    public void zapiszOgloszeniePoEdycji() throws Exception{
+        mooEndpoint.zapiszOgloszeniePoEdycji(ogloszenieEdytuj);
+    }
+    
+    /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
      */    
     void edytujOgloszenieInnegoUzytkownika() {

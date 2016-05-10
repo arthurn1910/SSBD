@@ -186,8 +186,26 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
     public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException{
+ //       if(sessionContext.getCallerPrincipal().getName().equals(ogloszenie.getIdWlasciciela().getLogin()) == false) {
+ //           throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+ //       }
         ogloszenieStan = ogloszenieFacadeLocal.find(ogloszenie.getId());
         return (Ogloszenie) CloneUtils.deepCloneThroughSerialization(ogloszenieStan);
+    }
+    
+    @Override
+    @RolesAllowed("zapiszOgloszeniePoEdycji")
+    public void zapiszOgloszeniePoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
+//        if (ogloszenieStan == null) {
+//            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
+//        }
+//        if (!ogloszenieStan.equals(ogloszenie)) {
+//            throw new WyjatekSystemu("blad.ogloszenieNiezgodneZWczytanym");
+//        }
+        /*
+        zapis ogloszenia po edycji
+        */
+//        ogloszenieStan = null;
     }
     
     //Implementacja SessionSynchronization

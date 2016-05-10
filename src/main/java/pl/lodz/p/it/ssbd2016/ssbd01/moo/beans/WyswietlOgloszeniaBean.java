@@ -50,7 +50,7 @@ public class WyswietlOgloszeniaBean {
         return ogloszeniaDataModel;
     }
     
-    /*
+    /**
     Stworzył: Maksymilian Zgierski
     Przypadek użycia: MOO.9 - Przeglądaj ogłoszenia posortowane
     
