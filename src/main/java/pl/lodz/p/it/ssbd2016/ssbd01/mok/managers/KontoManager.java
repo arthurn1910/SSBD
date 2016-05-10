@@ -1,6 +1,10 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -11,6 +15,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
@@ -41,7 +46,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("zmienMojeHaslo")
-    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu {
+    public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
             WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodnyLogin");
             throw new WyjatekSystemu("blad.niezgodnyLogin", ex);
@@ -62,7 +67,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("zmienHaslo")
-    public void zmienHaslo(Konto konto, String noweHaslo) throws WyjatekSystemu {
+    public void zmienHaslo(Konto konto, String noweHaslo) throws NoSuchAlgorithmException,UnsupportedEncodingException  {
         String noweZahashowanehaslo = MD5Generator.generateMD5Hash(noweHaslo);
         konto.setHaslo(noweZahashowanehaslo);
         kontoFacade.edit(konto);
@@ -70,7 +75,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @PermitAll
-    public void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu {
+    public void rejestrujKontoKlienta(Konto konto) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException {
             konto.setAktywne(true);
             konto.setPotwierdzone(false);
             konto.setHaslo(MD5Generator.generateMD5Hash(konto.getHaslo()));
@@ -89,7 +94,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("utworzKonto")
-    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws WyjatekSystemu {
+    public void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException, WyjatekSystemu {
         PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPoprawnaKombinacjaPoziomowDostepu(poziomyDostepu)) {
             //try{
@@ -154,7 +159,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("dodajPoziomDostepu")
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu {
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException {
         PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
             // Posiadamy dany poziom
@@ -191,7 +196,7 @@ public class KontoManager implements KontoManagerLocal {
 
     @Override
     @RolesAllowed("odlaczPoziomDostepu")
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu {
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException {
         PoziomDostepuManager tmp = new PoziomDostepuManager();
         if (tmp.czyPosiadaPoziomDostepu(konto, poziom)) {
 

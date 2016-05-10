@@ -1,7 +1,10 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.managers;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.ejb.Local;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
@@ -18,8 +21,10 @@ public interface KontoManagerLocal {
      * @param noweHaslo  nowe hasło w postaci jawnej
      * @param stareHaslo stare hasło w w postaci jawnej
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.security.NoSuchAlgorithmException
+     * @throws java.io.UnsupportedEncodingException
      */
-    void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHaslo) throws WyjatekSystemu;
+    void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHaslo) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException ;
 
     /**
      * Metoda zmienia hasło podanego konta
@@ -27,14 +32,14 @@ public interface KontoManagerLocal {
      * @param noweHaslo nowe hasło
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void zmienHaslo(Konto konto, String noweHaslo) throws WyjatekSystemu;
+    void zmienHaslo(Konto konto, String noweHaslo) throws NoSuchAlgorithmException,UnsupportedEncodingException;
     
     /**
      * Metoda wprowadza do systemu konto klienta (niepotwierdzone)
      * @param konto informacje kontcie do utworzenia
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void rejestrujKontoKlienta(Konto konto) throws WyjatekSystemu;
+    void rejestrujKontoKlienta(Konto konto) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException;
     
     /**
      * Metoda wprowadza do systemu konto o dowolnym, niewykluczajacym sie poziomie dostepu
@@ -42,7 +47,7 @@ public interface KontoManagerLocal {
      * @param poziomyDostepu lista poziomów dostępu jakie beda przypisane
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws WyjatekSystemu;
+    void utworzKonto(Konto konto, List<String> poziomyDostepu) throws NoSuchAlgorithmException,UnsupportedEncodingException, NamingException, WyjatekSystemu ;
     
     
     /**
@@ -65,7 +70,7 @@ public interface KontoManagerLocal {
      * @param poziom    nazwa poziomu dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu;
+    public void dodajPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException;
     
     /**
      * Metoda odłączająca dany poziom dostępu do konta
@@ -73,5 +78,5 @@ public interface KontoManagerLocal {
      * @param poziom    nazwa poziomu dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu;
+    public void odlaczPoziomDostepu(Konto konto, String poziom) throws WyjatekSystemu, NamingException;
 }

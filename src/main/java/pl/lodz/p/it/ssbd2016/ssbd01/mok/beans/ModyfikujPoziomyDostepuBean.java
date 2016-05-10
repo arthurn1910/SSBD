@@ -13,6 +13,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.ExcepcionActionListener;
@@ -42,7 +43,7 @@ public class ModyfikujPoziomyDostepuBean {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             poziomyDostepuDataModel = new ListDataModel<String>(tmp.getPoziomyDostepu());
             konto = uzytkownikSession.getWybraneKonto();
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException ex) {
             uzytkownikSession.setException(ex);
             Logger logger = Logger.getLogger(ModyfikujPoziomyDostepuBean.class.getName());;
             logger.log(Level.SEVERE, "Złapany wyjątek w "+ModyfikujPoziomyDostepuBean.class.getName(), ex.getCause());
@@ -60,7 +61,7 @@ public class ModyfikujPoziomyDostepuBean {
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public String dodajPoziomDostepu() throws WyjatekSystemu{
+    public String dodajPoziomDostepu() throws WyjatekSystemu, NamingException{
         uzytkownikSession.dodajPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
         initModel();
         return "modyfikujPoziomyDostepu";
@@ -83,11 +84,11 @@ public class ModyfikujPoziomyDostepuBean {
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.NiewykonanaOperacja
      */
-    public boolean czyPosiadaAktywnyPoziomDostepu() throws WyjatekSystemu {
+    public boolean czyPosiadaAktywnyPoziomDostepu() throws NamingException {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.czyPosiadaAktywnyPoziomDostepu(konto, poziomyDostepuDataModel.getRowData());
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }

@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.MessagingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -49,7 +50,7 @@ public class WyswietlSzczegolyKontaBean {
     /**
      * Handler przycisku zablokuj w widoku. Blokuje wybrane konto oraz odświeża widok
      */
-    public void zablokuj() throws WyjatekSystemu{
+    public void zablokuj() throws WyjatekSystemu, MessagingException{
         uzytkownikSession.zablokujKonto(konto);
         initModel();
     }
@@ -57,7 +58,7 @@ public class WyswietlSzczegolyKontaBean {
     /**
      * Handler przycisku odblokuj w widoku. Odblokowuje wybrane konto oraz odświeża widok
      */
-    public void odblokuj() throws WyjatekSystemu{
+    public void odblokuj() throws WyjatekSystemu, MessagingException{
         uzytkownikSession.odblokujKonto(konto);
         initModel();
     }

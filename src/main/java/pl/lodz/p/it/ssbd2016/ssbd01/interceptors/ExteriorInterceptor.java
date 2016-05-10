@@ -2,7 +2,9 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
 
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,6 +18,7 @@ import javax.ejb.TransactionRolledbackLocalException;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.mail.MessagingException;
+import javax.naming.NamingException;
 import org.eclipse.persistence.exceptions.OptimisticLockException;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import org.postgresql.util.PSQLException;
@@ -70,16 +73,25 @@ public class ExteriorInterceptor {
             }
             tmp2=tmp2.getCause();
             loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), e);
+            loger.log(Level.INFO, "!!!***"+tmp2.getMessage()+"***!!!", tmp2);
             WyjatekSystemu exc=null;
             if(tmp2 instanceof WyjatekSystemu){
                 throw (WyjatekSystemu) e;
-            } if(tmp2 instanceof RemoteException){
+            } else if(tmp2 instanceof RemoteException){
                 exc=new WyjatekSystemu("blad.RemoteException", tmp2.getCause());
-            } else if(tmp2 instanceof NullPointerException){
+            } else if(tmp2 instanceof NamingException){
+                exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2.getCause());
+            }else if(tmp2 instanceof NullPointerException){
                 exc=new WyjatekSystemu("blad.NullPointerException", tmp2.getCause());
             } else if(tmp2 instanceof OptimisticLockException){
                 exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2.getCause());
-            } else if(tmp2 instanceof EJBAccessException){
+            } else if(tmp2 instanceof UnsupportedEncodingException){
+                exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2.getCause());
+            }else if(tmp2 instanceof NoSuchAlgorithmException){
+                exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2.getCause());
+            }else if(tmp2 instanceof MessagingException ){
+                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2.getCause());
+            }else if(tmp2 instanceof EJBAccessException){
                 exc=new WyjatekSystemu("blad.EJBAccessException", tmp2.getCause());
             } else if(tmp2 instanceof EJBTransactionRequiredException){
                 exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", tmp2.getCause());

@@ -1,11 +1,16 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -30,12 +35,12 @@ public class UtworzKontoBean {
      * Handler dla przycisku utwórz. Metoda tworzy nowe konto o zadanych poziomach dostępu 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public String utworzKonto() throws WyjatekSystemu{
-        if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
-            uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
-            return "index";
-        }
-        return null;
+    public String utworzKonto() throws NamingException, WyjatekSystemu, NoSuchAlgorithmException, UnsupportedEncodingException{
+            if (checkPasswordMatching() && sprawdzPoziomyDostepu()) {
+                uzytkownikSession.utworzKonto(konto, Arrays.asList(wybranePoziomy));
+                return "index";
+            }
+            return null;
     }
     
     /**
@@ -44,7 +49,7 @@ public class UtworzKontoBean {
      * @return  decyzja czy można nadać dane poziomy dostępu
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public boolean sprawdzPoziomyDostepu() throws WyjatekSystemu{
+    public boolean sprawdzPoziomyDostepu() throws NamingException{
         PoziomDostepuManager tmp;
         try {
             tmp = new PoziomDostepuManager();
@@ -60,7 +65,7 @@ public class UtworzKontoBean {
                 return false;
             }
             return true;
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }
@@ -103,11 +108,11 @@ public class UtworzKontoBean {
         this.powtorzoneHaslo = powtorzoneHaslo;
     }
     
-    public String[] pobierzPoziomyDostepu() throws WyjatekSystemu {
+    public String[] pobierzPoziomyDostepu() throws WyjatekSystemu, NamingException {
         try {
             PoziomDostepuManager tmp=new PoziomDostepuManager();
             return tmp.getPoziomyDostepu().toArray(new String[0]);
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException ex) {
             uzytkownikSession.setException(ex);
             throw ex;
         }

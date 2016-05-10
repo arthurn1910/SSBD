@@ -21,7 +21,7 @@ public class PoziomDostepuManager {
     private List<String> poziomyDostepu;
     private List<List<String>> poprawneKombinacjePoziomowDostepu;
 
-    public PoziomDostepuManager() throws WyjatekSystemu{    
+    public PoziomDostepuManager() throws NamingException{    
         poziomyDostepu = dodajPoziomyDostepu();
         poprawneKombinacjePoziomowDostepu = dodajPoprawneKombinacjePoziomowDostepu();
     }
@@ -30,16 +30,11 @@ public class PoziomDostepuManager {
      * Metoda definiująca poziomy dostępu
      * @return      lista nazw poziomu dostepu
      */
-    private List<String> dodajPoziomyDostepu() throws WyjatekSystemu{
+    private List<String> dodajPoziomyDostepu() throws NamingException{
         List<String> nowePoziomy;
         String poziomyDostepuDoParsowania = null;
-        
-        try {
-            Context ctx = new InitialContext();
-            poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
-        } catch (NamingException ex) {
-            throw new WyjatekSystemu("blad.niewykonanaOperacja",ex.getCause());
-        }
+        Context ctx = new InitialContext();
+        poziomyDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoziomyDostepu");
         
         nowePoziomy = new ArrayList<String>(Arrays.asList(poziomyDostepuDoParsowania.split(";")));
         
@@ -50,18 +45,14 @@ public class PoziomDostepuManager {
      * Metoda defniująca dostępne kombinacje poziomów dostępu
      * @return lista poprawnych kombinacji poziomów dostępu
      */
-    private List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() throws WyjatekSystemu{
+    private List<List<String>> dodajPoprawneKombinacjePoziomowDostepu() throws NamingException{
         List<List<String>> nowePoprawneKombinacjePoziomowDostepu = new ArrayList<List<String>>();
         String kombinacjePoziomowDostepuDoParsowania = null;
         List<String> pojedynczaKombinacjaDoParsowania = null;
         
-        try {
-            Context ctx = new InitialContext();
-            kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
-        } catch (NamingException ex) {
-            throw new WyjatekSystemu("blad.niewykonanaOperacja", ex.getCause());
-        }
-        
+        Context ctx = new InitialContext();
+        kombinacjePoziomowDostepuDoParsowania = (String) ctx.lookup("java:comp/env/PoprawneKombinacjePoziomowDostepu");
+
         for (String kombinacja: kombinacjePoziomowDostepuDoParsowania.split(";")) {
             nowePoprawneKombinacjePoziomowDostepu.add(new ArrayList<String>(Arrays.asList(kombinacja.split(","))));
         }

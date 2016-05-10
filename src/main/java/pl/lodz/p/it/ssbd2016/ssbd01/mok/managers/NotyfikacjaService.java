@@ -84,23 +84,19 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @Override
     @PermitAll
-    public void wyslijPowiadomienieRejestracji(Konto konto) throws WyjatekSystemu{
-        try {
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(konto.getEmail())); //adres odbiorcy zmienic tutaj wartosc jesli chcecie zamockowac
-            message.setSubject(MessageProvider.getMessage("notyfikacja.rejestracja.tytul"));
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent( MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
-                    + " " + MessageProvider.getMessage("notyfikacja.rejestracja.tresc") + " " +
-                    dateFormat.format(konto.getDataUtworzenia()) + ".", "text/html; charset=utf-8" );
+    public void wyslijPowiadomienieRejestracji(Konto konto) throws MessagingException{
+        message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(konto.getEmail())); //adres odbiorcy zmienic tutaj wartosc jesli chcecie zamockowac
+        message.setSubject(MessageProvider.getMessage("notyfikacja.rejestracja.tytul"));
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent( MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+                + " " + MessageProvider.getMessage("notyfikacja.rejestracja.tresc") + " " +
+                dateFormat.format(konto.getDataUtworzenia()) + ".", "text/html; charset=utf-8" );
 
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart( messageBodyPart );
-            message.setContent( multipart );
-            Transport.send(message);
-        } catch (MessagingException ex) {
-            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
-        }
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart( messageBodyPart );
+        message.setContent( multipart );
+        Transport.send(message);
     }
 
     /**
@@ -108,28 +104,23 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @RolesAllowed("zablokujKonto")
     @Override
-    public void wyslijPowiadomienieZablokowaniaKonta(Konto konto) throws WyjatekSystemu{
+    public void wyslijPowiadomienieZablokowaniaKonta(Konto konto) throws MessagingException{
 
-        try {
-            message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(konto.getEmail()));
+        message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
+        message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(konto.getEmail()));
 
-            message.setSubject(MessageProvider.getMessage("notyfikacja.zablokowane.tytul"),"utf-8");
+        message.setSubject(MessageProvider.getMessage("notyfikacja.zablokowane.tytul"),"utf-8");
 
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
-                    + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
-                    + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+                + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
+                + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
 
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart( messageBodyPart );
-            message.setContent( multipart );
-            Transport.send(message);
-
-        } catch (MessagingException ex) {
-            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
-        }
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart( messageBodyPart );
+        message.setContent( multipart );
+        Transport.send(message);
     }
 
     /**
@@ -137,24 +128,19 @@ public class NotyfikacjaService implements NotyfikacjaServiceLocal {
      */
     @RolesAllowed("odblokujKonto")
     @Override
-    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu{
-        try {
-            message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(konto.getEmail()));
-            message.setSubject(MessageProvider.getMessage("notyfikacja.odblokowane.tytul"));
+    public void wyslijPowiadomienieAktywacjiKonta(Konto konto) throws WyjatekSystemu, MessagingException{
+        message.setFrom(new InternetAddress(MessageProvider.getConfig("notyfikacja.email")));
+        message.setRecipients(Message.RecipientType.TO,
+                InternetAddress.parse(konto.getEmail()));
+        message.setSubject(MessageProvider.getMessage("notyfikacja.odblokowane.tytul"));
 
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
-                    + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
-                    + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart( messageBodyPart );
-            message.setContent( multipart );
-            Transport.send(message);
-
-        } catch (MessagingException ex) {
-            throw new WyjatekSystemu("blad.wyslaniaWiadomosci",ex.getCause());
-        }
+        BodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setContent(MessageProvider.getMessage("notyfikacja.konto.login") + " " + konto.getLogin()
+                + " " + MessageProvider.getMessage("notyfikacja.zablokowane.tresc") + " "
+                + dateFormat.format(new Date()) + ".", "text/html; charset=utf-8" );
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart( messageBodyPart );
+        message.setContent( multipart );
+        Transport.send(message);
     }
 }
