@@ -20,7 +20,7 @@ public class EdytujOgloszenieBean {
      * @throws Exception 
      */
     public String edytujOgloszenieDanegoUzytkownika() throws Exception{
-        ogloszenieSession.zapiszOgloszeniePoEdycji();
+        ogloszenieSession.edytujOgloszenieDanegoUzytkownika();
         return "wyswietlOgloszenia";
     }
 }
