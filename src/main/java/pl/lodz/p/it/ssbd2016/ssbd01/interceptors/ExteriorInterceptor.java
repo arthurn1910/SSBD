@@ -105,8 +105,6 @@ public class ExteriorInterceptor {
                 if(tmp2.getMessage().substring(0, 62).equals("BŁĄD: podwójna wartość klucza narusza ograniczenie unikalności"))
                     mes="blad.naruszenieUniq";
                 exc=new WyjatekSystemu(mes, tmp2);
-            } else if(tmp2 instanceof SQLException){
-                exc=new WyjatekSystemu("blad.SQLException", tmp2);
             } else if(tmp2 instanceof MessagingException){
                 exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2);
             }else if(tmp2 instanceof ClassNotFoundException){

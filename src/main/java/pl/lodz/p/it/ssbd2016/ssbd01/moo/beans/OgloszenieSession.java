@@ -25,6 +25,10 @@ public class OgloszenieSession implements Serializable {
     
     private Ogloszenie ogloszenieEdytuj;
 
+    public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
+        this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
+    }
+
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
      *
