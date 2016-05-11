@@ -132,6 +132,12 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     }
    
     @Override
+    @RolesAllowed("znajdzPoID")
+    public Ogloszenie znajdzPoID(Long id) {
+        return ogloszenieFacadeLocal.znajdzPoID(id);
+    }
+    
+    @Override
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());

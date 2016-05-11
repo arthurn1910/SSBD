@@ -81,6 +81,13 @@ public interface MOOEndpointLocal {
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent);
     
     /***
+     * Funkcja zwracająca ogłoszenie o wybranym ID
+     * @param login
+     * @return 
+     */
+    public Ogloszenie znajdzPoID(Long ID) ;
+    
+    /***
      * Metoda zmieniająca agenta w ogłoszeniu
      * Stowrzył Radosław Pawlaczyk
      * MOO.7
