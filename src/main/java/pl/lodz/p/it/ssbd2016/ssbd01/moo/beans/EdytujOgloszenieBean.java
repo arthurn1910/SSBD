@@ -19,7 +19,7 @@ public class EdytujOgloszenieBean {
      * @return zwraca łańcuch, który przekierowuje do widoku wyświetlającego ogłoszenia
      * @throws Exception 
      */
-    public String zapiszOgloszeniePoEdycji() throws Exception{
+    public String edytujOgloszenieDanegoUzytkownika() throws Exception{
         ogloszenieSession.zapiszOgloszeniePoEdycji();
         return "wyswietlOgloszenia";
     }
