@@ -208,6 +208,21 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 //        ogloszenieStan = null;
     }
     
+     @Override
+    @RolesAllowed("zapiszOgloszenieInnegoUzytkownikaPoEdycji")
+    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
+//        if (ogloszenieStan == null) {
+//            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
+//        }
+//        if (!ogloszenieStan.equals(ogloszenie)) {
+//            throw new WyjatekSystemu("blad.ogloszenieNiezgodneZWczytanym");
+//        }
+        /*
+        zapis ogloszenia po edycji
+        */
+//        ogloszenieStan = null;
+    }
+    
     //Implementacja SessionSynchronization
     /**
      * Metoda logująca czas rozpoczęcia transakcji
