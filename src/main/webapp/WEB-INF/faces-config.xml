@@ -134,7 +134,7 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>wyswietlSzczegolyKonta</from-outcome>
-            <to-view-id>/mok/zalogowani/adminMenadzer/wyswietlSzczegolyKonta.xhtml</to-view-id>
+            <to-view-id>/mok/zalogowani/wyswietlSzczegolyKonta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
