@@ -24,7 +24,7 @@
             ${msg["daneKonta.numerTelefonu"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.telefon}"/><br />
             ${msg["daneKonta.aktywne"]}  <h:outputText  value="#{wyswietlSzczegolyKontaBean.konto.aktywne}"/><br />
             ${msg["daneKonta.potwierdzone"]}  <h:outputText value="#{wyswietlSzczegolyKontaBean.konto.potwierdzone}"/><br />
-            Poziomy dostępu: <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
+            ${msg["daneKonta.poziomyDostepu"]} <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
             
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" update="form" actionListener="#{wyswietlSzczegolyKontaBean.potwierdz()}" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
