@@ -7,6 +7,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
 
@@ -136,4 +137,14 @@ public class WyswietlOgloszeniaBean {
         */
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
+    
+    /***
+     * Funckja ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
+     * @return 
+     */
+    public String wyswietlSzczegolyOgloszenia(){
+        ogloszenieSession.setOgloszenieDoWyswietlenia(getOgloszeniaDataModel().getRowData());
+        return "wyswietlSzczegolyOgloszenia";
+    }
+    
 }

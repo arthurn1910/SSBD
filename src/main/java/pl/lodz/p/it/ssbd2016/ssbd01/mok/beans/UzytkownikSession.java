@@ -284,7 +284,7 @@ public class UzytkownikSession implements Serializable {
     public Konto getWybraneKonto() throws WyjatekSystemu{
         Konto tmp= MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
         if(tmp.getId()==null){
-            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException1");
+            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException");
             this.setException(ex);
             throw ex;
         }
