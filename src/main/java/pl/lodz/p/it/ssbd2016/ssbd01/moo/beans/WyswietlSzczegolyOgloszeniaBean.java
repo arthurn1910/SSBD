@@ -102,6 +102,17 @@ public class WyswietlSzczegolyOgloszeniaBean {
         return "edytujOgloszenieDanegoUzytkownika";
     }
     
+      /***
+     * Metoda odpowiada za pobranie ogłoszenia innego użytkownika do edycji
+     * Stowrzył Tomasz Jędrzejewski
+     * MOO.3
+     * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
+     */
+    public String edytujOgloszenieInnegoUzytkownika() throws Exception {
+        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
+        return "edytujOgloszenieDanegoUzytkownika";
+    }
+    
     /**
      * Stworzył: Maksymilian Zgierski
      * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 

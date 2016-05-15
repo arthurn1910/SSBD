@@ -134,10 +134,23 @@ public interface MOOEndpointLocal {
      * @param ogloszenie ogloszenie po edycji
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
      */
+    
+    
     public void zapiszOgloszeniePoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
+    
+     /**
+     * Metoda zapisuje ogłoszenie innego użytkownika po edycji
+     * @param ogloszenie ogloszenie po edycji
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     */
+    
+    
+    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
     /**
      * Pobiera liste agentów
      * @return lista agentow
      */
+    
+    
     public List<Konto> pobierzListeAgentow();
 }
