@@ -72,7 +72,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
     public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(ogloszenieNowe.getId());
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
@@ -86,7 +86,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
