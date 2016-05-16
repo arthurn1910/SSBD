@@ -32,10 +32,18 @@ public interface KontoFacadeLocal {
     List<Konto> findRange(int[] range);
 
     int count();
-
+    
+    /**
+     * Metoda zwracająca obiekt klasy konto z danym loginem
+     * @param login     login użytkownika do wyszukania
+     * @return          obiekt klasy konto o zadanym loginie
+     */
     public Konto znajdzPoLoginie(String login);
     
-    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta();
-
+    /**
+     * Metoda zwracająca liste kont podobnych do zadanego konta
+     * @param konto     obiekt zawierający kryteria wyszukania
+     * @return          lista podobnych kont
+     */
     public List<Konto> znajdzPodobne(Konto konto);
 }

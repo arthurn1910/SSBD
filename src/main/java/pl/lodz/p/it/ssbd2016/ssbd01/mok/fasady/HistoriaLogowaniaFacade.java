@@ -36,13 +36,7 @@ public class HistoriaLogowaniaFacade extends AbstractFacade<HistoriaLogowania> i
     public HistoriaLogowaniaFacade() {
         super(HistoriaLogowania.class);
     }
-
-    /**
-     * zwraca null lub jeden wynik, bo na niej bazuje insert/update
-     *
-     * @param konto
-     * @return
-     */
+    
     @Override
     public HistoriaLogowania findyByIdKonta(Konto konto) {
         Query q = em.createNamedQuery("HistoriaLogowania.findByIdKonta");

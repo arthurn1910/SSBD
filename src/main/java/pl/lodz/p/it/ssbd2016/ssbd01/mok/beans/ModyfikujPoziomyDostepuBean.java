@@ -16,7 +16,6 @@ import javax.inject.Named;
 import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.ExcepcionActionListener;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -82,7 +81,7 @@ public class ModyfikujPoziomyDostepuBean {
      * Metoda dla widoku definiująca czy konto posiada dany poziom dostępu. 
      * Zmienia dostępne klawisze między dołącz i odłącz
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws javax.naming.NamingException
      */
     public boolean czyPosiadaAktywnyPoziomDostepu() throws NamingException {
         try {

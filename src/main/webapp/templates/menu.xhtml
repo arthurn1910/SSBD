@@ -5,6 +5,7 @@
                 xmlns:h="http://java.sun.com/jsf/html">
 
     <h:form>
+        <h:outputText value="${msg['komunikat.potwierdzenieOperacji']}" rendered="#{menuBean.czyWyswietlicPotwierdzenie()}" />
         <p>${msg['komunikat.powitanie']} ${menuBean.login}</p>
         <p>${menuBean.poziomyDostepu}</p>
 

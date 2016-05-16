@@ -33,39 +33,13 @@ public class KontoFacade extends AbstractFacade<Konto> implements KontoFacadeLoc
         super(Konto.class);
     }
         
-    /**
-     * Metoda zwracająca obiekt klasy konto z danym loginem
-     * @param login     login użytkownika do wyszukania
-     * @return          obiekt klasy konto o zadanym loginie
-     */
     @Override
     public Konto znajdzPoLoginie(String login) {
         Query q = em.createNamedQuery("Konto.findByLogin");
         q.setParameter("login", login);
         return (Konto) q.getSingleResult();
     }
-    
-    /**
-     * Metoda zwracająca liste niepotwierdzonych kont
-     * @return          lista niepotwierdzonych kont
-     */
-    @Override
-    public List<Konto> pobierzWszystkieNiepotwierdzoneKonta() {        
-        Query query = em.createNamedQuery("Konto.findByPotwierdzone");
-        query.setParameter("potwierdzone", false);
-        List<Konto> listaKontNiepotwierdzonych = 
-                (List<Konto>) query.getResultList();
-        if (listaKontNiepotwierdzonych == null) {
-            return new ArrayList<Konto>();
-        }
-        return listaKontNiepotwierdzonych;
-    }
-
-    /**
-     * Metoda zwracająca liste kont podobnych do zadanego konta
-     * @param konto     obiekt zawierający kryteria wyszukania
-     * @return          lista podobnych kont
-     */
+        
     @Override
     public List<Konto> znajdzPodobne(Konto konto) {
         Query query = em.createNamedQuery("Konto.findSimilar");

@@ -6,14 +6,11 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.EJBAccessException;
 import javax.ejb.EJBException;
-import javax.ejb.EJBTransactionRequiredException;
-import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.SessionContext;
 import javax.ejb.TransactionRolledbackLocalException;
 import javax.interceptor.AroundInvoke;
@@ -82,22 +79,16 @@ public class ExteriorInterceptor {
                 exc=new WyjatekSystemu("blad.RemoteException", tmp2);
             } else if(tmp2 instanceof NamingException){
                 exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2);
-            }else if(tmp2 instanceof NullPointerException){
-                exc=new WyjatekSystemu("blad.NullPointerException", tmp2);
             } else if(tmp2 instanceof OptimisticLockException){
                 exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2);
             } else if(tmp2 instanceof UnsupportedEncodingException){
                 exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2);
-            }else if(tmp2 instanceof NoSuchAlgorithmException){
+            } else if(tmp2 instanceof NoSuchAlgorithmException){
                 exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2);
-            }else if(tmp2 instanceof SunCertPathBuilderException){
+            } else if(tmp2 instanceof SunCertPathBuilderException){
                 exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2);
-            }else if(tmp2 instanceof EJBAccessException){
+            } else if(tmp2 instanceof EJBAccessException){
                 exc=new WyjatekSystemu("blad.EJBAccessException", tmp2);
-            } else if(tmp2 instanceof EJBTransactionRequiredException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRequiredException", tmp2);
-            } else if(tmp2 instanceof EJBTransactionRolledbackException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2);
             } else if(tmp2 instanceof TransactionRolledbackLocalException){
                 exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2);
             } else if(tmp2 instanceof PSQLException){
@@ -107,9 +98,9 @@ public class ExteriorInterceptor {
                 exc=new WyjatekSystemu(mes, tmp2);
             } else if(tmp2 instanceof MessagingException){
                 exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2);
-            }else if(tmp2 instanceof ClassNotFoundException){
+            } else if(tmp2 instanceof ClassNotFoundException){
                 exc=new WyjatekSystemu("blad.klasaNieznaleziona",tmp2);
-            }else if(tmp2 instanceof IOException){
+            } else if(tmp2 instanceof IOException){
                 exc=new WyjatekSystemu("blad.bladPliku",tmp2);
             } else if(tmp2 instanceof EJBException){
                 exc=new WyjatekSystemu("blad.EJBException", tmp2);

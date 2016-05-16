@@ -28,6 +28,10 @@ public interface HistoriaLogowaniaFacadeLocal {
 
     int count();
 
+    /**
+     * zwraca null lub jeden wynik, bo na niej bazuje insert/update
+     * @param konto
+     * @return
+     */
     HistoriaLogowania findyByIdKonta(Konto konto);
-
 }
