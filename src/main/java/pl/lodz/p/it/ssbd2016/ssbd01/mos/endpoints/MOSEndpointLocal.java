@@ -37,13 +37,6 @@ public interface MOSEndpointLocal {
     void zapiszSpotkaniePoEdycji(Spotkanie spotkanie);
     
     /**
-     * pobiera liste spotkan dla danego uzytkownika
-     * @param konto
-     * @return 
-     */
-    List<Spotkanie> pobierzUmowioneSpotkania(Konto konto);
-    
-    /**
      * Anuluje spotkanie powiąane z kontem, stworzona dla MOS.3, Kamil Rogowski
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */

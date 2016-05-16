@@ -54,7 +54,8 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
-        return spotkanieManager.pobierzUmowioneSpotkania(spotkaniaDlaKonta);
+        //return spotkanieManager.pobierzUmowioneSpotkania(spotkaniaDlaKonta);
+        return spotkanieFacade.pobierzSpotkaniaUzytkownika(spotkaniaDlaKonta);
     }
 
     @Override
@@ -91,12 +92,6 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
         spotkanieFacade.edit(spotkanie);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    @RolesAllowed("pobierzUmowioneSpotkania")
-    public List<Spotkanie> pobierzUmowioneSpotkania(Konto konto) {
-        return spotkanieFacade.pobierzSpotkaniaUzytkownika(konto);
     }
     
     //Implementacja SessionSynchronization

@@ -29,12 +29,6 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
         return null;
     }
-
-    @Override
-    @RolesAllowed("pobierzSpotkania")
-    public List<Spotkanie> pobierzUmowioneSpotkania(Konto spotkaniaDlakonta) {
-        return null;
-    }
     
     @Override
     @RolesAllowed("edytujSpotkania")
