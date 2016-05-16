@@ -7,6 +7,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
 import java.util.List;
 import javax.ejb.Local;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
 /**
@@ -29,5 +30,12 @@ public interface SpotkanieFacadeLocal {
     List<Spotkanie> findRange(int[] range);
 
     int count();
+    
+    /**
+     * metoda zwraca liste spotkan danego uzytkownika/agenta
+     * @param konto
+     * @return 
+     */
+    List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto);
     
 }

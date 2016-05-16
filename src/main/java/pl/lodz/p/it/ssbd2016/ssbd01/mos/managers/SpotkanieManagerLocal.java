@@ -28,5 +28,17 @@ public interface SpotkanieManagerLocal {
      * @return lista spotkań
      */
     List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie);
+    
+    /**
+     * Dodaje spotkanie
+     * @param spotkanie spotkanie jakie ma zostac dodane
+     */
+    void rezerwujSpotkanie(Spotkanie spotkanie);
+    
+    /**
+     * edytuje nasze spotkanie
+     * @param spotkanie 
+     */
+    void edytujSwojeSpotkanie(Spotkanie spotkanie);
 
 }
