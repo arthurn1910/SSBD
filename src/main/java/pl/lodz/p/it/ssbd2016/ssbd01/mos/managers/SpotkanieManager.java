@@ -37,13 +37,13 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     }
     
     @Override
-    @RolesAllowed("pobierzSpotkania")
+    @RolesAllowed("edytujSpotkania")
     public void edytujSwojeSpotkanie(Spotkanie spotkanie) {
         spotkanieFacade.edit(spotkanie);
     }
     
     @Override
-    @RolesAllowed("pobierzSpotkania")
+    @RolesAllowed("rezerwujSpotkanie")
     public void rezerwujSpotkanie(Spotkanie spotkanie) {
         spotkanieFacade.create(spotkanie);
     }
