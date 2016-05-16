@@ -5,10 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+
+import javax.ejb.Local;
+import java.util.List;
 
 /**
  *
@@ -37,5 +39,12 @@ public interface SpotkanieFacadeLocal {
      * @return 
      */
     List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto);
-    
+
+    /**
+     * metoda zwraca listę spotkań dla ogłoszenia
+     * @param ogloszenie ogłoszenie
+     * @return lista spotkań
+     */
+    List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie);
+
 }
