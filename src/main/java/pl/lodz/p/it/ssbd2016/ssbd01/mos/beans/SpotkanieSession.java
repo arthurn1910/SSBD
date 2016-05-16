@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
@@ -8,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -67,11 +69,9 @@ public class SpotkanieSession implements Serializable {
     
     /**
      * pobiera spotkanie do edycji MOS.2 P. Stepien
-     * @param spotkanie
-     * @return 
+     * @return Spotkanie
      */
-    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) {
-
+    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
         return mosEndpoint.pobierzSpotkanieDoEdycji(spotkanie);
     }
     

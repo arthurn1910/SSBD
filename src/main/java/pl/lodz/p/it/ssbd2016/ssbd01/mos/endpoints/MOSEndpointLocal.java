@@ -1,10 +1,12 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
+import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOS
@@ -22,8 +24,11 @@ public interface MOSEndpointLocal {
      * pobiera spotkanie do edycji MOS 2, P. Stepien
      * @param spotkanie
      * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     * @throws java.io.IOException 
+     * @throws java.lang.ClassNotFoundException 
      */
-    Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie);
+    Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException;
     
     /**
      * zapisuje edytowane spotkanie po edycji MOS 2, P. Stepien
@@ -58,4 +63,6 @@ public interface MOSEndpointLocal {
      * @return lista spotkan
      */
     List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie);
+    
+
 }

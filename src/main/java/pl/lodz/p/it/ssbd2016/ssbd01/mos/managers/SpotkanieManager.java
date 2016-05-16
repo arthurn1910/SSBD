@@ -35,4 +35,16 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     public List<Spotkanie> pobierzUmowioneSpotkania(Konto spotkaniaDlakonta) {
         return null;
     }
+    
+    @Override
+    @RolesAllowed("pobierzSpotkania")
+    public void edytujSwojeSpotkanie(Spotkanie spotkanie) {
+        spotkanieFacade.edit(spotkanie);
+    }
+    
+    @Override
+    @RolesAllowed("pobierzSpotkania")
+    public void rezerwujSpotkanie(Spotkanie spotkanie) {
+        spotkanieFacade.create(spotkanie);
+    }
 }

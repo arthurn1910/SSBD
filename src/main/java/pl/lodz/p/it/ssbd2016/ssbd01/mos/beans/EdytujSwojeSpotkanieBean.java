@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
+import java.io.IOException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,21 +24,20 @@ public class EdytujSwojeSpotkanieBean {
     @Inject
     private SpotkanieSession spotkanieSession;
     
+    private Spotkanie spotkanie;
     /**
      * Zapisuje spotkanie po edycji
-     * @return 
      */
-    public String zapiszSwojeSpotkaniePoEdycji() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
+    public void zapiszSwojeSpotkaniePoEdycji() {
+        spotkanieSession.zapiszSpotkaniePoEdycji(spotkanie);
+        
     }
     
-
     /**
      * pobiera spotkanie do edycji
+     * @return 
      */
-    public Spotkanie getSpotkanieEdytuj() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
+    public Spotkanie getSpotkanieEdytuj() throws WyjatekSystemu, IOException, ClassNotFoundException {
+        return spotkanieSession.pobierzSpotkanieDoEdycji(spotkanie);
     }
 }

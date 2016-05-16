@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -14,13 +15,18 @@ import javax.ejb.Stateful;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBException;
+import javax.ejb.SessionContext;
 import javax.ejb.SessionSynchronization;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import static pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.Nieruchomosc_.ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * API servera dla modułu funkcjonalnego MOS
@@ -37,10 +43,13 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     private OgloszenieFacadeLocalInMOS ogloszenieFacade;
     @EJB
     private SpotkanieManagerLocal spotkanieManager;
-
+    @Resource
+    private SessionContext sessionContext;
     
     private long txId;
     private static final Logger loger = Logger.getLogger(MOSEndpoint.class.getName()); 
+    
+    private Spotkanie spotkanieStan;
     
     @Override
     @RolesAllowed("pobierzSpotkania")
@@ -63,25 +72,31 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("rezerwujSpotkanie")
     public void rezerwujSpotkanie(Spotkanie spotkanie) {
+        spotkanieManager.rezerwujSpotkanie(spotkanie);
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     @RolesAllowed("pobierzSpotkanieDoEdycji")
-    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
+          if(sessionContext.getCallerPrincipal().getName().equals(spotkanie.getIdUzytkownika().getLogin()) == false) {
+            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+        }
+        spotkanieStan = spotkanieFacade.find(spotkanie.getId());
+        return (Spotkanie) CloneUtils.deepCloneThroughSerialization(spotkanieStan);
     }
 
     @Override
     @RolesAllowed("zapiszSpotkaniePoEdycji")
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        spotkanieFacade.edit(spotkanie);
+       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     @RolesAllowed("pobierzUmowioneSpotkania")
     public List<Spotkanie> pobierzUmowioneSpotkania(Konto konto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return spotkanieFacade.pobierzSpotkaniaUzytkownika(konto);
     }
     
     //Implementacja SessionSynchronization
