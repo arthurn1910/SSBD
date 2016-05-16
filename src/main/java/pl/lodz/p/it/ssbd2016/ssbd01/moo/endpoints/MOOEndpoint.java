@@ -78,6 +78,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
         else {
             // zapisz dane obiektu ogloszenieNowe
+            ogloszenieFacadeLocal.edit(o);
         }
     }
     
@@ -94,6 +95,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
         else {
             o.setAktywne(false);
+            ogloszenieFacadeLocal.edit(o);
         }
     }
         
