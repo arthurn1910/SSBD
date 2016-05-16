@@ -31,12 +31,6 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
         return  spotkanieFacade.findByOgloszenie(ogloszenie);
 
     }
-
-    @Override
-    @RolesAllowed("pobierzSpotkania")
-    public List<Spotkanie> pobierzUmowioneSpotkania(Konto spotkaniaDlakonta) {
-        return null;
-    }
     
     @Override
     @RolesAllowed("edytujSpotkania")
