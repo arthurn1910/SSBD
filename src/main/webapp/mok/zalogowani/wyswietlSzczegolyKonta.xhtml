@@ -27,7 +27,7 @@
             ${msg["daneKonta.poziomyDostepu"]} <h:outputText  value="#{wyswietlSzczegolyKontaBean.pobierzPoziomy()}"/><br />
             
             
-            <p:commandButton value="#{msg['komunikat.potwierdz']}" update="form" actionListener="#{wyswietlSzczegolyKontaBean.potwierdz()}" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
+            <p:commandButton value="#{msg['komunikat.potwierdz']}" update="@form" action="#{wyswietlSzczegolyKontaBean.potwierdz()}" rendered="#{not wyswietlSzczegolyKontaBean.konto.potwierdzone and autoryzacja.czyAdministrator()}">
                 <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
             </p:commandButton>
 

@@ -22,6 +22,7 @@ public class MenuBean {
     String login;
     String poziomyDostepu;
     boolean zalogowany;
+    boolean czyWyswietlicPotwierdzenie;
     
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
@@ -43,6 +44,7 @@ public class MenuBean {
         } else {
             zalogowany = false;
         }
+        czyWyswietlicPotwierdzenie = uzytkownikSession.isCzyWyswietlicPotwierdzenie();
     }
     
     /**
@@ -60,6 +62,10 @@ public class MenuBean {
     public String wyloguj() {
         getContext().invalidateSession();
         return "index";
+    }
+    
+    public boolean czyWyswietlicPotwierdzenie() {        
+        return czyWyswietlicPotwierdzenie;
     }
     
     public String getLogin() {

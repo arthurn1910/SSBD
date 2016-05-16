@@ -67,6 +67,8 @@ public class WyswietlSzczegolyKontaBean {
     
     /**
      * Handler przycisku zablokuj w widoku. Blokuje wybrane konto oraz odświeża widok
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws javax.mail.MessagingException
      */
     public void zablokuj() throws WyjatekSystemu, MessagingException{
         uzytkownikSession.zablokujKonto(konto);
@@ -75,6 +77,8 @@ public class WyswietlSzczegolyKontaBean {
     
     /**
      * Handler przycisku odblokuj w widoku. Odblokowuje wybrane konto oraz odświeża widok
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws javax.mail.MessagingException
      */
     public void odblokuj() throws WyjatekSystemu, MessagingException{
         uzytkownikSession.odblokujKonto(konto);
@@ -84,9 +88,9 @@ public class WyswietlSzczegolyKontaBean {
     /**
      * Handler przycisku potwierdź w widoku. Potwierdza wybrane konto oraz odświeża widok
      */
-    public void potwierdz(){
+    public String potwierdz(){
         uzytkownikSession.potwierdzKonto(konto);
-        initModel();
+        return "wyswietlSzczegolyKonta";
     }
     
     /**
