@@ -146,7 +146,7 @@ public class OgloszenieSession implements Serializable {
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
      */
     public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws Exception{
-        mooEndpoint.zapiszOgloszeniePoEdycji(ogloszenieEdytuj);
+        mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
     }
     /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
