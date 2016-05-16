@@ -1,17 +1,18 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.managers;
+
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import java.util.List;
 
 /**
  * Menadżer dla spotkań
@@ -27,7 +28,8 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     @Override
     @RolesAllowed("pobierzSpotkaniaDlaOgloszenia")
     public List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie) {
-        return null;
+        return  spotkanieFacade.findByOgloszenie(ogloszenie);
+
     }
 
     @Override

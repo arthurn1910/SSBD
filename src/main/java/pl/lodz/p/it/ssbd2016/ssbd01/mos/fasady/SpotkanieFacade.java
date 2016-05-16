@@ -5,13 +5,15 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
-import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import java.util.List;
 
 /**
  *
@@ -36,5 +38,9 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
     public List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    public List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
