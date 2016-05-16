@@ -72,7 +72,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
     public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        if(ogloszenieNowe.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(ogloszenieNowe.getId());
+        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
         else {
@@ -84,14 +85,15 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        if(ogloszenie.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
+        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
         else if(ogloszenie.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
-            ogloszenie.setAktywne(false);
+            o.setAktywne(false);
         }
     }
         
