@@ -168,25 +168,30 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("deaktywujOgloszenieInnegoUzytkownika")
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
-        if (ogloszenie == null) 
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if (o == null) 
         throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
         
-        if(ogloszenie.getAktywne() == false) {
+        if(o.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
-            ogloszenie.setAktywne(false);
+            o.setAktywne(false);
+            ogloszenieFacadeLocal.edit(o);
         }
     }    
     
     @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-        if (ogloszenieNowe == null) 
+        if (ogloszenieStan == null){ 
         throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
+    }else{
+        ogloszenieFacadeLocal.edit(ogloszenieStan);
     }
     
+}
     @Override
     @PermitAll
     public Ogloszenie pobierzOgłoszenie(Ogloszenie ogloszenie) {
