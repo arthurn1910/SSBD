@@ -174,12 +174,11 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
-        if (o == null){ 
+        if (ogloszenieStan == null){ 
         throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
     }else{
-        ogloszenieFacadeLocal.edit(o);
+        ogloszenieFacadeLocal.edit(ogloszenieStan);
     }
     
 }
