@@ -82,10 +82,10 @@ public interface MOOEndpointLocal {
     
     /***
      * Funkcja zwracająca ogłoszenie o wybranym ID
-     * @param login
+     * @param ID
      * @return 
      */
-    public Ogloszenie znajdzPoID(Long ID) ;
+    public Ogloszenie znajdzPoID(Long ID);
     
     /***
      * Metoda zmieniająca agenta w ogłoszeniu
@@ -101,14 +101,7 @@ public interface MOOEndpointLocal {
      * @return lista ogłoszeń
      */
     List<Ogloszenie> pobierzWszytkieOgloszenia();
-    
-    /**
-     * Metoda pobiera dane ogłoszenie MOO.10
-     * @param ogloszenie
-     * @return 
-     */
-    Ogloszenie pobierzOgłoszenie(Ogloszenie ogloszenie);
-    
+        
     /**
      * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika MOO.11
      * @param ogloszenie ogłoszenie, które ma być dodane
@@ -126,31 +119,14 @@ public interface MOOEndpointLocal {
      * @param ogloszenie ogloszenie do edycji
      * @return 
      * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     * @throws java.io.IOException 
+     * @throws java.lang.ClassNotFoundException 
      */
     public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException;
-    
-    /**
-     * Metoda zapisuje ogłoszenie po edycji
-     * @param ogloszenie ogloszenie po edycji
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
-     */
-    
-    
-    public void zapiszOgloszeniePoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
-    
-     /**
-     * Metoda zapisuje ogłoszenie innego użytkownika po edycji
-     * @param ogloszenie ogloszenie po edycji
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
-     */
-    
-    
-    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu;
+         
     /**
      * Pobiera liste agentów
      * @return lista agentow
-     */
-    
-    
+     */ 
     public List<Konto> pobierzListeAgentow();
 }

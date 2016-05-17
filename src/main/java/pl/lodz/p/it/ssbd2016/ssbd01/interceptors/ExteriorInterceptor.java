@@ -1,4 +1,3 @@
-
 package pl.lodz.p.it.ssbd2016.ssbd01.interceptors;
 
 

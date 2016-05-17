@@ -40,7 +40,7 @@ public class MenuBean {
                     poziomyDostepu += poziom.getPoziom() + ", ";
                 }
             }
-            zalogowany = true;
+            zalogowany = true;            
         } else {
             zalogowany = false;
         }
