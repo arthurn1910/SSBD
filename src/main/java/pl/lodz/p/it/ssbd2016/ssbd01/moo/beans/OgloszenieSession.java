@@ -135,13 +135,6 @@ public class OgloszenieSession implements Serializable {
         setOgloszenieEdytuj(mooEndpoint.pobierzOgloszenieDoEdycji(ogloszenie));
     }
     
-    /**
-     * Metoda zapisuje zmienione ogloszenie.
-     */
-    public void zapiszOgloszeniePoEdycji() throws Exception{
-        mooEndpoint.zapiszOgloszeniePoEdycji(ogloszenieEdytuj);
-    }
-    
      /**
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
      */

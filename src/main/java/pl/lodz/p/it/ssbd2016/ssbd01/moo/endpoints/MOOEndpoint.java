@@ -187,16 +187,10 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         if (ogloszenieStan == null){ 
         throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
-    }else{
-        ogloszenieFacadeLocal.edit(ogloszenieStan);
+        }else{
+            ogloszenieFacadeLocal.edit(ogloszenieStan);
+        }
     }
-    
-}
-    @Override
-    @PermitAll
-    public Ogloszenie pobierzOgłoszenie(Ogloszenie ogloszenie) {
-        return ogloszenieFacadeLocal.find(ogloszenie.getId());
-    } 
     
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
@@ -207,37 +201,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         ogloszenieStan = ogloszenieFacadeLocal.find(ogloszenie.getId());
         return (Ogloszenie) CloneUtils.deepCloneThroughSerialization(ogloszenieStan);
     }
-    
-    @Override
-    @RolesAllowed("zapiszOgloszeniePoEdycji")
-    public void zapiszOgloszeniePoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
-//        if (ogloszenieStan == null) {
-//            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
-//        }
-//        if (!ogloszenieStan.equals(ogloszenie)) {
-//            throw new WyjatekSystemu("blad.ogloszenieNiezgodneZWczytanym");
-//        }
-        /*
-        zapis ogloszenia po edycji
-        */
-//        ogloszenieStan = null;
-    }
-    
-     @Override
-    @RolesAllowed("zapiszOgloszenieInnegoUzytkownikaPoEdycji")
-    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu {
-//        if (ogloszenieStan == null) {
-//            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
-//        }
-//        if (!ogloszenieStan.equals(ogloszenie)) {
-//            throw new WyjatekSystemu("blad.ogloszenieNiezgodneZWczytanym");
-//        }
-        /*
-        zapis ogloszenia po edycji
-        */
-//        ogloszenieStan = null;
-    }
-    
+        
     //Implementacja SessionSynchronization
     /**
      * Metoda logująca czas rozpoczęcia transakcji
