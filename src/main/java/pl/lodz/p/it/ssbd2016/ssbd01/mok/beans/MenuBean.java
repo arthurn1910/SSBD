@@ -28,17 +28,14 @@ public class MenuBean {
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika obecnie zalogowanego
+     * oraz procesuje dalej login użytkownika w celu zapisu jego IP
     */
     @PostConstruct
     public void initModel() {
-        String str = getContext().getRemoteUser();
-        login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-
+        String login = getContext().getRemoteUser();
         if (login != null) {
             uzytkownikSession.zapiszIP(login);
-        }
-        if (str != null) {
-            Konto konto = uzytkownikSession.znajdzPoLoginie(str);
+            Konto konto = uzytkownikSession.znajdzPoLoginie(login);
             login = konto.getLogin();
             poziomyDostepu = "";
             for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
