@@ -1,13 +1,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
  * Ziarno odpowiedzialne za wylogowanie/zakończenie sesji
@@ -18,7 +19,7 @@ public class MenuBean {
     
     @Inject
     private UzytkownikSession uzytkownikSession;
-    
+
     String login;
     String poziomyDostepu;
     boolean zalogowany;
@@ -27,12 +28,14 @@ public class MenuBean {
     /**
     * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
     * konto przez konto użytkownika obecnie zalogowanego
+     * oraz procesuje dalej login użytkownika w celu zapisu jego IP
     */
     @PostConstruct
     public void initModel() {
-        String str = getContext().getRemoteUser();
-        if (str != null) {
-            Konto konto = uzytkownikSession.znajdzPoLoginie(str);
+        String login = getContext().getRemoteUser();
+        if (login != null) {
+            uzytkownikSession.zapiszIP(login);
+            Konto konto = uzytkownikSession.znajdzPoLoginie(login);
             login = konto.getLogin();
             poziomyDostepu = "";
             for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
