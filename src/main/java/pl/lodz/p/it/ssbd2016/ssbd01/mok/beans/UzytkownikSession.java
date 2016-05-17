@@ -1,25 +1,23 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
-import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.HistoriaLogowania;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
+import javax.mail.MessagingException;
+import javax.naming.NamingException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.mail.MessagingException;
-import javax.naming.NamingException;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpointLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -44,10 +42,9 @@ public class UzytkownikSession implements Serializable {
     /**
      * MOK.16 logujemy zalogowanego użytkownika w historii logowania
      */
-    @PostConstruct
-    public void init() {
-        login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-        
+
+    public void zapiszIP(String login) {
+
         if (login != null) {
             MOKEndpoint.ustawIP(login);
         }

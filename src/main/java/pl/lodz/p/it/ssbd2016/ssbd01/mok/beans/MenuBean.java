@@ -1,13 +1,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 
 /**
  * Ziarno odpowiedzialne za wylogowanie/zakończenie sesji
@@ -18,7 +19,7 @@ public class MenuBean {
     
     @Inject
     private UzytkownikSession uzytkownikSession;
-    
+
     String login;
     String poziomyDostepu;
     boolean zalogowany;
@@ -31,6 +32,11 @@ public class MenuBean {
     @PostConstruct
     public void initModel() {
         String str = getContext().getRemoteUser();
+        login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+
+        if (login != null) {
+            uzytkownikSession.zapiszIP(login);
+        }
         if (str != null) {
             Konto konto = uzytkownikSession.znajdzPoLoginie(str);
             login = konto.getLogin();
