@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="top">
+        <h>${msg["tytulyPrzypadkow.wyswietlSzczegolyOgloszenia"]}</h>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    
+    
+     <ui:define name="content">
+        <h:form id="form">
+            ${msg["szczegolyOgloszenia.tytul"]} <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.tytul}"/><br />
+            ${msg["szczegolyOgloszenia.aktywne"]} <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.aktywne}"/><br />
+            ${msg["szczegolyOgloszenia.cena"]} <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.cena}"/><br />
+            ${msg["szczegolyOgloszenia.dataDodania"]} <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.dataDodania}"/><br />
+            ${msg["szczegolyOgloszenia.id"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.id}"/><br />
+            ${msg["szczegolyOgloszenia.idAgenta"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idAgenta}"/><br />
+            ${msg["szczegolyOgloszenia.idWlasciciela"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idWlasciciela}"/><br />
+            ${msg["szczegolyOgloszenia.rynekPierwotny"]}  <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.rynekPierwotny}"/><br />            
+            
+            <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.przydzielAgenta()}" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyAdministrator()}">
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog> 
+            
+            <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.zmienAgenta()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyAdministrator()}">
+            </h:commandButton> 
+        </h:form>
+    </ui:define>
+</ui:composition>
+        

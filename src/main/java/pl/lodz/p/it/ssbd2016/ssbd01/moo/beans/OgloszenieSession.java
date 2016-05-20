@@ -11,7 +11,6 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -171,11 +170,7 @@ public class OgloszenieSession implements Serializable {
     }
     
     Ogloszenie getOgloszenieDoWyswietlenia() {
-        Ogloszenie tmp=mooEndpoint.znajdzPoID(ogloszenieDoWyswietlenia.getId());
-        if(tmp.getId()==null){
-            //WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException");
-            return null;
-        }
+        Ogloszenie tmp=mooEndpoint.znajdzPoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
         return tmp;
     }
 

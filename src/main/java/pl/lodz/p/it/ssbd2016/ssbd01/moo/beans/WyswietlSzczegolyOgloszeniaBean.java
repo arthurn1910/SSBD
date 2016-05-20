@@ -33,6 +33,12 @@ public class WyswietlSzczegolyOgloszeniaBean {
     public Ogloszenie getOgloszenie() {
         return ogloszenie;
     }
+    
+    public Boolean posiadaAgenta(){
+        if(ogloszenie.getIdAgenta()!=null)
+            return true;
+        return false;
+    }
 
     /**
      * MOO.11
