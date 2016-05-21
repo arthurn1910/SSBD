@@ -23,6 +23,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
@@ -36,7 +37,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
  * API servera dla modułu funkcjonalnego MOO
  */
 @Stateful
-@Interceptors({TrackerInterceptor.class})
+@Interceptors({ExteriorInterceptor.class ,TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 

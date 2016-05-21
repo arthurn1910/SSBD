@@ -170,8 +170,9 @@ public class OgloszenieSession implements Serializable {
     }
     
     Ogloszenie getOgloszenieDoWyswietlenia() {
-        Ogloszenie tmp=mooEndpoint.znajdzPoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
-        return tmp;
+        /*Ogloszenie tmp=mooEndpoint.znajdzPoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
+        return tmp;*/
+        return new Ogloszenie(new Long("1"), "lol", 0, true, new Date(2016, 10, 1), 0, true);
     }
 
     public Ogloszenie getOgloszenieEdytuj() {
@@ -180,5 +181,13 @@ public class OgloszenieSession implements Serializable {
 
     public void setOgloszenieEdytuj(Ogloszenie ogloszenieEdytuj) {
         this.ogloszenieEdytuj = ogloszenieEdytuj;
+    }
+
+    List<Konto> getAgenci() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

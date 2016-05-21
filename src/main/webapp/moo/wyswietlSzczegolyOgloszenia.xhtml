@@ -26,7 +26,7 @@
             ${msg["szczegolyOgloszenia.idWlasciciela"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idWlasciciela}"/><br />
             ${msg["szczegolyOgloszenia.rynekPierwotny"]}  <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.rynekPierwotny}"/><br />            
             
-            <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.przydzielAgenta()}" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyAdministrator()}">
+            <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.przydzielAgenta()}" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </p:commandButton>
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
@@ -34,7 +34,7 @@
                 <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog> 
             
-            <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.zmienAgenta()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyAdministrator()}">
+            <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.zmienAgenta()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </h:commandButton> 
         </h:form>
     </ui:define>
