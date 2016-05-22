@@ -34,14 +34,9 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
 
     @Override
     public Konto znajdzPoLoginie(String login) {
-        Query q = em.createNamedQuery("Konto.findAll");
-        List<Konto> l = (List<Konto>) q.getResultList();
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getLogin() == login) {
-                return l.get(i);
-            }
-        }
-        return l.get(0);
+        Query q = em.createNamedQuery("Konto.findByLogin");
+        q.setParameter("login", login);
+        return (Konto) q.getSingleResult();
     }
     
 }

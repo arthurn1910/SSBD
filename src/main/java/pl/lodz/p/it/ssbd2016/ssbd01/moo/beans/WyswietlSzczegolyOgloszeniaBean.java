@@ -3,6 +3,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -27,20 +28,22 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     @PostConstruct
     private void initModel() {
+        ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.pobierzWszystkieOgloszenia().get(0));
         ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
     }
 
     public Ogloszenie getOgloszenie() {
         return ogloszenie;
     }
-
+    
     /**
      * MOO.11
      * Handler na przycisku "Dodaj do ulubionych". Dodaje ogłoszenie do ulubionych
      * dla obecnie zalogowanego użytkownika(klienta).
      */
-    public void dodajDoUlubionych() {
+    public String dodajDoUlubionych() {
         ogloszenieSession.dodajDoUlubionych(ogloszenie);
+        return "ulubione";
     }
     
     /**
@@ -48,10 +51,20 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Handler na przycisku "Usun z ulubionych". Usuwa ogłoszenie z ulubionych
      * dla obecnie zalogowanego użytkownika(klienta).
      */
-    public void usunZUlubionych() {
+    public String usunZUlubionych() {
         ogloszenieSession.usunZUlubionych(ogloszenie);
+        return "ulubione";
     }    
     
+    /**
+     * Metoda sprawdza czy dane ogłoszenie jest w ulubionych, na potrzeby renderowania 
+     * odpowiednich przycisków.
+     * @return 
+     */
+    public boolean czyUlubione() {
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        return ogloszenie.isUlubione(login);
+    }
           
     /**
      * Deaktywuje ogłoszenie innego użytkownika

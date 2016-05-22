@@ -5,6 +5,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
+import javax.faces.context.FacesContext;
 import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -30,9 +31,14 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @Override
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
-        Konto konto = kontoFacade.znajdzPoLoginie("");
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        
+        Konto konto = kontoFacade.znajdzPoLoginie(login);
         Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
-        // Czynności związane z logiką
+        
+        ogloszenieTemp.getKontoCollection().add(konto);
+        konto.getOgloszenieUlubioneCollection().add(ogloszenieTemp);
+        
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
     }
@@ -40,11 +46,14 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @Override
     @RolesAllowed("usunZUlubionych")
     public void usunZUlubionych(Ogloszenie ogloszenie) {
-        Konto konto = kontoFacade.znajdzPoLoginie("");
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        Konto konto = kontoFacade.znajdzPoLoginie(login);
         Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
-        // Czynności związane z logiką
+        
+        ogloszenieTemp.getKontoCollection().remove(konto);
+        konto.getOgloszenieUlubioneCollection().remove(ogloszenieTemp);
+        
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
-    }
-    
+    }    
 }
