@@ -55,11 +55,12 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
 
     @Override
     public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
+        Collection<Ogloszenie> ogloszenieAgentaCollection;
         Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
         Ogloszenie o = find(rowData.getId());
-        loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
-        if(o.getIdAgenta().getId()!=null){
-            Collection<Ogloszenie> ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
+        if(o.getIdAgenta()!=null){
+            loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
+            ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
             ogloszenieAgentaCollection.remove(o);
             o.getIdAgenta().setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
         }
@@ -67,7 +68,7 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
             if(k.getId().equals(agent.getId()))
                 o.setIdAgenta(k);
         }
-        Collection<Ogloszenie> ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
+        ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
         ogloszenieAgentaCollection.add(o);
         o.getIdAgenta().setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
         loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());

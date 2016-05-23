@@ -35,9 +35,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
     }
     
     public Boolean posiadaAgenta(){
-        if(ogloszenie.getIdAgenta()!=null)
-            return true;
-        return false;
+        return ogloszenieSession.czyPosiadaJakiegosAgenta(ogloszenie);
     }
 
     /**

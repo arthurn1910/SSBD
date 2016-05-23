@@ -150,7 +150,9 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
         ogloszenieFacadeLocal.przydzielAgenta(rowData, agent);
+        loger.log(Level.INFO, "!!!!1");
         ogloszenieFacadeLocal.flush();
+        loger.log(Level.INFO, "!!!!2");
     }
     
     @Override
