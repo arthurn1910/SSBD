@@ -75,6 +75,7 @@ public interface MOOEndpointLocal {
      * Metoda przydzielająca konto agenta do ogłoszenia
      * Stowrzył Radosław Pawlaczyk
      * MOO.6
+     * MOO 7
      * @param rowData
      * @param agent 
      */
@@ -85,16 +86,7 @@ public interface MOOEndpointLocal {
      * @param ID
      * @return 
      */
-    public Ogloszenie znajdzPoID(Long ID);
-    
-    /***
-     * Metoda zmieniająca agenta w ogłoszeniu
-     * Stowrzył Radosław Pawlaczyk
-     * MOO.7
-     * @param rowData
-     * @param agent 
-     */
-    public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent);
+    public Ogloszenie znajdzOgloszeniePoID(Long ID);
     
     /**
      * Metoda pobiera wszystkie ogłoszenia MOO.8 i 9
@@ -129,4 +121,19 @@ public interface MOOEndpointLocal {
      * @return lista agentow
      */ 
     public List<Konto> pobierzListeAgentow();
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada danego agenta.
+     * @return 
+     */
+    public Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData);
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada jakiegoś agenta.
+     * @return 
+     */
+    public Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie);
+    /***
+     * Funkcja zwracająca liste agentów.
+     * @return 
+     */
+    public List<Konto> getAgenci();
 }

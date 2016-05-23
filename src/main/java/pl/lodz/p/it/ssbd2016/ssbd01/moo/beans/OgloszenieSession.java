@@ -9,6 +9,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
@@ -92,6 +93,7 @@ public class OgloszenieSession implements Serializable {
      * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w MOOEndpoint przekazując jej parametr Ogloszenie
      * Stowrzył Radosław Pawlaczyk
      * MOO 6
+     * MOO 7
      */
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent){
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
@@ -152,15 +154,6 @@ public class OgloszenieSession implements Serializable {
         }
     }
     
-    /***
-     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w MOOEndpoint przekazując jej parametr Ogloszenie
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 7
-     */
-    void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent){
-        mooEndpoint.zmienAgentaWOgloszeniu(rowData, agent);
-    }  
-    
     /**
      * Pobiera liste agentów
      * @return lista agentow
@@ -170,9 +163,8 @@ public class OgloszenieSession implements Serializable {
     }
     
     Ogloszenie getOgloszenieDoWyswietlenia() {
-        /*Ogloszenie tmp=mooEndpoint.znajdzPoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
-        return tmp;*/
-        return new Ogloszenie(new Long("1"), "lol", 0, true, new Date(2016, 10, 1), 0, true);
+        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
+        return tmp;
     }
 
     public Ogloszenie getOgloszenieEdytuj() {
@@ -182,12 +174,25 @@ public class OgloszenieSession implements Serializable {
     public void setOgloszenieEdytuj(Ogloszenie ogloszenieEdytuj) {
         this.ogloszenieEdytuj = ogloszenieEdytuj;
     }
-
+    /***
+     * Funkcja zwracająca liste agentów.
+     * @return 
+     */
     List<Konto> getAgenci() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return mooEndpoint.getAgenci();
     }
-
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada danego agenta.
+     * @return 
+     */
     Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return mooEndpoint.czyPosiadaAgenta(ogloszenie, rowData);
+    }
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada jakiegoś agenta.
+     * @return 
+     */
+    Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
+        return mooEndpoint.czyPosiadaJakiegosAgenta(ogloszenie);
     }
 }

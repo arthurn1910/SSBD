@@ -22,8 +22,8 @@
             ${msg["szczegolyOgloszenia.cena"]} <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.cena}"/><br />
             ${msg["szczegolyOgloszenia.dataDodania"]} <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.dataDodania}"/><br />
             ${msg["szczegolyOgloszenia.id"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.id}"/><br />
-            ${msg["szczegolyOgloszenia.idAgenta"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idAgenta}"/><br />
-            ${msg["szczegolyOgloszenia.idWlasciciela"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idWlasciciela}"/><br />
+            ${msg["szczegolyOgloszenia.idAgenta"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idAgenta.getId()}"/><br />
+            ${msg["szczegolyOgloszenia.idWlasciciela"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idWlasciciela.getId()}"/><br />
             ${msg["szczegolyOgloszenia.rynekPierwotny"]}  <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.rynekPierwotny}"/><br />            
             
             <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.przydzielAgenta()}" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
@@ -34,7 +34,9 @@
                 <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog> 
             
-            <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="#{wyswietlSzczegolyOgloszeniaBean.zmienAgenta()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
+            <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="zmienAgenta"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
+            </h:commandButton> 
+            <h:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="przydzielAgenta"  class="edit_icon" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </h:commandButton> 
         </h:form>
     </ui:define>

@@ -75,21 +75,12 @@ public class WyswietlSzczegolyOgloszeniaBean {
         listaAgentów = ogloszenieSession.pobierzListeAgentow();
     }
     
-    /***
-     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 7
-     */
-    public void zmienAgentaWOgloszeniu(){
-        pobierzListAgentow();
-        Konto k=new Konto();
-        ogloszenieSession.zmienAgentaWOgloszeniu(ogloszenie, k);
-    }
     
     /***
      * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
      * Stowrzył Radosław Pawlaczyk
      * MOO 6
+     * MOO 7
      */
     void przydzielAgentaDoOgloszenia(){
         pobierzListAgentow();

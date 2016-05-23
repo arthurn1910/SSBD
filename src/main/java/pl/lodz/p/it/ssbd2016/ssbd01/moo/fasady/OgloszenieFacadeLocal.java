@@ -7,6 +7,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
 import javax.ejb.Local;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
 /**
@@ -21,6 +22,8 @@ public interface OgloszenieFacadeLocal {
     void edit(Ogloszenie ogloszenie);
 
     void remove(Ogloszenie ogloszenie);
+    
+    void flush();
 
     Ogloszenie find(Object id);
 
@@ -34,5 +37,7 @@ public interface OgloszenieFacadeLocal {
      */
     public Ogloszenie znajdzPoID(Long ID);
 
-    int count();    
+    int count();   
+    
+    public void przydzielAgenta(Ogloszenie rowData, Konto agent);
 }

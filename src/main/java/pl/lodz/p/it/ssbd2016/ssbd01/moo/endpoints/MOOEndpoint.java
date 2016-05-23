@@ -2,6 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,10 +22,12 @@ import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
@@ -40,7 +43,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 @Interceptors({ExteriorInterceptor.class ,TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
-
+    @EJB
+    private KontoManagerLocal kontoManager;
     @EJB
     private OgloszenieManagerLocal ogloszenieManagerLocal;
     @EJB
@@ -137,33 +141,16 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     }
    
     @Override
-    @RolesAllowed("znajdzPoID")
-    public Ogloszenie znajdzPoID(Long id) {
-        return ogloszenieFacadeLocal.znajdzPoID(id);
+    @PermitAll
+    public Ogloszenie znajdzOgloszeniePoID(Long id) {
+        return ogloszenieFacadeLocal.find(id);
     }
     
     @Override
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
-        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        o.setIdAgenta(agent);
-        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
-        ogloszenieAgentaCollection.add(o);
-        agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-    }
-
-    @Override
-    @RolesAllowed("zmienAgentaWOgloszeniu")
-    public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent) {
-        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        Konto agentStary=o.getIdAgenta();
-        o.setIdAgenta(agent);
-        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
-        ogloszenieAgentaCollection.add(o);
-        agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-        ogloszenieAgentaCollection=agentStary.getOgloszenieAgentaCollection();
-        ogloszenieAgentaCollection.remove(o);
-        agentStary.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+        ogloszenieFacadeLocal.przydzielAgenta(rowData, agent);
+        ogloszenieFacadeLocal.flush();
     }
     
     @Override
@@ -251,5 +238,36 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     public TypNieruchomosci getTypNieruchomosci(String typ) {
         return typNieruchomosciFacade.znajdzPoNazwie(typ);
+    }
+
+    @Override
+    public Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if(o.getIdAgenta().getId().equals(rowData.getId()))
+            return true;
+        return false;
+    }
+    
+    @Override
+    public Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if(o.getIdAgenta()!=null)
+            return true;
+        return false;
+    }
+    /***
+     * Funckja zwracająca liste agentów
+     * @return 
+     */
+    @Override
+    public List<Konto> getAgenci() {
+        List<Konto> tmp=kontoManager.pobierzWszystkie();
+        List<Konto> tmp2=new ArrayList<>();
+        for(Konto k : tmp){
+            for(PoziomDostepu p :k.getPoziomDostepuCollection())
+                if(p.getPoziom().equals("AGENT"))
+                    tmp2.add(k);
+        }           
+        return tmp2;
     }
 }

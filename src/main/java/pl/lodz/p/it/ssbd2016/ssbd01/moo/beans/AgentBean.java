@@ -43,29 +43,27 @@ public class AgentBean {
      * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
      * @return 
      */
-    public String dodajAgenta(){
+    public void przydzielAgenta(){
         ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agenci.getRowData());
         initModel();
-        return "wyswietlSzczegolyOgloszenia";
     }
     
     /**
-     * Handler dla przycisku odłącz. Metoda zmieniająca agenta w ogłoszeniu 
-     * @return 
-     */
-    public String zmienAgenta(){
-        ogloszenieSession.zmienAgentaWOgloszeniu(ogloszenie, agenci.getRowData());
-        initModel();
-        return "wyswietlSzczegolyOgloszenia";
-    }
-    
-    /**
-     * Metoda dla widoku definiująca czy konto posiada dany poziom dostępu. 
+     * Metoda dla widoku definiująca czy ogloszenie posiada danego agenta. 
      * Zmienia dostępne klawisze między dołącz i odłącz
      * @return  decyzcja czy konto posiada aktywny poziom dostępu
      */
     public boolean czyPosiadaAgenta(){
         return ogloszenieSession.czyPosiadaAgenta(ogloszenie, agenci.getRowData());
+    }
+    
+    /**
+     * Metoda dla widoku definiująca czy ogloszenie posiada jakiegos agenta. 
+     * Zmienia dostępne klawisze między dołącz i odłącz
+     * @return  decyzcja czy konto posiada aktywny poziom dostępu
+     */
+    public boolean czyPosiadaJakiegosAgenta(){
+        return ogloszenieSession.czyPosiadaJakiegosAgenta(ogloszenie);
     }
     
     // Gettery i Settery    
