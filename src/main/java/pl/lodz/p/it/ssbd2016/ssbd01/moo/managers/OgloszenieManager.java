@@ -59,10 +59,8 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         Konto tmp;
         if(o.getIdAgenta()!=null){
             loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
-            tmp=o.getIdAgenta();
-            ogloszenieAgentaCollection=tmp.getOgloszenieAgentaCollection();
-            ogloszenieAgentaCollection.remove(o);
-            tmp.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+            tmp=kontoFacade.znajdzPoLoginie(String.valueOf(o.getIdAgenta().getId()));
+            tmp.getOgloszenieAgentaCollection().remove(o);
             kontoFacade.edit(tmp);
         }
         loger.log(Level.INFO, "!!!!2");
@@ -72,15 +70,11 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         loger.log(Level.INFO, "!!!!4");
         ogloszenieFacadeLocal.edit(o);
         loger.log(Level.INFO, "!!!!5");
-        ogloszenieAgentaCollection=tmp.getOgloszenieAgentaCollection();
+        tmp.getOgloszenieAgentaCollection().add(o);
         loger.log(Level.INFO, "!!!!6");
-        ogloszenieAgentaCollection.remove(o);
-        loger.log(Level.INFO, "!!!!7");
-        tmp.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-        loger.log(Level.INFO, "!!!!8");
         kontoFacade.edit(tmp);
-        loger.log(Level.INFO, "!!!!9");
+        loger.log(Level.INFO, "!!!!7");
         ogloszenieFacadeLocal.flush();
-        loger.log(Level.INFO, "!!!!91");
+        loger.log(Level.INFO, "!!!!8");
     }
 }

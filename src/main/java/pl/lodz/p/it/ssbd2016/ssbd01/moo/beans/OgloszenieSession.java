@@ -163,7 +163,7 @@ public class OgloszenieSession implements Serializable {
     }
     
     Ogloszenie getOgloszenieDoWyswietlenia() {
-        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(new Long("33"));//(ogloszenieDoWyswietlenia.getId());
+        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
         return tmp;
     }
 
