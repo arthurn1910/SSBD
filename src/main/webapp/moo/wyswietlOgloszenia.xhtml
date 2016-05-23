@@ -37,8 +37,7 @@
                     
                 <h:column id="akcje">
                     <f:facet name="header">akcje</f:facet>
-                    <h:commandButton action="#{wyswietlOgloszeniaBean.aktywujOgloszenie()}" value="Aktywuj" rendered="#{not row.aktywne}"/>
-                    <h:commandButton action="#{wyswietlOgloszeniaBean.deaktywujOgloszenie()}" value="Deaktywuj" rendered="#{row.aktywne}"/>
+                    <h:commandButton action="#{wyswietlOgloszeniaBean.wyswietlSzczegolyOgloszenia()}" value="Wyswietl szczegoly ogloszenia" rendered="#{not autoryzacja.czyAdministrator()}"/>
                     <h:commandButton action="#{wyswietlOgloszeniaBean.dodajDoUlubionych()}" value="Dodaj do ulubionych" rendered="true"/>
                 </h:column>
                                 

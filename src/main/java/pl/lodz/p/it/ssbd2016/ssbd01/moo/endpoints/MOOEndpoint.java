@@ -87,7 +87,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
         else if(ogloszenie.getAktywne() == false) {

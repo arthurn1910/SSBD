@@ -21,6 +21,7 @@
         <h:outputLink value="#{request.contextPath}/mok/zalogowani/adminMenadzer/wyszukajKonta.xhtml" rendered="#{autoryzacja.czyAdministrator() or autoryzacja.czyMenadzer()}">${msg["menu.wyszukajKonta"]}</h:outputLink><br />
         
         <h:outputLink value="#{request.contextPath}/mok/zalogowani/admin/historiaLogowaniaRaport.xhtml" rendered="#{autoryzacja.czyAdministrator()}">${msg["menu.generuj.raport"]}</h:outputLink><br />
+        <h:outputLink value="#{request.contextPath}/moo/wyswietlOgloszenia.xhtml" rendered="#{not autoryzacja.czyAdministrator()}">${msg["menu.wyswietlOgloszenia"]}</h:outputLink><br />
 
         <h:commandButton value="#{msg['komunikat.wyloguj']}" action="#{menuBean.wyloguj()}" rendered="#{menuBean.zalogowany}"/>
     </h:form>

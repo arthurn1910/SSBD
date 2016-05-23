@@ -117,7 +117,8 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Stworzył: Maksymilian Zgierski
      * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
      */
-    public void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+    public String deaktywujOgloszenieDanegoUzytkownika() throws Exception {
         ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        return "";
     }
 }

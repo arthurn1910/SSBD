@@ -3,6 +3,8 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Obsługuje widok edycji ogłoszenia
@@ -31,5 +33,9 @@ public class EdytujOgloszenieBean {
     public String edytujOgloszenieInnegoUzytkownika() throws Exception{
         ogloszenieSession.zapiszOgloszenieInnegoUzytkownikaPoEdycji();
         return "wyswietlOgloszenia";
+    }
+    
+    public Ogloszenie getOgloszenieEdytuj() throws WyjatekSystemu {
+        return ogloszenieSession.getOgloszenieEdytuj();
     }
 }
