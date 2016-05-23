@@ -33,7 +33,10 @@ public class WyswietlSzczegolyOgloszeniaBean {
     public Ogloszenie getOgloszenie() {
         return ogloszenie;
     }
-    
+    /***
+     * Funkcja sprawdzająca czy ogłoszenie posiada agenta
+     * @return 
+     */
     public Boolean posiadaAgenta(){
         return ogloszenieSession.czyPosiadaJakiegosAgenta(ogloszenie);
     }
@@ -71,19 +74,6 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     public void pobierzListAgentow() {
         listaAgentów = ogloszenieSession.pobierzListeAgentow();
-    }
-    
-    
-    /***
-     * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 6
-     * MOO 7
-     */
-    void przydzielAgentaDoOgloszenia(){
-        pobierzListAgentow();
-        Konto agent=new Konto();
-        ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agent);
     }
     
     /***

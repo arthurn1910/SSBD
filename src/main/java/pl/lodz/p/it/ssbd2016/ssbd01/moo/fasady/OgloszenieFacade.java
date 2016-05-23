@@ -48,29 +48,8 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
 
     @Override
     public Ogloszenie znajdzPoID(Long ID) {
-        Query q = em.createNamedQuery("Ogloszenie.findByID");
-        q.setParameter("ID", ID);
+        Query q = em.createNamedQuery("Ogloszenie.findById");
+        q.setParameter("id", ID);
         return (Ogloszenie) q.getSingleResult();
     }   
-
-    @Override
-    public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
-        Collection<Ogloszenie> ogloszenieAgentaCollection;
-        Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
-        Ogloszenie o = find(rowData.getId());
-        if(o.getIdAgenta()!=null){
-            loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
-            ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
-            ogloszenieAgentaCollection.remove(o);
-            o.getIdAgenta().setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-        }
-        for(Konto k : kontoManager.pobierzWszystkie()){
-            if(k.getId().equals(agent.getId()))
-                o.setIdAgenta(k);
-        }
-        ogloszenieAgentaCollection=o.getIdAgenta().getOgloszenieAgentaCollection();
-        ogloszenieAgentaCollection.add(o);
-        o.getIdAgenta().setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-        loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
-    }
 }

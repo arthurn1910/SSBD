@@ -39,9 +39,11 @@ public class AgentBean {
         ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
     }
     
-    /**
-     * Handler dla przycisku dołącz. Metoda dołącza poziom dostępu do konta 
-     * @return 
+   /***
+     * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w OgloszenieSession przekazując jej parametry Ogloszenie, Konto
+     * Stowrzył Radosław Pawlaczyk
+     * MOO 6
+     * MOO 7
      */
     public void przydzielAgenta(){
         ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agenci.getRowData());

@@ -1,5 +1,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.managers;
 
+import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -9,6 +12,7 @@ import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 
@@ -47,4 +51,36 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         kontoFacade.edit(konto);
     }
     
+    @Override
+    public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
+        Collection<Ogloszenie> ogloszenieAgentaCollection;
+        Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
+        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(rowData.getId());
+        Konto tmp;
+        if(o.getIdAgenta()!=null){
+            loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
+            tmp=o.getIdAgenta();
+            ogloszenieAgentaCollection=tmp.getOgloszenieAgentaCollection();
+            ogloszenieAgentaCollection.remove(o);
+            tmp.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+            kontoFacade.edit(tmp);
+        }
+        loger.log(Level.INFO, "!!!!2");
+        tmp=kontoFacade.znajdzPoLoginie(String.valueOf(agent.getId()));
+        loger.log(Level.INFO, "!!!!3");
+        o.setIdAgenta(tmp);
+        loger.log(Level.INFO, "!!!!4");
+        ogloszenieFacadeLocal.edit(o);
+        loger.log(Level.INFO, "!!!!5");
+        ogloszenieAgentaCollection=tmp.getOgloszenieAgentaCollection();
+        loger.log(Level.INFO, "!!!!6");
+        ogloszenieAgentaCollection.remove(o);
+        loger.log(Level.INFO, "!!!!7");
+        tmp.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
+        loger.log(Level.INFO, "!!!!8");
+        kontoFacade.edit(tmp);
+        loger.log(Level.INFO, "!!!!9");
+        ogloszenieFacadeLocal.flush();
+        loger.log(Level.INFO, "!!!!91");
+    }
 }

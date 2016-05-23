@@ -44,8 +44,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @EJB
-    private KontoManagerLocal kontoManager;
-    @EJB
     private OgloszenieManagerLocal ogloszenieManagerLocal;
     @EJB
     private KontoMOOFacadeLocal kontoFacade;
@@ -143,16 +141,15 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @PermitAll
     public Ogloszenie znajdzOgloszeniePoID(Long id) {
-        return ogloszenieFacadeLocal.find(id);
+        return ogloszenieFacadeLocal.znajdzPoID(id);
     }
     
     @Override
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
-        ogloszenieFacadeLocal.przydzielAgenta(rowData, agent);
         loger.log(Level.INFO, "!!!!1");
-        ogloszenieFacadeLocal.flush();
-        loger.log(Level.INFO, "!!!!2");
+        ogloszenieManagerLocal.przydzielAgenta(rowData, agent);
+        loger.log(Level.INFO, "!!!!10");
     }
     
     @Override
@@ -263,7 +260,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
      */
     @Override
     public List<Konto> getAgenci() {
-        List<Konto> tmp=kontoManager.pobierzWszystkie();
+        List<Konto> tmp=kontoFacade.findAll();
         List<Konto> tmp2=new ArrayList<>();
         for(Konto k : tmp){
             for(PoziomDostepu p :k.getPoziomDostepuCollection())

@@ -39,5 +39,5 @@ public interface OgloszenieFacadeLocal {
 
     int count();   
     
-    public void przydzielAgenta(Ogloszenie rowData, Konto agent);
+    
 }
