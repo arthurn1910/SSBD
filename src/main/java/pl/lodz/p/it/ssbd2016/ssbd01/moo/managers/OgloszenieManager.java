@@ -53,28 +53,27 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     
     @Override
     public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
-        Collection<Ogloszenie> ogloszenieAgentaCollection;
         Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
         Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(rowData.getId());
         Konto tmp;
         if(o.getIdAgenta()!=null){
-            loger.log(Level.INFO, "!!!!"+o.getIdAgenta().getId());
-            tmp=kontoFacade.znajdzPoLoginie(String.valueOf(o.getIdAgenta().getId()));
+            tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
             tmp.getOgloszenieAgentaCollection().remove(o);
             kontoFacade.edit(tmp);
         }
         loger.log(Level.INFO, "!!!!2");
-        tmp=kontoFacade.znajdzPoLoginie(String.valueOf(agent.getId()));
+        tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
         loger.log(Level.INFO, "!!!!3");
         o.setIdAgenta(tmp);
-        loger.log(Level.INFO, "!!!!4");
+        loger.log(Level.INFO, "!!!!4: "+o.getIdAgenta().getId());
         ogloszenieFacadeLocal.edit(o);
-        loger.log(Level.INFO, "!!!!5");
+        loger.log(Level.INFO, "!!!!5: "+ogloszenieFacadeLocal.find(o.getId()).getIdAgenta().getId());
         tmp.getOgloszenieAgentaCollection().add(o);
         loger.log(Level.INFO, "!!!!6");
         kontoFacade.edit(tmp);
         loger.log(Level.INFO, "!!!!7");
         ogloszenieFacadeLocal.flush();
-        loger.log(Level.INFO, "!!!!8");
+        kontoFacade.flush();
+        loger.log(Level.INFO, "!!!!8: "+ogloszenieFacadeLocal.find(o.getId()).getIdAgenta().getId());
     }
 }

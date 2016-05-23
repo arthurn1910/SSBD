@@ -31,5 +31,7 @@ public interface KontoMOOFacadeLocal {
     Konto znajdzPoLoginie(String login);
     
     int count();
+
+    public void flush();
     
 }

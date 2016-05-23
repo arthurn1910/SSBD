@@ -12,6 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpoint;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
@@ -96,7 +99,9 @@ public class OgloszenieSession implements Serializable {
      * MOO 7
      */
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent){
+        Logger loger = Logger.getLogger(MOOEndpoint.class.getName());   
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
+        loger.log(Level.INFO, "!!!!9: "+getOgloszenieDoWyswietlenia().getIdAgenta().getId());
     }
     
     /**

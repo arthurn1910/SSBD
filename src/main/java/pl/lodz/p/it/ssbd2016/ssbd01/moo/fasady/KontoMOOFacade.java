@@ -6,12 +6,15 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 
 /**
  *
@@ -34,14 +37,9 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
 
     @Override
     public Konto znajdzPoLoginie(String login) {
-        Query q = em.createNamedQuery("Konto.findAll");
-        List<Konto> l = (List<Konto>) q.getResultList();
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getLogin() == login) {
-                return l.get(i);
-            }
-        }
-        return l.get(0);
+        Query q = em.createNamedQuery("Konto.findByLogin");
+        q.setParameter("login", login);
+        return (Konto) q.getSingleResult();
     }
     
 }
