@@ -32,6 +32,7 @@ public class WyswietlOgloszeniaBean {
      */
     @PostConstruct
     private void initModel() {
+        System.out.println("!!!!!!!");
         ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
@@ -202,8 +203,9 @@ public class WyswietlOgloszeniaBean {
      * Funckja ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
      * @return 
      */
-    public String wyswietlSzczegolyOgloszenia(){
-        ogloszenieSession.setOgloszenieDoWyswietlenia(getOgloszeniaDataModel().getRowData());
+    public String wyswietlSzczegolyOgloszenia() {
+        Ogloszenie o = ogloszenia.get(getOgloszeniaDataModel().getRowIndex());
+        ogloszenieSession.setOgloszenieDoWyswietlenia(o);
         return "wyswietlSzczegolyOgloszenia";
     }
     

@@ -15,11 +15,11 @@
     </ui:define>
     <ui:define name="content">
         <h:form id="listaOgloszenForm2">
-        Sortuj wg. ceny <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujCena}" /><br />
-        Sortuj wg. daty dodania <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujDataDodania}" /><br />
-        Sortuj wg. typu ogłoszenia <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujTypOgloszenia}" /><br />
-        Sortuj wg. rynku <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujRynekPierwotny}" /><br />
-        <h:commandButton value="Sortuj ogłoszenia" action="#{wyswietlOgloszeniaBean.sortujOgloszenia()}"/>
+        ${msg["wyswietlOgloszenia.sortujWgCeny"]} <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujCena}" /><br />
+        ${msg["wyswietlOgloszenia.sortujWgDatyDodania"]} <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujDataDodania}" /><br />
+        ${msg["wyswietlOgloszenia.sortujWgTypuOgloszenia"]}<h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujTypOgloszenia}" /><br />
+        ${msg["wyswietlOgloszenia.sortujWgRynku"]} <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujRynekPierwotny}" /><br />
+        <h:commandButton value="${msg['wyswietlOgloszenia.sortuj']}" action="#{wyswietlOgloszeniaBean.sortujOgloszenia()}"/>
         <br /><br />
         </h:form>
         <h:form id="listaOgloszenForm">
