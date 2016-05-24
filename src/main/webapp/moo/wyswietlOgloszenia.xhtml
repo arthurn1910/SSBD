@@ -1,15 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Lista ogloszen</title>
-    </h:head>
-    <h:body> Lista ogloszen<br />
-                <h:form id="listaOgloszenForm">
-            
-                    <h:dataTable id="listaOgloszen" var="row" value="#{wyswietlOgloszeniaBean.ogloszeniaDataModel}">
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="top">
+        <h>${msg["tytulyPrzypadkow.wyswietlOgloszenia"]}</h>
+    </ui:define>
+
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="listaOgloszenForm2">
+        Sortuj wg. ceny <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujCena}" /><br />
+        Sortuj wg. daty dodania <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujDataDodania}" /><br />
+        Sortuj wg. typu ogłoszenia <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujTypOgloszenia}" /><br />
+        Sortuj wg. rynku <h:selectBooleanCheckbox value="#{wyswietlOgloszeniaBean.sortujRynekPierwotny}" /><br />
+        <h:commandButton value="Sortuj ogłoszenia" action="#{wyswietlOgloszeniaBean.sortujOgloszenia()}"/>
+        <br /><br />
+        </h:form>
+        <h:form id="listaOgloszenForm">
+            <h:dataTable id="listaOgloszen" var="row" value="#{wyswietlOgloszeniaBean.ogloszeniaDataModel}">
                 <h:column id="login">
                     <f:facet name="header">Tytuł</f:facet>
                     <h:outputText value="#{row.tytul}" />
@@ -40,12 +54,8 @@
                     <h:commandButton action="#{wyswietlOgloszeniaBean.wyswietlSzczegolyOgloszenia()}" value="Wyswietl szczegoly ogloszenia" rendered="#{not autoryzacja.czyAdministrator()}"/>
                     <h:commandButton action="#{wyswietlOgloszeniaBean.dodajDoUlubionych()}" value="Dodaj do ulubionych" rendered="true"/>
                 </h:column>
-                                
-                
             </h:dataTable>
-                    <h:commandButton value="Powróć" action="cancel" />
         </h:form>
-
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

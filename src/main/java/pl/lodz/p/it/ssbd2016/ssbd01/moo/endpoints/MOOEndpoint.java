@@ -73,11 +73,12 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
-        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
         else {
-            // zapisz dane obiektu ogloszenieNowe
+            o.setTytul(ogloszenieNowe.getTytul());
+            o.setCena(ogloszenieNowe.getCena());
             ogloszenieFacadeLocal.edit(o);
         }
     }

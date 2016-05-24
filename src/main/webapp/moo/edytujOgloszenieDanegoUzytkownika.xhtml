@@ -18,8 +18,8 @@
      <ui:define name="content">         
          <h1>${msg["tytulyPrzypadkow.edycjaOgloszeniaDanegoUzytkownika"]}:</h1>
         <h:form>
-            ${msg["daneOgloszenia.tytul"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.tytul}" id="tytul"/>
-            ${msg["daneOgloszenia.cena"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.cena}" id="cena"/>
+            ${msg["daneOgloszenia.tytul"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.tytul}" id="tytul"/><br />
+            ${msg["daneOgloszenia.cena"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.cena}" id="cena"/><br />
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.edytujOgloszenieDanegoUzytkownika()}">

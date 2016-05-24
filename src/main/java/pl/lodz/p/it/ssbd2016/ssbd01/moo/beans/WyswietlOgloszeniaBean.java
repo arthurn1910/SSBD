@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -63,13 +65,9 @@ public class WyswietlOgloszeniaBean {
     selectOneRadio dla pozostałych
     */
     private boolean sortujCena;
-    private boolean cenaRosnaca;
     private boolean sortujDataDodania;
-    private boolean dataRosnaca;
     private boolean sortujTypOgloszenia;
-    private boolean typOgloszeniaAlfabetycznie;
     private boolean sortujRynekPierwotny;
-    private boolean rynekPierwotnyNajpierw;
     
     public boolean getSortujCena() {
         return this.sortujCena;
@@ -99,42 +97,104 @@ public class WyswietlOgloszeniaBean {
         this.sortujRynekPierwotny = r;
     }
     
-    public boolean getCenaRosnaca() {
-        return this.cenaRosnaca;
-    }
-    public void setCenaRosnaca(boolean c) {
-        this.cenaRosnaca = c;
-    }
-    
-    public boolean getDataRosnaca() {
-        return this.dataRosnaca;
-    }
-    public void setDataRosnaca(boolean d) {
-        this.dataRosnaca = d;
-    }
-    
-    public boolean getTypOgloszeniaAlfabetycznie() {
-        return this.typOgloszeniaAlfabetycznie;
-    }
-    public void setTypOgloszeniaAlfabetycznie(boolean t) {
-        this.typOgloszeniaAlfabetycznie = t;
-    }
-    
-    public boolean getRynekPierwotnyNajpierw() {
-        return this.rynekPierwotnyNajpierw;
-    }
-    public void setRynekPierwotnyNajpierw(boolean r) {
-        this.rynekPierwotnyNajpierw = r;
-    }
-    
     /**
      * Wyświetla ogłoszenia posortowane
      */
     public void sortujOgloszenia() {
         ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        /*
-        ...
-        */
+        Collections.sort(ogloszenia, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Ogloszenie x1 = (Ogloszenie) o1;
+                Ogloszenie x2 = (Ogloszenie) o2;
+                if(sortujCena == true) {
+                    int sComp1 = 0;
+                    if(x1.getCena() > x2.getCena())
+                        sComp1 = 1;
+                    else if(x1.getCena() < x2.getCena())
+                        sComp1 = -1;
+                    if (sComp1 != 0)
+                        return sComp1;
+                    else {
+                        if(sortujDataDodania == true) {
+                            int sComp2 = 0;
+                            if(x1.getDataDodania().after(x2.getDataDodania()))
+                                sComp2 = 1;
+                            else if(x1.getDataDodania().before(x2.getDataDodania()))
+                                sComp2 = -1;
+                            if (sComp2 != 0)
+                                return sComp2;
+                            else {
+                                if(sortujTypOgloszenia == true) {
+                                    int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
+                                    if (sComp3 != 0)
+                                        return sComp3;
+                                    else {
+                                        if(sortujRynekPierwotny == true) {
+                                           int sComp4 = 0;
+                                           if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
+                                               sComp4 = 1;
+                                           else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                               sComp4 = -1;
+                                           return sComp4;
+                                        }
+                                    }
+                                }
+                            }
+                        }            
+                    }
+                }
+                else if(sortujDataDodania == true) {
+                    int sComp2 = 0;
+                    if(x1.getDataDodania().after(x2.getDataDodania()))
+                        sComp2 = 1;
+                    else if(x1.getDataDodania().before(x2.getDataDodania()))
+                        sComp2 = -1;
+                    if (sComp2 != 0)
+                        return sComp2;
+                    else {
+                        if(sortujTypOgloszenia == true) {
+                            int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
+                            if (sComp3 != 0)
+                                return sComp3;
+                            else {
+                                if(sortujRynekPierwotny == true) {
+                                    int sComp4 = 0;
+                                    if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
+                                        sComp4 = 1;
+                                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                        sComp4 = -1;
+                                    return sComp4;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(sortujTypOgloszenia == true) {
+                    int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
+                    if (sComp3 != 0)
+                        return sComp3;
+                    else {
+                        if(sortujRynekPierwotny == true) {
+                            int sComp4 = 0;
+                            if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
+                                sComp4 = 1;
+                            else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                sComp4 = -1;
+                            return sComp4;
+                        }
+                    }
+                }
+                else if(sortujRynekPierwotny == true) {
+                    int sComp4 = 0;
+                    if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
+                        sComp4 = 1;
+                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                        sComp4 = -1;
+                    return sComp4;
+                }
+                return 1;
+            }
+        });
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }
     
