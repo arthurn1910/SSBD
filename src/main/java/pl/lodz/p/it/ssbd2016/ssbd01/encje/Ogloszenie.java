@@ -87,7 +87,7 @@ public class Ogloszenie implements Serializable {
     private boolean aktywne;
     @ManyToMany(mappedBy = "ogloszenieUlubioneCollection")
     private Collection<Konto> kontoCollection = new ArrayList<Konto>();
-    @JoinColumn(name = "id_agenta", referencedColumnName = "id", updatable = false)
+    @JoinColumn(name = "id_agenta", referencedColumnName = "id", updatable = true)
     @ManyToOne(optional = false)
     private Konto idAgenta;
     @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id", updatable = false)

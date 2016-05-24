@@ -101,7 +101,6 @@ public class OgloszenieSession implements Serializable {
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent){
         Logger loger = Logger.getLogger(MOOEndpoint.class.getName());   
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
-        loger.log(Level.INFO, "!!!!9: "+getOgloszenieDoWyswietlenia().getIdAgenta().getId());
     }
     
     /**
@@ -168,7 +167,7 @@ public class OgloszenieSession implements Serializable {
     }
     
     Ogloszenie getOgloszenieDoWyswietlenia() {
-        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(new Long("5"));//(ogloszenieDoWyswietlenia.getId());
+        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(new Long("33"));//(ogloszenieDoWyswietlenia.getId());
         return tmp;
     }
 

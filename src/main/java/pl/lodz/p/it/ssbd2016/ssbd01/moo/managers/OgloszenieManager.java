@@ -61,19 +61,10 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
             tmp.getOgloszenieAgentaCollection().remove(o);
             kontoFacade.edit(tmp);
         }
-        loger.log(Level.INFO, "!!!!2");
         tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
-        loger.log(Level.INFO, "!!!!3");
         o.setIdAgenta(tmp);
-        loger.log(Level.INFO, "!!!!4: "+o.getIdAgenta().getId());
         ogloszenieFacadeLocal.edit(o);
-        loger.log(Level.INFO, "!!!!5: "+ogloszenieFacadeLocal.find(o.getId()).getIdAgenta().getId());
         tmp.getOgloszenieAgentaCollection().add(o);
-        loger.log(Level.INFO, "!!!!6");
         kontoFacade.edit(tmp);
-        loger.log(Level.INFO, "!!!!7");
-        ogloszenieFacadeLocal.flush();
-        kontoFacade.flush();
-        loger.log(Level.INFO, "!!!!8: "+ogloszenieFacadeLocal.find(o.getId()).getIdAgenta().getId());
     }
 }
