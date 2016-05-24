@@ -24,27 +24,39 @@
         </h:form>
         <h:form id="listaOgloszenForm">
             <h:dataTable id="listaOgloszen" var="row" value="#{wyswietlOgloszeniaBean.ogloszeniaDataModel}">
-                <h:column id="login">
+                <h:column id="tytul">
                     <f:facet name="header">Tytuł</f:facet>
                     <h:outputText value="#{row.tytul}" />
                 </h:column>
-                <h:column id="imie">
+                <h:column id="cena">
                     <f:facet name="header">Cena</f:facet>
                     <h:outputText value="#{row.cena}" />
                 </h:column>
-                <h:column id="nazwisko">
+                <h:column id="dataDodania">
+                    <f:facet name="header">Data dodania</f:facet>
+                    <h:outputText value="#{row.dataDodania}" />
+                </h:column>
+                <h:column id="typOgloszenia">
+                    <f:facet name="header">Typ ogłoszenia</f:facet>
+                    <h:outputText value="#{row.typOgloszenia.nazwa}" />
+                </h:column>
+                <h:column id="miejscowosc">
                     <f:facet name="header">Miejscowosc</f:facet>
                     <h:outputText value="#{row.nieruchomosc.miejscowosc}" />
+                </h:column>
+                <h:column id="rynekPierwotny">
+                    <f:facet name="header">Rynek pierwotny</f:facet>
+                    <h:outputText value="#{row.rynekPierwotny}" />
                 </h:column>
                 <h:column id="wlasciciel">
                     <f:facet name="header">wlasciciel</f:facet>
                     <h:outputText value="#{row.idWlasciciela.login}" />
                 </h:column>
                 
-                <h:column id="stan">
-                    <f:facet name="header">stan</f:facet>
+                <h:column id="aktywne">
+                    <f:facet name="header">Aktywne</f:facet>
                     <h:panelGrid columns="2">
-                        <h:selectBooleanCheckbox id="aktywne" value="#{row.aktywne}" disabled="true"/>    
+                        <h:selectBooleanCheckbox id="stan" value="#{row.aktywne}" disabled="true"/>    
                         <h:outputLabel for="aktywne" value="aktywne" />    
                     </h:panelGrid>
                 </h:column>

@@ -132,9 +132,9 @@ public class WyswietlOgloszeniaBean {
                                         if(sortujRynekPierwotny == true) {
                                            int sComp4 = 0;
                                            if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                               sComp4 = 1;
-                                           else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
                                                sComp4 = -1;
+                                           else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                               sComp4 = 1;
                                            return sComp4;
                                         }
                                     }
@@ -160,9 +160,9 @@ public class WyswietlOgloszeniaBean {
                                 if(sortujRynekPierwotny == true) {
                                     int sComp4 = 0;
                                     if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                        sComp4 = 1;
-                                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
                                         sComp4 = -1;
+                                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                        sComp4 = 1;
                                     return sComp4;
                                 }
                             }
@@ -177,9 +177,9 @@ public class WyswietlOgloszeniaBean {
                         if(sortujRynekPierwotny == true) {
                             int sComp4 = 0;
                             if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                sComp4 = 1;
-                            else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
                                 sComp4 = -1;
+                            else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                                sComp4 = 1;
                             return sComp4;
                         }
                     }
@@ -187,9 +187,9 @@ public class WyswietlOgloszeniaBean {
                 else if(sortujRynekPierwotny == true) {
                     int sComp4 = 0;
                     if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                        sComp4 = 1;
-                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
                         sComp4 = -1;
+                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                        sComp4 = 1;
                     return sComp4;
                 }
                 return 1;

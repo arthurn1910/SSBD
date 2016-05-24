@@ -77,6 +77,12 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
         }
         else {
+            List<TypOgloszenia> typy = typOgloszeniaFacade.findAll();
+            for(int i = 0; i < typy.size(); i++) {
+                if(ogloszenieNowe.getTypOgloszenia().getNazwa().equals(typy.get(i).getNazwa()) == true) {
+                    o.setTypOgloszenia(typy.get(i));
+                }
+            }
             o.setTytul(ogloszenieNowe.getTytul());
             o.setCena(ogloszenieNowe.getCena());
             ogloszenieFacadeLocal.edit(o);

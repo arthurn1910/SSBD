@@ -20,6 +20,10 @@
         <h:form>
             ${msg["daneOgloszenia.tytul"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.tytul}" id="tytul"/><br />
             ${msg["daneOgloszenia.cena"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.cena}" id="cena"/><br />
+            ${msg["daneOgloszenia.typOgloszenia"]}* <h:selectOneMenu value="#{edytujOgloszenieBean.ogloszenieEdytuj.typOgloszenia.nazwa}">
+                <f:selectItem itemValue="wynajem" itemLabel="Wynajem" />
+                <f:selectItem itemValue="sprzedaż" itemLabel="Sprzedaż" />
+            </h:selectOneMenu><br />
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.edytujOgloszenieDanegoUzytkownika()}">
