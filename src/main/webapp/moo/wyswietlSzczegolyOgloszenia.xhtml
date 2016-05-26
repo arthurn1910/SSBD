@@ -24,8 +24,7 @@
             ${msg["szczegolyOgloszenia.id"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.id}"/><br />
             ${msg["szczegolyOgloszenia.idAgenta"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idAgenta.getId()}"/><br />
             ${msg["szczegolyOgloszenia.idWlasciciela"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.idWlasciciela.getId()}"/><br />
-            ${msg["szczegolyOgloszenia.rynekPierwotny"]}  <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.rynekPierwotny}"/><br />           
-            
+            ${msg["szczegolyOgloszenia.rynekPierwotny"]}  <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.rynekPierwotny}"/><br />          
             ${msg["szczegolyOgloszenia.liczbaPieter"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getLiczbaPieter()}"/><br />
             ${msg["szczegolyOgloszenia.liczbaPokoi"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getLiczbaPokoi()}"/><br />
             ${msg["szczegolyOgloszenia.miejscowosc"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getMiejscowosc()}"/><br />
@@ -33,6 +32,10 @@
             ${msg["szczegolyOgloszenia.powierzchniaNieruchomosci"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getPowierzchniaNieruchomosci()}"/><br />
             ${msg["szczegolyOgloszenia.getRokBudowy"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getRokBudowy()}"/><br />
             ${msg["szczegolyOgloszenia.getUlica"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getUlica()}"/><br />
+            
+            ${msg["szczegolyOgloszenia.nazwaOgloszenia"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getTypOgloszenia().getNazwa()}"/><br />
+            ${msg["szczegolyOgloszenia.typNieruchomosciNazwa"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getNazwa()}"/><br />
+            ${msg["szczegolyOgloszenia.cenaMetra"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getSredniaCenaMetraKwadratowego()}"/><br />
             
             <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="przydzielAgenta" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </p:commandButton>
