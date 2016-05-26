@@ -238,6 +238,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     }
 
     @Override
+    @PermitAll
     public Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData) {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
         if(o.getIdAgenta().getId().equals(rowData.getId()))
@@ -246,6 +247,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     }
     
     @Override
+    @PermitAll
     public Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
         if(o.getIdAgenta()!=null)
@@ -257,6 +259,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
      * @return 
      */
     @Override
+    @RolesAllowed("pobierzAgentow")
     public List<Konto> getAgenci() {
         List<Konto> tmp=kontoFacade.findAll();
         List<Konto> tmp2=new ArrayList<>();

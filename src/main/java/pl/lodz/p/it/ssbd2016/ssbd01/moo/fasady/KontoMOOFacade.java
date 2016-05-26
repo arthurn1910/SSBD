@@ -5,11 +5,9 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -21,6 +19,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
  * @author java
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
 public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")
