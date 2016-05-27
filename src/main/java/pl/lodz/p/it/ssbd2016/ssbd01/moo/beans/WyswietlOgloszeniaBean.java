@@ -65,37 +65,13 @@ public class WyswietlOgloszeniaBean {
     sortujTypOgloszenia, sortujRynekPierwotny
     selectOneRadio dla pozostałych
     */
-    private boolean sortujCena;
-    private boolean sortujDataDodania;
-    private boolean sortujTypOgloszenia;
-    private boolean sortujRynekPierwotny;
+    private String sortuj;
     
-    public boolean getSortujCena() {
-        return this.sortujCena;
+    public String getSortuj() {
+        return this.sortuj;
     }    
-    public void setSortujCena(boolean c) {
-        this.sortujCena = c;
-    }
-    
-    public boolean getSortujDataDodania() {
-        return this.sortujDataDodania;
-    }
-    public void setSortujDataDodania(boolean d) {
-        this.sortujDataDodania = d;
-    }
-    
-    public boolean getSortujTypOgloszenia() {
-        return this.sortujTypOgloszenia;
-    }    
-    public void setSortujTypOgloszenia(boolean t) {
-        this.sortujTypOgloszenia = t;
-    }
-    
-    public boolean getSortujRynekPierwotny() {
-        return this.sortujRynekPierwotny;
-    }
-    public void setSortujRynekPierwotny(boolean r) {
-        this.sortujRynekPierwotny = r;
+    public void setSortuj(String s) {
+        this.sortuj = s;
     }
     
     /**
@@ -107,91 +83,33 @@ public class WyswietlOgloszeniaBean {
             public int compare(Object o1, Object o2) {
                 Ogloszenie x1 = (Ogloszenie) o1;
                 Ogloszenie x2 = (Ogloszenie) o2;
-                if(sortujCena == true) {
-                    int sComp1 = 0;
+                if(sortuj.equals("cena") == true) {
+                    int sComp = 0;
                     if(x1.getCena() > x2.getCena())
-                        sComp1 = 1;
+                        sComp = 1;
                     else if(x1.getCena() < x2.getCena())
-                        sComp1 = -1;
-                    if (sComp1 != 0)
-                        return sComp1;
-                    else {
-                        if(sortujDataDodania == true) {
-                            int sComp2 = 0;
-                            if(x1.getDataDodania().after(x2.getDataDodania()))
-                                sComp2 = 1;
-                            else if(x1.getDataDodania().before(x2.getDataDodania()))
-                                sComp2 = -1;
-                            if (sComp2 != 0)
-                                return sComp2;
-                            else {
-                                if(sortujTypOgloszenia == true) {
-                                    int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
-                                    if (sComp3 != 0)
-                                        return sComp3;
-                                    else {
-                                        if(sortujRynekPierwotny == true) {
-                                           int sComp4 = 0;
-                                           if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                               sComp4 = -1;
-                                           else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
-                                               sComp4 = 1;
-                                           return sComp4;
-                                        }
-                                    }
-                                }
-                            }
-                        }            
-                    }
+                        sComp = -1;
+                    return sComp;
                 }
-                else if(sortujDataDodania == true) {
-                    int sComp2 = 0;
+                else if(sortuj.equals("dataDodania") == true) {
+                    int sComp = 0;
                     if(x1.getDataDodania().after(x2.getDataDodania()))
-                        sComp2 = 1;
+                        sComp = 1;
                     else if(x1.getDataDodania().before(x2.getDataDodania()))
-                        sComp2 = -1;
-                    if (sComp2 != 0)
-                        return sComp2;
-                    else {
-                        if(sortujTypOgloszenia == true) {
-                            int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
-                            if (sComp3 != 0)
-                                return sComp3;
-                            else {
-                                if(sortujRynekPierwotny == true) {
-                                    int sComp4 = 0;
-                                    if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                        sComp4 = -1;
-                                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
-                                        sComp4 = 1;
-                                    return sComp4;
-                                }
-                            }
-                        }
-                    }
+                        sComp = -1;
+                    return sComp;
                 }
-                else if(sortujTypOgloszenia == true) {
-                    int sComp3 = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
-                    if (sComp3 != 0)
-                        return sComp3;
-                    else {
-                        if(sortujRynekPierwotny == true) {
-                            int sComp4 = 0;
-                            if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                                sComp4 = -1;
-                            else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
-                                sComp4 = 1;
-                            return sComp4;
-                        }
-                    }
+                else if(sortuj.equals("typOgloszenia") == true) {
+                    int sComp = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
+                    return sComp;
                 }
-                else if(sortujRynekPierwotny == true) {
-                    int sComp4 = 0;
+                else if(sortuj.equals("rynekPierwotny") == true) {
+                    int sComp = 0;
                     if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
-                        sComp4 = -1;
+                        sComp = -1;
                     else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
-                        sComp4 = 1;
-                    return sComp4;
+                        sComp = 1;
+                    return sComp;
                 }
                 return 1;
             }

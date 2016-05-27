@@ -9,9 +9,9 @@
     <h:body>Szczegóły ogloszenia<br />
         <h:form id="szczegolyOgloszeniaForm">
             <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.tytul}" />
-            <h:commandButton value="Deaktywuj" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyAgent()}"/>
-            <h:commandButton value="Edytuj" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyAgent()}"/>
-            <h:commandButton value="Powróć" action="cancel" />
+            <h:commandButton value="${msg['komunikat.deaktywujOgłoszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyAgent()}"/>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyAgent()}"/>
+            <h:commandButton value="${msg['komunikat.powrot']}" action="cancel" />
         </h:form>
 
     </h:body>
