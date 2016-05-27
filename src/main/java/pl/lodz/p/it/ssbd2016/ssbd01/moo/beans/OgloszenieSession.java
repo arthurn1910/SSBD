@@ -25,7 +25,17 @@ public class OgloszenieSession implements Serializable {
     private Ogloszenie ogloszenieDoWyswietlenia;
     
     private Ogloszenie ogloszenieEdytuj;
+    
+    private boolean czyWyswietlicPotwierdzenie;
 
+    public boolean isCzyWyswietlicPotwierdzenie() {
+        if (czyWyswietlicPotwierdzenie) {
+            czyWyswietlicPotwierdzenie = false;
+            return true;
+        }
+        return false;
+    }    
+    
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
     }
@@ -104,6 +114,7 @@ public class OgloszenieSession implements Serializable {
      */
     void dodajDoUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.dodajDoUlubionych(ogloszenie);
+        czyWyswietlicPotwierdzenie = true;
     }
     
     /**
@@ -112,6 +123,7 @@ public class OgloszenieSession implements Serializable {
      */
     void usunZUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.usunZUlubionych(ogloszenie);
+        czyWyswietlicPotwierdzenie = true;
     }
     
     /**

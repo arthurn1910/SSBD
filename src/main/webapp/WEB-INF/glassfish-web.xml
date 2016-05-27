@@ -167,6 +167,12 @@
         <group-name>KLIENT</group-name>
         <group-name>AGENT</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>znajdzPoID</role-name>
+        <group-name>MENADZER</group-name>
+        <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
+    </security-role-mapping>
     
     <!-- role MOS -->
     <security-role-mapping>

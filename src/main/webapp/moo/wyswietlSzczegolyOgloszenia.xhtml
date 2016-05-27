@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                template="/templates/MainTemplate.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="top">
+        <h>${msg["tytulyPrzypadkow.wyswietlSzczegolyOgloszenia"]}</h>
+    </ui:define>
+    
+    <ui:define name="left">
+        <ui:include src="/templates/menu.xhtml" />
+    </ui:define>
+    
+    
+     <ui:define name="content">
+        <h:form id="form">
+            ${msg["daneKonta.imie"]} <h:outputText value="#{wyswietlSzczegolySwojegoKontaBean.konto.imie}"/><br />
+            ${msg["daneKonta.nazwisko"]} <h:outputText value="#{wyswietlSzczegolySwojegoKontaBean.konto.nazwisko}"/><br />
+            
+             <h:commandButton value="#{msg['komunikat.dodajDoUlubionych']}"  action="#{wyswietlSzczegolyOgloszeniaBean.dodajDoUlubionych()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
+            </h:commandButton> 
+            <h:commandButton value="#{msg['komunikat.usunZUlubionych']}" action="#{wyswietlSzczegolyOgloszeniaBean.usunZUlubionych()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
+            </h:commandButton> 
+        </h:form>
+    </ui:define>
+</ui:composition>
+        

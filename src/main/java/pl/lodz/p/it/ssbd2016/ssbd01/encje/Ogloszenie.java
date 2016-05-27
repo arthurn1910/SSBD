@@ -239,5 +239,18 @@ public class Ogloszenie implements Serializable {
     public String toString() {
         return "pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie[ id=" + id + " ]";
     }
-    
+
+    /**
+     * Przeszukuje kontoCollection i sprawdza czy istnieje konto o podanym loginie
+     * @param login
+     * @return 
+     */
+    public boolean isUlubione(String login) {
+        for (Konto konto:kontoCollection) {
+            if (konto.getLogin().equals(login)) {
+                return true;
+            }
+        }
+        return false;
+    }    
 }

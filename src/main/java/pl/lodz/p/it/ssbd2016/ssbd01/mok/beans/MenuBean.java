@@ -9,6 +9,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
 
 /**
  * Ziarno odpowiedzialne za wylogowanie/zakończenie sesji
@@ -19,6 +20,8 @@ public class MenuBean {
     
     @Inject
     private UzytkownikSession uzytkownikSession;
+    @Inject
+    private OgloszenieSession ogloszenieSession;
 
     String login;
     String poziomyDostepu;
@@ -36,7 +39,7 @@ public class MenuBean {
         if (login != null) {
             uzytkownikSession.zapiszIP(login);
             Konto konto = uzytkownikSession.znajdzPoLoginie(login);
-            login = konto.getLogin();
+            this.login = konto.getLogin();
             poziomyDostepu = "";
             for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
                 if (poziom.getAktywny()) {
@@ -47,7 +50,8 @@ public class MenuBean {
         } else {
             zalogowany = false;
         }
-        czyWyswietlicPotwierdzenie = uzytkownikSession.isCzyWyswietlicPotwierdzenie();
+        czyWyswietlicPotwierdzenie = (uzytkownikSession.isCzyWyswietlicPotwierdzenie() ||
+                                        ogloszenieSession.isCzyWyswietlicPotwierdzenie());
     }
     
     /**
