@@ -5,9 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+
+import javax.ejb.Local;
+import java.util.List;
 
 /**
  *
@@ -29,5 +30,12 @@ public interface OgloszenieFacadeLocalInMOS {
     List<Ogloszenie> findRange(int[] range);
 
     int count();
+
+    /**
+     * Znajduje ogloszenie po id
+     * @param id ogloszenia
+     * @return objekt ogloszenie
+     */
+    Ogloszenie findById(Long id);
     
 }

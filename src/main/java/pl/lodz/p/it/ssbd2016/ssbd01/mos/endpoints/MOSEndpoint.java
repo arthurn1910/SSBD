@@ -1,32 +1,25 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.KontoFacadeLocalInMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.OgloszenieFacadeLocalInMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.managers.SpotkanieManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.*;
+import javax.interceptor.Interceptors;
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-import javax.ejb.SessionSynchronization;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.interceptor.Interceptors;
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
-import static pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.Nieruchomosc_.ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * API servera dla modułu funkcjonalnego MOS
@@ -93,7 +86,13 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
         spotkanieFacade.edit(spotkanie);
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    @Override
+    @RolesAllowed("znajdzOgloszeniePoId")
+    public Ogloszenie znajdzOgloszeniePoId(Long id){
+        return ogloszenieFacade.findById(1L);
+    }
+
     //Implementacja SessionSynchronization
     /**
      * Metoda logująca czas rozpoczęcia transakcji

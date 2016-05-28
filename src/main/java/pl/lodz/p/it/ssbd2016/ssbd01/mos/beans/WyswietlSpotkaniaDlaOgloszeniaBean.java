@@ -2,11 +2,12 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.List;
 
 /**
  * Obsługuje widok spotkań dla ogłoszenia
@@ -25,7 +26,6 @@ public class WyswietlSpotkaniaDlaOgloszeniaBean {
      * Pobiera listę spotkań dla ogłoszenia, MOS.5, Kamil Rogowski
      */
     public void pobierzListeSpotkanDlaOgloszenia() {
-
         spotkania = spotkanieSession.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
     }
 
@@ -34,7 +34,8 @@ public class WyswietlSpotkaniaDlaOgloszeniaBean {
      */
     @PostConstruct
     public void init() {
-
+        ogloszenie = spotkanieSession.getWybraneOgloszenie();
+        pobierzListeSpotkanDlaOgloszenia();
     }
 
     public Ogloszenie getOgloszenie() {
