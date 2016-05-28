@@ -32,7 +32,6 @@ public class WyswietlOgloszeniaBean {
      */
     @PostConstruct
     private void initModel() {
-        System.out.println("!!!!!!!");
         ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
     }

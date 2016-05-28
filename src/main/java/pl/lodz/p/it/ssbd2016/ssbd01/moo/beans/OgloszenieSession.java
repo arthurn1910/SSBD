@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -76,7 +77,8 @@ public class OgloszenieSession implements Serializable {
     /**
      * Edytuje dane ogłoszenie
      */
-    void edytujOgloszenieDanegoUzytkownika() throws Exception {
+    void edytujOgloszenieDanegoUzytkownika(List<ElementWyposazeniaNieruchomosci> wyposazenie) throws Exception {
+        ogloszenieEdytuj.getNieruchomosc().setElementWyposazeniaNieruchomosciCollection(wyposazenie);
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
     }
     
@@ -184,5 +186,13 @@ public class OgloszenieSession implements Serializable {
 
     public void setOgloszenieEdytuj(Ogloszenie ogloszenieEdytuj) {
         this.ogloszenieEdytuj = ogloszenieEdytuj;
+    }
+    
+    /**
+     * Zwraca login aktualnie zalogowanego użytkownika
+     * @return login użytkownika
+     */
+    public String pobierzZalogowanegoUzytkownika() {
+        return mooEndpoint.pobierzZalogowanegoUzytkownika();
     }
 }

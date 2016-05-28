@@ -78,9 +78,18 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
         else {
             TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
+            Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.znajdzPoId(o.getNieruchomosc().getId());
+            nieruchomosc.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
+            nieruchomosc.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
+            nieruchomosc.setRokBudowy(ogloszenieNowe.getNieruchomosc().getRokBudowy());
+            nieruchomosc.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
+            nieruchomosc.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
+            nieruchomosc.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
+            nieruchomosc.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
             o.setTypOgloszenia(typ);
             o.setTytul(ogloszenieNowe.getTytul());
             o.setCena(ogloszenieNowe.getCena());
+            nieruchomoscFacadeLocal.edit(nieruchomosc);
             ogloszenieFacadeLocal.edit(o);
         }
     }
@@ -117,6 +126,12 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @PermitAll
     public List<Ogloszenie> pobierzWszytkieOgloszenia() {
         return ogloszenieFacadeLocal.findAll();
+    }
+    
+    @Override
+    @PermitAll
+    public String pobierzZalogowanegoUzytkownika() {
+        return sessionContext.getCallerPrincipal().getName();
     }
     
     @Override

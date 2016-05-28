@@ -33,7 +33,7 @@ public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> imp
 
     public TypNieruchomosci znajdzPoNazwie(String typ) {
         Query q = em.createNamedQuery("TypNieruchomosci.findAll");
-        //q.setParameter("nazwa", typ);
+        q.setParameter("nazwa", typ);
         return (TypNieruchomosci) q.getResultList().get(0);
     }    
 }

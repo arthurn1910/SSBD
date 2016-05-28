@@ -129,4 +129,10 @@ public interface MOOEndpointLocal {
      * @return lista agentow
      */ 
     public List<Konto> pobierzListeAgentow();
+    
+    /**
+     * Zwraca login aktualnie zalogowanego użytkownika
+     * @return login użytkownika
+     */
+    public String pobierzZalogowanegoUzytkownika();
 }

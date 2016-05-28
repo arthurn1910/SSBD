@@ -37,7 +37,7 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
         Query q = em.createNamedQuery("Konto.findAll");
         List<Konto> l = (List<Konto>) q.getResultList();
         for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getLogin() == login) {
+            if (l.get(i).getLogin().equals(login) == true) {
                 return l.get(i);
             }
         }

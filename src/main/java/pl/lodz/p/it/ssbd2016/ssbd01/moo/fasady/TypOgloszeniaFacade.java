@@ -5,10 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
@@ -33,9 +35,14 @@ public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implement
 
     @Override
     public TypOgloszenia znajdzPoNazwie(String typ) {
-        Query q = em.createNamedQuery("TypOgloszenia.findByNazwa");
-        q.setParameter("nazwa", typ);
-        return (TypOgloszenia) q.getSingleResult();
+        Query q = em.createNamedQuery("TypOgloszenia.findAll");
+        List<TypOgloszenia> l = (List<TypOgloszenia>) q.getResultList();
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).getNazwa().equals(typ) == true) {
+                return l.get(i);
+            }
+        }
+        return null;
     }
     
 }

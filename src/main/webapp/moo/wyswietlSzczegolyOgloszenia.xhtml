@@ -9,8 +9,8 @@
     <h:body>Szczegóły ogloszenia<br />
         <h:form id="szczegolyOgloszeniaForm">
             <h:outputText value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.tytul}" />
-            <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacjaMOO.czyMojeOgloszenie()}"/>
-            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{autoryzacjaMOO.czyMojeOgloszenie()}"/>
+            <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
             <h:commandButton value="${msg['komunikat.powrot']}" action="cancel" />
         </h:form>
 

@@ -30,4 +30,6 @@ public interface NieruchomoscFacadeLocal {
 
     int count();
     
+    Nieruchomosc znajdzPoId(long id);
+    
 }

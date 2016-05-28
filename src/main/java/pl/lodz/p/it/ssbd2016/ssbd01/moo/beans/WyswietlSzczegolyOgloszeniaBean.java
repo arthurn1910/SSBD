@@ -2,6 +2,8 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -121,5 +123,18 @@ public class WyswietlSzczegolyOgloszeniaBean {
         ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
         ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
         return "wyswietlOgloszenia";
+    }
+    
+    /**
+     * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
+     * @return
+     */
+    public boolean czyMojeOgloszenie()
+    {
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
+        if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false)
+            return false;
+        return true;
     }
 }
