@@ -5,31 +5,14 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -60,11 +43,13 @@ public class Ogloszenie implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull(message="{walidacja.notNull}")
-    @Size(min = 1, max = 80)
+    @Size(min = 1, max = 80, message="{walidacja.notNull}")
     @Column(name = "tytul")
     private String tytul;
+
     @Basic(optional = false)
     @NotNull(message="{walidacja.notNull}")
+    @Min(value = 1,message = "{walidacja.cena}")
     @Column(name = "cena")
     private int cena;
     @Basic(optional = false)
@@ -87,13 +72,14 @@ public class Ogloszenie implements Serializable {
     private boolean aktywne;
     @ManyToMany(mappedBy = "ogloszenieUlubioneCollection")
     private Collection<Konto> kontoCollection = new ArrayList<Konto>();
-    @JoinColumn(name = "id_agenta", referencedColumnName = "id", updatable = false)
+    @JoinColumn(name = "id_agenta", referencedColumnName = "id", updatable = true)
     @ManyToOne(optional = false)
     private Konto idAgenta;
-    @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id", updatable = false)
+    @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id", updatable = true)
     @ManyToOne(optional = false)
     private Konto idWlasciciela;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+
+    @PrimaryKeyJoinColumn( name = "id", referencedColumnName = "id" )
     @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private Nieruchomosc nieruchomosc;
     @JoinColumn(name = "typ_ogloszenia", referencedColumnName = "id")

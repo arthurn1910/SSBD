@@ -5,12 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 
+import javax.ejb.Local;
+import java.util.List;
+
 /**
- *
  * @author java
  */
 @Local
@@ -29,5 +29,9 @@ public interface NieruchomoscFacadeLocal {
     List<Nieruchomosc> findRange(int[] range);
 
     int count();
-    
+
+    void flush();
+
+    void refresh(Nieruchomosc nieruchomosc);
+
 }

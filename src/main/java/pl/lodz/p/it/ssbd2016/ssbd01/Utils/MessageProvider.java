@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  *
  * @author Kamil Rogowski
  */
+
 public class MessageProvider {
 
     /**

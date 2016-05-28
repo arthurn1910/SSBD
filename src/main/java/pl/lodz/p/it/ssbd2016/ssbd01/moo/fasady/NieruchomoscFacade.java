@@ -5,17 +5,24 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 
 /**
  *
  * @author java
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class NieruchomoscFacade extends AbstractFacade<Nieruchomosc> implements NieruchomoscFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")

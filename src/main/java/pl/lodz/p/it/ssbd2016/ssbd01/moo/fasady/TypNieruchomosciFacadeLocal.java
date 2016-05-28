@@ -5,12 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 
+import javax.ejb.Local;
+import java.util.List;
+
 /**
- *
  * @author Gleam
  */
 @Local
@@ -31,5 +31,6 @@ public interface TypNieruchomosciFacadeLocal {
     int count();
 
     public TypNieruchomosci znajdzPoNazwie(String typ);
-    
+
+    void flush();
 }

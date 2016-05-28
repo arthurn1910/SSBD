@@ -1,25 +1,28 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
-import java.io.IOException;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+import java.util.logging.Logger;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
+@ManagedBean(name = "ogloszenieSession")
 public class OgloszenieSession implements Serializable {
-    
+    private static final Logger logger = Logger.getLogger(OgloszenieSession.class.getName());
+
     @EJB
     private MOOEndpointLocal mooEndpoint;
     private Ogloszenie ogloszenieDoWyswietlenia;
@@ -36,34 +39,41 @@ public class OgloszenieSession implements Serializable {
      * @param ogloszenie   ogłoszenie do dodania
      * @param nieruchomosc nieruchomość do dodania
      */
-    void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc) {
+    void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc, List<ElementWyposazeniaNieruchomosci> elem) {
         Ogloszenie noweOgloszenie = new Ogloszenie();
         Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
-        
+        logger.info("cena: " + ogloszenie.getCena() + " rynekPierwotny: " + ogloszenie.getRynekPierwotny());
+        ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci = new ElementWyposazeniaNieruchomosci();
+
         // Wypelnij Nieruchomosc:
-        nowaNieruchomosc.setMiejscowosc("Mragowo");
-        nowaNieruchomosc.setUlica("Mazurska");
-        nowaNieruchomosc.setRokBudowy(new Date(2000, 6, 15));
+        nowaNieruchomosc.setMiejscowosc(nieruchomosc.getMiejscowosc());
+        nowaNieruchomosc.setUlica(nieruchomosc.getUlica());
+        nowaNieruchomosc.setRokBudowy(nieruchomosc.getRokBudowy());
         nowaNieruchomosc.setPowierzchniaNieruchomosci(nieruchomosc.getPowierzchniaNieruchomosci());
-        nowaNieruchomosc.setOgloszenie(noweOgloszenie);
-        nowaNieruchomosc.setTypNieruchomosci(mooEndpoint.getTypNieruchomosci("mieszkanie"));
-        nowaNieruchomosc.setLiczbaPieter(1);
-        nowaNieruchomosc.setLiczbaPokoi(1);
-        nowaNieruchomosc.setPowierzchniaDzialki(10);
-        
-        
+        nowaNieruchomosc.setTypNieruchomosci(nieruchomosc.getTypNieruchomosci());
+        nowaNieruchomosc.setLiczbaPieter(nieruchomosc.getLiczbaPieter());
+        nowaNieruchomosc.setLiczbaPokoi(nieruchomosc.getLiczbaPokoi());
+        nowaNieruchomosc.setPowierzchniaDzialki(nieruchomosc.getPowierzchniaDzialki());
+        nowaNieruchomosc.setElementWyposazeniaNieruchomosciCollection(nieruchomosc.getElementWyposazeniaNieruchomosciCollection());
+
+        List<Nieruchomosc> nieruchomoscDlaElementow = new ArrayList<>();
+        nieruchomoscDlaElementow.add(nowaNieruchomosc);
+
+        elementWyposazeniaNieruchomosci.setNieruchomoscWyposazonaCollection(nieruchomoscDlaElementow);
+
         // Wypelnij Ogloszenie:
         noweOgloszenie.setTytul(ogloszenie.getTytul());
         noweOgloszenie.setCena(ogloszenie.getCena());
-        noweOgloszenie.setRynekPierwotny(true);
+        noweOgloszenie.setRynekPierwotny(ogloszenie.getRynekPierwotny());
         noweOgloszenie.setAktywne(false);
-        noweOgloszenie.setDataDodania(new Date(2016, 1, 1));
-        noweOgloszenie.setNieruchomosc(nowaNieruchomosc);
-        noweOgloszenie.setIdWlasciciela(mooEndpoint.getKonto("janusz"));
+        noweOgloszenie.setDataDodania(new Date());
+        final String loginZalogowanegoUzytkownika = ZalogowanyUzytkownik.getLoginZalogowanegoUzytkownika();
+        noweOgloszenie.setIdWlasciciela(mooEndpoint.getKonto(loginZalogowanegoUzytkownika));
         noweOgloszenie.setIdAgenta(mooEndpoint.getKonto("agent"));
-        noweOgloszenie.setTypOgloszenia(mooEndpoint.getTypOgloszenia("wynajem"));
-        
-        mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc);
+        noweOgloszenie.setTypOgloszenia(ogloszenie.getTypOgloszenia());
+        noweOgloszenie.setNieruchomosc(nowaNieruchomosc);
+        nowaNieruchomosc.setOgloszenie(noweOgloszenie);
+        mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc, elementWyposazeniaNieruchomosci);
     }
 
     /**
@@ -179,6 +189,30 @@ public class OgloszenieSession implements Serializable {
         return tmp;
     }
 
+    /**
+     * Pobiera wszystkie typy ogłoszeń z tabel słownikowych
+     * @return lista kluczy
+     */
+   public List<TypOgloszenia> pobierzTypyOgloszen(){
+        return mooEndpoint.pobierzTypyOgloszen();
+    }
+
+    /**
+     * Pobiera wszystkie typy nieruchomości z tabel słownikowych
+     * @return lista kluczy
+     */
+    public List<TypNieruchomosci> pobierzTypyNieruchomosci(){
+
+        return mooEndpoint.pobierzTypyNieruchomosci();
+    }
+
+    public List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii(){
+        return mooEndpoint.pobierzElementyKategorii();
+    }
+
+    public List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie(){
+        return mooEndpoint.pobierzKategorie();
+    }
     public Ogloszenie getOgloszenieEdytuj() {
         return ogloszenieEdytuj;
     }

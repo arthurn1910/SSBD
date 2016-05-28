@@ -5,12 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
+import javax.ejb.Local;
+import java.util.List;
+
 /**
- *
  * @author java
  */
 @Local
@@ -29,7 +29,8 @@ public interface KontoMOOFacadeLocal {
     List<Konto> findRange(int[] range);
 
     Konto znajdzPoLoginie(String login);
-    
+
     int count();
-    
+
+    void flush();
 }

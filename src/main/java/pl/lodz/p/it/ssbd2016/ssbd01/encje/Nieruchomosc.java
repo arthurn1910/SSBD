@@ -5,90 +5,79 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
- *
  * @author java
  */
 @Entity
 @Table(name = "nieruchomosc")
 @NamedQueries({
-    @NamedQuery(name = "Nieruchomosc.findAll", query = "SELECT n FROM Nieruchomosc n"),
-    @NamedQuery(name = "Nieruchomosc.findById", query = "SELECT n FROM Nieruchomosc n WHERE n.id = :id"),
-    @NamedQuery(name = "Nieruchomosc.findByMiejscowosc", query = "SELECT n FROM Nieruchomosc n WHERE n.miejscowosc = :miejscowosc"),
-    @NamedQuery(name = "Nieruchomosc.findByUlica", query = "SELECT n FROM Nieruchomosc n WHERE n.ulica = :ulica"),
-    @NamedQuery(name = "Nieruchomosc.findByLiczbaPokoi", query = "SELECT n FROM Nieruchomosc n WHERE n.liczbaPokoi = :liczbaPokoi"),
-    @NamedQuery(name = "Nieruchomosc.findByLiczbaPieter", query = "SELECT n FROM Nieruchomosc n WHERE n.liczbaPieter = :liczbaPieter"),
-    @NamedQuery(name = "Nieruchomosc.findByRokBudowy", query = "SELECT n FROM Nieruchomosc n WHERE n.rokBudowy = :rokBudowy"),
-    @NamedQuery(name = "Nieruchomosc.findByPowierzchniaDzialki", query = "SELECT n FROM Nieruchomosc n WHERE n.powierzchniaDzialki = :powierzchniaDzialki"),
-    @NamedQuery(name = "Nieruchomosc.findByVersion", query = "SELECT n FROM Nieruchomosc n WHERE n.version = :version")})
+        @NamedQuery(name = "Nieruchomosc.findAll", query = "SELECT n FROM Nieruchomosc n"),
+        @NamedQuery(name = "Nieruchomosc.findById", query = "SELECT n FROM Nieruchomosc n WHERE n.id = :id"),
+        @NamedQuery(name = "Nieruchomosc.findByMiejscowosc", query = "SELECT n FROM Nieruchomosc n WHERE n.miejscowosc = :miejscowosc"),
+        @NamedQuery(name = "Nieruchomosc.findByUlica", query = "SELECT n FROM Nieruchomosc n WHERE n.ulica = :ulica"),
+        @NamedQuery(name = "Nieruchomosc.findByLiczbaPokoi", query = "SELECT n FROM Nieruchomosc n WHERE n.liczbaPokoi = :liczbaPokoi"),
+        @NamedQuery(name = "Nieruchomosc.findByLiczbaPieter", query = "SELECT n FROM Nieruchomosc n WHERE n.liczbaPieter = :liczbaPieter"),
+        @NamedQuery(name = "Nieruchomosc.findByRokBudowy", query = "SELECT n FROM Nieruchomosc n WHERE n.rokBudowy = :rokBudowy"),
+        @NamedQuery(name = "Nieruchomosc.findByPowierzchniaDzialki", query = "SELECT n FROM Nieruchomosc n WHERE n.powierzchniaDzialki = :powierzchniaDzialki"),
+        @NamedQuery(name = "Nieruchomosc.findByVersion", query = "SELECT n FROM Nieruchomosc n WHERE n.version = :version")})
 public class Nieruchomosc implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name="nieruchomosc_id_seq",
-                       sequenceName="nieruchomosc_id_seq",
-                       allocationSize=1)
+    @SequenceGenerator(name = "nieruchomosc_id_seq",
+            sequenceName = "nieruchomosc_id_seq",
+            allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator="nieruchomosc_id_seq")
+            generator = "nieruchomosc_id_seq")
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @NotNull(message="{walidacja.notNull}")
+    @NotNull(message = "{walidacja.notNull}")
     @Size(min = 1, max = 64, message = "{walidacja.size}")
     @Column(name = "miejscowosc")
     private String miejscowosc;
     @Basic(optional = false)
-    @NotNull(message="{walidacja.notNull}")
+    @NotNull(message = "{walidacja.notNull}")
     @Size(min = 1, max = 64, message = "{walidacja.size}")
     @Column(name = "ulica")
     private String ulica;
+    @NotNull(message = "{walidacja.notNull}")
     @Column(name = "liczba_pokoi")
     private Integer liczbaPokoi;
+    @NotNull(message = "{walidacja.notNull}")
     @Column(name = "liczba_pieter")
     private Integer liczbaPieter;
     @Basic(optional = false)
-    @NotNull(message="{walidacja.notNull}")
+    @NotNull(message = "{walidacja.notNull}")
     @Column(name = "rok_budowy")
     @Temporal(TemporalType.DATE)
     private Date rokBudowy;
+    @NotNull(message = "{walidacja.notNull}")
+    @Min(value = 1, message = "{walidacja.powierzchnia}")
     @Column(name = "powierzchnia_dzialki")
     private Integer powierzchniaDzialki;
+    @NotNull(message = "{walidacja.notNull}")
+    @Min(value = 1, message = "{walidacja.powierzchnia}")
     @Column(name = "powierzchnia_nieruchomosci")
     private Integer powierzchniaNieruchomosci;
     @Basic(optional = false)
-    @NotNull(message="{walidacja.notNull}")
+    @NotNull(message = "{walidacja.notNull}")
     @Column(name = "version")
     @Version
     private long version;
     @ManyToMany(mappedBy = "nieruchomoscWyposazonaCollection")
     private Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection = new ArrayList<ElementWyposazeniaNieruchomosci>();
-    @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id", updatable=false)
+    @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id", updatable = false)
     @ManyToOne(optional = false)
     private TypNieruchomosci typNieruchomosci;
     @OneToOne(cascade = {CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "nieruchomosc")
@@ -172,7 +161,7 @@ public class Nieruchomosc implements Serializable {
     public void setPowierzchniaNieruchomosci(Integer powierzchniaNieruchomosci) {
         this.powierzchniaNieruchomosci = powierzchniaNieruchomosci;
     }
-    
+
     public Collection<ElementWyposazeniaNieruchomosci> getElementWyposazeniaNieruchomosciCollection() {
         return elementWyposazeniaNieruchomosciCollection;
     }
@@ -221,5 +210,5 @@ public class Nieruchomosc implements Serializable {
     public String toString() {
         return "pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc[ id=" + id + " ]";
     }
-    
+
 }

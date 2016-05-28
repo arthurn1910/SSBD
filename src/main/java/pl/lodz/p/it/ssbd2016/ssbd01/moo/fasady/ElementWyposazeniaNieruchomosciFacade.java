@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 
@@ -15,16 +10,14 @@ import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
- *
- * @author java
+ * Created by Kamil Rogowski on 26.05.2016.
  */
 @Stateless
 @Interceptors({TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
-public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implements TypOgloszeniaFacadeLocal {
+public class ElementWyposazeniaNieruchomosciFacade extends AbstractFacade<ElementWyposazeniaNieruchomosci> implements ElementWyposazeniaNieruchomosciFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")
     private EntityManager em;
@@ -34,15 +27,8 @@ public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implement
         return em;
     }
 
-    public TypOgloszeniaFacade() {
-        super(TypOgloszenia.class);
+    public ElementWyposazeniaNieruchomosciFacade() {
+        super(ElementWyposazeniaNieruchomosci.class);
     }
 
-    @Override
-    public TypOgloszenia znajdzPoNazwie(String typ) {
-        Query q = em.createNamedQuery("TypOgloszenia.findByNazwa");
-        q.setParameter("nazwa", typ);
-        return (TypOgloszenia) q.getSingleResult();
-    }
-    
 }

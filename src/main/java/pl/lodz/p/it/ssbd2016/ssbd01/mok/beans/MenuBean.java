@@ -36,7 +36,7 @@ public class MenuBean {
         if (login != null) {
             uzytkownikSession.zapiszIP(login);
             Konto konto = uzytkownikSession.znajdzPoLoginie(login);
-            login = konto.getLogin();
+            this.login = konto.getLogin();
             poziomyDostepu = "";
             for (PoziomDostepu poziom:konto.getPoziomDostepuCollection()) {
                 if (poziom.getAktywny()) {

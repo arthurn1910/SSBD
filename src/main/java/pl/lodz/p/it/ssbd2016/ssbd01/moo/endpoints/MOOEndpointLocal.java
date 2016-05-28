@@ -1,14 +1,11 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import java.io.IOException;
-import javax.ejb.Local;
-import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
+import javax.ejb.Local;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Interfejs API servera dla modułu funkcjonalnego MOO
@@ -18,9 +15,17 @@ public interface MOOEndpointLocal {
 
     Konto getKonto(String login);
 
-    TypOgloszenia getTypOgloszenia(String typ);
+    /**
+     * Pobiera wszystkie typy ogłoszeń z tabel słownikowych
+     * @return lista kluczy
+     */
+    List<TypOgloszenia> pobierzTypyOgloszen();
 
-    TypNieruchomosci getTypNieruchomosci(String typ);
+    /**
+     * Pobiera wszystkie typy nieruchomości z tabel słownikowych
+     * @return lista kluczy
+     */
+    List<TypNieruchomosci> pobierzTypyNieruchomosci();
 
     /**
      * Dodaje ogłszenie dla nieruchomości MOO. 1, Kamil Rogowski
@@ -28,8 +33,18 @@ public interface MOOEndpointLocal {
      * @param noweOgloszenie   ogłoszenie
      * @param nowaNieruchomosc nieruchomości
      */
-    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
-    
+    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc,  ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci);
+
+    /**
+     * Pobiera wszystkie predefiniowane elementy dla kategorii
+     * @return lista kluczy do elementow kategorii
+     */
+    List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii();
+    /**
+     * Pobiera wszystkie predefiniowane kategorie
+     * @return lista kluczy do kategorii
+     */
+    List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie();
     /**
      * Metoda aktywuje ogłoszenie
      * @param rowData 
@@ -129,4 +144,7 @@ public interface MOOEndpointLocal {
      * @return lista agentow
      */ 
     public List<Konto> pobierzListeAgentow();
+
+
+
 }

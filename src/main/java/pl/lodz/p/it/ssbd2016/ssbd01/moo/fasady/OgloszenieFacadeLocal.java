@@ -5,12 +5,12 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
+import javax.ejb.Local;
+import java.util.List;
+
 /**
- *
  * @author java
  */
 @Local
@@ -27,12 +27,18 @@ public interface OgloszenieFacadeLocal {
     List<Ogloszenie> findAll();
 
     List<Ogloszenie> findRange(int[] range);
+
     /***
      * Zwraca ogłoszenie o podanym ID
+     *
      * @param ID
-     * @return 
+     * @return
      */
-    public Ogloszenie znajdzPoID(Long ID);
+    Ogloszenie znajdzPoID(Long ID);
 
-    int count();    
+    int count();
+
+    void flush();
+
+    void refresh(Ogloszenie ogloszenie);
 }

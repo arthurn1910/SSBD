@@ -1,36 +1,23 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.*;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
+import javax.annotation.Resource;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.*;
+import javax.interceptor.Interceptors;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
-import javax.ejb.SessionContext;
-import javax.ejb.SessionSynchronization;
-import javax.ejb.Stateful;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.interceptor.Interceptors;
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * API servera dla modułu funkcjonalnego MOO
@@ -52,58 +39,79 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    @EJB
+    private ElementWyposazeniaNieruchomosciFacadeLocal elementWyposazeniaNieruchomosciFacade;
+    @EJB
+    private KategoriaWyposazeniaNieruchomosciFacadeLocal kategoriaWyposazeniaNieruchomosciFacade;
     @Resource
     private SessionContext sessionContext;
-    
+
     private Ogloszenie ogloszenieStan;
-    
-    
+
+
     private long txId;
-    private static final Logger loger = Logger.getLogger(MOOEndpoint.class.getName());    
-    
+    private static final Logger loger = Logger.getLogger(MOOEndpoint.class.getName());
+
     @Override
-    @RolesAllowed("dodajOgloszenie")
-    public void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc) {        
+    //@RolesAllowed("dodajOgloszenie")
+    public void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc, ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci) {
+        loger.info("DODAJE OGLOSZENIE - HEHEHE");
         nieruchomoscFacadeLocal.create(nowaNieruchomosc);
+        nieruchomoscFacadeLocal.flush();
+        nieruchomoscFacadeLocal.refresh(nowaNieruchomosc);
         ogloszenieFacadeLocal.create(noweOgloszenie);
+        ogloszenieFacadeLocal.flush();
+        ogloszenieFacadeLocal.refresh(noweOgloszenie);
+        elementWyposazeniaNieruchomosciFacade.create(elementWyposazeniaNieruchomosci);
+        elementWyposazeniaNieruchomosciFacade.flush();
+       // elementWyposazeniaNieruchomosciFacade.create(elementWyposazeniaNieruchomosci);
+
+
     }
-    
+
+    @Override
+    public List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii() {
+        return elementWyposazeniaNieruchomosciFacade.findAll();
+    }
+
+    @Override
+    public List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie() {
+        return kategoriaWyposazeniaNieruchomosciFacade.findAll();
+    }
+
     @Override
     @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
     public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
-        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        if (o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
-        }
-        else {
+        } else {
             // zapisz dane obiektu ogloszenieNowe
             ogloszenieFacadeLocal.edit(o);
         }
     }
-    
+
     @Override
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
+        if (o.getIdWlasciciela().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
-        }
-        else if(ogloszenie.getAktywne() == false) {
+        } else if (ogloszenie.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
-        }
-        else {
+        } else {
             o.setAktywne(false);
             ogloszenieFacadeLocal.edit(o);
         }
     }
-        
+
     @Override
     @RolesAllowed("deaktywujOgloszenie")
     public void deaktywujOgloszenie(Ogloszenie rowData) throws WyjatekSystemu {
     }
-       
+
     @Override
     @RolesAllowed("pobierzListeAgentow")
     public List<Konto> pobierzListeAgentow() {
@@ -115,38 +123,38 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     public List<Ogloszenie> pobierzWszytkieOgloszenia() {
         return ogloszenieFacadeLocal.findAll();
     }
-    
+
     @Override
     @RolesAllowed("aktywujOgloszenie")
     public void aktywujOgloszenie(Ogloszenie rowData) {
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
         o.setAktywne(true);
     }
-    
+
     @Override
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
         ogloszenieManagerLocal.dodajDoUlubionych(ogloszenie);
     }
-    
+
     @Override
     @RolesAllowed("usunZUlubionych")
     public void usunZUlubionych(Ogloszenie ogloszenie) {
         ogloszenieManagerLocal.usunZUlubionych(ogloszenie);
     }
-   
+
     @Override
     @RolesAllowed("znajdzPoID")
     public Ogloszenie znajdzPoID(Long id) {
         return ogloszenieFacadeLocal.znajdzPoID(id);
     }
-    
+
     @Override
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
         o.setIdAgenta(agent);
-        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
+        Collection<Ogloszenie> ogloszenieAgentaCollection = agent.getOgloszenieAgentaCollection();
         ogloszenieAgentaCollection.add(o);
         agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
     }
@@ -155,58 +163,70 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("zmienAgentaWOgloszeniu")
     public void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent) {
         Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        Konto agentStary=o.getIdAgenta();
+        Konto agentStary = o.getIdAgenta();
         o.setIdAgenta(agent);
-        Collection<Ogloszenie> ogloszenieAgentaCollection=agent.getOgloszenieAgentaCollection();
+        Collection<Ogloszenie> ogloszenieAgentaCollection = agent.getOgloszenieAgentaCollection();
         ogloszenieAgentaCollection.add(o);
         agent.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
-        ogloszenieAgentaCollection=agentStary.getOgloszenieAgentaCollection();
+        ogloszenieAgentaCollection = agentStary.getOgloszenieAgentaCollection();
         ogloszenieAgentaCollection.remove(o);
         agentStary.setOgloszenieAgentaCollection(ogloszenieAgentaCollection);
     }
-    
+
     @Override
     @RolesAllowed("deaktywujOgloszenieInnegoUzytkownika")
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        if (o == null) 
-        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
-        
-        if(o.getAktywne() == false) {
+        if (o == null)
+            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
+
+        if (o.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
-        }
-        else {
+        } else {
             o.setAktywne(false);
             ogloszenieFacadeLocal.edit(o);
         }
-    }    
-    
+    }
+
+
+    @Override
+    public List<TypOgloszenia> pobierzTypyOgloszen() {
+        return typOgloszeniaFacade.findAll();
+    }
+
+    @Override
+    public List<TypNieruchomosci> pobierzTypyNieruchomosci() {
+        return typNieruchomosciFacade.findAll();
+    }
+
     @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-        if (ogloszenieStan == null){ 
-        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
+        if (ogloszenieStan == null) {
+            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
             // kopiuj dane z ogloszenia nowego do starego
-        }else{
+        } else {
             ogloszenieFacadeLocal.edit(ogloszenieStan);
         }
     }
-    
+
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
-    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException{
- //       if(sessionContext.getCallerPrincipal().getName().equals(ogloszenie.getIdWlasciciela().getLogin()) == false) {
- //           throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
- //       }
+    public Ogloszenie pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException {
+        //       if(sessionContext.getCallerPrincipal().getName().equals(ogloszenie.getIdWlasciciela().getLogin()) == false) {
+        //           throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+        //       }
         ogloszenieStan = ogloszenieFacadeLocal.find(ogloszenie.getId());
         return (Ogloszenie) CloneUtils.deepCloneThroughSerialization(ogloszenieStan);
     }
-        
+
     //Implementacja SessionSynchronization
+
     /**
      * Metoda logująca czas rozpoczęcia transakcji
+     *
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void afterBegin() throws EJBException, RemoteException {
@@ -216,39 +236,32 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 
     /**
      * Metoda logująca czas przed zakończeniem transakcji
+     *
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void beforeCompletion() throws EJBException, RemoteException {
         loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " przed zakonczeniem");
     }
-    
+
     /**
      * Metoda logująca stan zakończonej transakcji
-     * @param committed     stan zakończonej transakcji
+     *
+     * @param committed stan zakończonej transakcji
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void afterCompletion(boolean committed) throws EJBException, RemoteException {
-        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala zakonczona przez: " + (committed?"zatwierdzenie":"wycofanie"));
+        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala zakonczona przez: " + (committed ? "zatwierdzenie" : "wycofanie"));
     }
-    
+
     // gettery i settery
-    
+
     @Override
     public Konto getKonto(String login) {
         return kontoFacade.znajdzPoLoginie(login);
     }
 
-    @Override
-    public TypOgloszenia getTypOgloszenia(String typ) {
-        return typOgloszeniaFacade.znajdzPoNazwie(typ);
-    }
-
-    @Override
-    public TypNieruchomosci getTypNieruchomosci(String typ) {
-        return typNieruchomosciFacade.znajdzPoNazwie(typ);
-    }
 }
