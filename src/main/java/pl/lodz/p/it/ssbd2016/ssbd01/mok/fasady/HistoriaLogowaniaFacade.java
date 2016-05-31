@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
 /**
  * Created by Kamil Rogowski on 01.05.2016.
@@ -35,6 +36,12 @@ public class HistoriaLogowaniaFacade extends AbstractFacade<HistoriaLogowania> i
 
     public HistoriaLogowaniaFacade() {
         super(HistoriaLogowania.class);
+    }
+    
+    @RolesAllowed("pobierzHistorieLogowanUzytkownikow")
+    @Override
+    public List<HistoriaLogowania> findAll() {
+        return super.findAll();
     }
     
     @Override
