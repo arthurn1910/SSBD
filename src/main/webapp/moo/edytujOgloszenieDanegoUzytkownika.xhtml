@@ -31,22 +31,7 @@
             ${msg["daneOgloszenia.nieruchomosc.powierzchniaDzialki"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaDzialki}" id="powierzchniaDzialki"/><br />
             ${msg["daneOgloszenia.nieruchomosc.powierzchniaNieruchomosci"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaNieruchomosci}" id="powierzchniaNieruchomosci"/><br />
             ${msg["daneOgloszenia.nieruchomosc.rokBudowy"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.rokBudowy}" id="rokBudowy"/><br />
-            ${msg["daneOgloszenia.typNieruchomosci"]}* <h:selectOneMenu value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.typNieruchomosci}">
-                <f:selectItem itemValue="ogloszenia.typ.wynajem" itemLabel="${msg['edytujOgloszenie.wynajem']}" />
-                <f:selectItem itemValue="ogloszenia.typ.sprzedaz" itemLabel="${msg['edytujOgloszenie.sprzedaz']}" />
-            </h:selectOneMenu><br />
-            <h:dataTable id="listaElementowWyposazenia" var="row" value="#{edytujOgloszenieBean.wyposazenieNieruchomosci}">
-                <h:column id="nazwa">
-                    <f:facet name="header">${msg["daneOgloszenia.nazwaElementuWyposazenia"]}</f:facet>
-                    <h:outputText value="#{row.nazwa}" />
-                </h:column>
-                <h:column id="usun">
-                    <f:facet name="header">${msg["komunikat.usun"]}</f:facet>
-                    <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.usunElementWyposazenia()}">
-                        <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
-                    </p:commandButton>
-                </h:column>
-            </h:dataTable>
+
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.edytujOgloszenieDanegoUzytkownika()}">

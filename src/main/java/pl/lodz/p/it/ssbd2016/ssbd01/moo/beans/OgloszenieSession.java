@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.faces.model.DataModel;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 
@@ -25,9 +26,18 @@ public class OgloszenieSession implements Serializable {
     private Ogloszenie ogloszenieDoWyswietlenia;
     
     private Ogloszenie ogloszenieEdytuj;
+    private DataModel<Ogloszenie> ogloszeniaDataModel;
 
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
+    }
+    
+    public void setOgloszeniaDataModel(DataModel<Ogloszenie> o) {
+        ogloszeniaDataModel = o;
+    }
+    
+    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
+        return ogloszeniaDataModel;
     }
 
     /**

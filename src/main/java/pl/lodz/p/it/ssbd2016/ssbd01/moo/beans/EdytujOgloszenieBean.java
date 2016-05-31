@@ -21,6 +21,10 @@ public class EdytujOgloszenieBean {
     
     private List<ElementWyposazeniaNieruchomosci> wyposazenieNieruchomosci;
     
+    public List<ElementWyposazeniaNieruchomosci> getWyposazenieNieruchomosci() {
+        return wyposazenieNieruchomosci;
+    }
+    /*
     @PostConstruct
     private void initModel() {
         try {
@@ -30,7 +34,7 @@ public class EdytujOgloszenieBean {
             e.printStackTrace();
         }
     }
-    
+    */
     /**
      * Metoda ma za zadanie zapisanie ogłoszenia po zakończeniu edycji
      * @return zwraca łańcuch, który przekierowuje do widoku wyświetlającego ogłoszenia

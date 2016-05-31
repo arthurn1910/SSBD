@@ -7,7 +7,6 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import java.util.Collections;
 import java.util.Comparator;
@@ -23,34 +22,25 @@ public class WyswietlOgloszeniaBean {
     @Inject
     private OgloszenieSession ogloszenieSession;
     
-    private List<Ogloszenie> ogloszenia;
-    private DataModel<Ogloszenie> ogloszeniaDataModel;
-    
-    
+ 
     /**
      * Inijcalizuje dane
      */
     @PostConstruct
     private void initModel() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<Ogloszenie>(ogloszenia));
     }
         
     /**
      * Wyświetla ogłoszenia nieposortowane
      */
     public void wyswietlOgloszeniaNieposortowane() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         /*
         ... ewentualnie kiedy zostanie zaimplementowane MOO9 to można wykorzystać jeden domyślny tryb sortowania dla MOO8
         */
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-    
-    
-
-    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
-        return ogloszeniaDataModel;
+        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<Ogloszenie>(ogloszenia));
     }
     
     /**
@@ -77,7 +67,7 @@ public class WyswietlOgloszeniaBean {
      * Wyświetla ogłoszenia posortowane
      */
     public void sortujOgloszenia() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
         Collections.sort(ogloszenia, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Ogloszenie x1 = (Ogloszenie) o1;
@@ -113,7 +103,7 @@ public class WyswietlOgloszeniaBean {
                 return 1;
             }
         });
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<>(ogloszenia));
     }
     
     /***
@@ -121,9 +111,12 @@ public class WyswietlOgloszeniaBean {
      * @return 
      */
     public String wyswietlSzczegolyOgloszenia() {
-        Ogloszenie o = ogloszenia.get(getOgloszeniaDataModel().getRowIndex());
-        ogloszenieSession.setOgloszenieDoWyswietlenia(o);
+        ogloszenieSession.setOgloszenieDoWyswietlenia(getOgloszeniaDataModel().getRowData());
         return "wyswietlSzczegolyOgloszenia";
+    }
+    
+    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
+        return ogloszenieSession.getOgloszeniaDataModel();
     }
     
 }
