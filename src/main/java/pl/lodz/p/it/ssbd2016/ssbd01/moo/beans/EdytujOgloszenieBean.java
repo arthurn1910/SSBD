@@ -7,7 +7,6 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import java.util.*;
-import javax.annotation.PostConstruct;
 
 /**
  * Obsługuje widok edycji ogłoszenia

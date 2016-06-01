@@ -2,8 +2,6 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
