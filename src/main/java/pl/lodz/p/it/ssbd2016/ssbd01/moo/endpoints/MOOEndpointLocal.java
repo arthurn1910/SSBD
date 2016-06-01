@@ -3,6 +3,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 import java.io.IOException;
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -135,4 +136,17 @@ public interface MOOEndpointLocal {
      * @return login użytkownika
      */
     public String pobierzZalogowanegoUzytkownika();
+    
+    /**
+     * Zwraca wyposażenie nieruchomości
+     * @param idNieruchomosci id nieruchomości
+     * @return wyposażenie
+     */
+    public List<ElementWyposazeniaNieruchomosci> pobierzWyposazenieNieruchomosci(Long idNieruchomosci);
+    
+    /**
+     * Zwraca wszystkie możliwe wyposażenia nieruchomości
+     * @return wyposażenie
+     */
+    public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci();
 }

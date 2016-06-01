@@ -1,6 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
-import java.util.List;
+import java.util.*;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -8,8 +8,6 @@ import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
-import java.util.Collections;
-import java.util.Comparator;
 
 
 /**
@@ -26,22 +24,11 @@ public class WyswietlOgloszeniaBean {
     /**
      * Inijcalizuje dane
      */
-    @PostConstruct
-    private void initModel() {
-        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<Ogloszenie>(ogloszenia));
-    }
-        
-    /**
-     * Wyświetla ogłoszenia nieposortowane
-     */
-    public void wyswietlOgloszeniaNieposortowane() {
-        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        /*
-        ... ewentualnie kiedy zostanie zaimplementowane MOO9 to można wykorzystać jeden domyślny tryb sortowania dla MOO8
-        */
-        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<Ogloszenie>(ogloszenia));
-    }
+//    @PostConstruct
+//    private void initModel() {
+//        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+//        ogloszenieSession.setOgloszeniaDataModel(new ArrayList<Ogloszenie>(ogloszenia));
+//    }
     
     /**
     Stworzył: Maksymilian Zgierski
@@ -67,7 +54,7 @@ public class WyswietlOgloszeniaBean {
      * Wyświetla ogłoszenia posortowane
      */
     public void sortujOgloszenia() {
-        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
+        List<Ogloszenie> ogloszenia = ogloszenieSession.getOgloszeniaDataModel();
         Collections.sort(ogloszenia, new Comparator() {
             public int compare(Object o1, Object o2) {
                 Ogloszenie x1 = (Ogloszenie) o1;
@@ -103,19 +90,26 @@ public class WyswietlOgloszeniaBean {
                 return 1;
             }
         });
-        ogloszenieSession.setOgloszeniaDataModel(new ListDataModel<>(ogloszenia));
+        ogloszenieSession.setOgloszeniaDataModel(ogloszenia);
+    }
+    
+    /**
+     * Metoda odświeża listę ogłoszeń
+     */
+    public void odswiez() {
+        ogloszenieSession.pobierzWszystkieOgloszenia();
     }
     
     /***
-     * Funckja ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
+     * Metoda ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
      * @return 
      */
-    public String wyswietlSzczegolyOgloszenia() {
-        ogloszenieSession.setOgloszenieDoWyswietlenia(getOgloszeniaDataModel().getRowData());
+    public String wyswietlSzczegolyOgloszenia(Ogloszenie o) {
+        ogloszenieSession.setOgloszenieDoWyswietlenia(o);
         return "wyswietlSzczegolyOgloszenia";
     }
     
-    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
+    public List<Ogloszenie> getOgloszeniaDataModel() {
         return ogloszenieSession.getOgloszeniaDataModel();
     }
     

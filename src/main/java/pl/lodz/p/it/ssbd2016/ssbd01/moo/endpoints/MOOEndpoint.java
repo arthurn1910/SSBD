@@ -2,8 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
@@ -23,12 +22,14 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypOgloszeniaFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.KontoMOOFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.ElementWyposazeniaNieruchomosciMOOFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
@@ -52,6 +53,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     private OgloszenieFacadeLocal ogloszenieFacadeLocal;
     @EJB
     private NieruchomoscFacadeLocal nieruchomoscFacadeLocal;
+    @EJB
+    private ElementWyposazeniaNieruchomosciMOOFacadeLocal elementWyposazeniaFacadeLocal;
     @Resource
     private SessionContext sessionContext;
     
@@ -81,11 +84,56 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.znajdzPoId(o.getNieruchomosc().getId());
             nieruchomosc.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
             nieruchomosc.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
-            nieruchomosc.setRokBudowy(ogloszenieNowe.getNieruchomosc().getRokBudowy());
             nieruchomosc.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
             nieruchomosc.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
             nieruchomosc.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
             nieruchomosc.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
+            nieruchomosc.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+            List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomosc.getId());
+            List<ElementWyposazeniaNieruchomosci> wyposazenieNowe = new ArrayList(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+            for(int i = 0; i < wyposazenie.size(); i++) {
+                boolean jest = false;
+                for(int j = 0; j < wyposazenieNowe.size(); j++)
+                    if(wyposazenieNowe.get(j).getId().equals(wyposazenie.get(i).getId()))
+                        jest = true;
+                
+                if(!jest) {
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.znajdzPoId(wyposazenie.get(i).getId());
+                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazonaCollection());
+                    for(int j = 0; j < n.size(); j++)
+                        if(n.get(j).getId().equals(nieruchomosc.getId()))
+                            n.remove(j);
+                    el.setNieruchomoscWyposazonaCollection(n);
+                    elementWyposazeniaFacadeLocal.edit(el);
+                }
+            }
+            
+            for(int i = 0; i < wyposazenieNowe.size(); i++) {
+                boolean jest = false;
+                for(int j = 0; j < wyposazenie.size(); j++)
+                    if(wyposazenieNowe.get(i).getId().equals(wyposazenie.get(j).getId()))
+                        jest = true;
+                
+                if(!jest) {
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.znajdzPoId(wyposazenieNowe.get(i).getId());
+                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazonaCollection());
+                    n.add(nieruchomosc);
+                    el.setNieruchomoscWyposazonaCollection(n);
+                    elementWyposazeniaFacadeLocal.edit(el);
+                }
+            }
+            
+            TypNieruchomosci typNieruchomosciNowy = typNieruchomosciFacade.znajdzPoNazwie(ogloszenieNowe.getNieruchomosc().getTypNieruchomosci().getNazwa());
+            TypNieruchomosci typNieruchomosciStary = typNieruchomosciFacade.znajdzPoNazwie(nieruchomosc.getTypNieruchomosci().getNazwa());
+            List <Nieruchomosc> tempNieruchomosci = new ArrayList(typNieruchomosciStary.getNieruchomoscCollection());
+            for(int i = 0; i < tempNieruchomosci.size(); i++)
+                if(tempNieruchomosci.get(i).getId().equals(nieruchomosc.getId()))
+                    tempNieruchomosci.remove(i);
+            typNieruchomosciStary.setNieruchomoscCollection(tempNieruchomosci);
+            typNieruchomosciNowy.getNieruchomoscCollection().add(nieruchomosc);
+            nieruchomosc.setTypNieruchomosci(typNieruchomosciNowy);
+            typNieruchomosciFacade.edit(typNieruchomosciNowy);
+            typNieruchomosciFacade.edit(typNieruchomosciStary);
             o.setTypOgloszenia(typ);
             o.setTytul(ogloszenieNowe.getTytul());
             o.setCena(ogloszenieNowe.getCena());
@@ -120,6 +168,18 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("pobierzListeAgentow")
     public List<Konto> pobierzListeAgentow() {
         return kontoFacade.findAll();
+    }
+    
+    @Override
+    @PermitAll
+    public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci() {
+        return elementWyposazeniaFacadeLocal.findAll();
+    }
+    
+    @Override
+    @PermitAll
+    public List<ElementWyposazeniaNieruchomosci> pobierzWyposazenieNieruchomosci(Long idNieruchomosci) {
+        return elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(idNieruchomosci);
     }
 
     @Override

@@ -22,6 +22,7 @@
             <f:selectItem itemValue="rynekPierwotny" itemLabel="${msg['wyswietlOgloszenia.sortujWgRynku']}" />	
         </h:selectOneRadio>	
         <h:commandButton value="${msg['komunikat.sortuj']}" action="#{wyswietlOgloszeniaBean.sortujOgloszenia()}"/>
+        <h:commandButton action="#{wyswietlOgloszeniaBean.odswiez()}" value="${msg['komunikat.odswiez']}" rendered="true"/>
         <br /><br />
         </h:form>
         <h:form id="listaOgloszenForm">
@@ -65,7 +66,7 @@
                     
                 <h:column id="akcje">
                     <f:facet name="header">${msg["daneOgloszenia.akcje"]}</f:facet>
-                    <h:commandButton action="#{wyswietlOgloszeniaBean.wyswietlSzczegolyOgloszenia()}" value="${msg['komunikat.wyswietlSzczegolyOgloszenia']}" rendered="#{not autoryzacja.czyAdministrator()}"/>
+                    <h:commandButton action="#{wyswietlOgloszeniaBean.wyswietlSzczegolyOgloszenia(row)}" value="${msg['komunikat.wyswietlSzczegolyOgloszenia']}" rendered="#{not autoryzacja.czyAdministrator()}"/>
                     <h:commandButton action="#{wyswietlOgloszeniaBean.dodajDoUlubionych()}" value="${msg['komunikat.dodajDoUlubionych']}" rendered="true"/>
                 </h:column>
             </h:dataTable>

@@ -9,8 +9,10 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
 import javax.faces.model.DataModel;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
@@ -19,6 +21,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
+@ManagedBean(name = "ogloszenieSession")
 public class OgloszenieSession implements Serializable {
     
     @EJB
@@ -26,18 +29,28 @@ public class OgloszenieSession implements Serializable {
     private Ogloszenie ogloszenieDoWyswietlenia;
     
     private Ogloszenie ogloszenieEdytuj;
-    private DataModel<Ogloszenie> ogloszeniaDataModel;
+    private List<Ogloszenie> ogloszeniaDataModel;
 
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
     }
     
-    public void setOgloszeniaDataModel(DataModel<Ogloszenie> o) {
+    public void setOgloszeniaDataModel(List<Ogloszenie> o) {
         ogloszeniaDataModel = o;
     }
     
-    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
+    public List<Ogloszenie> getOgloszeniaDataModel() {
+        if (null == ogloszeniaDataModel) pobierzWszystkieOgloszenia();
         return ogloszeniaDataModel;
+    }
+    
+    public List<ElementWyposazeniaNieruchomosci> getWyposazenieEdytowanejNieruchomosci() {
+        Nieruchomosc n = ogloszenieEdytuj.getNieruchomosc();
+        return mooEndpoint.pobierzWyposazenieNieruchomosci(n.getId());
+    }
+    
+    public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci() {
+        return mooEndpoint.getWszystkieMozliweElementyWyposazeniaNieruchomosci();
     }
 
     /**
@@ -80,16 +93,16 @@ public class OgloszenieSession implements Serializable {
      * Pobiera wszystkie ogłoszenia
      * @return lista ogłoszeń
      */
-    List<Ogloszenie> pobierzWszystkieOgloszenia() {
-        return mooEndpoint.pobierzWszytkieOgloszenia();
+    void pobierzWszystkieOgloszenia() {
+        ogloszeniaDataModel = mooEndpoint.pobierzWszytkieOgloszenia();
     }
     
     /**
      * Edytuje dane ogłoszenie
      */
-    void edytujOgloszenieDanegoUzytkownika(List<ElementWyposazeniaNieruchomosci> wyposazenie) throws Exception {
-        ogloszenieEdytuj.getNieruchomosc().setElementWyposazeniaNieruchomosciCollection(wyposazenie);
+    void edytujOgloszenieDanegoUzytkownika() throws Exception {
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
+        pobierzWszystkieOgloszenia();
     }
     
     /**
