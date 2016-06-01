@@ -27,12 +27,6 @@ public interface OgloszenieFacadeLocal {
     List<Ogloszenie> findAll();
 
     List<Ogloszenie> findRange(int[] range);
-    /***
-     * Zwraca ogłoszenie o podanym ID
-     * @param ID
-     * @return 
-     */
-    public Ogloszenie znajdzPoID(Long ID);
 
     int count();    
 }

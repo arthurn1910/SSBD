@@ -81,7 +81,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
         else {
             TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
-            Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.znajdzPoId(o.getNieruchomosc().getId());
+            Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.find(o.getNieruchomosc().getId());
             nieruchomosc.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
             nieruchomosc.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
             nieruchomosc.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
@@ -98,7 +98,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                         jest = true;
                 
                 if(!jest) {
-                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.znajdzPoId(wyposazenie.get(i).getId());
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenie.get(i).getId());
                     List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazonaCollection());
                     for(int j = 0; j < n.size(); j++)
                         if(n.get(j).getId().equals(nieruchomosc.getId()))
@@ -115,7 +115,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                         jest = true;
                 
                 if(!jest) {
-                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.znajdzPoId(wyposazenieNowe.get(i).getId());
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenieNowe.get(i).getId());
                     List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazonaCollection());
                     n.add(nieruchomosc);
                     el.setNieruchomoscWyposazonaCollection(n);
@@ -123,17 +123,6 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                 }
             }
             
-            TypNieruchomosci typNieruchomosciNowy = typNieruchomosciFacade.znajdzPoNazwie(ogloszenieNowe.getNieruchomosc().getTypNieruchomosci().getNazwa());
-            TypNieruchomosci typNieruchomosciStary = typNieruchomosciFacade.znajdzPoNazwie(nieruchomosc.getTypNieruchomosci().getNazwa());
-            List <Nieruchomosc> tempNieruchomosci = new ArrayList(typNieruchomosciStary.getNieruchomoscCollection());
-            for(int i = 0; i < tempNieruchomosci.size(); i++)
-                if(tempNieruchomosci.get(i).getId().equals(nieruchomosc.getId()))
-                    tempNieruchomosci.remove(i);
-            typNieruchomosciStary.setNieruchomoscCollection(tempNieruchomosci);
-            typNieruchomosciNowy.getNieruchomoscCollection().add(nieruchomosc);
-            nieruchomosc.setTypNieruchomosci(typNieruchomosciNowy);
-            typNieruchomosciFacade.edit(typNieruchomosciNowy);
-            typNieruchomosciFacade.edit(typNieruchomosciStary);
             o.setTypOgloszenia(typ);
             o.setTytul(ogloszenieNowe.getTytul());
             o.setCena(ogloszenieNowe.getCena());
@@ -150,12 +139,11 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
-        else if(ogloszenie.getAktywne() == false) {
+        else if(o.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
         }
         else {
             o.setAktywne(false);
-            ogloszenieFacadeLocal.edit(o);
         }
     }
         
@@ -216,7 +204,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("znajdzPoID")
     public Ogloszenie znajdzPoID(Long id) {
-        return ogloszenieFacadeLocal.znajdzPoID(id);
+        return ogloszenieFacadeLocal.find(id);
     }
     
     @Override

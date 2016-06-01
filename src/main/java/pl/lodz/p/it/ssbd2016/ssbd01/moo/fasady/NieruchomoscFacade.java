@@ -32,16 +32,4 @@ public class NieruchomoscFacade extends AbstractFacade<Nieruchomosc> implements 
     public NieruchomoscFacade() {
         super(Nieruchomosc.class);
     }
-    
-    @Override
-    public Nieruchomosc znajdzPoId(long id) {
-        Query q = em.createNamedQuery("Nieruchomosc.findAll");
-        List<Nieruchomosc> l = (List<Nieruchomosc>) q.getResultList();
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getId() == id) {
-                return l.get(i);
-            }
-        }
-        return l.get(0);
-    }
 }

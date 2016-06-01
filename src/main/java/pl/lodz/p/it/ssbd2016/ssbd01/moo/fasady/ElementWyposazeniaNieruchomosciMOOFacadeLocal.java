@@ -30,8 +30,11 @@ public interface ElementWyposazeniaNieruchomosciMOOFacadeLocal {
 
     int count();
 
+    /**
+     * Metoda zwraca listę elementów wyposażenia nieruchomości o id podanym w parametrze
+     * @param idNieruchomosci id nieruchomości
+     * @return lista elementów wyposażenia
+     */
     public List<ElementWyposazeniaNieruchomosci> znajdzPoIdNieruchomosci(Long idNieruchomosci);
-    
-    public ElementWyposazeniaNieruchomosci znajdzPoId(long id);
     
 }

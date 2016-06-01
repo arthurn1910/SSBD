@@ -20,26 +20,12 @@ public class WyswietlOgloszeniaBean {
     @Inject
     private OgloszenieSession ogloszenieSession;
     
- 
-    /**
-     * Inijcalizuje dane
-     */
-//    @PostConstruct
-//    private void initModel() {
-//        List<Ogloszenie> ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-//        ogloszenieSession.setOgloszeniaDataModel(new ArrayList<Ogloszenie>(ogloszenia));
-//    }
-    
-    /**
+    /*
     Stworzył: Maksymilian Zgierski
     Przypadek użycia: MOO.9 - Przeglądaj ogłoszenia posortowane
     
     Poniższe pola będą użyte w formularzu JSF i będą określały według jakich kryteriów przeprowadzić
     sortowanie w metodzie sortujOgloszenia
-    
-    Przewidywane kontrolki w JSF: selectBooleanCheckBoxes dla sortujCena, sortujDataDodania, 
-    sortujTypOgloszenia, sortujRynekPierwotny
-    selectOneRadio dla pozostałych
     */
     private String sortuj;
     
@@ -109,6 +95,10 @@ public class WyswietlOgloszeniaBean {
         return "wyswietlSzczegolyOgloszenia";
     }
     
+    /**
+     * Metoda odpowiada za przekazanie do widoku listy z ogłoszeniami
+     * @return lista ogłoszeń
+     */
     public List<Ogloszenie> getOgloszeniaDataModel() {
         return ogloszenieSession.getOgloszeniaDataModel();
     }

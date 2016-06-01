@@ -31,7 +31,7 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
         Konto konto = kontoFacade.znajdzPoLoginie("");
-        Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
+        Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.find(ogloszenie.getId());
         // Czynności związane z logiką
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
@@ -41,7 +41,7 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @RolesAllowed("usunZUlubionych")
     public void usunZUlubionych(Ogloszenie ogloszenie) {
         Konto konto = kontoFacade.znajdzPoLoginie("");
-        Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.znajdzPoID(ogloszenie.getId());
+        Ogloszenie ogloszenieTemp = ogloszenieFacadeLocal.find(ogloszenie.getId());
         // Czynności związane z logiką
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);

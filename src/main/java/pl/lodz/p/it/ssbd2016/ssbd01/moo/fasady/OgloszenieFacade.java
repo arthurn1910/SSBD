@@ -32,12 +32,4 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     public OgloszenieFacade() {
         super(Ogloszenie.class);
     }
-
-    @Override
-    public Ogloszenie znajdzPoID(Long ID) {
-        Query q = em.createNamedQuery("Ogloszenie.findById");
-        q.setParameter("id", ID);
-        return (Ogloszenie) q.getSingleResult();
-    }
-    
 }

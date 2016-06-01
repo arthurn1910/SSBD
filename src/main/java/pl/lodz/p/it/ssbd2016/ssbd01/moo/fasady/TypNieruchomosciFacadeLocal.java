@@ -30,6 +30,11 @@ public interface TypNieruchomosciFacadeLocal {
 
     int count();
 
+    /**
+     * Metoda zwraca obiekt TypNieruchomosci, który ma nazwe taką jak podana w parametrze
+     * @param typ nazwa typu
+     * @return odpowiedni obiektTypNieruchomosci
+     */
     public TypNieruchomosci znajdzPoNazwie(String typ);
     
 }

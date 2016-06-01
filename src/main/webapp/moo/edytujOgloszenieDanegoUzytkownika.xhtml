@@ -30,13 +30,6 @@
             ${msg["daneOgloszenia.nieruchomosc.liczbaPieter"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.liczbaPieter}" id="iczbaPieter"/><br />
             ${msg["daneOgloszenia.nieruchomosc.powierzchniaDzialki"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaDzialki}" id="powierzchniaDzialki"/><br />
             ${msg["daneOgloszenia.nieruchomosc.powierzchniaNieruchomosci"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaNieruchomosci}" id="powierzchniaNieruchomosci"/><br />
-            ${msg["daneOgloszenia.typNieruchomosci"]}* <h:selectOneMenu value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.typNieruchomosci.nazwa}">
-                <f:selectItem itemValue="nieruchomosc.typ_nieruchomosci.mieszkanie" itemLabel="${msg['edytujOgloszenie.mieszkanie']}" />
-                <f:selectItem itemValue="nieruchomosc.typ_nieruchomosci.dom" itemLabel="${msg['edytujOgloszenie.dom']}" />
-                <f:selectItem itemValue="nieruchomosc.typ_nieruchomosci.garaz" itemLabel="${msg['edytujOgloszenie.garaz']}" />
-                <f:selectItem itemValue="nieruchomosc.typ_nieruchomosci.lokal" itemLabel="${msg['edytujOgloszenie.lokal']}" />
-                <f:selectItem itemValue="nieruchomosc.typ_nieruchomosci.dzialka" itemLabel="${msg['edytujOgloszenie.dzialka']}" />
-            </h:selectOneMenu><br />
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.edytujOgloszenieDanegoUzytkownika()}">
@@ -57,8 +50,8 @@
                     <f:facet name="header">${msg["elementWyposazenia.usun"]}</f:facet>
                     <h:commandButton action="#{edytujOgloszenieBean.usunElementWyposazenia(row)}" value="${msg['elementWyposazenia.usun']}"/>
                 </h:column>
-            </h:dataTable><br /><br />
-            <h:dataTable id="listaDostepnychElementowWyposazeniaNieruchomosci" var="row" value="#{edytujOgloszenieBean.wszystkieMozliweElementyWyposazeniaNieruchomosci}">
+            </h:dataTable>
+            <h:dataTable id="listaDostepnychElementowWyposazeniaNieruchomosci" var="row" value="#{edytujOgloszenieBean.mozliweWyposazenie}">
                 <h:column id="tytul1">
                     <f:facet name="header">${msg["elementWyposazenia.nazwa"]}</f:facet>
                     <h:outputText value="#{row.nazwa}" />

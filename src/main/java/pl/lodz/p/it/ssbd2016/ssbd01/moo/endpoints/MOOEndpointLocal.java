@@ -47,9 +47,9 @@ public interface MOOEndpointLocal {
     /**
      * Metoda edytuje ogloszenie dotyczace klienta MOO.2
      * @param ogloszenieNowe
-     * @throws Exception 
+     * @throws WyjatekSystemu 
      */
-    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;    
+    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu;    
     
     /**
      * Metoda odpowiadajaca za edycje ogloszenia danego uzytkownika MOO.3
@@ -61,9 +61,9 @@ public interface MOOEndpointLocal {
     /**
      * Metoda deaktywuje ogłoszenie dotyczace użytkownika MOO.4
      * @param ogloszenie
-     * @throws Exception 
+     * @throws WyjatekSystemu
      */
-    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu;
         
     /**
     * Metoda odpowiadajaca za deaktywacje ogłoszenia innego uzytkownika MOO.5

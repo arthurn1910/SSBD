@@ -18,28 +18,13 @@ public class EdytujOgloszenieBean {
     
     @Inject
     private OgloszenieSession ogloszenieSession;
-    
-    private List<ElementWyposazeniaNieruchomosci> wyposazenieNieruchomosci;
-    
-    public List<ElementWyposazeniaNieruchomosci> getWyposazenieNieruchomosci() {
-        return wyposazenieNieruchomosci;
-    }
-    public void setWyposazenieNieruchomosci(List<ElementWyposazeniaNieruchomosci> w) {
-        wyposazenieNieruchomosci = w;
-    }
-    
-    @PostConstruct
-    private void initModel() {
-        wyposazenieNieruchomosci = ogloszenieSession.getWyposazenieEdytowanejNieruchomosci();
-    }
-    
+
     /**
      * Metoda ma za zadanie zapisanie ogłoszenia po zakończeniu edycji
      * @return zwraca łańcuch, który przekierowuje do widoku wyświetlającego ogłoszenia
-     * @throws Exception 
+     * @throws WyjatekSystemu
      */
-    public String edytujOgloszenieDanegoUzytkownika() throws Exception{
-        ogloszenieSession.getOgloszenieEdytuj().getNieruchomosc().setElementWyposazeniaNieruchomosciCollection(wyposazenieNieruchomosci);
+    public String edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         ogloszenieSession.edytujOgloszenieDanegoUzytkownika();
         return "wyswietlOgloszenia";
     }
@@ -49,10 +34,18 @@ public class EdytujOgloszenieBean {
      * @param element element do usunięcia
      */
     public void usunElementWyposazenia(ElementWyposazeniaNieruchomosci element) {
+        List<ElementWyposazeniaNieruchomosci> wyposazenieNieruchomosci = ogloszenieSession.getWyposazenieNieruchomosci();
         for(int i = 0; i < wyposazenieNieruchomosci.size(); i++) {
-            if(wyposazenieNieruchomosci.get(i).getId().equals(element.getId()))
+            if(wyposazenieNieruchomosci.get(i).getId().equals(element.getId())) {
                 wyposazenieNieruchomosci.remove(i);
+                break;
+            }
         }
+        ogloszenieSession.setWyposazenieNieruchomosci(wyposazenieNieruchomosci);
+        ogloszenieSession.getOgloszenieEdytuj().getNieruchomosc().setElementWyposazeniaNieruchomosciCollection(wyposazenieNieruchomosci);
+        List<ElementWyposazeniaNieruchomosci> mozliweWyposazenie = ogloszenieSession.getMozliweWyposazenie();
+        mozliweWyposazenie.add(element);
+        ogloszenieSession.setMozliweWyposazenie(mozliweWyposazenie);
     }
     
     /**
@@ -60,10 +53,18 @@ public class EdytujOgloszenieBean {
      * @param element 
      */
     public void dodajElementWyposazenia(ElementWyposazeniaNieruchomosci element) {
+        List<ElementWyposazeniaNieruchomosci> wyposazenieNieruchomosci = ogloszenieSession.getWyposazenieNieruchomosci();
         for(int i = 0; i < wyposazenieNieruchomosci.size(); i++)
             if(wyposazenieNieruchomosci.get(i).getId().equals(element.getId()))
                 return;
         wyposazenieNieruchomosci.add(element);
+        ogloszenieSession.setWyposazenieNieruchomosci(wyposazenieNieruchomosci);
+        ogloszenieSession.getOgloszenieEdytuj().getNieruchomosc().setElementWyposazeniaNieruchomosciCollection(wyposazenieNieruchomosci);
+        List<ElementWyposazeniaNieruchomosci> mozliweWyposazenie = ogloszenieSession.getMozliweWyposazenie();
+        for(int i = 0; i < mozliweWyposazenie.size(); i++)
+            if(mozliweWyposazenie.get(i).getId().equals(element.getId()))
+                mozliweWyposazenie.remove(i);
+        ogloszenieSession.setMozliweWyposazenie(mozliweWyposazenie);
     }
     /**
      * Metoda ma za zadanie zapisanie ogłoszenia innego użytkownika po zakończeniu edycji
@@ -75,15 +76,29 @@ public class EdytujOgloszenieBean {
         return "wyswietlOgloszenia";
     }
     
+    /**
+     * Metoda zwraca aktualnie edytowane ogłoszenie
+     * @return edytowane ogłoszenie
+     * @throws WyjatekSystemu 
+     */
     public Ogloszenie getOgloszenieEdytuj() throws WyjatekSystemu {
         return ogloszenieSession.getOgloszenieEdytuj();
     }
     
     /**
-     * Metoda odpowiedzialna za zwracanie wszystkich możliwych elementów wyposażenia nieruchomości
-     * @return list możliwych elementów wyposażenia
+     * Metoda zwraca wyposażenie nieruchomości aktualnie edytowanego ogłoszenia
+     * @return lista elementów wyposażenia
      */
-    public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci() {
-        return ogloszenieSession.getWszystkieMozliweElementyWyposazeniaNieruchomosci();
+    public List<ElementWyposazeniaNieruchomosci> getWyposazenieNieruchomosci() {
+        return ogloszenieSession.getWyposazenieNieruchomosci();
+    }
+    
+    /**
+     * Metoda zwraca dozwoloną listę elementów wyposażenia nieruchomości
+     * Wszystkie możliwe elementy oprócz tych, które są już w nieruchomości z aktualnie edytowanego ogłoszenia
+     * @return lista elementów wyposażenia
+     */
+    public List<ElementWyposazeniaNieruchomosci> getMozliweWyposazenie() {
+        return ogloszenieSession.getMozliweWyposazenie();
     }
 }

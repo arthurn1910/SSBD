@@ -47,16 +47,4 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
         }
         return wyposazenie;
     }
-    
-    @Override
-    public ElementWyposazeniaNieruchomosci znajdzPoId(long id) {
-        Query q = em.createNamedQuery("ElementWyposazeniaNieruchomosci.findAll");
-        List<ElementWyposazeniaNieruchomosci> l = (List<ElementWyposazeniaNieruchomosci>) q.getResultList();
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getId() == id) {
-                return l.get(i);
-            }
-        }
-        return l.get(0);
-    }
 }
