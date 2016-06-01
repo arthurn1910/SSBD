@@ -159,13 +159,13 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     }
     
     @Override
-    @PermitAll
+    @RolesAllowed("getWszystkieMozliweElementyWyposazeniaNieruchomosci")
     public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci() {
         return elementWyposazeniaFacadeLocal.findAll();
     }
     
     @Override
-    @PermitAll
+    @RolesAllowed("pobierzWyposazenieNieruchomosci")
     public List<ElementWyposazeniaNieruchomosci> pobierzWyposazenieNieruchomosci(Long idNieruchomosci) {
         return elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(idNieruchomosci);
     }

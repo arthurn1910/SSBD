@@ -1,10 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
 import java.util.*;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -86,7 +83,7 @@ public class WyswietlOgloszeniaBean {
         ogloszenieSession.pobierzWszystkieOgloszenia();
     }
     
-    /***
+    /**
      * Metoda ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
      * @return 
      */
