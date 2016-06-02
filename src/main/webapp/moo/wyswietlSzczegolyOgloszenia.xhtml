@@ -37,6 +37,16 @@
             ${msg["szczegolyOgloszenia.typNieruchomosciNazwa"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getNazwa()}"/><br />
             ${msg["szczegolyOgloszenia.cenaMetra"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getSredniaCenaMetraKwadratowego()}"/><br />
             
+            <h>${msg["szczegolyOgloszenia.wyposazenie"]}</h>
+            <h:dataTable id="listaWyposazenia" var="rzecz" value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection()}">
+                <h:column id="nazwa">
+                    <h:outputFormat value="${msg[rzecz.getIdKategorii().getNazwa()]}"></h:outputFormat>
+                </h:column>
+                <h:column id="nazwa2">
+                    <h:outputFormat value="${msg[rzecz.getNazwa()]}"></h:outputFormat>
+                </h:column>
+            </h:dataTable>
+            
             <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="przydzielAgenta" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </p:commandButton>
 
