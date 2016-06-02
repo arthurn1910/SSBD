@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady;
 
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -36,4 +37,15 @@ public class PoziomDostepuFacade extends AbstractFacade<PoziomDostepu> implement
         super(PoziomDostepu.class);
     }
     
+    @RolesAllowed("dodajPoziomDostepu")
+    @Override
+    public void create(PoziomDostepu poziomDostepu) {
+        super.create(poziomDostepu);
+    }
+
+    @RolesAllowed({"dodajPoziomDostepu", "odlaczPoziomDostepu"})
+    @Override
+    public PoziomDostepu find(Object id) {
+        return super.find(id);
+    }
 }

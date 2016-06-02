@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -40,4 +41,23 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
         return (Ogloszenie) q.getSingleResult();
     }
     
+    @Override
+    public void create(Ogloszenie ogloszenie) {
+        super.create(ogloszenie);
+    }
+
+    @Override
+    public void edit(Ogloszenie ogloszenie) {
+        super.edit(ogloszenie);
+    }
+
+    @Override
+    public Ogloszenie find(Object id) {
+        return super.find(id);
+    }
+
+    @Override
+    public List<Ogloszenie> findAll() {
+        return super.findAll();
+    }
 }
