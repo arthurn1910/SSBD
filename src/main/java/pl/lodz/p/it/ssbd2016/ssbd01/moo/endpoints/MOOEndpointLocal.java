@@ -3,6 +3,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 import java.io.IOException;
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -46,9 +47,9 @@ public interface MOOEndpointLocal {
     /**
      * Metoda edytuje ogloszenie dotyczace klienta MOO.2
      * @param ogloszenieNowe
-     * @throws Exception 
+     * @throws WyjatekSystemu 
      */
-    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws Exception;    
+    public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu;    
     
     /**
      * Metoda odpowiadajaca za edycje ogloszenia danego uzytkownika MOO.3
@@ -60,9 +61,9 @@ public interface MOOEndpointLocal {
     /**
      * Metoda deaktywuje ogłoszenie dotyczace użytkownika MOO.4
      * @param ogloszenie
-     * @throws Exception 
+     * @throws WyjatekSystemu
      */
-    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws Exception;
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu;
         
     /**
     * Metoda odpowiadajaca za deaktywacje ogłoszenia innego uzytkownika MOO.5
@@ -129,4 +130,23 @@ public interface MOOEndpointLocal {
      * @return lista agentow
      */ 
     public List<Konto> pobierzListeAgentow();
+    
+    /**
+     * Zwraca login aktualnie zalogowanego użytkownika
+     * @return login użytkownika
+     */
+    public String pobierzZalogowanegoUzytkownika();
+    
+    /**
+     * Zwraca wyposażenie nieruchomości
+     * @param idNieruchomosci id nieruchomości
+     * @return wyposażenie
+     */
+    public List<ElementWyposazeniaNieruchomosci> pobierzWyposazenieNieruchomosci(Long idNieruchomosci);
+    
+    /**
+     * Zwraca wszystkie możliwe wyposażenia nieruchomości
+     * @return wyposażenie
+     */
+    public List<ElementWyposazeniaNieruchomosci> getWszystkieMozliweElementyWyposazeniaNieruchomosci();
 }

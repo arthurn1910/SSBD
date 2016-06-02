@@ -39,6 +39,7 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         ogloszenieTemp.getKontoCollection().add(konto);
         konto.getOgloszenieUlubioneCollection().add(ogloszenieTemp);
         
+        // Czynności związane z logiką
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
     }
@@ -53,6 +54,7 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         ogloszenieTemp.getKontoCollection().remove(konto);
         konto.getOgloszenieUlubioneCollection().remove(ogloszenieTemp);
         
+        // Czynności związane z logiką
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
     }    

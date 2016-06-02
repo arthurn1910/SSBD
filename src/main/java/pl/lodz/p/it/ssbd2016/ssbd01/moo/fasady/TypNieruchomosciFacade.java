@@ -5,12 +5,14 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
+import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 
 /**
  *
@@ -31,9 +33,15 @@ public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> imp
         super(TypNieruchomosci.class);
     }
 
+    @Override
     public TypNieruchomosci znajdzPoNazwie(String typ) {
         Query q = em.createNamedQuery("TypNieruchomosci.findAll");
-        //q.setParameter("nazwa", typ);
-        return (TypNieruchomosci) q.getResultList().get(0);
+        List<TypNieruchomosci> l = (List<TypNieruchomosci>) q.getResultList();
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).getNazwa().equals(typ) == true) {
+                return l.get(i);
+            }
+        }
+        return null;
     }    
 }

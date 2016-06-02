@@ -30,6 +30,11 @@ public interface TypOgloszeniaFacadeLocal {
 
     int count();
 
+    /**
+     * Metoda zwraca obiekt TypOgloszenia o nazwie takiej jak podana w parametrze
+     * @param typ nazwa typu ogłoszenia
+     * @return obiekt TypOgloszenia
+     */
     public TypOgloszenia znajdzPoNazwie(String typ);
     
 }

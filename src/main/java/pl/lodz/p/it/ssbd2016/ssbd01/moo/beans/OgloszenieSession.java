@@ -11,13 +11,15 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.endpoints.MOKEndpoint;
+import javax.faces.bean.ManagedBean;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
+@ManagedBean(name = "ogloszenieSession")
 public class OgloszenieSession implements Serializable {
     
     @EJB
@@ -27,6 +29,24 @@ public class OgloszenieSession implements Serializable {
     private Ogloszenie ogloszenieEdytuj;
     
     private boolean czyWyswietlicPotwierdzenie;
+    private List<Ogloszenie> ogloszeniaDataModel;
+    
+    private List<ElementWyposazeniaNieruchomosci> wyposazenieNieruchomosci;
+    private List<ElementWyposazeniaNieruchomosci> mozliweWyposazenie;
+    
+    public List<ElementWyposazeniaNieruchomosci> getWyposazenieNieruchomosci() {
+        return wyposazenieNieruchomosci;
+    }
+    public void setWyposazenieNieruchomosci(List<ElementWyposazeniaNieruchomosci> w) {
+        wyposazenieNieruchomosci = w;
+    }
+    
+    public List<ElementWyposazeniaNieruchomosci> getMozliweWyposazenie() {
+        return mozliweWyposazenie;
+    }
+    public void setMozliweWyposazenie(List<ElementWyposazeniaNieruchomosci> w) {
+        mozliweWyposazenie = w;
+    }
 
     public boolean isCzyWyswietlicPotwierdzenie() {
         if (czyWyswietlicPotwierdzenie) {
@@ -38,6 +58,15 @@ public class OgloszenieSession implements Serializable {
     
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
+    }
+    
+    public void setOgloszeniaDataModel(List<Ogloszenie> o) {
+        ogloszeniaDataModel = o;
+    }
+    
+    public List<Ogloszenie> getOgloszeniaDataModel() {
+        if (null == ogloszeniaDataModel) pobierzWszystkieOgloszenia();
+        return ogloszeniaDataModel;
     }
 
     /**
@@ -80,14 +109,15 @@ public class OgloszenieSession implements Serializable {
      * Pobiera wszystkie ogłoszenia
      * @return lista ogłoszeń
      */
-    List<Ogloszenie> pobierzWszystkieOgloszenia() {
-        return mooEndpoint.pobierzWszytkieOgloszenia();
+    void pobierzWszystkieOgloszenia() {
+        ogloszeniaDataModel = mooEndpoint.pobierzWszytkieOgloszenia();
     }
     
     /**
      * Edytuje dane ogłoszenie
+     * @throws WyjatekSystemu
      */
-    void edytujOgloszenieDanegoUzytkownika() throws Exception {
+    void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
     }
     
@@ -145,6 +175,15 @@ public class OgloszenieSession implements Serializable {
      */
     void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException {
         setOgloszenieEdytuj(mooEndpoint.pobierzOgloszenieDoEdycji(ogloszenie));
+        Nieruchomosc n = ogloszenieEdytuj.getNieruchomosc();
+        wyposazenieNieruchomosci = mooEndpoint.pobierzWyposazenieNieruchomosci(n.getId());
+        mozliweWyposazenie = mooEndpoint.getWszystkieMozliweElementyWyposazeniaNieruchomosci();
+        for(int i = 0; i < mozliweWyposazenie.size(); i++) {
+            for(int j = 0; j < wyposazenieNieruchomosci.size(); j++) {
+                if(mozliweWyposazenie.get(i).getId().equals(wyposazenieNieruchomosci.get(j).getId()))
+                    mozliweWyposazenie.remove(i);
+            }
+        }
     }
     
      /**
@@ -182,7 +221,7 @@ public class OgloszenieSession implements Serializable {
         return mooEndpoint.pobierzListeAgentow();
     }
     
-    Ogloszenie getOgloszenieDoWyswietlenia() {
+    public Ogloszenie getOgloszenieDoWyswietlenia() {
         Ogloszenie tmp=mooEndpoint.znajdzPoID(ogloszenieDoWyswietlenia.getId());
         if(tmp.getId()==null){
             //WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException");
@@ -197,5 +236,13 @@ public class OgloszenieSession implements Serializable {
 
     public void setOgloszenieEdytuj(Ogloszenie ogloszenieEdytuj) {
         this.ogloszenieEdytuj = ogloszenieEdytuj;
+    }
+    
+    /**
+     * Zwraca login aktualnie zalogowanego użytkownika
+     * @return login użytkownika
+     */
+    public String pobierzZalogowanegoUzytkownika() {
+        return mooEndpoint.pobierzZalogowanegoUzytkownika();
     }
 }

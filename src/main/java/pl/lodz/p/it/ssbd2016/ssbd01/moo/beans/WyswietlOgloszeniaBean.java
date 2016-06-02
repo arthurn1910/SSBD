@@ -1,13 +1,9 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
+import java.util.*;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
 
@@ -21,130 +17,87 @@ public class WyswietlOgloszeniaBean {
     @Inject
     private OgloszenieSession ogloszenieSession;
     
-    private List<Ogloszenie> ogloszenia;
-    private DataModel<Ogloszenie> ogloszeniaDataModel;
-    
-    
-    /**
-     * Inijcalizuje dane
-     */
-    @PostConstruct
-    private void initModel() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-        
-    /**
-     * Wyświetla ogłoszenia nieposortowane
-     */
-    public void wyswietlOgloszeniaNieposortowane() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        /*
-        ... ewentualnie kiedy zostanie zaimplementowane MOO9 to można wykorzystać jeden domyślny tryb sortowania dla MOO8
-        */
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
-    }
-    
-    
-
-    public DataModel<Ogloszenie> getOgloszeniaDataModel() {
-        return ogloszeniaDataModel;
-    }
-    
-    /**
+    /*
     Stworzył: Maksymilian Zgierski
     Przypadek użycia: MOO.9 - Przeglądaj ogłoszenia posortowane
     
     Poniższe pola będą użyte w formularzu JSF i będą określały według jakich kryteriów przeprowadzić
     sortowanie w metodzie sortujOgloszenia
-    
-    Przewidywane kontrolki w JSF: selectBooleanCheckBoxes dla sortujCena, sortujDataDodania, 
-    sortujTypOgloszenia, sortujRynekPierwotny
-    selectOneRadio dla pozostałych
     */
-    private boolean sortujCena;
-    private boolean cenaRosnaca;
-    private boolean sortujDataDodania;
-    private boolean dataRosnaca;
-    private boolean sortujTypOgloszenia;
-    private boolean typOgloszeniaAlfabetycznie;
-    private boolean sortujRynekPierwotny;
-    private boolean rynekPierwotnyNajpierw;
+    private String sortuj;
     
-    public boolean getSortujCena() {
-        return this.sortujCena;
+    public String getSortuj() {
+        return this.sortuj;
     }    
-    public void setSortujCena(boolean c) {
-        this.sortujCena = c;
-    }
-    
-    public boolean getSortujDataDodania() {
-        return this.sortujDataDodania;
-    }
-    public void setSortujDataDodania(boolean d) {
-        this.sortujDataDodania = d;
-    }
-    
-    public boolean getSortujTypOgloszenia() {
-        return this.sortujTypOgloszenia;
-    }    
-    public void setSortujTypOgloszenia(boolean t) {
-        this.sortujTypOgloszenia = t;
-    }
-    
-    public boolean getSortujRynekPierwotny() {
-        return this.sortujRynekPierwotny;
-    }
-    public void setSortujRynekPierwotny(boolean r) {
-        this.sortujRynekPierwotny = r;
-    }
-    
-    public boolean getCenaRosnaca() {
-        return this.cenaRosnaca;
-    }
-    public void setCenaRosnaca(boolean c) {
-        this.cenaRosnaca = c;
-    }
-    
-    public boolean getDataRosnaca() {
-        return this.dataRosnaca;
-    }
-    public void setDataRosnaca(boolean d) {
-        this.dataRosnaca = d;
-    }
-    
-    public boolean getTypOgloszeniaAlfabetycznie() {
-        return this.typOgloszeniaAlfabetycznie;
-    }
-    public void setTypOgloszeniaAlfabetycznie(boolean t) {
-        this.typOgloszeniaAlfabetycznie = t;
-    }
-    
-    public boolean getRynekPierwotnyNajpierw() {
-        return this.rynekPierwotnyNajpierw;
-    }
-    public void setRynekPierwotnyNajpierw(boolean r) {
-        this.rynekPierwotnyNajpierw = r;
+    public void setSortuj(String s) {
+        this.sortuj = s;
     }
     
     /**
      * Wyświetla ogłoszenia posortowane
      */
     public void sortujOgloszenia() {
-        ogloszenia = ogloszenieSession.pobierzWszystkieOgloszenia();
-        /*
-        ...
-        */
-        ogloszeniaDataModel = new ListDataModel<Ogloszenie>(ogloszenia);
+        List<Ogloszenie> ogloszenia = ogloszenieSession.getOgloszeniaDataModel();
+        Collections.sort(ogloszenia, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Ogloszenie x1 = (Ogloszenie) o1;
+                Ogloszenie x2 = (Ogloszenie) o2;
+                if(sortuj.equals("cena") == true) {
+                    int sComp = 0;
+                    if(x1.getCena() > x2.getCena())
+                        sComp = 1;
+                    else if(x1.getCena() < x2.getCena())
+                        sComp = -1;
+                    return sComp;
+                }
+                else if(sortuj.equals("dataDodania") == true) {
+                    int sComp = 0;
+                    if(x1.getDataDodania().after(x2.getDataDodania()))
+                        sComp = 1;
+                    else if(x1.getDataDodania().before(x2.getDataDodania()))
+                        sComp = -1;
+                    return sComp;
+                }
+                else if(sortuj.equals("typOgloszenia") == true) {
+                    int sComp = x1.getTypOgloszenia().getNazwa().compareTo(x2.getTypOgloszenia().getNazwa());
+                    return sComp;
+                }
+                else if(sortuj.equals("rynekPierwotny") == true) {
+                    int sComp = 0;
+                    if(x1.getRynekPierwotny() == true && x2.getRynekPierwotny() == false)
+                        sComp = -1;
+                    else if(x1.getRynekPierwotny() == false && x2.getRynekPierwotny() == true)
+                        sComp = 1;
+                    return sComp;
+                }
+                return 1;
+            }
+        });
+        ogloszenieSession.setOgloszeniaDataModel(ogloszenia);
     }
     
-    /***
-     * Funckja ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
+    /**
+     * Metoda odświeża listę ogłoszeń
+     */
+    public void odswiez() {
+        ogloszenieSession.pobierzWszystkieOgloszenia();
+    }
+    
+    /**
+     * Metoda ustawiająca w ogloszenieSession ogłoszenie do wysiwetlenia
      * @return 
      */
-    public String wyswietlSzczegolyOgloszenia(){
-        ogloszenieSession.setOgloszenieDoWyswietlenia(getOgloszeniaDataModel().getRowData());
+    public String wyswietlSzczegolyOgloszenia(Ogloszenie o) {
+        ogloszenieSession.setOgloszenieDoWyswietlenia(o);
         return "wyswietlSzczegolyOgloszenia";
+    }
+    
+    /**
+     * Metoda odpowiada za przekazanie do widoku listy z ogłoszeniami
+     * @return lista ogłoszeń
+     */
+    public List<Ogloszenie> getOgloszeniaDataModel() {
+        return ogloszenieSession.getOgloszeniaDataModel();
     }
     
 }

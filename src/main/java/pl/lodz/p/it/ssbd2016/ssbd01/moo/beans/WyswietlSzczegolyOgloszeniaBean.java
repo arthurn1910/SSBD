@@ -28,7 +28,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     @PostConstruct
     private void initModel() {
-        ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.pobierzWszystkieOgloszenia().get(0));
+        ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
         ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
     }
 
@@ -130,7 +130,22 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Stworzył: Maksymilian Zgierski
      * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
      */
-    public void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+    public String deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
         ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        return "wyswietlOgloszenia";
+    }
+    
+    /**
+     * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
+     * @return
+     */
+    public boolean czyMojeOgloszenie()
+    {
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
+        if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false)
+            return false;
+        return true;
     }
 }
