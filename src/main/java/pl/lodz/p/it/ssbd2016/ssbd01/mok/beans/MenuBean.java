@@ -2,6 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -19,6 +20,9 @@ public class MenuBean {
     
     @Inject
     private UzytkownikSession uzytkownikSession;
+
+    @Inject
+    private OgloszenieSession ogloszenieSession;
 
     String login;
     String poziomyDostepu;
@@ -48,6 +52,7 @@ public class MenuBean {
             zalogowany = false;
         }
         czyWyswietlicPotwierdzenie = uzytkownikSession.isCzyWyswietlicPotwierdzenie();
+        czyWyswietlicPotwierdzenie |= ogloszenieSession.isCzyWyswietlicPotwierdzenie();
     }
     
     /**

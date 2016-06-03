@@ -75,7 +75,7 @@ public class Nieruchomosc implements Serializable {
     @Column(name = "version")
     @Version
     private long version;
-    @ManyToMany(mappedBy = "nieruchomoscWyposazonaCollection")
+    @ManyToMany(fetch = FetchType.EAGER,  mappedBy = "nieruchomoscWyposazonaCollection")
     private Collection<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosciCollection = new ArrayList<ElementWyposazeniaNieruchomosci>();
     @JoinColumn(name = "typ_nieruchomosci", referencedColumnName = "id", updatable = false)
     @ManyToOne(optional = false)

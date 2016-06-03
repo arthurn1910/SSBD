@@ -53,18 +53,15 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     private static final Logger loger = Logger.getLogger(MOOEndpoint.class.getName());
 
     @Override
-    //@RolesAllowed("dodajOgloszenie")
+    @RolesAllowed("dodajOgloszenie")
     public void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc, List<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosci) {
 
+        ogloszenieFacadeLocal.create(noweOgloszenie);
+        ogloszenieFacadeLocal.flush();
         for (ElementWyposazeniaNieruchomosci wyposazeniaNieruchomosci : elementWyposazeniaNieruchomosci) {
             elementWyposazeniaNieruchomosciFacade.edit(wyposazeniaNieruchomosci);
         }
         elementWyposazeniaNieruchomosciFacade.flush();
-        ogloszenieFacadeLocal.create(noweOgloszenie);
-        ogloszenieFacadeLocal.flush();
-        ogloszenieFacadeLocal.refresh(noweOgloszenie);
-
-
 
     }
 

@@ -75,12 +75,6 @@ public class DodajOgloszenieBean {
         final List<TypOgloszenia> typyOgloszen = typyOgloszenNieruchomosciBean.getTypyOgloszen();
         nieruchomosc.setTypNieruchomosci(odfiltrujZaznaczonyTypNieruchomosci(typyNieruchomosci));
         ogloszenie.setTypOgloszenia(odfiltrujZaznaczonyTypOgloszenia(typyOgloszen));
-
-        for (ElementWyposazeniaNieruchomosci anElementyWyposazeniaNieruchomosci : elementyWyposazeniaNieruchomosci) {
-            anElementyWyposazeniaNieruchomosci.getNieruchomoscWyposazona().add(nieruchomosc);
-
-        }
-        nieruchomosc.setElementWyposazeniaNieruchomosciCollection(elementyWyposazeniaNieruchomosci);
         ogloszenieSession.dodajOgloszenie(ogloszenie, nieruchomosc, elementyWyposazeniaNieruchomosci);
 
         return "index";

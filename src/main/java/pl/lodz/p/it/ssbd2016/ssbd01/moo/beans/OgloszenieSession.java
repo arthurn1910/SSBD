@@ -29,6 +29,7 @@ public class OgloszenieSession implements Serializable {
 
     private Ogloszenie ogloszenieEdytuj;
     private Exception exception;
+    private boolean czyWyswietlicPotwierdzenie;
 
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
@@ -47,7 +48,11 @@ public class OgloszenieSession implements Serializable {
         final List<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosci = new ArrayList<>(elem);
         noweOgloszenie.setNieruchomosc(nowaNieruchomosc);
         nowaNieruchomosc.setOgloszenie(noweOgloszenie);
+        nowaNieruchomosc.setElementWyposazeniaNieruchomosciCollection(elementWyposazeniaNieruchomosci);
+        elementWyposazeniaNieruchomosci.forEach(e -> e.getNieruchomoscWyposazona().add(nowaNieruchomosc));
+
         mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc, elementWyposazeniaNieruchomosci);
+        czyWyswietlicPotwierdzenie = true;
     }
 
 
@@ -143,7 +148,18 @@ public class OgloszenieSession implements Serializable {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Metoda zwraca wartość określającą czy pokazać potwierdzenie operacji
+     *
+     * @return
+     */
+    public boolean isCzyWyswietlicPotwierdzenie() {
+        if (czyWyswietlicPotwierdzenie) {
+            czyWyswietlicPotwierdzenie = false;
+            return true;
+        }
+        return false;
+    }
     /**
      * Metoda pobierająca ogłoszenie do edycji. Zapewnia blokade optymistyczną.
      *

@@ -43,7 +43,7 @@ public class ElementWyposazeniaNieruchomosci implements Serializable {
     @Column(name = "version")
     @Version
     private long version;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "id")
     @JoinTable(name = "wyposazenie_nieruchomosci", joinColumns = {
             @JoinColumn(name = "id_wartosci", referencedColumnName = "id")}, inverseJoinColumns = {
