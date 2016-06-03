@@ -1,6 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
@@ -38,12 +39,12 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     private SpotkanieManagerLocal spotkanieManager;
     @Resource
     private SessionContext sessionContext;
-    
+
     private long txId;
-    private static final Logger loger = Logger.getLogger(MOSEndpoint.class.getName()); 
-    
+    private static final Logger logger = Logger.getLogger(MOSEndpoint.class.getName());
+
     private Spotkanie spotkanieStan;
-    
+
     @Override
     @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
@@ -54,7 +55,7 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("anulujSpotkanie")
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
-        spotkanieFacade.remove(spotkanieDoAnulowania);
+        spotkanieManager.anulujSpotkanie(spotkanieDoAnulowania);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzSpotkanieDoEdycji")
     public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
-          if(sessionContext.getCallerPrincipal().getName().equals(spotkanie.getIdUzytkownika().getLogin()) == false) {
+        if (sessionContext.getCallerPrincipal().getName().equals(spotkanie.getIdUzytkownika().getLogin()) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
         }
         spotkanieStan = spotkanieFacade.find(spotkanie.getId());
@@ -84,45 +85,55 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszSpotkaniePoEdycji")
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
         spotkanieFacade.edit(spotkanie);
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     @RolesAllowed("znajdzOgloszeniePoId")
-    public Ogloszenie znajdzOgloszeniePoId(Long id){
+    public Ogloszenie znajdzOgloszeniePoId(Long id) {
         return ogloszenieFacade.findById(1L);
     }
 
+    @Override
+    @RolesAllowed("pobierzMojeKonto")
+    public Konto pobierzMojeKonto() {
+        final String loginZalogowanegoUzytkownika = ZalogowanyUzytkownik.getLoginZalogowanegoUzytkownika();
+        return kontoFacade.znajdzPoLoginie(loginZalogowanegoUzytkownika);
+    }
     //Implementacja SessionSynchronization
+
     /**
      * Metoda logująca czas rozpoczęcia transakcji
+     *
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void afterBegin() throws EJBException, RemoteException {
         txId = System.currentTimeMillis();
-        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala rozpoczeta");
+        logger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala rozpoczeta");
     }
 
     /**
      * Metoda logująca czas przed zakończeniem transakcji
+     *
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void beforeCompletion() throws EJBException, RemoteException {
-        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " przed zakonczeniem");
+        logger.log(Level.SEVERE, "Transakcja o ID: " + txId + " przed zakonczeniem");
     }
-    
+
     /**
      * Metoda logująca stan zakończonej transakcji
-     * @param committed     stan zakończonej transakcji
+     *
+     * @param committed stan zakończonej transakcji
      * @throws EJBException
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     @Override
     public void afterCompletion(boolean committed) throws EJBException, RemoteException {
-        loger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala zakonczona przez: " + (committed?"zatwierdzenie":"wycofanie"));
+        logger.log(Level.SEVERE, "Transakcja o ID: " + txId + " zostala zakonczona przez: " + (committed ? "zatwierdzenie" : "wycofanie"));
     }
 }

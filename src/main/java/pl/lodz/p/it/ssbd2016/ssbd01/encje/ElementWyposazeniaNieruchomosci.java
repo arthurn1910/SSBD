@@ -25,11 +25,11 @@ public class ElementWyposazeniaNieruchomosci implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @SequenceGenerator(name = "element_wyposazenia_nieruchomosci_id_seq",
-            sequenceName = "element_wyposazenia_nieruchomosci_id_seq",
+    @SequenceGenerator(name = "element_wyposazenia_nieruchomosci_seq",
+            sequenceName = "element_wyposazenia_nieruchomosci_seq",
             allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-            generator = "element_wyposazenia_nieruchomosci_id_seq")
+            generator = "element_wyposazenia_nieruchomosci_seq")
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
@@ -87,7 +87,7 @@ public class ElementWyposazeniaNieruchomosci implements Serializable {
     }
 
     public void setNieruchomoscWyposazonaCollection(Collection<Nieruchomosc> nieruchomoscWyposazona) {
-        this.nieruchomoscWyposazonaCollection = nieruchomoscWyposazonaCollection;
+        this.nieruchomoscWyposazonaCollection = nieruchomoscWyposazona;
     }
 
     public KategoriaWyposazeniaNieruchomosci getIdKategorii() {

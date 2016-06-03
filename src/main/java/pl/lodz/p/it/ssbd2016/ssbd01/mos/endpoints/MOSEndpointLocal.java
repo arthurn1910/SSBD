@@ -65,4 +65,10 @@ public interface MOSEndpointLocal {
      */
     Ogloszenie znajdzOgloszeniePoId(Long id);
 
+    /**
+     * Pobiera konto aktualnie zalogowanego użytkownika
+     * @return konto użytkownika
+     */
+    Konto pobierzMojeKonto();
+
 }

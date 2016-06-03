@@ -6,6 +6,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
@@ -24,6 +25,19 @@ public class SpotkanieSession implements Serializable {
     private MOSEndpointLocal mosEndpoint;
 
     private Ogloszenie wybraneOgloszenie;
+    private Spotkanie wybraneSpotkanie;
+    private Konto aktualneKonto;
+
+    /**
+     * Inicjalizacja modelu danych
+     */
+    @PostConstruct
+    public void initModel(){
+
+        aktualneKonto = mosEndpoint.pobierzMojeKonto();
+    }
+
+
     /**
      * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
      * MOS.4, MOS.2 P. Stepien
@@ -51,6 +65,7 @@ public class SpotkanieSession implements Serializable {
      */
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
         mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
+
     }
 
     /**
@@ -93,8 +108,16 @@ public class SpotkanieSession implements Serializable {
      * Pobiera ogloszenie dla ktorego maja byc wyswietlone spotkania
      * @return ogloszenie
      */
-    public Ogloszenie getWybraneOgloszenie(){
+    public Ogloszenie pobierzWybraneOgloszenie(){
 
         return wybraneOgloszenie = mosEndpoint.znajdzOgloszeniePoId(1L);
+    }
+    /**
+     * Pobiera aktualne konto użytkownika
+     * @return ogloszenie
+     */
+
+    public Konto getAktualneKonto() {
+        return aktualneKonto;
     }
 }

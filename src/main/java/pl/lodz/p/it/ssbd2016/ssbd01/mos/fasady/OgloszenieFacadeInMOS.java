@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements OgloszenieFacadeLocalInMOS {
 
-    @PersistenceContext(unitName = "ssbd01mooPU")
+    @PersistenceContext(unitName = "ssbd01mosPU")
     private EntityManager em;
 
     @Override

@@ -39,7 +39,8 @@ public class DodajOgloszenieBean {
     private Nieruchomosc nieruchomosc = new Nieruchomosc();
 
     /**
-     * Ponizej wybrane przez uzytkownika wartosci kategorii, wartoscia jest klucz w postaci stringa
+     * Ponizej wybrane przez uzytkownika wartosci kategorii z selectboxow, wartoscia jest klucz w postaci stringa
+     * w listach, znajduja sie wartosci z multi selectboxow
      */
     private String wybranyTypOgloszenia;
     private String wybranyTypNieruchomosci;
@@ -64,22 +65,25 @@ public class DodajOgloszenieBean {
     /**
      * MOO. 1 Dodaje ogłoszenie dla nieruchomości, Kamil Rogowski
      *
-     * @return success
+     * @return index
      */
     public String dodajOgloszenie() {
 
         elementyKategorii = kategoriaWartoscBean.getElementyKategorii();
         final List<ElementWyposazeniaNieruchomosci> elementyWyposazeniaNieruchomosci = konwertujZaznaczoneNaElementWyposazeniaNieruchomosci();
-        elementyWyposazeniaNieruchomosci.forEach(System.out::println);
-        nieruchomosc.setElementWyposazeniaNieruchomosciCollection(elementyWyposazeniaNieruchomosci);
         final List<TypNieruchomosci> typyNieruchomosci = typyOgloszenNieruchomosciBean.getTypyNieruchomosci();
         final List<TypOgloszenia> typyOgloszen = typyOgloszenNieruchomosciBean.getTypyOgloszen();
         nieruchomosc.setTypNieruchomosci(odfiltrujZaznaczonyTypNieruchomosci(typyNieruchomosci));
         ogloszenie.setTypOgloszenia(odfiltrujZaznaczonyTypOgloszenia(typyOgloszen));
+
+        for (ElementWyposazeniaNieruchomosci anElementyWyposazeniaNieruchomosci : elementyWyposazeniaNieruchomosci) {
+            anElementyWyposazeniaNieruchomosci.getNieruchomoscWyposazona().add(nieruchomosc);
+
+        }
         nieruchomosc.setElementWyposazeniaNieruchomosciCollection(elementyWyposazeniaNieruchomosci);
         ogloszenieSession.dodajOgloszenie(ogloszenie, nieruchomosc, elementyWyposazeniaNieruchomosci);
 
-        return "success";
+        return "index";
     }
 
     /**

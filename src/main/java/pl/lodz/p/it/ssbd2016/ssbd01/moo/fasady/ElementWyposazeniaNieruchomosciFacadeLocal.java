@@ -22,4 +22,6 @@ public interface ElementWyposazeniaNieruchomosciFacadeLocal {
     void flush();
 
     void create(ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci);
+
+    void edit(ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci);
 }

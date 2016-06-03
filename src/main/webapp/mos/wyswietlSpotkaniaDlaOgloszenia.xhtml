@@ -48,6 +48,8 @@
                     <h:outputText value="#{spotkanie.dlugoscSpotkania}" />
                 </h:column>
             </h:dataTable>
+            <h:button outcome="index" value="#{msg['komunikat.powrot']}"  />
+            <h:button value="TEST ANULOWOANIA SPOTKANIA O ID 1" action="#{przegladajSwojeSpotkania.anulujSpotkanie()}"  />
         </h:form>
    </ui:define>
 </ui:composition>

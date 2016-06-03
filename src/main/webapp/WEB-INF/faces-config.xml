@@ -210,6 +210,15 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/moo/dodajOgloszenie.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>powrot</from-outcome>
+            <to-view-id>/moo/dodajOgloszenie.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
         
     <navigation-rule>
         <navigation-case>

@@ -170,6 +170,8 @@ public class Nieruchomosc implements Serializable {
         this.elementWyposazeniaNieruchomosciCollection = elementWyposazeniaNieruchomosciCollection;
     }
 
+
+
     public TypNieruchomosci getTypNieruchomosci() {
         return typNieruchomosci;
     }

@@ -16,26 +16,23 @@ import java.util.List;
 @RequestScoped
 public class WyswietlSpotkaniaDlaOgloszeniaBean {
 
+
     private Ogloszenie ogloszenie;
+    /**
+     * Lista spotkan dla ogloszenia
+     */
     private List<Spotkanie> spotkania;
 
     @Inject
     private SpotkanieSession spotkanieSession;
 
     /**
-     * Pobiera listę spotkań dla ogłoszenia, MOS.5, Kamil Rogowski
-     */
-    public void pobierzListeSpotkanDlaOgloszenia() {
-        spotkania = spotkanieSession.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
-    }
-
-    /**
-     * inicjalizacja modelu danych
+     * inicjalizacja modelu danych, MOS.5, Kamil Rogowski
      */
     @PostConstruct
     public void init() {
-        ogloszenie = spotkanieSession.getWybraneOgloszenie();
-        pobierzListeSpotkanDlaOgloszenia();
+        ogloszenie = spotkanieSession.pobierzWybraneOgloszenie();
+        spotkania = spotkanieSession.pobierzSpotkaniaDlaOgloszenia(ogloszenie);
     }
 
     public Ogloszenie getOgloszenie() {

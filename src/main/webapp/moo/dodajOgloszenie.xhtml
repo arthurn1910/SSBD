@@ -146,13 +146,22 @@
             ${msg["niercuchomosc.liczba_pokoi"]} *<h:inputText value="#{dodajOgloszenieBean.nieruchomosc.liczbaPokoi}" id="liczbaPokoi"/> <p:messages for="liczbaPokoi" autoUpdate="true"/><br />
             ${msg["nieruchomosc.liczba_pieter"]} *<h:inputText value="#{dodajOgloszenieBean.nieruchomosc.liczbaPieter}" id="liczbaPieter" /> <p:messages for="liczbaPieter" autoUpdate="true"/><br />
             ${msg["nieruchomosc.rok_budowy"]} *<h:inputText value="#{dodajOgloszenieBean.nieruchomosc.rokBudowy}" id="rokBudowy" immediate="true">
-            <f:convertDateTime pattern="yyyy-MM-dd" /> *</h:inputText> <p:messages for="rokBudowy" autoUpdate="true"/><br />
+            <f:convertDateTime pattern="mm-yyyy" /> *</h:inputText> <p:messages for="rokBudowy" autoUpdate="true"/><br />
             ${msg["nieruchomosc.powierzchnia_dzialki"]} *<h:inputText value="#{dodajOgloszenieBean.nieruchomosc.powierzchniaDzialki}" id="powierzchniaDzialki"/> <p:messages for="powierzchniaDzialki" autoUpdate="true"/><br />
             ${msg["nieruchomosc.powierzchnia_nieruchomosci"]} *<h:inputText value="#{dodajOgloszenieBean.nieruchomosc.powierzchniaNieruchomosci}" id="powierzchniaNieruchomosci"/> <p:messages for="powierzchniaNieruchomosci" autoUpdate="true"/><br />
 
             <br />
-            <h:commandButton action="#{dodajOgloszenieBean.dodajOgloszenie}" value="#{msg['komunikat.potwierdz']}" />
 
+            <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{dodajOgloszenieBean.dodajOgloszenie()}">
+                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            </p:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+            </p:confirmDialog>
+
+            <h:button outcome="index" value="#{msg['komunikat.powrot']}"  />
         </h:form>
    </ui:define>
 </ui:composition>

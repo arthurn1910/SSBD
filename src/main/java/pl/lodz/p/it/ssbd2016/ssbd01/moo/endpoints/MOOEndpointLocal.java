@@ -32,8 +32,9 @@ public interface MOOEndpointLocal {
      *
      * @param noweOgloszenie   ogłoszenie
      * @param nowaNieruchomosc nieruchomości
+     * @param elementWyposazeniaNieruchomosci lista elementow wyposazenia nieruchomosci
      */
-    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc,  ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci);
+    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc,  List<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosci);
 
     /**
      * Pobiera wszystkie predefiniowane elementy dla kategorii
