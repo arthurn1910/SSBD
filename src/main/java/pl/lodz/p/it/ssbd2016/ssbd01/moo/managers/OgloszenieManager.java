@@ -1,5 +1,6 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.managers;
 
+import java.util.logging.Logger;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -57,5 +58,22 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         // Czynności związane z logiką
         ogloszenieFacadeLocal.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
-    }    
+    }
+    
+    @Override
+    public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
+        Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
+        Ogloszenie o = ogloszenieFacadeLocal.znajdzPoID(rowData.getId());
+        Konto tmp;
+        if(o.getIdAgenta()!=null){
+            tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
+            tmp.getOgloszenieAgentaCollection().remove(o);
+            kontoFacade.edit(tmp);
+        }
+        tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
+        o.setIdAgenta(tmp);
+        ogloszenieFacadeLocal.edit(o);
+        tmp.getOgloszenieAgentaCollection().add(o);
+        kontoFacade.edit(tmp);
+    }
 }

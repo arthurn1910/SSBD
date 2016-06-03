@@ -21,6 +21,8 @@ public interface OgloszenieFacadeLocal {
     void edit(Ogloszenie ogloszenie);
 
     void remove(Ogloszenie ogloszenie);
+    
+    void flush();
 
     Ogloszenie find(Object id);
 

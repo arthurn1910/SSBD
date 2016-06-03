@@ -81,6 +81,10 @@
         <group-name>MENADZER</group-name>
     </security-role-mapping>
     <security-role-mapping>
+        <role-name>pobierzAgentow</role-name>
+        <group-name>MENADZER</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
         <role-name>zapiszSwojeKontoPoEdycji</role-name>
         <group-name>ADMINISTRATOR</group-name>
         <group-name>AGENT</group-name>

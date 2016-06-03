@@ -9,9 +9,13 @@ import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpoint;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 
@@ -133,8 +137,10 @@ public class OgloszenieSession implements Serializable {
      * Metoda wywołuje metodę przydzielAgentaDoOgloszenia w MOOEndpoint przekazując jej parametr Ogloszenie
      * Stowrzył Radosław Pawlaczyk
      * MOO 6
+     * MOO 7
      */
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent){
+        Logger loger = Logger.getLogger(MOOEndpoint.class.getName());   
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
     }
     
@@ -188,6 +194,7 @@ public class OgloszenieSession implements Serializable {
     
      /**
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
+     * @throws java.lang.Exception
      */
     public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws Exception{
         mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
@@ -204,15 +211,6 @@ public class OgloszenieSession implements Serializable {
         }
     }
     
-    /***
-     * Metoda wywołuje metodę zmienAgentaWOgloszeniu w MOOEndpoint przekazując jej parametr Ogloszenie
-     * Stowrzył Radosław Pawlaczyk
-     * MOO 7
-     */
-    void zmienAgentaWOgloszeniu(Ogloszenie rowData, Konto agent){
-        mooEndpoint.zmienAgentaWOgloszeniu(rowData, agent);
-    }  
-    
     /**
      * Pobiera liste agentów
      * @return lista agentow
@@ -222,7 +220,7 @@ public class OgloszenieSession implements Serializable {
     }
     
     public Ogloszenie getOgloszenieDoWyswietlenia() {
-        Ogloszenie tmp=mooEndpoint.znajdzPoID(ogloszenieDoWyswietlenia.getId());
+        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
         if(tmp.getId()==null){
             //WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException");
             return null;
@@ -244,5 +242,27 @@ public class OgloszenieSession implements Serializable {
      */
     public String pobierzZalogowanegoUzytkownika() {
         return mooEndpoint.pobierzZalogowanegoUzytkownika();
+    }
+
+    /***
+     * Funkcja zwracająca liste agentów.
+     * @return 
+     */
+    List<Konto> getAgenci() {
+        return mooEndpoint.getAgenci();
+    }
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada danego agenta.
+     * @return 
+     */
+    Boolean czyPosiadaAgenta(Ogloszenie ogloszenie, Konto rowData) {
+        return mooEndpoint.czyPosiadaAgenta(ogloszenie, rowData);
+    }
+    /***
+     * Funkcja sprawdza czy ogłoszenie posiada jakiegoś agenta.
+     * @return 
+     */
+    Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
+        return mooEndpoint.czyPosiadaJakiegosAgenta(ogloszenie);
     }
 }

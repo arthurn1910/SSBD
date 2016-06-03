@@ -1,6 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.managers;
 
 import javax.ejb.Local;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
 
@@ -21,4 +22,10 @@ public interface OgloszenieManagerLocal {
      * @param ogloszenie ogłoszenie, które ma być usunięte
      */
     public void usunZUlubionych(Ogloszenie ogloszenie);    
+    /***
+     * Metoda przydzielajaca ogenta do ogłoszenia
+     * @param rowData
+     * @param agent 
+     */
+    public void przydzielAgenta(Ogloszenie rowData, Konto agent);
 }
