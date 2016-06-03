@@ -117,6 +117,82 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <!--MOO-->
+    <security-constraint>
+        <display-name>MOOZalogowaniConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony zalogowanych</web-resource-name>
+            <description/>
+            <url-pattern>/moo/zalogowani/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>MENADZER</role-name>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>MOOZalogowaniKlientConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony klientow</web-resource-name>
+            <description/>
+            <url-pattern>/moo/zalogowani/klient/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <!--MOS-->
+    <security-constraint>
+        <display-name>MOSZalogowani</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony zalogowanych</web-resource-name>
+            <description/>
+            <url-pattern>/mos/zalogowani/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>ADMINISTRATOR</role-name>
+            <role-name>MENADZER</role-name>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>MOSZalogowaniKlientAgent</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony agentow klientow</web-resource-name>
+            <description/>
+            <url-pattern>/mos/zalogowani/klientAgent/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
     <!-- definicja metody logowania, odwołanie do stron z formularzem logowania i komunikatem błędu -->
     <login-config>
         <auth-method>FORM</auth-method>
