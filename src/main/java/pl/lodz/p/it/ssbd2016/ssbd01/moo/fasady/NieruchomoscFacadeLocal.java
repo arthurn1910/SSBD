@@ -32,6 +32,4 @@ public interface NieruchomoscFacadeLocal {
 
     void flush();
 
-    void refresh(Nieruchomosc nieruchomosc);
-
 }

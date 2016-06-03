@@ -17,7 +17,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
  * @author java
  */
 @Stateless
@@ -36,5 +35,5 @@ public class NieruchomoscFacade extends AbstractFacade<Nieruchomosc> implements 
     public NieruchomoscFacade() {
         super(Nieruchomosc.class);
     }
-    
+
 }

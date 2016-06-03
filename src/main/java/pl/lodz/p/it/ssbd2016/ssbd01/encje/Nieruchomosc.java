@@ -28,6 +28,7 @@ import java.util.Date;
         @NamedQuery(name = "Nieruchomosc.findByLiczbaPieter", query = "SELECT n FROM Nieruchomosc n WHERE n.liczbaPieter = :liczbaPieter"),
         @NamedQuery(name = "Nieruchomosc.findByRokBudowy", query = "SELECT n FROM Nieruchomosc n WHERE n.rokBudowy = :rokBudowy"),
         @NamedQuery(name = "Nieruchomosc.findByPowierzchniaDzialki", query = "SELECT n FROM Nieruchomosc n WHERE n.powierzchniaDzialki = :powierzchniaDzialki"),
+        @NamedQuery(name = "Nieruchomosc.findByTypNieruchomosci", query = "SELECT n FROM Nieruchomosc n WHERE n.typNieruchomosci = :typNieruchomosci"),
         @NamedQuery(name = "Nieruchomosc.findByVersion", query = "SELECT n FROM Nieruchomosc n WHERE n.version = :version")})
 public class Nieruchomosc implements Serializable {
 

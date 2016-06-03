@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 
     @EJB
-    private OgloszenieManagerLocal ogloszenieManagerLocal;
+    private OgloszenieManagerLocal ogloszenieManager;
     @EJB
     private KontoMOOFacadeLocal kontoFacade;
     @EJB
@@ -62,7 +62,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             elementWyposazeniaNieruchomosciFacade.edit(wyposazeniaNieruchomosci);
         }
         elementWyposazeniaNieruchomosciFacade.flush();
-
+        ogloszenieManager.przeliczAgregat();
     }
 
     @Override
@@ -130,13 +130,13 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
-        ogloszenieManagerLocal.dodajDoUlubionych(ogloszenie);
+        ogloszenieManager.dodajDoUlubionych(ogloszenie);
     }
 
     @Override
     @RolesAllowed("usunZUlubionych")
     public void usunZUlubionych(Ogloszenie ogloszenie) {
-        ogloszenieManagerLocal.usunZUlubionych(ogloszenie);
+        ogloszenieManager.usunZUlubionych(ogloszenie);
     }
 
     @Override

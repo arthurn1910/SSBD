@@ -216,5 +216,9 @@
         <group-name>AGENT</group-name>
         <group-name>KLIENT</group-name>
     </security-role-mapping>
+    <security-role-mapping>
+        <role-name>przeliczAgregat</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
 
 </glassfish-web-app>

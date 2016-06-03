@@ -151,7 +151,7 @@ public class DodajOgloszenieBean {
      */
     private TypNieruchomosci odfiltrujZaznaczonyTypNieruchomosci(List<TypNieruchomosci> typyNieruchomosci) {
         for (TypNieruchomosci typNieruchomosci : typyNieruchomosci) {
-            if (Objects.equals(typNieruchomosci.getId(), Integer.valueOf(wybranyTypOgloszenia)))
+            if (Objects.equals(typNieruchomosci.getId(), Integer.valueOf(wybranyTypNieruchomosci)))
                 return typNieruchomosci;
         }
         return null;
