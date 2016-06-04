@@ -5,14 +5,22 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.HistoriaLogowaniaRaportBean;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  *
@@ -35,8 +43,20 @@ public class AgentBean {
      */
     @PostConstruct
     private void initModel(){
-        agenci = new ListDataModel<Konto>(ogloszenieSession.getAgenci());
-        ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        try {
+            agenci = new ListDataModel<Konto>(ogloszenieSession.getAgenci());
+            ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        } catch (WyjatekSystemu ex) {
+            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            try {
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
     
    /***
@@ -45,7 +65,7 @@ public class AgentBean {
      * MOO 6
      * MOO 7
      */
-    public void przydzielAgenta(){
+    public void przydzielAgenta() {
         ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agenci.getRowData());
         initModel();
     }

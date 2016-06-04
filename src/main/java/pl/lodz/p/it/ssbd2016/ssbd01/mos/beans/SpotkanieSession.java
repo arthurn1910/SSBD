@@ -19,6 +19,16 @@ public class SpotkanieSession implements Serializable {
     @Inject
     private MOSEndpointLocal mosEndpoint;
     
+    private Exception exception;
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
+    }
+    
     /**
      * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
      * MOS.4, MOS.2 P. Stepien
@@ -72,7 +82,12 @@ public class SpotkanieSession implements Serializable {
      * @return Spotkanie
      */
     public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
-        return mosEndpoint.pobierzSpotkanieDoEdycji(spotkanie);
+        try{
+            return mosEndpoint.pobierzSpotkanieDoEdycji(spotkanie);
+        }catch(Exception e){
+            this.exception=e;
+            throw e;
+        }
     }
     
     /**

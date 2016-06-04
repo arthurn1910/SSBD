@@ -24,7 +24,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
-import static pl.lodz.p.it.ssbd2016.ssbd01.encje.ssbd01adminPU.Nieruchomosc_.ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptorMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
@@ -32,7 +32,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
  * API servera dla modułu funkcjonalnego MOS
  */
 @Stateful
-@Interceptors({TrackerInterceptor.class})
+@Interceptors({ExteriorInterceptorMOS.class ,TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @EJB
@@ -81,7 +81,7 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @RolesAllowed("pobierzSpotkanieDoEdycji")
     public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
           if(sessionContext.getCallerPrincipal().getName().equals(spotkanie.getIdUzytkownika().getLogin()) == false) {
-            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia", "MOS");
         }
         spotkanieStan = spotkanieFacade.find(spotkanie.getId());
         return (Spotkanie) CloneUtils.deepCloneThroughSerialization(spotkanieStan);

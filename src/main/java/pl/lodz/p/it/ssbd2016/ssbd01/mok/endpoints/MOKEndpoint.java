@@ -153,14 +153,14 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszSwojeKontoPoEdycji")
     public void zapiszSwojeKontoPoEdycji(Konto konto) throws WyjatekSystemu{
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            throw new WyjatekSystemu("blad.niezgodnyLogin");
+            throw new WyjatekSystemu("blad.niezgodnyLogin","MOK");
         }
         
         if (kontoStan == null) {
-            throw new WyjatekSystemu("blad.brakKontaDoEdycji");
+            throw new WyjatekSystemu("blad.brakKontaDoEdycji","MOK");
         }
         if (!kontoStan.equals(konto)) {
-            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym");
+            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym","MOK");
         }
 
         kontoStan.setEmail(konto.getEmail());
@@ -177,10 +177,10 @@ public class MOKEndpoint implements MOKEndpointLocal, SessionSynchronization {
     @RolesAllowed("zapiszKontoPoEdycji")
     public void zapiszKontoPoEdycji(Konto konto)  throws WyjatekSystemu{
         if (kontoStan == null) {
-            throw new WyjatekSystemu("blad.brakKontaDoEdycji");
+            throw new WyjatekSystemu("blad.brakKontaDoEdycji","MOK");
         }
         if (!kontoStan.equals(konto)) {
-            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym");
+            throw new WyjatekSystemu("blad.kontoNiezgodneZWczytanym","MOK");
         }
         kontoStan.setEmail(konto.getEmail());
         kontoStan.setImie(konto.getImie());

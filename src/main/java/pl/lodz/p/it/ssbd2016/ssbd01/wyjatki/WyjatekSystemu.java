@@ -8,16 +8,28 @@ import javax.ejb.ApplicationException;
  */
 @ApplicationException(rollback = true)
 public class WyjatekSystemu extends Exception {
-
-    public WyjatekSystemu(String message) {
+    private String miejsce;
+    public WyjatekSystemu(String message, String miejsce) {
         super(message);
+        this.miejsce=miejsce;
     }
 
-    public WyjatekSystemu(String message, Throwable cause) {
+    public WyjatekSystemu(String message, Throwable cause, String miejsce) {
         super(message, cause);
+        this.miejsce=miejsce;
     }
 
-    public WyjatekSystemu(Throwable cause) {
+    public WyjatekSystemu(Throwable cause, String miejsce) {
         super(cause);
+        this.miejsce=miejsce;
     }
+
+    public String getMiejsce() {
+        return miejsce;
+    }
+
+    public void setMiejsce(String miejsce) {
+        this.miejsce = miejsce;
+    }
+    
 }

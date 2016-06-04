@@ -80,7 +80,7 @@ public interface MOOEndpointLocal {
      * @param rowData
      * @param agent 
      */
-    public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent);
+    public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) ;
     
     /***
      * Funkcja zwracająca ogłoszenie o wybranym ID

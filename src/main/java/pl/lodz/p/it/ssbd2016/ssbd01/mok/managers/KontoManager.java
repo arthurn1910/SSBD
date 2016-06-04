@@ -44,8 +44,8 @@ public class KontoManager implements KontoManagerLocal {
     @RolesAllowed("zmienMojeHaslo")
     public void zmienMojeHaslo(Konto konto, String noweHaslo, String stareHasloWpisane) throws WyjatekSystemu, NoSuchAlgorithmException,UnsupportedEncodingException {
         if (!konto.getLogin().equals(sessionContext.getCallerPrincipal().getName())) {
-            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodnyLogin");
-            throw new WyjatekSystemu("blad.niezgodnyLogin", ex);
+            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodnyLogin","MOK");
+            throw new WyjatekSystemu("blad.niezgodnyLogin", ex,"MOK");
         }
         String stareHaslo = konto.getHaslo();
         String hashedPassword = null;
@@ -56,8 +56,8 @@ public class KontoManager implements KontoManagerLocal {
             konto.setHaslo(hashedPassword);
             kontoFacade.edit(konto);
         } else {
-            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodneHasla");
-            throw new WyjatekSystemu("blad.niezgodneHasla", ex);
+            WyjatekSystemu ex = new WyjatekSystemu("blad.niezgodneHasla","MOK");
+            throw new WyjatekSystemu("blad.niezgodneHasla", ex,"MOK");
         }
     }
 
@@ -162,8 +162,8 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(true);
             } else {
                 // Jeśli nie zwracamy błąd
-                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie");
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie","MOK");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex,"MOK");
             }
         } else // Nie posiadamy danego poziomu dostępu
         // Sprawdzamy czy możemy taki poziom dodać
@@ -179,8 +179,8 @@ public class KontoManager implements KontoManagerLocal {
                 aktualneKonto.getPoziomDostepuCollection().add(nowyPoziom);
             } else {
                 // Jeśli nie udało się dodać poziom dostępu zwracamy błąd
-                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie");
-                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex);
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuDodanie","MOK");
+                throw new WyjatekSystemu("blad.PoziomDostepuDodanie", ex,"MOK");
             }
         }
     }
@@ -199,14 +199,14 @@ public class KontoManager implements KontoManagerLocal {
                 odlaczanyPoziom.setAktywny(false);
             } else {
                 // Jeśli poziom jest nieaktywny zwracamy błąd
-                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
-                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
+                WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie","MOK");
+                throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex,"MOK");
 
             }
         } else {
             // Jeśli nie posiadamy danego poziomu dostępu zwracamy błąd
-            WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie");
-            throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex);
+            WyjatekSystemu ex = new WyjatekSystemu("blad.PoziomDostepuOlaczenie","MOK");
+            throw new WyjatekSystemu("blad.PoziomDostepuOlaczenie", ex,"MOK");
         }
     }
 }
