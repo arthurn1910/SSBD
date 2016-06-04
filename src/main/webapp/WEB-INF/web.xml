@@ -117,23 +117,7 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <security-constraint>
-        <display-name>MooMenadzerConstr</display-name>
-        <web-resource-collection>
-            <web-resource-name>Strony admina</web-resource-name>
-            <description/>
-            <url-pattern>/moo/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>MENADZER</role-name>
-            <role-name>AGENT</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
+
     <security-constraint>
         <display-name>MOOWyswietlSzczegolyOgloszenia</display-name>
         <web-resource-collection>

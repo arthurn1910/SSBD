@@ -133,6 +133,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             o.setCena(ogloszenieNowe.getCena());
             nieruchomoscFacadeLocal.edit(nieruchomosc);
             ogloszenieFacadeLocal.edit(o);
+            // bedzie dzialac po dodaniu do merge'a kodu Kamila
+            ogloszenieManagerLocal.przeliczAgregat();
         }
     }
     
@@ -149,6 +151,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
         else {
             o.setAktywne(false);
+            // bedzie dzialac po dodaniu do merge'a kodu Kamila
+            ogloszenieManagerLocal.przeliczAgregat();
         }
     }
         
