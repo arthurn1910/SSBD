@@ -40,5 +40,4 @@ public interface OgloszenieFacadeLocal {
 
     void flush();
 
-    void refresh(Ogloszenie ogloszenie);
 }

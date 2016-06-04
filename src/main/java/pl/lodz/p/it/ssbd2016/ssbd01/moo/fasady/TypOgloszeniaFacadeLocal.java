@@ -30,7 +30,7 @@ public interface TypOgloszeniaFacadeLocal {
 
     int count();
 
-    public TypOgloszenia znajdzPoNazwie(String typ);
+     TypOgloszenia znajdzPoNazwie(String typ);
 
     void flush();
 }

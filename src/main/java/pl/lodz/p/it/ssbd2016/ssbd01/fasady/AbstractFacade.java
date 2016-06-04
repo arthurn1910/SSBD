@@ -67,8 +67,5 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    public void refresh(T entity){
-        getEntityManager().refresh(entity);
-    }
-    
+
 }

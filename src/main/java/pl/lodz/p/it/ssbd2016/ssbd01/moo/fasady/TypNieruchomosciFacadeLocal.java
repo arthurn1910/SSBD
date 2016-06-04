@@ -30,7 +30,7 @@ public interface TypNieruchomosciFacadeLocal {
 
     int count();
 
-    public TypNieruchomosci znajdzPoNazwie(String typ);
+     TypNieruchomosci znajdzPoNazwie(String typ);
 
     void flush();
 }
