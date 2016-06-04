@@ -65,11 +65,13 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         ogloszenieManager.przeliczAgregat();
     }
 
+    @RolesAllowed("pobierzElementyKategorii")
     @Override
     public List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii() {
         return elementWyposazeniaNieruchomosciFacade.findAll();
     }
 
+    @RolesAllowed("pobierzKategorie")
     @Override
     public List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie() {
         return kategoriaWyposazeniaNieruchomosciFacade.findAll();
@@ -184,12 +186,13 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         }
     }
 
-
+    @RolesAllowed("pobierzTypyOgloszen")
     @Override
     public List<TypOgloszenia> pobierzTypyOgloszen() {
         return typOgloszeniaFacade.findAll();
     }
 
+    @RolesAllowed("pobierzTypyNieruchomosci")
     @Override
     public List<TypNieruchomosci> pobierzTypyNieruchomosci() {
         return typNieruchomosciFacade.findAll();

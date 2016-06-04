@@ -221,4 +221,20 @@
         <group-name>KLIENT</group-name>
     </security-role-mapping>
 
+    <security-role-mapping>
+        <role-name>pobierzKategorie</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzTypyOgloszen</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzTypyNieruchomosci</role-name
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
+    <security-role-mapping>
+        <role-name>pobierzElementyKategorii</role-name>
+        <group-name>KLIENT</group-name>
+    </security-role-mapping>
 </glassfish-web-app>
