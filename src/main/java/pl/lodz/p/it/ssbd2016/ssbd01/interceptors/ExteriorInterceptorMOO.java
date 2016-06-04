@@ -75,38 +75,38 @@ public class ExteriorInterceptorMOO {
             if(tmp2 instanceof WyjatekSystemu){
                 throw (WyjatekSystemu) e;
             } else if(tmp2 instanceof RemoteException){
-                exc=new WyjatekSystemu("blad.RemoteException", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.RemoteException", tmp2,"MOO");
             } else if(tmp2 instanceof NamingException){
-                exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.niewykonanaOperacja", tmp2,"MOO");
             } else if(tmp2 instanceof OptimisticLockException){
-                exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.OptimisticLockException", tmp2,"MOO");
             } else if(tmp2 instanceof UnsupportedEncodingException){
-                exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.nieobslugiwaneKodowanie", tmp2,"MOO");
             } else if(tmp2 instanceof NoSuchAlgorithmException){
-                exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.brakAlgorytmuKodowania", tmp2,"MOO");
             } else if(tmp2 instanceof SunCertPathBuilderException){
-                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.wyslaniaWiadomosci", tmp2,"MOO");
             } else if(tmp2 instanceof EJBAccessException){
-                exc=new WyjatekSystemu("blad.EJBAccessException", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.EJBAccessException", tmp2,"MOO");
             } else if(tmp2 instanceof TransactionRolledbackLocalException){
-                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.EJBTransactionRolledbackException", tmp2,"MOO");
             } else if(tmp2 instanceof PSQLException){
                 String mes="blad.PSQLException";
                 if(tmp2.getMessage().substring(0, 62).equals("BŁĄD: podwójna wartość klucza narusza ograniczenie unikalności"))
                     mes="blad.naruszenieUniq";
                 exc=new WyjatekSystemu(mes, tmp2,"MOS");
             } else if(tmp2 instanceof MessagingException){
-                exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.wysylanieWiadomosci",tmp2,"MOO");
             } else if(tmp2 instanceof ClassNotFoundException){
-                exc=new WyjatekSystemu("blad.klasaNieznaleziona",tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.klasaNieznaleziona",tmp2,"MOO");
             } else if(tmp2 instanceof IOException){
-                exc=new WyjatekSystemu("blad.bladPliku",tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.bladPliku",tmp2,"MOO");
             }  else if(tmp2 instanceof NullPointerException){
                 exc=new WyjatekSystemu("blad.NullPointerExcepton", tmp2,"MOO");
             } else if(tmp2 instanceof EJBException){
-                exc=new WyjatekSystemu("blad.EJBException", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.EJBException", tmp2,"MOO");
             } else{
-                exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", tmp2,"MOS");
+                exc=new WyjatekSystemu("blad.nieobsluzonyWyjatek", tmp2,"MOO");
             }
             throw exc;
         } 
