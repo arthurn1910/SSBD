@@ -28,15 +28,16 @@ public class ExcepcionActionListener extends ActionListenerImpl implements Actio
             super.processAction(event);
         }catch(FacesException fe){
             try {
-                Throwable tmp1=fe, tmp2=fe;
-                while(tmp1.getCause()!=null){
-                tmp2=tmp1;
-                tmp1=tmp1.getCause();
-                }
-                logger.log(Level.SEVERE, "Złapany wyjątek w "+ExcepcionActionListener.class.getName(), fe.getCause());
+                WyjatekSystemu e=(WyjatekSystemu) fe.getCause().getCause();
+                logger.log(Level.SEVERE, fe.getCause().getCause().getMessage()+" !!!! "+e.getMiejsce()+"  Złapany wyjątek w "+ExcepcionActionListener.class.getName(), fe.getCause());
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
+                if(e.getMiejsce().equals("MOK"))
+                    externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
+                else if(e.getMiejsce().equals("MOO"))
+                    externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");
+                else
+                    externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOS.xhtml");
             } catch (IOException ex) {
                 Logger.getLogger(ExcepcionActionListener.class.getName()).log(Level.SEVERE, null, ex);
             }

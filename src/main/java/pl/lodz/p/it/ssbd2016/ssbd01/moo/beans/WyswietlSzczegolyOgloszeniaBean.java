@@ -1,13 +1,20 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.HistoriaLogowaniaRaportBean;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
    
 /**
  * Ziarno odpowiedzialne za prezentacje informacji o ogłoszeniu. Umożliwia
@@ -27,9 +34,21 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Pobiera wybrane ogłoszenie
      */
     @PostConstruct
-    private void initModel() {
-        ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
-        ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
+    public void initModel() {
+        try {
+            ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
+            ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        } catch (WyjatekSystemu ex) {
+            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            try {
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+        }
     }
 
     public Ogloszenie getOgloszenie() {
@@ -125,7 +144,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
      * @return
      */
-    public boolean czyMojeOgloszenie()
+    public boolean czyMojeOgloszenie() throws WyjatekSystemu
     {
         Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
         String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();

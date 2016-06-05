@@ -46,7 +46,7 @@ public class HistoriaLogowaniaRaportBean {
             List<HistoriaLogowania> historiaLogowan = uzytkownikSession.pobierzHistorieLogowanUzytkownikow();
             historiaLogowanKont = new ListDataModel(historiaLogowan);
         }catch(EJBAccessException | AccessLocalException e){
-            WyjatekSystemu ex=new WyjatekSystemu("brakUprawnien", e);
+            WyjatekSystemu ex=new WyjatekSystemu("brakUprawnien", e,"MOK");
             uzytkownikSession.setException(e);
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);

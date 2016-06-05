@@ -2,9 +2,7 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,9 +25,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptor;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptorMOO;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.managers.KontoManagerLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.NieruchomoscFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.OgloszenieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.TypNieruchomosciFacadeLocal;
@@ -43,7 +40,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
  * API servera dla modułu funkcjonalnego MOO
  */
 @Stateful
-@Interceptors({ExteriorInterceptor.class ,TrackerInterceptor.class})
+@Interceptors({ExteriorInterceptorMOO.class ,TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @EJB
@@ -82,7 +79,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
-            throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia","MOO");
         }
         else {
             TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
@@ -142,10 +139,10 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
-            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia");
+            throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia","MOO");
         }
         else if(o.getAktywne() == false) {
-            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej","MOO");
         }
         else {
             o.setAktywne(false);
@@ -223,10 +220,10 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
         if (o == null) 
-        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji","MOO");
         
         if(o.getAktywne() == false) {
-            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej");
+            throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej","MOO");
         }
         else {
             o.setAktywne(false);
@@ -238,7 +235,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         if (ogloszenieStan == null){ 
-        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji");
+        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji","MOO");
             // kopiuj dane z ogloszenia nowego do starego
         }else{
             ogloszenieFacadeLocal.edit(ogloszenieStan);

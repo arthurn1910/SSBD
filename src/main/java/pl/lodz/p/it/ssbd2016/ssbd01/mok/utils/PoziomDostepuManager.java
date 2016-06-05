@@ -70,7 +70,7 @@ public class PoziomDostepuManager {
      */
     public PoziomDostepu stworzPoziomDostepu(String poziom) throws WyjatekSystemu{
         if (!poziomyDostepu.contains(poziom)) {
-            throw new WyjatekSystemu("blad.poziomDostepuNieIstnieje"+poziom);
+            throw new WyjatekSystemu("blad.poziomDostepuNieIstnieje"+poziom,"MOK");
         }
 
         PoziomDostepu nowyPoziomDostepu = new PoziomDostepu();

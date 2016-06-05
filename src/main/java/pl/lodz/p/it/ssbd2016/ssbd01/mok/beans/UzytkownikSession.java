@@ -337,7 +337,7 @@ public class UzytkownikSession implements Serializable {
      */
     public Konto getKontoEdytuj() throws WyjatekSystemu {
         if (kontoEdytuj == null) {
-            WyjatekSystemu ex = new WyjatekSystemu("blad.brakKontaDoEdycji");
+            WyjatekSystemu ex = new WyjatekSystemu("blad.brakKontaDoEdycji","MOK");
             this.setException(ex);
             throw ex;
         }
@@ -354,7 +354,7 @@ public class UzytkownikSession implements Serializable {
     public Konto getWybraneKonto() throws WyjatekSystemu {
         Konto tmp = MOKEndpoint.znajdzPoLoginie(wybraneKonto.getLogin());
         if (tmp.getId() == null) {
-            WyjatekSystemu ex = new WyjatekSystemu("blad.NullPointerException");
+            WyjatekSystemu ex = new WyjatekSystemu("blad.NullPointerException","MOK");
             this.setException(ex);
             throw ex;
         }
@@ -383,7 +383,7 @@ public class UzytkownikSession implements Serializable {
         try {
             this.kontaDataModel = kontaDataModel;
         } catch (Exception ex) {
-            WyjatekSystemu exc = new WyjatekSystemu("blad.EJBAccessExcpetion");
+            WyjatekSystemu exc = new WyjatekSystemu("blad.EJBAccessExcpetion","MOK");
             this.exception = exc;
             throw exc;
         }
