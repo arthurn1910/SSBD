@@ -1,6 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.managers;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
@@ -33,4 +32,9 @@ public interface SpotkanieManagerLocal {
      */
     void edytujSwojeSpotkanie(Spotkanie spotkanie);
 
+    /**
+     * Anuluje spotkanie powiązane z kontem, stworzona dla MOS.3, Kamil Rogowski
+     * @param spotkanieDoAnulowania spotkanie do anulowania
+     */
+    void anulujSpotkanie(Spotkanie spotkanieDoAnulowania);
 }

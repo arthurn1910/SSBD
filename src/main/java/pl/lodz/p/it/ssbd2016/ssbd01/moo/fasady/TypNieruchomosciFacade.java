@@ -6,8 +6,14 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
+
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -19,6 +25,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
  * @author Gleam
  */
 @Stateless
+@Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> implements TypNieruchomosciFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")

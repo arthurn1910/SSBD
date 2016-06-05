@@ -47,4 +47,6 @@ public interface SpotkanieFacadeLocal {
      */
     List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie);
 
+
+
 }

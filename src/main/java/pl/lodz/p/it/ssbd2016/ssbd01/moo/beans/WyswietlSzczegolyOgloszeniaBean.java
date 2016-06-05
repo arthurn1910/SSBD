@@ -34,19 +34,33 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Pobiera wybrane ogłoszenie
      */
     @PostConstruct
-    public void initModel() {
+    private void initModel() {
         try {
             ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
             ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
         } catch (WyjatekSystemu ex) {
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.INFO, "1!!!:"+ogloszenieSession.getException().getMessage());
+            ex.setMessage("blad.NullPointerException");
+            lg.log(Level.INFO, "2!!!:"+ogloszenieSession.getException().getMessage());
+            ogloszenieSession.setException(ex);
+            lg.log(Level.INFO, "3!!!:"+ogloszenieSession.getException().getMessage());
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
+            lg.log(Level.INFO, "4!!!:"+ogloszenieSession.getException().getMessage());
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            lg.log(Level.INFO, "5!!!:"+ogloszenieSession.getException().getMessage());
             HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            lg.log(Level.INFO, "6!!!:"+ogloszenieSession.getException().getMessage());
             try {
+                lg.log(Level.INFO, "7!!!:"+ogloszenieSession.getOgloszenieDoWyswietlenia());
                 externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");
+                lg.log(Level.INFO, "8!!!:"+ogloszenieSession.getException().getMessage());
             } catch (IOException ex1) {
+                lg.log(Level.INFO, "9!!!:"+ogloszenieSession.getException().getMessage());
                 Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
+                lg.log(Level.INFO, "10!!!:"+ogloszenieSession.getException().getMessage());
+            } catch (WyjatekSystemu ex1) {
+                Logger.getLogger(WyswietlSzczegolyOgloszeniaBean.class.getName()).log(Level.SEVERE, null, ex1);
             }
         }
     }

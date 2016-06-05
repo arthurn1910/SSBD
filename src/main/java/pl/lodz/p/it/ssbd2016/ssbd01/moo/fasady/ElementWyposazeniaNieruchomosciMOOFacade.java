@@ -39,7 +39,7 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
         Query q = em.createNamedQuery("ElementWyposazeniaNieruchomosci.findAll");
         List<ElementWyposazeniaNieruchomosci> l = (List<ElementWyposazeniaNieruchomosci>) q.getResultList();
         for (int i = 0; i < l.size(); i++) {
-            List<Nieruchomosc> nieruchomosci = new ArrayList(l.get(i).getNieruchomoscWyposazonaCollection());
+            List<Nieruchomosc> nieruchomosci = new ArrayList(l.get(i).getNieruchomoscWyposazona());
             for(int j = 0; j < nieruchomosci.size(); j++) {
                 if(nieruchomosci.get(j).getId().equals(idNieruchomosci))
                     wyposazenie.add(l.get(i));

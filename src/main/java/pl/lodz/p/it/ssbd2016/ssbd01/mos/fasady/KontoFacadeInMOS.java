@@ -5,11 +5,13 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+import javax.persistence.Query;
 
 /**
  *
@@ -18,7 +20,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 @Stateless
 public class KontoFacadeInMOS extends AbstractFacade<Konto> implements KontoFacadeLocalInMOS {
 
-    @PersistenceContext(unitName = "ssbd01mokPU")
+    @PersistenceContext(unitName = "ssbd01mosPU")
     private EntityManager em;
 
     @Override
@@ -29,5 +31,11 @@ public class KontoFacadeInMOS extends AbstractFacade<Konto> implements KontoFaca
     public KontoFacadeInMOS() {
         super(Konto.class);
     }
-    
+
+    @Override
+    public Konto znajdzPoLoginie(String login) {
+        Query q = em.createNamedQuery("Konto.findByLogin");
+        q.setParameter("login", login);
+        return (Konto) q.getSingleResult();
+    }
 }

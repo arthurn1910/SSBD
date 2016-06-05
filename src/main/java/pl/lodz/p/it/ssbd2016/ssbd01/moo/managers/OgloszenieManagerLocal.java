@@ -5,6 +5,8 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
+import javax.ejb.Local;
+
 
 /**
  * Interfejs dla OgloszenieManager
@@ -16,7 +18,7 @@ public interface OgloszenieManagerLocal {
      * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika
      * @param ogloszenie ogłoszenie, które ma być dodane
      */
-    public void dodajDoUlubionych(Ogloszenie ogloszenie);
+     void dodajDoUlubionych(Ogloszenie ogloszenie);
 
     /**
      * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
@@ -29,4 +31,9 @@ public interface OgloszenieManagerLocal {
      * @param agent 
      */
     public void przydzielAgenta(Ogloszenie rowData, Konto agent);
+
+    /**
+     * Metoda odpowiedzialna za przeliczanie agregatu, gdzie agregatem jest srednia cena nieruchomosci
+     */
+    void przeliczAgregat();
 }

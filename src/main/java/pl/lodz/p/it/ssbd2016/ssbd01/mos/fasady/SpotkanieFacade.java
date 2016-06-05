@@ -13,6 +13,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -41,6 +42,8 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
 
     @Override
     public List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query q = em.createNamedQuery("Spotkanie.findByOgloszenie");
+        q.setParameter("ogloszenie",ogloszenie);
+        return (List<Spotkanie>) q.getResultList();
     }
 }

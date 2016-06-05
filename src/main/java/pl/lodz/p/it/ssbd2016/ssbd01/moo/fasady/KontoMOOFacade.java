@@ -7,6 +7,8 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +22,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
  */
 @Stateless
 @Interceptors({TrackerInterceptor.class})
+@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFacadeLocal {
 
     @PersistenceContext(unitName = "ssbd01mooPU")

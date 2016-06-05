@@ -1,7 +1,10 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import java.io.IOException;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
 import javax.ejb.Local;
+import java.io.IOException;
 import java.util.List;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
@@ -19,18 +22,37 @@ public interface MOOEndpointLocal {
 
     Konto getKonto(String login);
 
-    TypOgloszenia getTypOgloszenia(String typ);
+    /**
+     * Pobiera wszystkie typy ogłoszeń z tabel słownikowych
+     * @return lista kluczy
+     */
+    List<TypOgloszenia> pobierzTypyOgloszen();
 
-    TypNieruchomosci getTypNieruchomosci(String typ);
+    /**
+     * Pobiera wszystkie typy nieruchomości z tabel słownikowych
+     * @return lista kluczy
+     */
+    List<TypNieruchomosci> pobierzTypyNieruchomosci();
 
     /**
      * Dodaje ogłszenie dla nieruchomości MOO. 1, Kamil Rogowski
      *
      * @param noweOgloszenie   ogłoszenie
      * @param nowaNieruchomosc nieruchomości
+     * @param elementWyposazeniaNieruchomosci lista elementow wyposazenia nieruchomosci
      */
-    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc);
-    
+    void dodajOgloszenie(Ogloszenie noweOgloszenie, Nieruchomosc nowaNieruchomosc,  List<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosci);
+
+    /**
+     * Pobiera wszystkie predefiniowane elementy dla kategorii
+     * @return lista kluczy do elementow kategorii
+     */
+    List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii();
+    /**
+     * Pobiera wszystkie predefiniowane kategorie
+     * @return lista kluczy do kategorii
+     */
+    List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie();
     /**
      * Metoda aktywuje ogłoszenie
      * @param rowData 
@@ -159,4 +181,8 @@ public interface MOOEndpointLocal {
      * @return 
      */
     public List<Konto> getAgenci();
+    
+    public TypNieruchomosci getTypNieruchomosci(String typ);
+    public TypOgloszenia getTypOgloszenia(String typ) ;
+            
 }

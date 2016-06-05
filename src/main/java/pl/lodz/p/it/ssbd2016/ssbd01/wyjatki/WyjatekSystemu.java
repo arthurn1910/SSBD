@@ -9,14 +9,17 @@ import javax.ejb.ApplicationException;
 @ApplicationException(rollback = true)
 public class WyjatekSystemu extends Exception {
     private String miejsce;
+    private String message;
     public WyjatekSystemu(String message, String miejsce) {
         super(message);
         this.miejsce=miejsce;
+        this.message=message;
     }
 
     public WyjatekSystemu(String message, Throwable cause, String miejsce) {
         super(message, cause);
         this.miejsce=miejsce;
+        this.message=message;
     }
 
     public WyjatekSystemu(Throwable cause, String miejsce) {
@@ -30,6 +33,14 @@ public class WyjatekSystemu extends Exception {
 
     public void setMiejsce(String miejsce) {
         this.miejsce = miejsce;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
     
 }

@@ -5,8 +5,8 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.fasady;
 
-import java.util.List;
 import javax.persistence.EntityManager;
+import java.util.List;
 
 /**
  *
@@ -66,5 +66,6 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
+
 }

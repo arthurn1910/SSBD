@@ -5,24 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.encje;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Version;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -35,7 +21,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Spotkanie.findById", query = "SELECT s FROM Spotkanie s WHERE s.id = :id"),
     @NamedQuery(name = "Spotkanie.findByDataSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dataSpotkania = :dataSpotkania"),
     @NamedQuery(name = "Spotkanie.findByVersion", query = "SELECT s FROM Spotkanie s WHERE s.version = :version"),
-    @NamedQuery(name = "Spotkanie.findByDlugoscSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dlugoscSpotkania = :dlugoscSpotkania")})
+    @NamedQuery(name = "Spotkanie.findByDlugoscSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dlugoscSpotkania = :dlugoscSpotkania"),
+        @NamedQuery(name = "Spotkanie.findByOgloszenie", query = "SELECT s FROM Spotkanie s WHERE s.idOgloszenia = :ogloszenie")
+})
 public class Spotkanie implements Serializable {
 
     private static final long serialVersionUID = 1L;

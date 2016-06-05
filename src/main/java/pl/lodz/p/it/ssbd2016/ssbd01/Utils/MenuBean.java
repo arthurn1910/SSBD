@@ -1,7 +1,8 @@
-package pl.lodz.p.it.ssbd2016.ssbd01.mok.beans;
+package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
+import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -9,6 +10,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
 
 /**
@@ -50,8 +52,8 @@ public class MenuBean {
         } else {
             zalogowany = false;
         }
-        czyWyswietlicPotwierdzenie = (uzytkownikSession.isCzyWyswietlicPotwierdzenie() ||
-                                        ogloszenieSession.isCzyWyswietlicPotwierdzenie());
+        czyWyswietlicPotwierdzenie = uzytkownikSession.isCzyWyswietlicPotwierdzenie();
+        czyWyswietlicPotwierdzenie |= ogloszenieSession.isCzyWyswietlicPotwierdzenie();
     }
     
     /**

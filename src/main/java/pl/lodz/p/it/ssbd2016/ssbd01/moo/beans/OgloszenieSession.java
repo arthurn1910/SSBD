@@ -1,19 +1,22 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 
-import java.io.IOException;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
+import java.util.logging.Logger;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -21,11 +24,12 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 @SessionScoped
 @ManagedBean(name = "ogloszenieSession")
 public class OgloszenieSession implements Serializable {
-    
+    private static final Logger logger = Logger.getLogger(OgloszenieSession.class.getName());
+
     @EJB
     private MOOEndpointLocal mooEndpoint;
     private Ogloszenie ogloszenieDoWyswietlenia;
-    
+
     private Ogloszenie ogloszenieEdytuj;
     
     private boolean czyWyswietlicPotwierdzenie;
@@ -58,13 +62,7 @@ public class OgloszenieSession implements Serializable {
         mozliweWyposazenie = w;
     }
 
-    public boolean isCzyWyswietlicPotwierdzenie() {
-        if (czyWyswietlicPotwierdzenie) {
-            czyWyswietlicPotwierdzenie = false;
-            return true;
-        }
-        return false;
-    }    
+
     
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
@@ -85,44 +83,58 @@ public class OgloszenieSession implements Serializable {
      * @param ogloszenie   ogłoszenie do dodania
      * @param nieruchomosc nieruchomość do dodania
      */
-    void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc) {
-        Ogloszenie noweOgloszenie = new Ogloszenie();
-        Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
-        
-        // Wypelnij Nieruchomosc:
-        nowaNieruchomosc.setMiejscowosc("Mragowo");
-        nowaNieruchomosc.setUlica("Mazurska");
-        nowaNieruchomosc.setRokBudowy(new Date(2000, 6, 15));
-        nowaNieruchomosc.setPowierzchniaNieruchomosci(nieruchomosc.getPowierzchniaNieruchomosci());
+    void dodajOgloszenie(Ogloszenie ogloszenie, Nieruchomosc nieruchomosc, List<ElementWyposazeniaNieruchomosci> elem) {
+
+        final Nieruchomosc nowaNieruchomosc = ustawNieruchomosc(nieruchomosc);
+        final Ogloszenie noweOgloszenie = ustawOgloszenie(ogloszenie);
+        final List<ElementWyposazeniaNieruchomosci> elementWyposazeniaNieruchomosci = new ArrayList<>(elem);
+        noweOgloszenie.setNieruchomosc(nowaNieruchomosc);
         nowaNieruchomosc.setOgloszenie(noweOgloszenie);
-        nowaNieruchomosc.setTypNieruchomosci(mooEndpoint.getTypNieruchomosci("mieszkanie"));
-        nowaNieruchomosc.setLiczbaPieter(1);
-        nowaNieruchomosc.setLiczbaPokoi(1);
-        nowaNieruchomosc.setPowierzchniaDzialki(10);
-        
-        
-        // Wypelnij Ogloszenie:
+        nowaNieruchomosc.setElementWyposazeniaNieruchomosciCollection(elementWyposazeniaNieruchomosci);
+        elementWyposazeniaNieruchomosci.forEach(e -> e.getNieruchomoscWyposazona().add(nowaNieruchomosc));
+
+        mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc, elementWyposazeniaNieruchomosci);
+        czyWyswietlicPotwierdzenie = true;
+    }
+
+
+    private Ogloszenie ustawOgloszenie(Ogloszenie ogloszenie) {
+        Ogloszenie noweOgloszenie = new Ogloszenie();
         noweOgloszenie.setTytul(ogloszenie.getTytul());
         noweOgloszenie.setCena(ogloszenie.getCena());
-        noweOgloszenie.setRynekPierwotny(true);
+        noweOgloszenie.setRynekPierwotny(ogloszenie.getRynekPierwotny());
         noweOgloszenie.setAktywne(false);
-        noweOgloszenie.setDataDodania(new Date(2016, 1, 1));
-        noweOgloszenie.setNieruchomosc(nowaNieruchomosc);
-        noweOgloszenie.setIdWlasciciela(mooEndpoint.getKonto("janusz"));
-        noweOgloszenie.setIdAgenta(mooEndpoint.getKonto("agent"));
-        noweOgloszenie.setTypOgloszenia(mooEndpoint.getTypOgloszenia("wynajem"));
-        
-        mooEndpoint.dodajOgloszenie(noweOgloszenie, nowaNieruchomosc);
+        noweOgloszenie.setDataDodania(new Date());
+        final String loginZalogowanegoUzytkownika = ZalogowanyUzytkownik.getLoginZalogowanegoUzytkownika();
+        noweOgloszenie.setIdWlasciciela(mooEndpoint.getKonto(loginZalogowanegoUzytkownika));
+        noweOgloszenie.setTypOgloszenia(ogloszenie.getTypOgloszenia());
+        return noweOgloszenie;
+    }
+
+    private Nieruchomosc ustawNieruchomosc(Nieruchomosc nieruchomosc) {
+        Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
+        nowaNieruchomosc.setMiejscowosc(nieruchomosc.getMiejscowosc());
+        nowaNieruchomosc.setUlica(nieruchomosc.getUlica());
+        nowaNieruchomosc.setRokBudowy(nieruchomosc.getRokBudowy());
+        nowaNieruchomosc.setPowierzchniaNieruchomosci(nieruchomosc.getPowierzchniaNieruchomosci());
+        nowaNieruchomosc.setTypNieruchomosci(nieruchomosc.getTypNieruchomosci());
+        nowaNieruchomosc.setLiczbaPieter(nieruchomosc.getLiczbaPieter());
+        nowaNieruchomosc.setLiczbaPokoi(nieruchomosc.getLiczbaPokoi());
+        nowaNieruchomosc.setPowierzchniaDzialki(nieruchomosc.getPowierzchniaDzialki());
+        nowaNieruchomosc.getElementWyposazeniaNieruchomosciCollection().addAll(nieruchomosc.getElementWyposazeniaNieruchomosciCollection());
+
+        return nowaNieruchomosc;
     }
 
     /**
      * Pobiera wszystkie ogłoszenia
+     *
      * @return lista ogłoszeń
      */
     void pobierzWszystkieOgloszenia() {
         ogloszeniaDataModel = mooEndpoint.pobierzWszytkieOgloszenia();
     }
-    
+
     /**
      * Edytuje dane ogłoszenie
      * @throws WyjatekSystemu
@@ -130,9 +142,10 @@ public class OgloszenieSession implements Serializable {
     void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
     }
-    
+
     /**
      * Deaktywuje ogłoszenie
+     *
      * @param ogloszenie ogłoszenie do deaktywacji
      */
     void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
@@ -152,40 +165,54 @@ public class OgloszenieSession implements Serializable {
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent)  {
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
     }
-    
+
     /**
      * Metoda dodaje ogloszenie do ulubionych dla obecnie zalogowanego użytkownika
+     *
      * @param ogloszenie ogłoszenie, które ma być dodane
      */
     void dodajDoUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.dodajDoUlubionych(ogloszenie);
         czyWyswietlicPotwierdzenie = true;
     }
-    
+
     /**
      * Metoda usuwa ogloszenie z ulubionych dla obecnie zalogowanego użytkownika
+     *
      * @param ogloszenie ogłoszenie, które ma być usunięte
      */
     void usunZUlubionych(Ogloszenie ogloszenie) {
         mooEndpoint.usunZUlubionych(ogloszenie);
         czyWyswietlicPotwierdzenie = true;
     }
-    
+
     /**
-     *   metoda deaktywująca ogłoszenie innego użytkownika
-     *   @param ogloszenie, które ma zostać deaktywowane
+     * metoda deaktywująca ogłoszenie innego użytkownika
+     *
+     * @param ogloszenie, które ma zostać deaktywowane
      */
     void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
         try {
             mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+    /**
+     * Metoda zwraca wartość określającą czy pokazać potwierdzenie operacji
+     *
+     * @return
+     */
+    public boolean isCzyWyswietlicPotwierdzenie() {
+        if (czyWyswietlicPotwierdzenie) {
+            czyWyswietlicPotwierdzenie = false;
+            return true;
+        }
+        return false;
+    }
     /**
      * Metoda pobierająca ogłoszenie do edycji. Zapewnia blokade optymistyczną.
+     *
      * @param ogloszenie ogloszenie do edycji
      */
     void pobierzOgloszenieDoEdycji(Ogloszenie ogloszenie) throws WyjatekSystemu, IOException, ClassNotFoundException {
@@ -205,8 +232,8 @@ public class OgloszenieSession implements Serializable {
             throw e;
         }
     }
-    
-     /**
+
+    /**
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
      * @throws java.lang.Exception
      */
@@ -218,20 +245,21 @@ public class OgloszenieSession implements Serializable {
             throw e;
         }
     }
+
     /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
-     */    
+     */
     void edytujOgloszenieInnegoUzytkownika() {
         try {
             mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     /**
      * Pobiera liste agentów
+     *
      * @return lista agentow
      */
     List<Konto> pobierzListeAgentow() {
@@ -239,20 +267,48 @@ public class OgloszenieSession implements Serializable {
     }
     
     public Ogloszenie getOgloszenieDoWyswietlenia() throws WyjatekSystemu {
-        if(ogloszenieDoWyswietlenia.getId()==null){
+        try{
+            if(ogloszenieDoWyswietlenia.getId()==null){
+                WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
+                WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
+                this.exception=exc;
+                throw exc;
+            }
+            Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
+            return tmp;
+        }catch(Exception e){
             WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
             WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
             this.exception=exc;
             throw exc;
         }
-        Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
-        if(tmp.getId()==null){
-            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
-            WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
-            this.exception=exc;
-            throw exc;
-        }
-        return tmp;
+    }
+
+    /**
+     * Pobiera wszystkie typy ogłoszeń z tabel słownikowych
+     *
+     * @return lista kluczy
+     */
+    public List<TypOgloszenia> pobierzTypyOgloszen() {
+        return mooEndpoint.pobierzTypyOgloszen();
+    }
+
+    /**
+     * Pobiera wszystkie typy nieruchomości z tabel słownikowych
+     *
+     * @return lista kluczy
+     */
+    public List<TypNieruchomosci> pobierzTypyNieruchomosci() {
+
+        return mooEndpoint.pobierzTypyNieruchomosci();
+    }
+
+    public List<ElementWyposazeniaNieruchomosci> pobierzElementyKategorii() {
+        return mooEndpoint.pobierzElementyKategorii();
+    }
+
+    public List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie() {
+        return mooEndpoint.pobierzKategorie();
     }
 
     public Ogloszenie getOgloszenieEdytuj() {
@@ -292,4 +348,5 @@ public class OgloszenieSession implements Serializable {
     Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
         return mooEndpoint.czyPosiadaJakiegosAgenta(ogloszenie);
     }
+
 }

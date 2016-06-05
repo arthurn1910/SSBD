@@ -5,9 +5,10 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
-import java.util.List;
-import javax.ejb.Local;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
+
+import javax.ejb.Local;
+import java.util.List;
 
 /**
  *
@@ -29,5 +30,12 @@ public interface KontoFacadeLocalInMOS {
     List<Konto> findRange(int[] range);
 
     int count();
+
+    /**
+     * Metoda zwracająca obiekt klasy konto z danym loginem
+     * @param login     login użytkownika do wyszukania
+     * @return          obiekt klasy konto o zadanym loginie
+     */
+    Konto znajdzPoLoginie(String login);
     
 }

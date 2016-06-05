@@ -1,22 +1,27 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
-import java.io.IOException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.endpoints.MOSEndpointLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+import javax.faces.bean.ManagedBean;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
  */
 @SessionScoped
+@ManagedBean(name = "spotkanieSession")
 public class SpotkanieSession implements Serializable {
-    @Inject
+
+    @EJB
     private MOSEndpointLocal mosEndpoint;
     
     private Exception exception;
@@ -29,6 +34,19 @@ public class SpotkanieSession implements Serializable {
         this.exception = exception;
     }
     
+    private Ogloszenie wybraneOgloszenie;
+    private Spotkanie wybraneSpotkanie;
+    private Konto aktualneKonto;
+
+    /**
+     * Inicjalizacja modelu danych
+     */
+    @PostConstruct
+    public void initModel(){
+
+        aktualneKonto = mosEndpoint.pobierzMojeKonto();
+    }
+
     /**
      * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
      * MOS.4, MOS.2 P. Stepien
@@ -56,6 +74,7 @@ public class SpotkanieSession implements Serializable {
      */
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
         mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
+
     }
 
     /**
@@ -97,5 +116,22 @@ public class SpotkanieSession implements Serializable {
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
 
         mosEndpoint.zapiszSpotkaniePoEdycji(spotkanie);
+    }
+
+    /**
+     * Pobiera ogloszenie dla ktorego maja byc wyswietlone spotkania
+     * @return ogloszenie
+     */
+    public Ogloszenie pobierzWybraneOgloszenie(){
+
+        return wybraneOgloszenie = mosEndpoint.znajdzOgloszeniePoId(1L);
+    }
+    /**
+     * Pobiera aktualne konto użytkownika
+     * @return ogloszenie
+     */
+
+    public Konto getAktualneKonto() {
+        return aktualneKonto;
     }
 }

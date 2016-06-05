@@ -70,7 +70,7 @@ public class ExteriorInterceptorMOS {
                 tmp1=tmp1.getCause();
             }
             tmp2=tmp2.getCause();
-            loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptor.class.getName(), e);
+            loger.log(Level.SEVERE, "Złapany wyjątek w "+ExteriorInterceptorMOS.class.getName(), e);
             WyjatekSystemu exc=null;
             if(tmp2 instanceof WyjatekSystemu){
                 throw (WyjatekSystemu) e;

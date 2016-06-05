@@ -210,7 +210,7 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-        
+
     <navigation-rule>
         <navigation-case>
             <from-outcome>modyfikujPoziomyDostepu</from-outcome>
