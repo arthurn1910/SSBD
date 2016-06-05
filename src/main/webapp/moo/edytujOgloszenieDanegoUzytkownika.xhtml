@@ -18,18 +18,18 @@
      <ui:define name="content">         
          <h1>${msg["tytulyPrzypadkow.edycjaOgloszeniaDanegoUzytkownika"]}:</h1>
         <h:form>
-            ${msg["daneOgloszenia.tytul"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.tytul}" id="tytul"/><br />
-            ${msg["daneOgloszenia.cena"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.cena}" id="cena"/><br />
+            ${msg["daneOgloszenia.tytul"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.tytul}" id="tytul"/><p:messages for="tytul" autoUpdate="true"/><br />
+            ${msg["daneOgloszenia.cena"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.cena}" id="cena"/><p:messages for="cena" autoUpdate="true"/><br />
             ${msg["daneOgloszenia.typOgloszenia"]}* <h:selectOneMenu value="#{edytujOgloszenieBean.ogloszenieEdytuj.typOgloszenia.nazwa}">
                 <f:selectItem itemValue="ogloszenia.typ.wynajem" itemLabel="${msg['edytujOgloszenie.wynajem']}" />
                 <f:selectItem itemValue="ogloszenia.typ.sprzedaz" itemLabel="${msg['edytujOgloszenie.sprzedaz']}" />
             </h:selectOneMenu><br />
-            ${msg["daneOgloszenia.nieruchomosc.miejscowosc"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.miejscowosc}" id="miejscowosc"/><br />
-            ${msg["daneOgloszenia.nieruchomosc.ulica"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.ulica}" id="ulica"/><br />
-            ${msg["daneOgloszenia.nieruchomosc.liczbaPokoi"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.liczbaPokoi}" id="liczbaPokoi"/><br />
-            ${msg["daneOgloszenia.nieruchomosc.liczbaPieter"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.liczbaPieter}" id="iczbaPieter"/><br />
-            ${msg["daneOgloszenia.nieruchomosc.powierzchniaDzialki"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaDzialki}" id="powierzchniaDzialki"/><br />
-            ${msg["daneOgloszenia.nieruchomosc.powierzchniaNieruchomosci"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaNieruchomosci}" id="powierzchniaNieruchomosci"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.miejscowosc"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.miejscowosc}" id="miejscowosc"/><p:messages for="miejscowosc" autoUpdate="true"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.ulica"]}* <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.ulica}" id="ulica"/><p:messages for="ulica" autoUpdate="true"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.liczbaPokoi"]} <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.liczbaPokoi}" id="liczbaPokoi"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.liczbaPieter"]} <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.liczbaPieter}" id="iczbaPieter"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.powierzchniaDzialki"]} <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaDzialki}" id="powierzchniaDzialki"/><br />
+            ${msg["daneOgloszenia.nieruchomosc.powierzchniaNieruchomosci"]} <h:inputText value="#{edytujOgloszenieBean.ogloszenieEdytuj.nieruchomosc.powierzchniaNieruchomosci}" id="powierzchniaNieruchomosci"/><br />
             ${msg["komunikat.polaObowiazkowe"]}*<br /><br />
             
             <p:commandButton value="#{msg['komunikat.potwierdz']}" action="#{edytujOgloszenieBean.edytujOgloszenieDanegoUzytkownika()}">
