@@ -5,6 +5,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Interfejs dla menadżera spotkań
@@ -24,7 +25,7 @@ public interface SpotkanieManagerLocal {
      * Dodaje spotkanie
      * @param spotkanie spotkanie jakie ma zostac dodane
      */
-    void rezerwujSpotkanie(Spotkanie spotkanie);
+    void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu;
     
     /**
      * edytuje nasze spotkanie

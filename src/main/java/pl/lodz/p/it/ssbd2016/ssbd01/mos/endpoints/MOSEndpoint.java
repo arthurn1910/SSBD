@@ -70,9 +70,8 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("rezerwujSpotkanie")
-    public void rezerwujSpotkanie(Spotkanie spotkanie) {
-        spotkanieManager.rezerwujSpotkanie(spotkanie);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void rezerwujSpotkanie(Spotkanie spotkanie) throws WyjatekSystemu{
+        spotkanieManager.rezerwujSpotkanie(spotkanie, sessionContext.getCallerPrincipal().getName());
     }
 
     @Override

@@ -163,6 +163,18 @@
         </user-data-constraint>
     </security-constraint>
     <security-constraint>
+        <display-name>MOOWyswietlSzczegolyOgloszenia</display-name>
+        <web-resource-collection>
+            <web-resource-name>Szczegoly Ogloszenia</web-resource-name>
+            <description/>
+            <url-pattern>/moo/wyswietlOgloszenia.xhtml</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
         <display-name>MOOZalogowaniKlientConstr</display-name>
         <web-resource-collection>
             <web-resource-name>Strony klientow</web-resource-name>
@@ -216,7 +228,39 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-
+    <security-constraint>
+        <display-name>MOSZalogowaniKlient</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony klientow</web-resource-name>
+            <description/>
+            <url-pattern>/mos/zalogowani/klient/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>MosRezerwujSpotkanie</display-name>
+        <web-resource-collection>
+            <web-resource-name>Rezerwuj Spotkanie</web-resource-name>
+            <description/>
+            <url-pattern>/mos/rezerwacjaSpotkania.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
     <!-- definicja metody logowania, odwołanie do stron z formularzem logowania i komunikatem błędu -->
     <login-config>
         <auth-method>FORM</auth-method>

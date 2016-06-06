@@ -46,4 +46,11 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
         q.setParameter("ogloszenie",ogloszenie);
         return (List<Spotkanie>) q.getResultList();
     }
+    
+    @Override
+    public List<Spotkanie> terminyUzytkownika(Konto id) {
+        Query q = em.createNamedQuery("Spotkanie.findByIdUzytkownika");
+        q.setParameter("idUzytkownika", id);
+        return (List < Spotkanie >) q.getResultList();
+    }
 }

@@ -13,6 +13,10 @@ import javax.faces.bean.ManagedBean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.SessionContext;
+import javax.inject.Inject;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -89,11 +93,16 @@ public class SpotkanieSession implements Serializable {
     }
 
     /**
-     * rezerwuje spotkanie MOS 1, P. Stepien
+     * rezerwuje spotkanie MOS 1, Radosław Pawlaczyk
      * @param spotkanie 
      */
-    public void rezerwujSpotkanie(Spotkanie spotkanie) {
-        mosEndpoint.rezerwujSpotkanie(spotkanie);
+    public void rezerwujSpotkanie(Spotkanie spotkanie) throws WyjatekSystemu {
+        try{
+            mosEndpoint.rezerwujSpotkanie(spotkanie);
+        }catch(WyjatekSystemu ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
     
     /**
