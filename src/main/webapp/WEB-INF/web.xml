@@ -244,6 +244,22 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>MosRezerwujSpotkanie</display-name>
+        <web-resource-collection>
+            <web-resource-name>Rezerwuj Spotkanie</web-resource-name>
+            <description/>
+            <url-pattern>/mos/rezerwacjaSpotkania.xhtml</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     
     <!-- definicja metody logowania, odwołanie do stron z formularzem logowania i komunikatem błędu -->
     <login-config>

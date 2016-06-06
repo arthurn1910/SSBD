@@ -1,6 +1,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.SessionContext;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
@@ -29,13 +31,22 @@ public class RezerwacjaSpotkaniaBean{
      * Metoda tworząca spotkanie i przesyłająca je do metody rezerwujSPotkanie w SpotkanieSession
      */
     public String rezerwujSpotkanie() throws WyjatekSystemu {
+        Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+        lg.log(Level.INFO, "1!!!");
         this.date.setHours(godzina.getHours());
+        lg.log(Level.INFO, "2!!!");
         this.date.setMinutes(godzina.getMinutes());
+        lg.log(Level.INFO, "3!!!");
         this.date.setSeconds(godzina.getSeconds());
+        lg.log(Level.INFO, "4!!!");
         spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
+        lg.log(Level.INFO, "5!!!");
         spotkanie.setDataSpotkania(date);
+        lg.log(Level.INFO, "6!!!");
         spotkanie.setIdOgloszenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
+        lg.log(Level.INFO, "7!!!");
         spotkanieSession.rezerwujSpotkanie(spotkanie);
+        lg.log(Level.INFO, "1!!!");
         return "wyswietlSzczegolyOgloszenia";
     }
 
