@@ -22,7 +22,8 @@ import java.util.Date;
     @NamedQuery(name = "Spotkanie.findByDataSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dataSpotkania = :dataSpotkania"),
     @NamedQuery(name = "Spotkanie.findByVersion", query = "SELECT s FROM Spotkanie s WHERE s.version = :version"),
     @NamedQuery(name = "Spotkanie.findByDlugoscSpotkania", query = "SELECT s FROM Spotkanie s WHERE s.dlugoscSpotkania = :dlugoscSpotkania"),
-        @NamedQuery(name = "Spotkanie.findByOgloszenie", query = "SELECT s FROM Spotkanie s WHERE s.idOgloszenia = :ogloszenie")
+    @NamedQuery(name = "Spotkanie.findByOgloszenie", query = "SELECT s FROM Spotkanie s WHERE s.idOgloszenia = :ogloszenie"),
+    @NamedQuery(name = "Spotkanie.findByIdUzytkownika", query = "SELECT s FROM Spotkanie s WHERE s.idUzytkownika= :idUzytkownika")
 })
 public class Spotkanie implements Serializable {
 

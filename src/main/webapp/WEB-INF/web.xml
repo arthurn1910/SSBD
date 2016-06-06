@@ -198,6 +198,22 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>MOSZalogowaniKlient</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony klientow</web-resource-name>
+            <description/>
+            <url-pattern>/mos/zalogowani/klient/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
     <security-constraint>
         <display-name>MOSZalogowaniKlientAgent</display-name>

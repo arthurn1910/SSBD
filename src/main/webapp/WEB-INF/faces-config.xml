@@ -235,5 +235,12 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>rezerwacjaSpotkania</from-outcome>
+            <to-view-id>/mos/zalogowani/klient/rezerwacjaSpotkania.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
 </faces-config>

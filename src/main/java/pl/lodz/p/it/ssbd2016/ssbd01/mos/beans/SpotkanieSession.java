@@ -89,11 +89,16 @@ public class SpotkanieSession implements Serializable {
     }
 
     /**
-     * rezerwuje spotkanie MOS 1, P. Stepien
+     * rezerwuje spotkanie MOS 1, Radosław Pawlaczyk
      * @param spotkanie 
      */
-    public void rezerwujSpotkanie(Spotkanie spotkanie) {
-        mosEndpoint.rezerwujSpotkanie(spotkanie);
+    public void rezerwujSpotkanie(Spotkanie spotkanie,String login) throws WyjatekSystemu {
+        try{
+            mosEndpoint.rezerwujSpotkanie(spotkanie, login);
+        }catch(WyjatekSystemu ex){
+            this.exception=ex;
+            throw ex;
+        }
     }
     
     /**

@@ -65,6 +65,8 @@
             </h:commandButton> 
             <h:commandButton value="#{msg['komunikat.usunZUlubionych']}" action="#{wyswietlSzczegolyOgloszeniaBean.usunZUlubionych()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
             </h:commandButton> 
+            <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient()}">
+            </h:commandButton>
         </h:form>
     </ui:define>
 </ui:composition>

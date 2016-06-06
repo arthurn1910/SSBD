@@ -16,10 +16,10 @@ import java.util.List;
 public interface MOSEndpointLocal {
 
     /**
-     * rezerwacja spotkania MOS 1, P. Stepien
+     * rezerwacja spotkania MOS 1, Radosław Pawlaczyk
      * @param spotkanie
      */
-    void rezerwujSpotkanie(Spotkanie spotkanie);
+    void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu;
 
     /**
      * pobiera spotkanie do edycji MOS 2, P. Stepien
