@@ -3,11 +3,9 @@ package pl.lodz.p.it.ssbd2016.ssbd01.moo.beans;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints.MOOEndpointLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;

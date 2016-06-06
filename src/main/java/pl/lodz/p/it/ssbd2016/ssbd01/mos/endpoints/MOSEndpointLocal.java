@@ -19,7 +19,7 @@ public interface MOSEndpointLocal {
      * rezerwacja spotkania MOS 1, Radosław Pawlaczyk
      * @param spotkanie
      */
-    void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu;
+    void rezerwujSpotkanie(Spotkanie spotkanie) throws WyjatekSystemu;
 
     /**
      * pobiera spotkanie do edycji MOS 2, P. Stepien

@@ -70,8 +70,8 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("MOSZalogowaniKlient")
-    public void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu{
-        spotkanieManager.rezerwujSpotkanie(spotkanie, login);
+    public void rezerwujSpotkanie(Spotkanie spotkanie) throws WyjatekSystemu{
+        spotkanieManager.rezerwujSpotkanie(spotkanie, sessionContext.getCallerPrincipal().getName());
     }
 
     @Override

@@ -60,7 +60,7 @@
             
             <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
             <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
-            <h:commandButton value="${msg['komunikat.powrot']}" action="cancel" />
+            <h:commandButton value="${msg['komunikat.powrot']}" action="wyswietlSzczegolyOgloszenia" />
             <h:commandButton value="#{msg['komunikat.dodajDoUlubionych']}"  action="#{wyswietlSzczegolyOgloszeniaBean.dodajDoUlubionych()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
             </h:commandButton> 
             <h:commandButton value="#{msg['komunikat.usunZUlubionych']}" action="#{wyswietlSzczegolyOgloszeniaBean.usunZUlubionych()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">

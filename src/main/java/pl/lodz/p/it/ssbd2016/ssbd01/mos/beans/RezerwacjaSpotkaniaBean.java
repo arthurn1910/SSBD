@@ -19,8 +19,6 @@ public class RezerwacjaSpotkaniaBean{
     private SpotkanieSession spotkanieSession;
     @Inject
     private OgloszenieSession ogloszenieSession;
-    @Inject
-    private SessionContext sessionContext;
     Spotkanie spotkanie = new Spotkanie();
     
     private Date date;
@@ -37,7 +35,7 @@ public class RezerwacjaSpotkaniaBean{
         spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
         spotkanie.setDataSpotkania(date);
         spotkanie.setIdOgloszenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
-        spotkanieSession.rezerwujSpotkanie(spotkanie, sessionContext.getCallerPrincipal().getName());
+        spotkanieSession.rezerwujSpotkanie(spotkanie);
         return "wyswietlSzczegolyOgloszenia";
     }
 
