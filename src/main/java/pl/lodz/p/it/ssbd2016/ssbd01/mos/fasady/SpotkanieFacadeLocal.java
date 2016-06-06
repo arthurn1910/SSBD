@@ -46,7 +46,11 @@ public interface SpotkanieFacadeLocal {
      * @return lista spotkań
      */
     List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie);
-    
+    /***
+     * funkcja zwraca liste spotkań danego użytkownika
+     * @param id
+     * @return 
+     */
     public List<Spotkanie> terminyUzytkownika(Konto id);
 
 
