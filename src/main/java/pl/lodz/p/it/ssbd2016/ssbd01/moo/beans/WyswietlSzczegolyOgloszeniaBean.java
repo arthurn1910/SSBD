@@ -83,7 +83,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     public String dodajDoUlubionych() {
         ogloszenieSession.dodajDoUlubionych(ogloszenie);
-        return "ulubione";
+        return "wyswietlSzczegolyOgloszenia";
     }
     
     /**
@@ -93,7 +93,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     public String usunZUlubionych() {
         ogloszenieSession.usunZUlubionych(ogloszenie);
-        return "ulubione";
+        return "wyswietlSzczegolyOgloszenia";
     }    
     
     /**

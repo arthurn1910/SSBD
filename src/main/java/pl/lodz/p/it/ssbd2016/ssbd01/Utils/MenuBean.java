@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.UzytkownikSession;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
+import pl.lodz.p.it.ssbd2016.ssbd01.mos.beans.SpotkanieSession;
 
 /**
  * Ziarno odpowiedzialne za wylogowanie/zakończenie sesji
@@ -24,6 +25,8 @@ public class MenuBean {
     private UzytkownikSession uzytkownikSession;
     @Inject
     private OgloszenieSession ogloszenieSession;
+    @Inject
+    private SpotkanieSession spotkanieSession;
 
     String login;
     String poziomyDostepu;
@@ -54,6 +57,7 @@ public class MenuBean {
         }
         czyWyswietlicPotwierdzenie = uzytkownikSession.isCzyWyswietlicPotwierdzenie();
         czyWyswietlicPotwierdzenie |= ogloszenieSession.isCzyWyswietlicPotwierdzenie();
+        czyWyswietlicPotwierdzenie |= spotkanieSession.isCzyWyswietlicPotwierdzenie();
     }
     
     /**

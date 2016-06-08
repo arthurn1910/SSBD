@@ -154,6 +154,7 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    
     <!-- MOO -->
     <navigation-rule>
         <navigation-case>
@@ -162,10 +163,24 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-        <navigation-rule>
+    <navigation-rule>
         <navigation-case>
             <from-outcome>wyswietlOgloszenia</from-outcome>
             <to-view-id>/moo/wyswietlOgloszenia.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>edytujOgloszenieDanegoUzytkownika</from-outcome>
+            <to-view-id>/moo/klientAgent/edytujOgloszenieDanegoUzytkownika.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>edytujOgloszenieDanegoUzytkownika</from-outcome>
+            <to-view-id>/moo/klientAgent/edytujOgloszenieDanegoUzytkownika.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
