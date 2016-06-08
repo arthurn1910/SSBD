@@ -117,20 +117,9 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    <security-constraint>
-        <display-name>MooMenadzerConstr</display-name>
-        <web-resource-collection>
-            <web-resource-name>Strony admina</web-resource-name>
-            <description/>
-            <url-pattern>/moo/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>MENADZER</role-name>
-            <role-name>AGENT</role-name>
-        </auth-constraint>
-    </security-constraint>
+    
     <!--MOO-->
+    
     <security-constraint>
         <display-name>MOOZalogowaniConstr</display-name>
         <web-resource-collection>
@@ -151,33 +140,9 @@
         </user-data-constraint>
     </security-constraint>
     <security-constraint>
-        <display-name>MOOWyswietlSzczegolyOgloszenia</display-name>
-        <web-resource-collection>
-            <web-resource-name>Szczegoly Ogloszenia</web-resource-name>
-            <description/>
-            <url-pattern>/moo/wyswietlSzczegolyOgloszenia.xhtml</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>MOOWyswietlSzczegolyOgloszenia</display-name>
-        <web-resource-collection>
-            <web-resource-name>Szczegoly Ogloszenia</web-resource-name>
-            <description/>
-            <url-pattern>/moo/wyswietlOgloszenia.xhtml</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
         <display-name>MOOZalogowaniKlientConstr</display-name>
         <web-resource-collection>
-            <web-resource-name>Strony klientow</web-resource-name>
+            <web-resource-name>Strony klienta</web-resource-name>
             <description/>
             <url-pattern>/moo/zalogowani/klient/*</url-pattern>
         </web-resource-collection>
@@ -190,6 +155,40 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>MOOZalogowaniMenadzerConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony menadzera</web-resource-name>
+            <description/>
+            <url-pattern>/moo/zalogowani/menadzer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>MENADZER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>MOOZalogowaniKlientAgentConstr</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony klient i agent</web-resource-name>
+            <description/>
+            <url-pattern>/moo/zalogowani/klientAgent/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
     <!--MOS-->
     <security-constraint>
         <display-name>MOSZalogowani</display-name>
@@ -234,22 +233,6 @@
             <web-resource-name>Strony klientow</web-resource-name>
             <description/>
             <url-pattern>/mos/zalogowani/klient/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>KLIENT</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <description/>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>MosRezerwujSpotkanie</display-name>
-        <web-resource-collection>
-            <web-resource-name>Rezerwuj Spotkanie</web-resource-name>
-            <description/>
-            <url-pattern>/mos/rezerwacjaSpotkania.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

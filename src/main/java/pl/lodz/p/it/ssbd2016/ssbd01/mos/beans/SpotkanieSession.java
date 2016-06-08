@@ -42,13 +42,14 @@ public class SpotkanieSession implements Serializable {
     private Spotkanie wybraneSpotkanie;
     private Konto aktualneKonto;
 
+    
+    private boolean czyWyswietlicPotwierdzenie;
+    
     /**
      * Inicjalizacja modelu danych
      */
     @PostConstruct
     public void initModel(){
-
-        aktualneKonto = mosEndpoint.pobierzMojeKonto();
     }
 
     /**
@@ -140,7 +141,21 @@ public class SpotkanieSession implements Serializable {
      * @return ogloszenie
      */
 
-    public Konto getAktualneKonto() {
+    public Konto getAktualneKonto() {        
+        aktualneKonto = mosEndpoint.pobierzMojeKonto();
         return aktualneKonto;
+    }
+    
+    /**
+     * Metoda zwraca wartość określającą czy pokazać potwierdzenie operacji
+     *
+     * @return
+     */
+    public boolean isCzyWyswietlicPotwierdzenie() {
+        if (czyWyswietlicPotwierdzenie) {
+            czyWyswietlicPotwierdzenie = false;
+            return true;
+        }
+        return false;
     }
 }

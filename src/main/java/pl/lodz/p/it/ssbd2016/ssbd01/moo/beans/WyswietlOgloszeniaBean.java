@@ -98,6 +98,5 @@ public class WyswietlOgloszeniaBean {
      */
     public List<Ogloszenie> getOgloszeniaDataModel() {
         return ogloszenieSession.getOgloszeniaDataModel();
-    }
-    
+    } 
 }

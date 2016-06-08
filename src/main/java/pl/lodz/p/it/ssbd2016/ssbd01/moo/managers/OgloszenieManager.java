@@ -50,9 +50,14 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @Override
     @RolesAllowed("dodajDoUlubionych")
     public void dodajDoUlubionych(Ogloszenie ogloszenie) {
-        Konto konto = kontoFacade.znajdzPoLoginie("");
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        
+        Konto konto = kontoFacade.znajdzPoLoginie(login);
         Ogloszenie ogloszenieTemp = ogloszenieFacade.znajdzPoID(ogloszenie.getId());
-        // Czynności związane z logiką
+        
+        ogloszenieTemp.getKontoCollection().add(konto);
+        konto.getOgloszenieUlubioneCollection().add(ogloszenieTemp);
+        
         ogloszenieFacade.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
     }
@@ -60,9 +65,13 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     @Override
     @RolesAllowed("usunZUlubionych")
     public void usunZUlubionych(Ogloszenie ogloszenie) {
-        Konto konto = kontoFacade.znajdzPoLoginie("");
+        String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+        Konto konto = kontoFacade.znajdzPoLoginie(login);
         Ogloszenie ogloszenieTemp = ogloszenieFacade.znajdzPoID(ogloszenie.getId());
-        // Czynności związane z logiką
+        
+        ogloszenieTemp.getKontoCollection().remove(konto);
+        konto.getOgloszenieUlubioneCollection().remove(ogloszenieTemp);
+        
         ogloszenieFacade.edit(ogloszenieTemp);
         kontoFacade.edit(konto);
     }
