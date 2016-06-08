@@ -237,7 +237,8 @@ public class OgloszenieSession implements Serializable {
      */
     public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws Exception{
         try{
-            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);       
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+            this.pobierzWszystkieOgloszenia();
         }catch(Exception e){
             this.exception=e;
             throw e;
