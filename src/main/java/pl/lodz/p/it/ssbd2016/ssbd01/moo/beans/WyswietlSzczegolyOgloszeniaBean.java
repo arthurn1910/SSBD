@@ -150,7 +150,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     public String deaktywujOgloszenieDanegoUzytkownika() throws Exception {
         ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika();
         return "wyswietlOgloszenia";
     }
     

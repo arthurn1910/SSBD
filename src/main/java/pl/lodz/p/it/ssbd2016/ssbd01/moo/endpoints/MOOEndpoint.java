@@ -169,7 +169,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
-    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
+    public void deaktywujOgloszenieDotyczaceUzytkownika() throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         if(ogloszenieStan.getIdWlasciciela().getLogin().equals(loginKonta) == false && ogloszenieStan.getIdAgenta().getLogin().equals(loginKonta) == false) {
             WyjatekSystemu ex=new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia","MOO");
