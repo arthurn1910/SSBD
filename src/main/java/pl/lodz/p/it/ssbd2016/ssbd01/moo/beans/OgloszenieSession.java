@@ -146,9 +146,9 @@ public class OgloszenieSession implements Serializable {
      *
      * @param ogloszenie ogłoszenie do deaktywacji
      */
-    void deaktywujOgloszenieDanegoUzytkownika() throws Exception {
+    void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
         try{
-            mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika();
+            mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
         }catch(Exception e){
             this.exception=e;
         }

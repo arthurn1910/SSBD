@@ -169,18 +169,19 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("deaktywujOgloszenieDotyczaceUzytkownika")
-    public void deaktywujOgloszenieDotyczaceUzytkownika() throws WyjatekSystemu {
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
-        if(ogloszenieStan.getIdWlasciciela().getLogin().equals(loginKonta) == false && ogloszenieStan.getIdAgenta().getLogin().equals(loginKonta) == false) {
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
             WyjatekSystemu ex=new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia","MOO");
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia",ex,"MOO");
         }
-        else if(ogloszenieStan.getAktywne() == false) {
+        else if(o.getAktywne() == false) {
             WyjatekSystemu ex=new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej","MOO");
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej",ex,"MOO");
         }
         else {
-            ogloszenieStan.setAktywne(false);
+            o.setAktywne(false);
             ogloszenieManager.przeliczAgregat();
         }
     }
