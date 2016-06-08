@@ -47,7 +47,7 @@
                 </h:column>
             </h:dataTable>
             
-            <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="przydzielAgenta" rendered="#{autoryzacja.czyMenadzer()}">
+            <p:commandButton value="#{msg['szczegolyOgloszenia.przydzielAgenta']}" action="przydzielAgenta" rendered="#{not wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </p:commandButton>
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
