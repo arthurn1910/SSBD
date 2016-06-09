@@ -110,14 +110,14 @@
     <navigation-rule>
         <navigation-case>
             <from-outcome>przydzielAgenta</from-outcome>
-            <to-view-id>/moo/zalogowani/menadzer/przydzielAgenta.xhtm</to-view-id>
+            <to-view-id>/moo/zalogowani/menadzer/przydzielAgenta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>zmienAgenta</from-outcome>
-            <to-view-id>/moo/zalogowani/menadzer/zmienAgenta.xhtm</to-view-id>
+            <to-view-id>/moo/zalogowani/menadzer/zmienAgenta.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
@@ -136,7 +136,7 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-    
+
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujHasloKonta</from-outcome>
@@ -167,7 +167,7 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-    
+
     <!-- MOO -->
     <navigation-rule>
         <navigation-case>
@@ -197,8 +197,8 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-    
-    
+
+
     <!-- MOS -->
     <navigation-rule>
         <navigation-case>
@@ -211,6 +211,21 @@
         <navigation-case>
             <from-outcome>rezerwacjaSpotkania</from-outcome>
             <to-view-id>/mos/zalogowani/klient/rezerwacjaSpotkania.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlSpotkaniaDlaOgloszenia</from-outcome>
+            <to-view-id>/mos/zalogowani/klientAgentMenadzer/wyswietlSpotkaniaDlaOgloszenia.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mos/zalogowani/klientAgentMenadzer/wyswietlSpotkaniaDlaOgloszenia.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>wyswietlSzczegolyOgloszenia</from-outcome>
+            <to-view-id>/moo/wyswietlSzczegolyOgloszenia.xhtml</to-view-id>
             <redirect />
         </navigation-case>
     </navigation-rule>
