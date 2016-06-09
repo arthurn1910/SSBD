@@ -245,6 +245,7 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
     void edytujOgloszenieInnegoUzytkownika() {
         try {
             mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+            pobierzWszystkieOgloszenia();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -112,7 +112,6 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Przypadek użycia - MOO5
      */
     public String deaktywujOgloszenieInnegoUzytkownika() throws Exception {
-        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
         ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
         return "wyswietlOgloszenia";
     }

@@ -281,18 +281,16 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
       @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-            String loginKonta = sessionContext.getCallerPrincipal().getName();
-        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
-            TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
-            Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.find(o.getNieruchomosc().getId());
-            nieruchomosc.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
-            nieruchomosc.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
-            nieruchomosc.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
-            nieruchomosc.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
-            nieruchomosc.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
-            nieruchomosc.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
-            nieruchomosc.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
-            List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomosc.getId());
+            //TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
+            
+            nieruchomoscStan.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
+            nieruchomoscStan.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
+            nieruchomoscStan.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
+            nieruchomoscStan.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
+            nieruchomoscStan.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
+            nieruchomoscStan.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
+            nieruchomoscStan.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+            List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomoscStan.getId());
             List<ElementWyposazeniaNieruchomosci> wyposazenieNowe = new ArrayList(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
             for(int i = 0; i < wyposazenie.size(); i++) {
                 boolean jest = false;
@@ -304,7 +302,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                     ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenie.get(i).getId());
                     List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
                     for(int j = 0; j < n.size(); j++)
-                        if(n.get(j).getId().equals(nieruchomosc.getId()))
+                        if(n.get(j).getId().equals(nieruchomoscStan.getId()))
                             n.remove(j);
                     el.setNieruchomoscWyposazonaCollection(n);
                     elementWyposazeniaFacadeLocal.edit(el);
@@ -320,17 +318,17 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                 if(!jest) {
                     ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenieNowe.get(i).getId());
                     List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
-                    n.add(nieruchomosc);
+                    n.add(nieruchomoscStan);
                     el.setNieruchomoscWyposazonaCollection(n);
                     elementWyposazeniaFacadeLocal.edit(el);
                 }
             }
             
-            o.setTypOgloszenia(typ);
-            o.setTytul(ogloszenieNowe.getTytul());
-            o.setCena(ogloszenieNowe.getCena());
-            nieruchomoscFacadeLocal.edit(nieruchomosc);
-            ogloszenieFacadeLocal.edit(o);
+            //ogloszenieStan.setTypOgloszenia(typ);
+            ogloszenieStan.setTytul(ogloszenieNowe.getTytul());
+            ogloszenieStan.setCena(ogloszenieNowe.getCena());
+            nieruchomoscFacadeLocal.edit(nieruchomoscStan);
+            ogloszenieFacadeLocal.edit(ogloszenieStan);
         }
     
 

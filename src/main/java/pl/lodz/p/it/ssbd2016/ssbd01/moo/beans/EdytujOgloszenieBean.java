@@ -25,6 +25,7 @@ public class EdytujOgloszenieBean {
      */
     public String edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         ogloszenieSession.edytujOgloszenieDanegoUzytkownika();
+        ogloszenieSession.pobierzWszystkieOgloszenia();
         return "wyswietlOgloszenia";
     }
     
@@ -72,6 +73,7 @@ public class EdytujOgloszenieBean {
      */
     public String edytujOgloszenieInnegoUzytkownika() throws WyjatekSystemu{
         ogloszenieSession.zapiszOgloszenieInnegoUzytkownikaPoEdycji();
+        ogloszenieSession.pobierzWszystkieOgloszenia();
         return "wyswietlOgloszenia";
     }
     
