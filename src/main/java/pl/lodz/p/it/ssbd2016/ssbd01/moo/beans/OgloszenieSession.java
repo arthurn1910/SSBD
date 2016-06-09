@@ -233,17 +233,11 @@ public class OgloszenieSession implements Serializable {
 
     /**
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
-     * @throws java.lang.Exception
+     * @throws WyjatekSystemu
      */
-    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws Exception{
-        try{
-            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
-            this.pobierzWszystkieOgloszenia();
-        }catch(Exception e){
-            this.exception=e;
-            throw e;
-        }
-    }
+public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
+        mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+}
 
     /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
@@ -251,6 +245,7 @@ public class OgloszenieSession implements Serializable {
     void edytujOgloszenieInnegoUzytkownika() {
         try {
             mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+            pobierzWszystkieOgloszenia();
         } catch (Exception e) {
             e.printStackTrace();
         }

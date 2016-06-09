@@ -25,6 +25,7 @@ public class EdytujOgloszenieBean {
      */
     public String edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         ogloszenieSession.edytujOgloszenieDanegoUzytkownika();
+        ogloszenieSession.pobierzWszystkieOgloszenia();
         return "wyswietlOgloszenia";
     }
     
@@ -68,10 +69,11 @@ public class EdytujOgloszenieBean {
     /**
      * Metoda ma za zadanie zapisanie ogłoszenia innego użytkownika po zakończeniu edycji
      * @return zwraca łańcuch, który przekierowuje do widoku wyświetlającego ogłoszenia
-     * @throws Exception 
+     * @throws WyjatekSystemu
      */
-    public String edytujOgloszenieInnegoUzytkownika() throws Exception{
+    public String edytujOgloszenieInnegoUzytkownika() throws WyjatekSystemu{
         ogloszenieSession.zapiszOgloszenieInnegoUzytkownikaPoEdycji();
+        ogloszenieSession.pobierzWszystkieOgloszenia();
         return "wyswietlOgloszenia";
     }
     
