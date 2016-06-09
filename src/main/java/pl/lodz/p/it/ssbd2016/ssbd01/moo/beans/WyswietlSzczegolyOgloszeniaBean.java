@@ -160,10 +160,19 @@ public class WyswietlSzczegolyOgloszeniaBean {
      */
     public boolean czyMojeOgloszenie() throws WyjatekSystemu
     {
+        Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+        lg.log(Level.INFO, "1!!!:");
         Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        
         String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
-        if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false)
-            return false;
+        if(otwarte.getIdAgenta()!=null)
+            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
+                return false;
+        }else{
+            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
+                return false;
+            }
+        }    
         return true;
     }
 }
