@@ -66,7 +66,7 @@
             </h:commandButton>
             <h:commandButton value="#{msg['komunikat.usunZUlubionych']}" action="#{wyswietlSzczegolyOgloszeniaBean.usunZUlubionych()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
             </h:commandButton>
-            <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient()}">
+            <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient() and wyswietlSzczegolyOgloszeniaBean.ogloszenie.aktywne}">
             </h:commandButton>
             <h:commandButton value="#{msg['tytulyPrzypadkow.spotkania_dla_ogloszenia']}"  action="wyswietlSpotkaniaDlaOgloszenia"  class="edit_icon" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyMenadzer() or autoryzacja.czyAgent()}">
             </h:commandButton>

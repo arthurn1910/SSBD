@@ -26,6 +26,13 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyjatekMOS</from-outcome>
+            <to-view-id>/wyjatki/wyjatekMOS.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
     <navigation-rule>
         <navigation-case>
