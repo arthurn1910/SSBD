@@ -119,7 +119,10 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
             tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
             tmp.getOgloszenieAgentaCollection().remove(o);
             kontoFacade.edit(tmp);
+        }else{
+            o.setAktywne(true);
         }
+        
         tmp=kontoFacade.znajdzPoLoginie(agent.getLogin());
         o.setIdAgenta(tmp);
         ogloszenieFacade.edit(o);

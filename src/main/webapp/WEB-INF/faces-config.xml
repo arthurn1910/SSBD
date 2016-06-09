@@ -107,7 +107,20 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
-    
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>przydzielAgenta</from-outcome>
+            <to-view-id>/moo/zalogowani/menadzer/przydzielAgenta.xhtm</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>zmienAgenta</from-outcome>
+            <to-view-id>/moo/zalogowani/menadzer/zmienAgenta.xhtm</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     <navigation-rule>
         <navigation-case>
             <from-outcome>edytujHaslo</from-outcome>
