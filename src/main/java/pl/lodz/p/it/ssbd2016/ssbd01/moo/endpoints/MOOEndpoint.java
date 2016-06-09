@@ -115,6 +115,9 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         if (ogloszenieStan == null) {
             throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
         }
+        if (nieruchomoscStan == null) {
+            throw new WyjatekSystemu("blad.brakNieruchomosciDoEdycji","MOO");
+        }
         if(ogloszenieStan.getIdWlasciciela().getLogin().equals(loginKonta) == false && ogloszenieStan.getIdAgenta().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia","MOO");
         }
@@ -168,6 +171,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             ogloszenieFacadeLocal.edit(ogloszenieStan);
             ogloszenieManager.przeliczAgregat();
             ogloszenieStan = null;
+            nieruchomoscStan = null;
         }
     }
 
@@ -286,7 +290,11 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
             if (ogloszenieStan == null) {
-            throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
+                throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
+            }
+            
+            if (nieruchomoscStan == null) {
+                throw new WyjatekSystemu("blad.brakNieruchomosciDoEdycji","MOO");
             }
             
             nieruchomoscStan.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
@@ -328,14 +336,16 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                     el.setNieruchomoscWyposazonaCollection(n);
                     elementWyposazeniaFacadeLocal.edit(el);
                     ogloszenieStan = null;
+                    nieruchomoscStan = null;
                 }
             }
             
-            //ogloszenieStan.setTypOgloszenia(typ);
             ogloszenieStan.setTytul(ogloszenieNowe.getTytul());
             ogloszenieStan.setCena(ogloszenieNowe.getCena());
             nieruchomoscFacadeLocal.edit(nieruchomoscStan);
             ogloszenieFacadeLocal.edit(ogloszenieStan);
+            ogloszenieManager.przeliczAgregat();
+
         }
     
 
