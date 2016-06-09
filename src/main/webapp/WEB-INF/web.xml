@@ -243,7 +243,25 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
-    
+
+    <security-constraint>
+        <display-name>MOSZalogowaniKlientAgentMenadzer</display-name>
+        <web-resource-collection>
+            <web-resource-name>Strony agentow klientow menadzerow</web-resource-name>
+            <description/>
+            <url-pattern>/mos/zalogowani/klientAgentMenadzer/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>KLIENT</role-name>
+            <role-name>AGENT</role-name>
+            <role-name>MENADZER</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
     <!-- definicja metody logowania, odwołanie do stron z formularzem logowania i komunikatem błędu -->
     <login-config>
         <auth-method>FORM</auth-method>

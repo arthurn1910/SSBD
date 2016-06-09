@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.wyswietlSzczegolyOgloszenia"]}</h>
@@ -60,12 +59,14 @@
             
             <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
             <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
-            <h:commandButton value="${msg['komunikat.powrot']}" action="wyswietlSzczegolyOgloszenia" />
+            <h:commandButton value="${msg['komunikat.powrot']}" action="wyswietlOgloszenia" />
             <h:commandButton value="#{msg['komunikat.dodajDoUlubionych']}"  action="#{wyswietlSzczegolyOgloszeniaBean.dodajDoUlubionych()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
-            </h:commandButton> 
+            </h:commandButton>
             <h:commandButton value="#{msg['komunikat.usunZUlubionych']}" action="#{wyswietlSzczegolyOgloszeniaBean.usunZUlubionych()}"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
-            </h:commandButton> 
+            </h:commandButton>
             <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient()}">
+            </h:commandButton>
+            <h:commandButton value="#{msg['tytulyPrzypadkow.spotkania_dla_ogloszenia']}"  action="wyswietlSpotkaniaDlaOgloszenia"  class="edit_icon" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyMenadzer() or autoryzacja.czyAgent()}">
             </h:commandButton>
         </h:form>
     </ui:define>
