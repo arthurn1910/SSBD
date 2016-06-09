@@ -19,7 +19,7 @@
             <h:dataTable id="listaKont" var="poziom" value="#{modyfikujPoziomyDostepuBean.poziomyDostepuDataModel}">
                 <h:column id="nazwa">
                     <f:facet name="header">#{msg['komunikat.nazwaDostepu']}</f:facet>
-                    <h:outputText value="#{ID}" />
+                    <h:outputText value="#{poziom}" />
                 </h:column>
                 <h:column id="akcja">
                     <f:facet name="header">#{msg['komunikat.akcja']}</f:facet>
