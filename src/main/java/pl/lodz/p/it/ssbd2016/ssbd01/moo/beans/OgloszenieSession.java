@@ -139,6 +139,7 @@ public class OgloszenieSession implements Serializable {
      */
     void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
+        czyWyswietlicPotwierdzenie = true;
     }
 
     /**
@@ -149,6 +150,7 @@ public class OgloszenieSession implements Serializable {
     void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
         try{
             mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
+            czyWyswietlicPotwierdzenie = true;
         }catch(Exception e){
             this.exception=e;
         }
@@ -162,6 +164,7 @@ public class OgloszenieSession implements Serializable {
      */
     void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent)  {
         mooEndpoint.przydzielAgentaDoOgloszenia(rowData, agent);
+        czyWyswietlicPotwierdzenie = true;
     }
 
     /**
@@ -192,6 +195,7 @@ public class OgloszenieSession implements Serializable {
     void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) {
         try {
             mooEndpoint.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+            czyWyswietlicPotwierdzenie = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,6 +241,7 @@ public class OgloszenieSession implements Serializable {
      */
 public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
         mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+        czyWyswietlicPotwierdzenie = true;
 }
 
     /**
@@ -246,6 +251,7 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
         try {
             mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
             pobierzWszystkieOgloszenia();
+            czyWyswietlicPotwierdzenie = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
