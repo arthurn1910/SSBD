@@ -29,7 +29,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
     
     private Ogloszenie ogloszenie; 
     List<Konto> listaAgentów;   
-    int licznik=0;
+    int licznik=0, licznik2=0;
     
 
     public Ogloszenie getOgloszenie() throws WyjatekSystemu, IOException{
@@ -43,7 +43,10 @@ public class WyswietlSzczegolyOgloszeniaBean {
             }
             return null;
         }else{
-            ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
+            if(licznik2==0){
+                licznik2++;
+                ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
+            }
             ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
             return ogloszenie;
         }
