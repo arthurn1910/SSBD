@@ -37,6 +37,7 @@ public class OgloszenieSession implements Serializable {
     private List<ElementWyposazeniaNieruchomosci> mozliweWyposazenie;
     
     private Exception exception;
+    int licznik=0;
 
     public Exception getException() {
         return exception;
@@ -64,6 +65,7 @@ public class OgloszenieSession implements Serializable {
     
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
         this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
+        licznik=0;
     }
     
     public void setOgloszeniaDataModel(List<Ogloszenie> o) {
@@ -274,8 +276,11 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
                 this.exception=exc;
                 return null;
             }
-            Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
-            return tmp;
+            if(licznik==0){
+                licznik++;
+                ogloszenieDoWyswietlenia=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
+            }
+            return ogloszenieDoWyswietlenia;
         }catch(Exception e){
             WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
             WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
