@@ -112,6 +112,9 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
     public void edytujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
+        if (ogloszenieStan == null) {
+            throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
+        }
         if(ogloszenieStan.getIdWlasciciela().getLogin().equals(loginKonta) == false && ogloszenieStan.getIdAgenta().getLogin().equals(loginKonta) == false) {
             throw new WyjatekSystemu("blad.nieJestesWlascielemOgloszenia","MOO");
         }
@@ -164,6 +167,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             nieruchomoscFacadeLocal.edit(nieruchomoscStan);
             ogloszenieFacadeLocal.edit(ogloszenieStan);
             ogloszenieManager.przeliczAgregat();
+            ogloszenieStan = null;
         }
     }
 
@@ -281,7 +285,9 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
       @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-            //TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
+            if (ogloszenieStan == null) {
+            throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
+            }
             
             nieruchomoscStan.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
             nieruchomoscStan.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
@@ -321,6 +327,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
                     n.add(nieruchomoscStan);
                     el.setNieruchomoscWyposazonaCollection(n);
                     elementWyposazeniaFacadeLocal.edit(el);
+                    ogloszenieStan = null;
                 }
             }
             
