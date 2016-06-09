@@ -82,10 +82,10 @@ public interface MOOEndpointLocal {
     
     /**
      * Metoda deaktywuje ogłoszenie dotyczace użytkownika MOO.4
-     * @param ogloszenie
+     * @param  o ogloszenie do deaktywacji
      * @throws WyjatekSystemu
      */
-    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu;
+    public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie o) throws WyjatekSystemu;
         
     /**
     * Metoda odpowiadajaca za deaktywacje ogłoszenia innego uzytkownika MOO.5
