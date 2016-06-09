@@ -31,12 +31,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
     List<Konto> listaAgentów;   
     int licznik=0;
     
-    @PostConstruct
-    public void init() {
-        ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
-        ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
-    }
-    
+
     public Ogloszenie getOgloszenie() throws WyjatekSystemu, IOException{
         if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null){
             ogloszenieSession.setException(new WyjatekSystemu("blad.NullPointerException", "MOO"));
@@ -48,6 +43,8 @@ public class WyswietlSzczegolyOgloszeniaBean {
             }
             return null;
         }else{
+            ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
+            ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
             return ogloszenie;
         }
     }

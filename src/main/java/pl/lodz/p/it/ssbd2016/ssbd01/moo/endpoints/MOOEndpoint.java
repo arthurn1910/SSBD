@@ -424,8 +424,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @Override
     @PermitAll
     public Boolean czyPosiadaJakiegosAgenta(Ogloszenie ogloszenie) {
-        //Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        if(ogloszenie.getIdAgenta()!=null)
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if(o.getIdAgenta()!=null)
             return true;
         return false;
     }

@@ -59,9 +59,11 @@ public class OgloszenieSession implements Serializable {
     public void setMozliweWyposazenie(List<ElementWyposazeniaNieruchomosci> w) {
         mozliweWyposazenie = w;
     }
+
+
     
     public void setOgloszenieDoWyswietlenia(Ogloszenie ogloszenieDoWyswietlenia) {
-        this.ogloszenieDoWyswietlenia = mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
+        this.ogloszenieDoWyswietlenia = ogloszenieDoWyswietlenia;
     }
     
     public void setOgloszeniaDataModel(List<Ogloszenie> o) {
@@ -264,9 +266,22 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
         return mooEndpoint.pobierzListeAgentow();
     }
     
-    public Ogloszenie getOgloszenieDoWyswietlenia() {        
-        //Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
-        return ogloszenieDoWyswietlenia;
+    public Ogloszenie getOgloszenieDoWyswietlenia() throws WyjatekSystemu {
+        try{
+            if(ogloszenieDoWyswietlenia==null){
+                WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
+                WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
+                this.exception=exc;
+                return null;
+            }
+            Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
+            return tmp;
+        }catch(Exception e){
+            WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
+            WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
+            this.exception=exc;
+            return null;
+        }
     }
 
     /**
