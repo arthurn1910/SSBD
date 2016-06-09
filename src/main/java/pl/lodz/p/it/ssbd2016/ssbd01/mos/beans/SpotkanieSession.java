@@ -29,6 +29,7 @@ public class SpotkanieSession implements Serializable {
     private MOSEndpointLocal mosEndpoint;
     
     private Exception exception;
+    private Ogloszenie wybraneOgloszenie;
 
     public Exception getException() {
         return exception;
@@ -38,8 +39,6 @@ public class SpotkanieSession implements Serializable {
         this.exception = exception;
     }
     
-    private Ogloszenie wybraneOgloszenie;
-    private Spotkanie wybraneSpotkanie;
     private Konto aktualneKonto;
 
     
@@ -79,7 +78,7 @@ public class SpotkanieSession implements Serializable {
      */
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
         mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
-
+        czyWyswietlicPotwierdzenie = true;
     }
 
     /**
@@ -100,6 +99,7 @@ public class SpotkanieSession implements Serializable {
     public void rezerwujSpotkanie(Spotkanie spotkanie) throws WyjatekSystemu {
         try{
             mosEndpoint.rezerwujSpotkanie(spotkanie);
+            czyWyswietlicPotwierdzenie = true;
         }catch(WyjatekSystemu ex){
             this.exception=ex;
             throw ex;
@@ -108,7 +108,11 @@ public class SpotkanieSession implements Serializable {
     
     /**
      * pobiera spotkanie do edycji MOS.2 P. Stepien
+     * @param spotkanie
      * @return Spotkanie
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
     public Spotkanie pobierzSpotkanieDoEdycji(Spotkanie spotkanie) throws WyjatekSystemu, IOException, ClassNotFoundException {
         try{
@@ -124,8 +128,8 @@ public class SpotkanieSession implements Serializable {
      * @param spotkanie 
      */
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
-
         mosEndpoint.zapiszSpotkaniePoEdycji(spotkanie);
+        czyWyswietlicPotwierdzenie = true;
     }
 
     /**
