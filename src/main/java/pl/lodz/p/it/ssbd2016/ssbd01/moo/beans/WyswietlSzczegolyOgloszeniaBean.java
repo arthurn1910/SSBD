@@ -164,10 +164,10 @@ public class WyswietlSzczegolyOgloszeniaBean {
         
         String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
         if(otwarte.getIdAgenta()!=null)
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
+            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
                 return false;
         }else{
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
+            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
                 return false;
             }
         }    
