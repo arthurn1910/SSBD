@@ -256,8 +256,6 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("deaktywujOgloszenieInnegoUzytkownika")
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        if (o == null) 
-        throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoDeaktywacji","MOO");
         
         if(o.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej","MOO");
@@ -280,16 +278,61 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         return typNieruchomosciFacade.findAll();
     }
 
-    @Override
+      @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-        if (ogloszenieStan == null){ 
-            WyjatekSystemu ex=new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji","MOO");
-            throw new WyjatekSystemu("blad.brakWczytanegoOgloszeniaDoEdycji", ex,"MOO");
-        } else {
-            ogloszenieFacadeLocal.edit(ogloszenieStan);
+            String loginKonta = sessionContext.getCallerPrincipal().getName();
+        Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenieNowe.getId());
+            TypOgloszenia typ = typOgloszeniaFacade.znajdzPoNazwie(ogloszenieNowe.getTypOgloszenia().getNazwa());
+            Nieruchomosc nieruchomosc = nieruchomoscFacadeLocal.find(o.getNieruchomosc().getId());
+            nieruchomosc.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
+            nieruchomosc.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
+            nieruchomosc.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
+            nieruchomosc.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
+            nieruchomosc.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
+            nieruchomosc.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
+            nieruchomosc.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+            List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomosc.getId());
+            List<ElementWyposazeniaNieruchomosci> wyposazenieNowe = new ArrayList(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+            for(int i = 0; i < wyposazenie.size(); i++) {
+                boolean jest = false;
+                for(int j = 0; j < wyposazenieNowe.size(); j++)
+                    if(wyposazenieNowe.get(j).getId().equals(wyposazenie.get(i).getId()))
+                        jest = true;
+                
+                if(!jest) {
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenie.get(i).getId());
+                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
+                    for(int j = 0; j < n.size(); j++)
+                        if(n.get(j).getId().equals(nieruchomosc.getId()))
+                            n.remove(j);
+                    el.setNieruchomoscWyposazonaCollection(n);
+                    elementWyposazeniaFacadeLocal.edit(el);
+                }
+            }
+            
+            for(int i = 0; i < wyposazenieNowe.size(); i++) {
+                boolean jest = false;
+                for(int j = 0; j < wyposazenie.size(); j++)
+                    if(wyposazenieNowe.get(i).getId().equals(wyposazenie.get(j).getId()))
+                        jest = true;
+                
+                if(!jest) {
+                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenieNowe.get(i).getId());
+                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
+                    n.add(nieruchomosc);
+                    el.setNieruchomoscWyposazonaCollection(n);
+                    elementWyposazeniaFacadeLocal.edit(el);
+                }
+            }
+            
+            o.setTypOgloszenia(typ);
+            o.setTytul(ogloszenieNowe.getTytul());
+            o.setCena(ogloszenieNowe.getCena());
+            nieruchomoscFacadeLocal.edit(nieruchomosc);
+            ogloszenieFacadeLocal.edit(o);
         }
-    }
+    
 
     @Override
     @RolesAllowed("pobierzOgloszenieDoEdycji")
