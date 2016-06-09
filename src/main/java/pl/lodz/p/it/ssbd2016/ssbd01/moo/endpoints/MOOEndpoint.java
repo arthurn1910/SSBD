@@ -345,7 +345,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             nieruchomoscFacadeLocal.edit(nieruchomoscStan);
             ogloszenieFacadeLocal.edit(ogloszenieStan);
             ogloszenieManager.przeliczAgregat();
-
+            ogloszenieStan = null;
+            nieruchomoscStan = null;
         }
     
 
