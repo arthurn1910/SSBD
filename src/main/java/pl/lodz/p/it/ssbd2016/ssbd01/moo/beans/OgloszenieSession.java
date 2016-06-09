@@ -262,11 +262,11 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
     
     public Ogloszenie getOgloszenieDoWyswietlenia() throws WyjatekSystemu {
         try{
-            if(ogloszenieDoWyswietlenia.getId()==null){
+            if(ogloszenieDoWyswietlenia==null){
                 WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
                 WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
                 this.exception=exc;
-                throw exc;
+                return null;
             }
             Ogloszenie tmp=mooEndpoint.znajdzOgloszeniePoID(ogloszenieDoWyswietlenia.getId());
             return tmp;
@@ -274,7 +274,7 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
             WyjatekSystemu ex=new WyjatekSystemu("blad.NullPointerException", "MOO");
             WyjatekSystemu exc=new WyjatekSystemu("blad.NullPointerException",ex, "MOO");
             this.exception=exc;
-            throw exc;
+            return null;
         }
     }
 

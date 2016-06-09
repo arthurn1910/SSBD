@@ -29,50 +29,32 @@ public class WyswietlSzczegolyOgloszeniaBean {
     
     private Ogloszenie ogloszenie; 
     List<Konto> listaAgentów;   
+    int licznik=0;
     
-    /**
-     * Pobiera wybrane ogłoszenie
-     */
-    @PostConstruct
-    private void initModel() {
-        try {
+
+    public Ogloszenie getOgloszenie() throws WyjatekSystemu, IOException{
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null){
+            ogloszenieSession.setException(new WyjatekSystemu("blad.NullPointerException", "MOO"));
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            if(licznik==0){
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
+                licznik++;
+            }
+            return null;
+        }else{
             ogloszenieSession.setOgloszenieDoWyswietlenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
             ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
-        } catch (WyjatekSystemu ex) {
-            Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
-            lg.log(Level.INFO, "1!!!:"+ogloszenieSession.getException().getMessage());
-            ex.setMessage("blad.NullPointerException");
-            lg.log(Level.INFO, "2!!!:"+ogloszenieSession.getException().getMessage());
-            ogloszenieSession.setException(ex);
-            lg.log(Level.INFO, "3!!!:"+ogloszenieSession.getException().getMessage());
-            lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
-            lg.log(Level.INFO, "4!!!:"+ogloszenieSession.getException().getMessage());
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            lg.log(Level.INFO, "5!!!:"+ogloszenieSession.getException().getMessage());
-            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            lg.log(Level.INFO, "6!!!:"+ogloszenieSession.getException().getMessage());
-            try {
-                lg.log(Level.INFO, "7!!!:"+ogloszenieSession.getOgloszenieDoWyswietlenia());
-                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");
-                lg.log(Level.INFO, "8!!!:"+ogloszenieSession.getException().getMessage());
-            } catch (IOException ex1) {
-                lg.log(Level.INFO, "9!!!:"+ogloszenieSession.getException().getMessage());
-                Logger.getLogger(HistoriaLogowaniaRaportBean.class.getName()).log(Level.SEVERE, null, ex1);
-                lg.log(Level.INFO, "10!!!:"+ogloszenieSession.getException().getMessage());
-            } catch (WyjatekSystemu ex1) {
-                Logger.getLogger(WyswietlSzczegolyOgloszeniaBean.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            return ogloszenie;
         }
-    }
-
-    public Ogloszenie getOgloszenie() {
-        return ogloszenie;
     }
     /***
      * Funkcja sprawdzająca czy ogłoszenie posiada agenta
      * @return 
      */
-    public Boolean posiadaAgenta(){
+    public Boolean posiadaAgenta() throws WyjatekSystemu{
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return null;
         return ogloszenieSession.czyPosiadaJakiegosAgenta(ogloszenie);
     }
 
@@ -101,7 +83,9 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * odpowiednich przycisków.
      * @return 
      */
-    public boolean czyUlubione() {
+    public Boolean czyUlubione() throws WyjatekSystemu {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return null;
         String login = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
         return ogloszenie.isUlubione(login);
     }
@@ -159,8 +143,10 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
      * @return
      */
-    public boolean czyMojeOgloszenie() throws WyjatekSystemu
+    public Boolean czyMojeOgloszenie() throws WyjatekSystemu
     {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return null;
         Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
         
         String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
