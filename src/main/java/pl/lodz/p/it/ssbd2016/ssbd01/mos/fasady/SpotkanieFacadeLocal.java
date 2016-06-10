@@ -34,9 +34,9 @@ public interface SpotkanieFacadeLocal {
     int count();
     
     /**
-     * metoda zwraca liste spotkan danego uzytkownika/agenta
-     * @param konto
-     * @return 
+     * metoda zwraca liste spotkan danego uzytkownika
+     * @param konto konto dla ktorego szuakmy
+     * @return lista spotkan
      */
     List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto);
 

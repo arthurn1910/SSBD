@@ -20,9 +20,8 @@ public class PrzegladajSwojeSpotkania implements Serializable {
 
     @Inject
     private SpotkanieSession spotkanieSession;
-
+    private boolean czyKlient = false;
     private List<Spotkanie> spotkania;
-    private Spotkanie wybraneSpotkanie;
 
     //na potrzeby przetestowania anulowania wybranego spotkania
     @EJB
@@ -37,13 +36,13 @@ public class PrzegladajSwojeSpotkania implements Serializable {
      */
     @PostConstruct
     public void init() {
-        wybraneSpotkanie = spotkanieFacade.find(1L);  //na potrzeby przetestowania anulowania wybranego spotkania
+        spotkania = spotkanieSession.pobierzSwojeSpotkania();
     }
 
     /**
      * Anuluje spotkania powiązane z kontem MOS.3, Kamil Rogowski
      */
-    public void anulujSpotkanie() {
+    public void anulujSpotkanie(Spotkanie wybraneSpotkanie) {
         spotkanieSession.anulujSpotkanie(wybraneSpotkanie);
     }
 

@@ -5,6 +5,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptorMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.KontoFacadeLocalInMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.OgloszenieFacadeLocalInMOS;
@@ -16,10 +17,6 @@ import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.*;
 import javax.interceptor.Interceptors;
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.ExteriorInterceptorMOS;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -52,7 +49,7 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
-        //return spotkanieManager.pobierzUmowioneSpotkania(spotkaniaDlaKonta);
+
         return spotkanieFacade.pobierzSpotkaniaUzytkownika(spotkaniaDlaKonta);
     }
 
@@ -90,12 +87,6 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     public void zapiszSpotkaniePoEdycji(Spotkanie spotkanie) {
         spotkanieFacade.edit(spotkanie);
         // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    @RolesAllowed("znajdzOgloszeniePoId")
-    public Ogloszenie znajdzOgloszeniePoId(Long id) {
-        return ogloszenieFacade.findById(1L);
     }
 
     @Override

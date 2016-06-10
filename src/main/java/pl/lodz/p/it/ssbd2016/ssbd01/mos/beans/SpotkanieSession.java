@@ -10,13 +10,11 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.SessionContext;
-import javax.inject.Inject;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -38,10 +36,7 @@ public class SpotkanieSession implements Serializable {
     public void setException(Exception exception) {
         this.exception = exception;
     }
-    
-    private Konto aktualneKonto;
 
-    
     private boolean czyWyswietlicPotwierdzenie;
     
     /**
@@ -52,7 +47,7 @@ public class SpotkanieSession implements Serializable {
     }
 
     /**
-     * Pobiera listę spotkań dla konta, MOS. 3, Kamil Rogowski
+     * Pobiera listę spotkań dla konta
      * MOS.4, MOS.2 P. Stepien
      * @param spotkaniaDlaKonta konto,
      * @return lista spotkań
@@ -60,25 +55,31 @@ public class SpotkanieSession implements Serializable {
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
         return mosEndpoint.pobierzSpotkania(spotkaniaDlaKonta);
     }
-      
+
     /**
-     * Pobiera listę spotkań dla konta, 
+     * Pobiera listę swoich spotkań dla konta,
+     * MOS. 4, Kamil Rogowski
      * @return lista spotkań
      */
     List<Spotkanie> pobierzSwojeSpotkania() {
-        Konto konto = new Konto();
-        return mosEndpoint.pobierzSpotkania(konto);
+         return  mosEndpoint.pobierzSpotkania(mosEndpoint.pobierzMojeKonto());
     }
 
 
     /**
      * Anuluje spotkania dla konta, MOS.3, Kamil Rogowski
-     *
+     *   po anuluje przekierowuje na ta samo strone
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
         mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
         czyWyswietlicPotwierdzenie = true;
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        try {
+            context.redirect(context.getRequestContextPath() + "/mos/zalogowani/klientAgent/wyswietlSwojeSpotkania.xhtml");
+        } catch (IOException e) {
+
+        }
     }
 
     /**
@@ -132,24 +133,6 @@ public class SpotkanieSession implements Serializable {
         czyWyswietlicPotwierdzenie = true;
     }
 
-    /**
-     * Pobiera ogloszenie dla ktorego maja byc wyswietlone spotkania
-     * @return ogloszenie
-     */
-    public Ogloszenie pobierzWybraneOgloszenie(){
-
-        return wybraneOgloszenie = mosEndpoint.znajdzOgloszeniePoId(1L);
-    }
-    /**
-     * Pobiera aktualne konto użytkownika
-     * @return ogloszenie
-     */
-
-    public Konto getAktualneKonto() {        
-        aktualneKonto = mosEndpoint.pobierzMojeKonto();
-        return aktualneKonto;
-    }
-    
     /**
      * Metoda zwraca wartość określającą czy pokazać potwierdzenie operacji
      *

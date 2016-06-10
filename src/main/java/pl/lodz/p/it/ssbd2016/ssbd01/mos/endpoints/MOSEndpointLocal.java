@@ -58,12 +58,6 @@ public interface MOSEndpointLocal {
      */
     List<Spotkanie> pobierzSpotkaniaDlaOgloszenia(Ogloszenie ogloszenie);
 
-    /**
-     * Pobiera ogloszenie dla ktorego maja byc wyswietlone spotkania
-     * @param id ogloszenia
-     * @return znalezione ogloszenie
-     */
-    Ogloszenie znajdzOgloszeniePoId(Long id);
 
     /**
      * Pobiera konto aktualnie zalogowanego użytkownika
