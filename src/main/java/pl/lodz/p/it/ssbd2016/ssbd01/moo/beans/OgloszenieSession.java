@@ -37,7 +37,7 @@ public class OgloszenieSession implements Serializable {
     private List<ElementWyposazeniaNieruchomosci> mozliweWyposazenie;
     
     private Exception exception;
-    int licznik=0;
+    int licznik=0, licznikWyswietlOgloszenia = 0;
 
     public Exception getException() {
         return exception;
@@ -73,6 +73,11 @@ public class OgloszenieSession implements Serializable {
     }
     
     public List<Ogloszenie> getOgloszeniaDataModel() {
+        if(this.licznikWyswietlOgloszenia == 0) {
+            pobierzWszystkieOgloszenia();
+            licznikWyswietlOgloszenia = 1;
+            return ogloszeniaDataModel;
+        }
         if (null == ogloszeniaDataModel) pobierzWszystkieOgloszenia();
         return ogloszeniaDataModel;
     }
@@ -140,6 +145,7 @@ public class OgloszenieSession implements Serializable {
      * @throws WyjatekSystemu
      */
     void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
+        this.licznikWyswietlOgloszenia = 0;
         mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
         czyWyswietlicPotwierdzenie = true;
     }
@@ -151,6 +157,7 @@ public class OgloszenieSession implements Serializable {
      */
     void deaktywujOgloszenieDanegoUzytkownika(Ogloszenie ogloszenie) throws Exception {
         try{
+            this.licznikWyswietlOgloszenia = 0;
             mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
             czyWyswietlicPotwierdzenie = true;
         }catch(Exception e){

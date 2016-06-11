@@ -37,6 +37,8 @@ public class WyswietlOgloszeniaBean {
      * Wyświetla ogłoszenia posortowane
      */
     public void sortujOgloszenia() {
+        if(sortuj == null)
+            return;
         List<Ogloszenie> ogloszenia = ogloszenieSession.getOgloszeniaDataModel();
         Collections.sort(ogloszenia, new Comparator() {
             public int compare(Object o1, Object o2) {

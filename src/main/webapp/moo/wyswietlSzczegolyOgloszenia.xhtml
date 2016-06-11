@@ -57,9 +57,9 @@
             <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="zmienAgenta"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </h:commandButton> 
             
-            <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
+            <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}"/>
             <h:commandButton value="${msg['komunikat.deaktywujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
-            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}"/>
             <h:commandButton value="${msg['komunikat.edytujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
             <h:commandButton value="${msg['komunikat.powrot']}" action="cancel" />
             <h:commandButton value="#{msg['komunikat.dodajDoUlubionych']}"  action="#{wyswietlSzczegolyOgloszeniaBean.dodajDoUlubionych()}"  class="edit_icon" rendered="#{not wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">
