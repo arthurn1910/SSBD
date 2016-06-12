@@ -52,7 +52,8 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
     
     @Override
     @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika" ,"edytujOgloszenieInnegoUzytkownika"})
-    public void edit(ElementWyposazeniaNieruchomosci typOgloszenia){        
+    public void edit(ElementWyposazeniaNieruchomosci typOgloszenia){
+        super.edit(typOgloszenia);
     }
         
     @Override

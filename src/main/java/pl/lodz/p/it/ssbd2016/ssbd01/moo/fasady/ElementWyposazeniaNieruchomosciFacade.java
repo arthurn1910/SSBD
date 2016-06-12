@@ -37,6 +37,7 @@ public class ElementWyposazeniaNieruchomosciFacade extends AbstractFacade<Elemen
     @Override
     @RolesAllowed("dodajOgloszenie")
     public void edit(ElementWyposazeniaNieruchomosci elementWyposazeniaNieruchomosci){
+        super.edit(elementWyposazeniaNieruchomosci);
     }
     
     @Override

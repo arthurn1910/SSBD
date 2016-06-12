@@ -48,6 +48,6 @@ public class NieruchomoscFacade extends AbstractFacade<Nieruchomosc> implements 
     
     @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika", "edytujOgloszenieInnegoUzytkownika"})
     public void edit(Nieruchomosc nieruchomosc){
-        
+        super.edit(nieruchomosc);
     }
 }

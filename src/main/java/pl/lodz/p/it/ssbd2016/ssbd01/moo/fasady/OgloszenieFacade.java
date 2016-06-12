@@ -75,6 +75,6 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     
     @RolesAllowed("dodajOgloszenie")
     public void flush(){
-        
+        super.flush();
     }
 }

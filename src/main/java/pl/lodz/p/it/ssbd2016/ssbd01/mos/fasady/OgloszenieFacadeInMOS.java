@@ -42,7 +42,7 @@ public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements
     
     @RolesAllowed("anulujSpotkanie")
     public void edit(Ogloszenie ogloszenie){
-        
+        super.edit(ogloszenie);
     }
 
 }

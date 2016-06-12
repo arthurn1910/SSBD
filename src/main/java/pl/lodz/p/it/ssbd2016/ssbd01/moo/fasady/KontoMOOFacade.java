@@ -50,7 +50,8 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
         
    
     @RolesAllowed({"dodajDoUlubionych" ,"usunZUlubionych", "edytujOgloszenieInnegoUzytkownika"})
-    public void edit(Konto konto){        
+    public void edit(Konto konto){
+        super.edit(konto);
     }
     
     @RolesAllowed({"pobierzListeAgentow", "pobierzAgentow"})

@@ -55,7 +55,8 @@ public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> imp
     }
 
     @RolesAllowed("przeliczAgregat")
-    public void edit(TypNieruchomosci typNieruchomosci){        
+    public void edit(TypNieruchomosci typNieruchomosci){
+        super.edit(typNieruchomosci);
     }
     
     @RolesAllowed({"pobierzTypyNieruchomosci", "przeliczAgregat"})

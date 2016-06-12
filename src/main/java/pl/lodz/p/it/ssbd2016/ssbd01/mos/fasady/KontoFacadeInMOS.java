@@ -43,6 +43,7 @@ public class KontoFacadeInMOS extends AbstractFacade<Konto> implements KontoFaca
     
     @RolesAllowed("anulujSpotkanie")
     public void edit(Konto konto){
+        super.edit(konto);
     }
     
     @RolesAllowed("rezerwujSpotkanie")

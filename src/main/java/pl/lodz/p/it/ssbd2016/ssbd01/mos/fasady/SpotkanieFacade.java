@@ -62,14 +62,17 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
     
     @RolesAllowed("rezerwujSpotkanie")
     public void create(Spotkanie spotkanie){
+        super.create(spotkanie);
     }
 
     @RolesAllowed({"zapiszSpotkaniePoEdycji",  "edytujSpotkania"})
     public void edit(Spotkanie spotkanie){
+        super.edit(spotkanie);
     }
     
     @RolesAllowed("anulujSpotkanie")
-    public void remove(Spotkanie spotkanie){        
+    public void remove(Spotkanie spotkanie){
+        super.remove(spotkanie);
     }
     
     @RolesAllowed("pobierzSpotkanieDoEdycji")
