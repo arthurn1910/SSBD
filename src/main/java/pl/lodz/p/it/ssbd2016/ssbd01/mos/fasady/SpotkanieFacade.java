@@ -37,7 +37,9 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
 
     @Override
     public List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Query query = em.createNamedQuery("Spotkanie.findByIdUzytkownika");
+        query.setParameter("idUzytkownika", konto);
+        return (List < Spotkanie >) query.getResultList();
     }
 
     @Override
