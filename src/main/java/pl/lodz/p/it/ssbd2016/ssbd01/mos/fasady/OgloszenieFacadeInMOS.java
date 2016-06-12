@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
@@ -31,8 +32,8 @@ public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements
         super(Ogloszenie.class);
     }
 
-
     @Override
+    @RolesAllowed("rezerwujSpotkanie")
     public Ogloszenie findById(Long id) {
         Query q = em.createNamedQuery("Ogloszenie.findById");
         q.setParameter("id", id);

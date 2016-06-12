@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
@@ -33,6 +34,7 @@ public class KontoFacadeInMOS extends AbstractFacade<Konto> implements KontoFaca
     }
 
     @Override
+    @RolesAllowed({"pobierzMojeKonto", "rezerwujSpotkanie", "anulujSpotkanie"})
     public Konto znajdzPoLoginie(String login) {
         Query q = em.createNamedQuery("Konto.findByLogin");
         q.setParameter("login", login);

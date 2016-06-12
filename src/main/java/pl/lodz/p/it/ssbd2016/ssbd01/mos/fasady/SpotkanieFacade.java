@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 
 /**
  *
@@ -36,6 +37,7 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
     }
 
     @Override
+    @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkaniaUzytkownika(Konto konto) {
         Query query = em.createNamedQuery("Spotkanie.findByIdUzytkownika");
         query.setParameter("idUzytkownika", konto);
@@ -43,6 +45,7 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
     }
 
     @Override
+    @RolesAllowed("pobierzSpotkaniaDlaOgloszenia")
     public List<Spotkanie> findByOgloszenie(Ogloszenie ogloszenie) {
         Query q = em.createNamedQuery("Spotkanie.findByOgloszenie");
         q.setParameter("ogloszenie",ogloszenie);
@@ -50,6 +53,7 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
     }
     
     @Override
+    @RolesAllowed("rezerwujSpotkanie")
     public List<Spotkanie> terminyUzytkownika(Konto id) {
         Query q = em.createNamedQuery("Spotkanie.findByIdUzytkownika");
         q.setParameter("idUzytkownika", id);
