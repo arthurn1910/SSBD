@@ -59,4 +59,21 @@ public class SpotkanieFacade extends AbstractFacade<Spotkanie> implements Spotka
         q.setParameter("idUzytkownika", id);
         return (List < Spotkanie >) q.getResultList();
     }
+    
+    @RolesAllowed("rezerwujSpotkanie")
+    public void create(Spotkanie spotkanie){
+    }
+
+    @RolesAllowed({"zapiszSpotkaniePoEdycji",  "edytujSpotkania"})
+    public void edit(Spotkanie spotkanie){
+    }
+    
+    @RolesAllowed("anulujSpotkanie")
+    public void remove(Spotkanie spotkanie){        
+    }
+    
+    @RolesAllowed("pobierzSpotkanieDoEdycji")
+    public Spotkanie find(Object id){
+        return super.find(id);
+    }
 }

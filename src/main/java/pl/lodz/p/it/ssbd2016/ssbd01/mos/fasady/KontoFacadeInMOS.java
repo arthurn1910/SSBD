@@ -40,4 +40,13 @@ public class KontoFacadeInMOS extends AbstractFacade<Konto> implements KontoFaca
         q.setParameter("login", login);
         return (Konto) q.getSingleResult();
     }
+    
+    @RolesAllowed("anulujSpotkanie")
+    public void edit(Konto konto){
+    }
+    
+    @RolesAllowed("rezerwujSpotkanie")
+    public Konto find(Object id){
+        return super.find(id);
+    }
 }

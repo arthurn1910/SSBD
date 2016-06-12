@@ -39,5 +39,10 @@ public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements
         q.setParameter("id", id);
         return (Ogloszenie) q.getSingleResult();
     }
+    
+    @RolesAllowed("anulujSpotkanie")
+    public void edit(Ogloszenie ogloszenie){
+        
+    }
 
 }

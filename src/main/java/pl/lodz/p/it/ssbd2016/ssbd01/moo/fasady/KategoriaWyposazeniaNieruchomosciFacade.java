@@ -1,5 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
+import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.KategoriaWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
@@ -29,5 +31,10 @@ public class KategoriaWyposazeniaNieruchomosciFacade extends AbstractFacade<Kate
 
     public KategoriaWyposazeniaNieruchomosciFacade() {
         super(KategoriaWyposazeniaNieruchomosci.class);
+    }
+    
+    @RolesAllowed("pobierzKategorie")
+    public List<KategoriaWyposazeniaNieruchomosci> findAll(){
+        return super.findAll();
     }
 }

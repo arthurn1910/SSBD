@@ -49,4 +49,20 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
         }
         return wyposazenie;
     }
+    
+    @Override
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika" ,"edytujOgloszenieInnegoUzytkownika"})
+    public void edit(ElementWyposazeniaNieruchomosci typOgloszenia){        
+    }
+        
+    @Override
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika" ,"getWszystkieMozliweElementyWyposazeniaNieruchomosci", "edytujOgloszenieInnegoUzytkownika"})
+    public ElementWyposazeniaNieruchomosci find(Object id){
+        return super.find(id);
+    }
+    
+    @RolesAllowed("getWszystkieMozliweElementyWyposazeniaNieruchomosci")
+    public List<ElementWyposazeniaNieruchomosci> findAll(){
+        return super.findAll();
+    }
 }

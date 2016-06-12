@@ -55,4 +55,9 @@ public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implement
         return null;
     }
     
+    @RolesAllowed("pobierzTypyOgloszen")
+    public List<TypOgloszenia> findAll(){
+         return super.findAll();
+    }
+    
 }
