@@ -25,7 +25,6 @@ public class EdytujOgloszenieBean {
      */
     public String edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
         ogloszenieSession.edytujOgloszenieDanegoUzytkownika();
-        ogloszenieSession.pobierzWszystkieOgloszenia();
         return "wyswietlOgloszenia";
     }
     

@@ -57,9 +57,11 @@
             <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="zmienAgenta"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </h:commandButton> 
             
-            <h:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
+            <p:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}">
+                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            </p:commandButton>
             <h:commandButton value="${msg['komunikat.deaktywujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
-            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie()}"/>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}"/>
             <h:commandButton value="${msg['komunikat.edytujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
             <h:commandButton value="${msg['komunikat.powrot']}" action="wyswietlOgloszenia" />
             <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient() and wyswietlSzczegolyOgloszeniaBean.ogloszenie.aktywne}">
@@ -72,6 +74,11 @@
             </h:commandButton>
             <h:commandButton value="#{msg['tytulyPrzypadkow.spotkania_dla_ogloszenia']}"  action="wyswietlSpotkaniaDlaOgloszenia"  class="edit_icon" rendered="#{autoryzacja.czyKlient() or autoryzacja.czyMenadzer() or autoryzacja.czyAgent()}">
             </h:commandButton>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog> 
         </h:form>
     </ui:define>
 </ui:composition>
