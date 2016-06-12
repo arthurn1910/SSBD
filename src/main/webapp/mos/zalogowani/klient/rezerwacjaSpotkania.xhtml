@@ -44,7 +44,7 @@
                 <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog> 
-            <h:commandButton value="#{msg['komunikat.powrot']}" action="wyswietlSzczegolyOgloszenia" />
+            <h:button outcome="wyswietlSzczegolyOgloszenia" value="#{msg['komunikat.powrot']}"  />
         </h:form>
     </ui:define>
 </ui:composition>

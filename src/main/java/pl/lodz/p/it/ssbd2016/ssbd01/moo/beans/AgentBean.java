@@ -23,7 +23,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.mok.beans.HistoriaLogowaniaRaportBean;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
- *
+ *Klasa AgentBean obsługuje widok dla przydziel i zmień agenta
  * @author java
  */
 @Named

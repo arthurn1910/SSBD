@@ -34,6 +34,11 @@ public class RezerwacjaSpotkaniaBean{
         this.date.setHours(godzina.getHours());
         this.date.setMinutes(godzina.getMinutes());
         this.date.setSeconds(godzina.getSeconds());
+        if(date.getTime()<= new Date().getTime()){
+            spotkanieSession.setException(new WyjatekSystemu("blad.spotkanie.data", "MOS"));
+            return "wyjatekMOS";
+        }
+            
         spotkanie.setDlugoscSpotkania(Integer.parseInt(dlugosc));
         spotkanie.setDataSpotkania(date);
         spotkanie.setIdOgloszenia(ogloszenieSession.getOgloszenieDoWyswietlenia());
