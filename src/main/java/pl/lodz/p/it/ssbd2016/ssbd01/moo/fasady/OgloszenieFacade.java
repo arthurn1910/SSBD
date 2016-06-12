@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
 import javax.ejb.Stateless;
@@ -40,6 +41,7 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     }
 
     @Override
+    @PermitAll
     public Ogloszenie znajdzPoID(Long ID) {
         Query q = em.createNamedQuery("Ogloszenie.findById");
         q.setParameter("id", ID);
