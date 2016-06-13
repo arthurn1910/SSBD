@@ -6,6 +6,8 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 
 import javax.ejb.Stateless;
@@ -40,6 +42,7 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     }
 
     @Override
+    @PermitAll
     public Ogloszenie znajdzPoID(Long ID) {
         Query q = em.createNamedQuery("Ogloszenie.findById");
         q.setParameter("id", ID);
@@ -47,22 +50,31 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     }
     
     @Override
+    @RolesAllowed("dodajOgloszenie")
     public void create(Ogloszenie ogloszenie) {
         super.create(ogloszenie);
     }
 
     @Override
+    @RolesAllowed({"dodajDoUlubionych", "usunZUlubionych", "edytujOgloszenieDotyczaceUzytkownika", "edytujOgloszenieInnegoUzytkownika", "deaktywujOgloszenieInnegoUzytkownika"})
     public void edit(Ogloszenie ogloszenie) {
         super.edit(ogloszenie);
     }
 
     @Override
+    @PermitAll
     public Ogloszenie find(Object id) {
         return super.find(id);
     }
 
     @Override
+    @PermitAll
     public List<Ogloszenie> findAll() {
         return super.findAll();
+    }
+    
+    @RolesAllowed("dodajOgloszenie")
+    public void flush(){
+        super.flush();
     }
 }

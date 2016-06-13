@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.*;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -34,6 +35,7 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
     }
 
     @Override
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika", "pobierzWyposazenieNieruchomosci"})
     public List<ElementWyposazeniaNieruchomosci> znajdzPoIdNieruchomosci(Long idNieruchomosci) {
         List<ElementWyposazeniaNieruchomosci> wyposazenie = new ArrayList();
         Query q = em.createNamedQuery("ElementWyposazeniaNieruchomosci.findAll");
@@ -46,5 +48,22 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
             }
         }
         return wyposazenie;
+    }
+    
+    @Override
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika" ,"edytujOgloszenieInnegoUzytkownika"})
+    public void edit(ElementWyposazeniaNieruchomosci typOgloszenia){
+        super.edit(typOgloszenia);
+    }
+        
+    @Override
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika" ,"getWszystkieMozliweElementyWyposazeniaNieruchomosci", "edytujOgloszenieInnegoUzytkownika"})
+    public ElementWyposazeniaNieruchomosci find(Object id){
+        return super.find(id);
+    }
+    
+    @RolesAllowed("getWszystkieMozliweElementyWyposazeniaNieruchomosci")
+    public List<ElementWyposazeniaNieruchomosci> findAll(){
+        return super.findAll();
     }
 }

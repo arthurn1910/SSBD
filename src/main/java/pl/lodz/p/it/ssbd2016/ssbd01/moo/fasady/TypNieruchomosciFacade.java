@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
@@ -51,5 +52,15 @@ public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> imp
             }
         }
         return null;
-    }    
+    }
+
+    @RolesAllowed("przeliczAgregat")
+    public void edit(TypNieruchomosci typNieruchomosci){
+        super.edit(typNieruchomosci);
+    }
+    
+    @RolesAllowed({"pobierzTypyNieruchomosci", "przeliczAgregat"})
+    public List<TypNieruchomosci> findAll(){
+        return super.findAll();
+    }
 }

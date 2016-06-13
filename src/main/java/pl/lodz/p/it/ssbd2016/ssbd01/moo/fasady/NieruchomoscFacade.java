@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
@@ -38,5 +39,15 @@ public class NieruchomoscFacade extends AbstractFacade<Nieruchomosc> implements 
 
     public NieruchomoscFacade() {
         super(Nieruchomosc.class);
+    }
+    
+    @RolesAllowed("pobierzOgloszenieDoEdycji")  
+    public Nieruchomosc find(Object id){
+        return super.find(id);         
+    }
+    
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika", "edytujOgloszenieInnegoUzytkownika"})
+    public void edit(Nieruchomosc nieruchomosc){
+        super.edit(nieruchomosc);
     }
 }
