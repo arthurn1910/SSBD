@@ -48,6 +48,7 @@ public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements
     }
 
     @Override
+    @RolesAllowed("listaOgloszenPoIDAgenta")
     public List<Ogloszenie> findByAgent(Konto agent) {
         Query q = em.createNamedQuery("OgloszenieID.findByAgent");
         q.setParameter("agent", agent);
