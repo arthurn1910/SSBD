@@ -35,7 +35,7 @@ public class ElementWyposazeniaNieruchomosciMOOFacade extends AbstractFacade<Ele
     }
 
     @Override
-    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika", "pobierzWyposazenieNieruchomosci"})
+    @RolesAllowed({"edytujOgloszenieDotyczaceUzytkownika", "pobierzWyposazenieNieruchomosci", "edytujOgloszenieInnegoUzytkownika"})
     public List<ElementWyposazeniaNieruchomosci> znajdzPoIdNieruchomosci(Long idNieruchomosci) {
         List<ElementWyposazeniaNieruchomosci> wyposazenie = new ArrayList();
         Query q = em.createNamedQuery("ElementWyposazeniaNieruchomosci.findAll");

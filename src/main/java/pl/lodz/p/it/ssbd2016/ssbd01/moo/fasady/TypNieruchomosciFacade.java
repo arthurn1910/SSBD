@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
@@ -43,6 +44,7 @@ public class TypNieruchomosciFacade extends AbstractFacade<TypNieruchomosci> imp
     }
 
     @Override
+    @PermitAll
     public TypNieruchomosci znajdzPoNazwie(String typ) {
         Query q = em.createNamedQuery("TypNieruchomosci.findAll");
         List<TypNieruchomosci> l = (List<TypNieruchomosci>) q.getResultList();

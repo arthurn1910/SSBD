@@ -111,6 +111,7 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
     }
     
     @Override
+    @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgenta(Ogloszenie rowData, Konto agent) {
         Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
         Ogloszenie o = ogloszenieFacade.znajdzPoID(rowData.getId());
