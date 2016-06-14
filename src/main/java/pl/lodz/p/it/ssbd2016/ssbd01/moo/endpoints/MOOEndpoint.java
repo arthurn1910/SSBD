@@ -398,16 +398,19 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     // gettery i settery
 
     @Override
+    @PermitAll
     public Konto getKonto(String login) {
         return kontoFacade.znajdzPoLoginie(login);
     }
 
     @Override
+    @PermitAll
     public TypOgloszenia getTypOgloszenia(String typ) {
         return typOgloszeniaFacade.znajdzPoNazwie(typ);
     }
 
     @Override
+    @PermitAll
     public TypNieruchomosci getTypNieruchomosci(String typ) {
         return typNieruchomosciFacade.znajdzPoNazwie(typ);
     }

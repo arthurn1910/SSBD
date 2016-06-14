@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
 import javax.ejb.Stateless;
@@ -41,7 +42,7 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
     }
 
     @Override
-    @RolesAllowed("usunZUlubionych, dodajDoUlubionych")
+    @PermitAll
     public Konto znajdzPoLoginie(String login) {
         Query q = em.createNamedQuery("Konto.findByLogin");
         q.setParameter("login", login);
@@ -49,7 +50,7 @@ public class KontoMOOFacade extends AbstractFacade<Konto> implements KontoMOOFac
     }
         
    
-    @RolesAllowed({"dodajDoUlubionych" ,"usunZUlubionych", "edytujOgloszenieInnegoUzytkownika"})
+    @RolesAllowed({"dodajDoUlubionych" ,"usunZUlubionych", "przeliczAgregat", "przydzielAgentaDoOgloszenia"})
     public void edit(Konto konto){
         super.edit(konto);
     }

@@ -56,7 +56,7 @@ public class OgloszenieFacade extends AbstractFacade<Ogloszenie> implements Oglo
     }
 
     @Override
-    @RolesAllowed({"dodajDoUlubionych", "usunZUlubionych", "edytujOgloszenieDotyczaceUzytkownika", "edytujOgloszenieInnegoUzytkownika", "deaktywujOgloszenieInnegoUzytkownika"})
+    @RolesAllowed({"dodajDoUlubionych", "usunZUlubionych", "przydzielAgentaDoOgloszenia", "edytujOgloszenieDotyczaceUzytkownika", "edytujOgloszenieInnegoUzytkownika", "deaktywujOgloszenieInnegoUzytkownika"})
     public void edit(Ogloszenie ogloszenie) {
         super.edit(ogloszenie);
     }

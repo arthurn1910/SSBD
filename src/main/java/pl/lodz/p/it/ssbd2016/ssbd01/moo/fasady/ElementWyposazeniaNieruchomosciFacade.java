@@ -46,4 +46,9 @@ public class ElementWyposazeniaNieruchomosciFacade extends AbstractFacade<Elemen
         return super.findAll();
     }
     
+    @RolesAllowed("dodajOgloszenie")
+    public void flush(){
+        super.flush();
+    }
+    
 }

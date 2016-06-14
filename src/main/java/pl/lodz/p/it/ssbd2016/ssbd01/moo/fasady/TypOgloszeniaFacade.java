@@ -6,6 +6,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.TypOgloszenia;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
@@ -43,7 +44,7 @@ public class TypOgloszeniaFacade extends AbstractFacade<TypOgloszenia> implement
     }
 
     @Override
-    @RolesAllowed("edytujOgloszenieDotyczaceUzytkownika")
+    @PermitAll
     public TypOgloszenia znajdzPoNazwie(String typ) {
         Query q = em.createNamedQuery("TypOgloszenia.findAll");
         List<TypOgloszenia> l = (List<TypOgloszenia>) q.getResultList();
