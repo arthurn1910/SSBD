@@ -82,6 +82,12 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
             throw new WyjatekSystemu(e.getMessage(), e, "MOS");
         }
         spotkanieFacade.create(spotkanie);
+        Spotkanie spotkanieAgenta=new Spotkanie();
+        spotkanieAgenta.setDataSpotkania(spotkanie.getDataSpotkania());
+        spotkanieAgenta.setDlugoscSpotkania(spotkanie.getDlugoscSpotkania());
+        spotkanieAgenta.setIdOgloszenia(spotkanie.getIdOgloszenia());
+        spotkanieAgenta.setIdUzytkownika(agent);
+        spotkanieFacade.create(spotkanieAgenta);
     }
 
     @Override
