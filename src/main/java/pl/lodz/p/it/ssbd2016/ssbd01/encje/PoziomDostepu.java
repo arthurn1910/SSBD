@@ -60,7 +60,7 @@ public class PoziomDostepu implements Serializable {
     @Column(name = "version")
     @Version
     private long version;
-    @JoinColumn(name = "konto_id", referencedColumnName = "id")
+    @JoinColumn(name = "konto_id", referencedColumnName = "id", updatable=false)
     @ManyToOne(optional = false)
     private Konto kontoId;
 

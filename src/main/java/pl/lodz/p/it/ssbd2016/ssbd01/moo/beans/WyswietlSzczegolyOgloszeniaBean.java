@@ -157,7 +157,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
             if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
                 return false;
         }else{
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
+            if(!otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
                 return false;
             }
         }    
