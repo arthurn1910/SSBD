@@ -9,6 +9,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 
 import javax.ejb.Local;
 import java.util.List;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
  *
@@ -37,5 +38,6 @@ public interface OgloszenieFacadeLocalInMOS {
      * @return objekt ogloszenie
      */
     Ogloszenie findById(Long id);
+    List<Ogloszenie> findByAgent(Konto agent);
     
 }

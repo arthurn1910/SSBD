@@ -58,7 +58,15 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
         List<Spotkanie> listaTerminowZajetych=new ArrayList<Spotkanie>();
         listaTerminowZajetych=spotkanieFacade.terminyUzytkownika(spotkanie.getIdUzytkownika());
         Konto agent=ogloszenieFacade.findById(spotkanie.getIdOgloszenia().getId()).getIdAgenta();
-        List<Spotkanie> spotkaniaAgenta=(List<Spotkanie>) kontoFacade.find(agent.getId()).getSpotkanieCollection();
+        List<Ogloszenie> ogloszeniaAgenta=ogloszenieFacade.findByAgent(agent);
+        List<Spotkanie> spotkaniaAgenta=new ArrayList<>();
+        List<Spotkanie> spotkania;
+        for(Ogloszenie ogloszenie : ogloszeniaAgenta){
+            spotkania=spotkanieFacade.findByOgloszenie(ogloszenie);
+            for(Spotkanie spotk : spotkania )
+                spotkaniaAgenta.add(spotk);
+        }
+            
         if(spotkaniaAgenta!=null){
             for( Spotkanie ret : spotkaniaAgenta){
                 listaTerminowZajetych.add(ret);
@@ -82,12 +90,6 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
             throw new WyjatekSystemu(e.getMessage(), e, "MOS");
         }
         spotkanieFacade.create(spotkanie);
-        Spotkanie spotkanieAgenta=new Spotkanie();
-        spotkanieAgenta.setDataSpotkania(spotkanie.getDataSpotkania());
-        spotkanieAgenta.setDlugoscSpotkania(spotkanie.getDlugoscSpotkania());
-        spotkanieAgenta.setIdOgloszenia(spotkanie.getIdOgloszenia());
-        spotkanieAgenta.setIdUzytkownika(agent);
-        spotkanieFacade.create(spotkanieAgenta);
     }
 
     @Override
