@@ -5,6 +5,7 @@
  */
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady;
 
+import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
 import pl.lodz.p.it.ssbd2016.ssbd01.fasady.AbstractFacade;
@@ -13,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 
 /**
  * @author java
@@ -44,5 +46,15 @@ public class OgloszenieFacadeInMOS extends AbstractFacade<Ogloszenie> implements
     public void edit(Ogloszenie ogloszenie){
         super.edit(ogloszenie);
     }
+
+    @Override
+    @RolesAllowed("listaOgloszenPoIDAgenta")
+    public List<Ogloszenie> findByAgent(Konto agent) {
+        Query q = em.createNamedQuery("OgloszenieID.findByAgent");
+        q.setParameter("agent", agent);
+        return (List<Ogloszenie>) q.getResultList();
+    }
+    
+    
 
 }

@@ -28,7 +28,8 @@ import java.util.Date;
     @NamedQuery(name = "Ogloszenie.findByRynekPierwotny", query = "SELECT o FROM Ogloszenie o WHERE o.rynekPierwotny = :rynekPierwotny"),
     @NamedQuery(name = "Ogloszenie.findByDataDodania", query = "SELECT o FROM Ogloszenie o WHERE o.dataDodania = :dataDodania"),
     @NamedQuery(name = "Ogloszenie.findByVersion", query = "SELECT o FROM Ogloszenie o WHERE o.version = :version"),
-    @NamedQuery(name = "Ogloszenie.findByAktywne", query = "SELECT o FROM Ogloszenie o WHERE o.aktywne = :aktywne")})
+    @NamedQuery(name = "Ogloszenie.findByAktywne", query = "SELECT o FROM Ogloszenie o WHERE o.aktywne = :aktywne"),
+    @NamedQuery(name = "OgloszenieID.findByAgent", query = "SELECT o From Ogloszenie o WHERE o.idAgenta = :agent")})
 public class Ogloszenie implements Serializable {
 
     private static final long serialVersionUID = 1L;
