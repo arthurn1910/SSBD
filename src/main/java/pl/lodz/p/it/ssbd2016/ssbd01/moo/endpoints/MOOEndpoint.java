@@ -180,6 +180,13 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     public void deaktywujOgloszenieDotyczaceUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         String loginKonta = sessionContext.getCallerPrincipal().getName();
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
+        if(o.getSpotkanieCollection() != null) {
+            if(o.getSpotkanieCollection().size() != 0) {
+                System.out.println("------------aaa");
+   //             WyjatekSystemu ex=new WyjatekSystemu("blad.toOgloszenieMaSpotkania","MOO");
+                throw new WyjatekSystemu("blad.toOgloszenieMaSpotkania", "MOO");
+            }
+        }
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
             WyjatekSystemu ex=new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia","MOO");
             throw new WyjatekSystemu("blad.nieJestesWlascicielemOgloszenia",ex,"MOO");

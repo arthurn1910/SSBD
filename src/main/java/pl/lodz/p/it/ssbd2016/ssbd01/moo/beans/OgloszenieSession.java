@@ -160,7 +160,7 @@ public class OgloszenieSession implements Serializable {
             this.licznikWyswietlOgloszenia = 0;
             mooEndpoint.deaktywujOgloszenieDotyczaceUzytkownika(ogloszenie);
             czyWyswietlicPotwierdzenie = true;
-        }catch(Exception e){
+        }catch(WyjatekSystemu e){
             this.exception=e;
         }
     }

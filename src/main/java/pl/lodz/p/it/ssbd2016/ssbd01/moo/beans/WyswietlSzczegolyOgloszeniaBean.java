@@ -114,6 +114,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Metoda odpowiada za pobranie ogłoszenia do edycji
      * Stowrzył Maksymilian Zgierski
      * MOO.2
+     * @throws Exception
      * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
      */
     public String edytujOgloszenieDanegoUzytkownika() throws Exception {
@@ -143,18 +144,31 @@ public class WyswietlSzczegolyOgloszeniaBean {
     }
     
     /**
+     * Sprawdza czy ogłoszenie jest aktywne
+     * @return
+     */    
+    public Boolean czyOgloszenieAktywne() throws WyjatekSystemu {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return false;
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        if(!otwarte.getAktywne())
+            return false;
+        return true;
+    }
+    
+    /**
      * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
      * @return
      */
     public Boolean czyMojeOgloszenie() throws WyjatekSystemu
     {
+        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
         if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
-            return null;
+            return false;
         Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
         
-        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
-        if(otwarte.getIdAgenta()!=null)
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
+        if(otwarte.getIdAgenta()!=null) {
+            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false)
                 return false;
         }else{
             if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
