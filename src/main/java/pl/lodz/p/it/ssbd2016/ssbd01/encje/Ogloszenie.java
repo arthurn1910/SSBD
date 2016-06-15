@@ -76,7 +76,7 @@ public class Ogloszenie implements Serializable {
     @JoinColumn(name = "id_agenta", referencedColumnName = "id", updatable = true)
     @ManyToOne(optional = false)
     private Konto idAgenta;
-    @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id", updatable = true)
+    @JoinColumn(name = "id_wlasciciela", referencedColumnName = "id", updatable = false)
     @ManyToOne(optional = false)
     private Konto idWlasciciela;
 
