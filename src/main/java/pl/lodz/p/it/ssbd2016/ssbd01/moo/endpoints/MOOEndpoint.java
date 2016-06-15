@@ -183,8 +183,8 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         if(o.getSpotkanieCollection() != null) {
             if(o.getSpotkanieCollection().size() != 0) {
                 System.out.println("------------aaa");
-   //             WyjatekSystemu ex=new WyjatekSystemu("blad.toOgloszenieMaSpotkania","MOO");
-                throw new WyjatekSystemu("blad.toOgloszenieMaSpotkania", "MOO");
+                WyjatekSystemu ex=new WyjatekSystemu("blad.toOgloszenieMaSpotkania","MOO");
+                throw new WyjatekSystemu("blad.toOgloszenieMaSpotkania", ex, "MOO");
             }
         }
         if(o.getIdWlasciciela().getLogin().equals(loginKonta) == false && o.getIdAgenta().getLogin().equals(loginKonta) == false) {
