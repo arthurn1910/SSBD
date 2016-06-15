@@ -16,6 +16,12 @@ public class TrackerInterceptor {
     private SessionContext sctx;
     private static final Logger loger = Logger.getLogger(TrackerInterceptor.class.getName());
     
+    /***
+     * Funkcja loguje wywołania metod.
+     * @param ictx
+     * @return 
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     */
     @AroundInvoke
     public Object traceInvoke(InvocationContext ictx) throws WyjatekSystemu, Exception{
         StringBuilder message = new StringBuilder("********Przechwycone wywołanie metody: ");

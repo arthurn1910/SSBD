@@ -1,17 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.moo.endpoints;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.*;
-import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.moo.fasady.*;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.managers.OgloszenieManagerLocal;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
-
-import javax.annotation.Resource;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.*;
-import javax.interceptor.Interceptors;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -93,7 +83,6 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
             elementWyposazeniaNieruchomosciFacade.edit(wyposazeniaNieruchomosci);
         }
         elementWyposazeniaNieruchomosciFacade.flush();
-        ogloszenieManager.przeliczAgregat();
     }
 
     @RolesAllowed("pobierzElementyKategorii")
@@ -236,12 +225,6 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         return sessionContext.getCallerPrincipal().getName();
     }
     
-    @Override
-    @RolesAllowed("aktywujOgloszenie")
-    public void aktywujOgloszenie(Ogloszenie rowData) {
-        Ogloszenie o = ogloszenieFacadeLocal.find(rowData.getId());
-        o.setAktywne(true);
-    }
 
     @Override
     @RolesAllowed("dodajDoUlubionych")
@@ -265,6 +248,7 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("przydzielAgentaDoOgloszenia")
     public void przydzielAgentaDoOgloszenia(Ogloszenie rowData, Konto agent) {
         ogloszenieManager.przydzielAgenta(rowData, agent);
+        ogloszenieManager.przeliczAgregat();
     }
 
     @Override
@@ -296,65 +280,65 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
       @Override
     @RolesAllowed("edytujOgloszenieInnegoUzytkownika")
     public void edytujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenieNowe) throws WyjatekSystemu {
-            if (ogloszenieStan == null) {
-                throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
-            }
-            
-            if (nieruchomoscStan == null) {
-                throw new WyjatekSystemu("blad.brakNieruchomosciDoEdycji","MOO");
-            }
-            
-            nieruchomoscStan.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
-            nieruchomoscStan.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
-            nieruchomoscStan.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
-            nieruchomoscStan.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
-            nieruchomoscStan.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
-            nieruchomoscStan.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
-            nieruchomoscStan.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
-            List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomoscStan.getId());
-            List<ElementWyposazeniaNieruchomosci> wyposazenieNowe = new ArrayList(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
-            for(int i = 0; i < wyposazenie.size(); i++) {
-                boolean jest = false;
-                for(int j = 0; j < wyposazenieNowe.size(); j++)
-                    if(wyposazenieNowe.get(j).getId().equals(wyposazenie.get(i).getId()))
-                        jest = true;
-                
-                if(!jest) {
-                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenie.get(i).getId());
-                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
-                    for(int j = 0; j < n.size(); j++)
-                        if(n.get(j).getId().equals(nieruchomoscStan.getId()))
-                            n.remove(j);
-                    el.setNieruchomoscWyposazonaCollection(n);
-                    elementWyposazeniaFacadeLocal.edit(el);
-                }
-            }
-            
-            for(int i = 0; i < wyposazenieNowe.size(); i++) {
-                boolean jest = false;
-                for(int j = 0; j < wyposazenie.size(); j++)
-                    if(wyposazenieNowe.get(i).getId().equals(wyposazenie.get(j).getId()))
-                        jest = true;
-                
-                if(!jest) {
-                    ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenieNowe.get(i).getId());
-                    List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
-                    n.add(nieruchomoscStan);
-                    el.setNieruchomoscWyposazonaCollection(n);
-                    elementWyposazeniaFacadeLocal.edit(el);
-                    ogloszenieStan = null;
-                    nieruchomoscStan = null;
-                }
-            }
-            
-            ogloszenieStan.setTytul(ogloszenieNowe.getTytul());
-            ogloszenieStan.setCena(ogloszenieNowe.getCena());
-            nieruchomoscFacadeLocal.edit(nieruchomoscStan);
-            ogloszenieFacadeLocal.edit(ogloszenieStan);
-            ogloszenieManager.przeliczAgregat();
-            ogloszenieStan = null;
-            nieruchomoscStan = null;
+        if (ogloszenieStan == null) {
+            throw new WyjatekSystemu("blad.brakOgloszeniaDoEdycji","MOO");
         }
+
+        if (nieruchomoscStan == null) {
+            throw new WyjatekSystemu("blad.brakNieruchomosciDoEdycji","MOO");
+        }
+
+        nieruchomoscStan.setMiejscowosc(ogloszenieNowe.getNieruchomosc().getMiejscowosc());
+        nieruchomoscStan.setUlica(ogloszenieNowe.getNieruchomosc().getUlica());
+        nieruchomoscStan.setLiczbaPieter(ogloszenieNowe.getNieruchomosc().getLiczbaPieter());
+        nieruchomoscStan.setLiczbaPokoi(ogloszenieNowe.getNieruchomosc().getLiczbaPokoi());
+        nieruchomoscStan.setPowierzchniaDzialki(ogloszenieNowe.getNieruchomosc().getPowierzchniaDzialki());
+        nieruchomoscStan.setPowierzchniaNieruchomosci(ogloszenieNowe.getNieruchomosc().getPowierzchniaNieruchomosci());
+        nieruchomoscStan.setElementWyposazeniaNieruchomosciCollection(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+        List<ElementWyposazeniaNieruchomosci> wyposazenie = elementWyposazeniaFacadeLocal.znajdzPoIdNieruchomosci(nieruchomoscStan.getId());
+        List<ElementWyposazeniaNieruchomosci> wyposazenieNowe = new ArrayList(ogloszenieNowe.getNieruchomosc().getElementWyposazeniaNieruchomosciCollection());
+        for(int i = 0; i < wyposazenie.size(); i++) {
+            boolean jest = false;
+            for(int j = 0; j < wyposazenieNowe.size(); j++)
+                if(wyposazenieNowe.get(j).getId().equals(wyposazenie.get(i).getId()))
+                    jest = true;
+
+            if(!jest) {
+                ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenie.get(i).getId());
+                List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
+                for(int j = 0; j < n.size(); j++)
+                    if(n.get(j).getId().equals(nieruchomoscStan.getId()))
+                        n.remove(j);
+                el.setNieruchomoscWyposazonaCollection(n);
+                elementWyposazeniaFacadeLocal.edit(el);
+            }
+        }
+
+        for(int i = 0; i < wyposazenieNowe.size(); i++) {
+            boolean jest = false;
+            for(int j = 0; j < wyposazenie.size(); j++)
+                if(wyposazenieNowe.get(i).getId().equals(wyposazenie.get(j).getId()))
+                    jest = true;
+
+            if(!jest) {
+                ElementWyposazeniaNieruchomosci el = elementWyposazeniaFacadeLocal.find(wyposazenieNowe.get(i).getId());
+                List<Nieruchomosc> n = new ArrayList(el.getNieruchomoscWyposazona());
+                n.add(nieruchomoscStan);
+                el.setNieruchomoscWyposazonaCollection(n);
+                elementWyposazeniaFacadeLocal.edit(el);
+                ogloszenieStan = null;
+                nieruchomoscStan = null;
+            }
+        }
+
+        ogloszenieStan.setTytul(ogloszenieNowe.getTytul());
+        ogloszenieStan.setCena(ogloszenieNowe.getCena());
+        nieruchomoscFacadeLocal.edit(nieruchomoscStan);
+        ogloszenieFacadeLocal.edit(ogloszenieStan);
+        ogloszenieManager.przeliczAgregat();
+        ogloszenieStan = null;
+        nieruchomoscStan = null;
+    }
     
 
     @Override

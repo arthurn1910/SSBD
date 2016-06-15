@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
  *
  * @author Kamil Rogowski
  */
-
 public class MessageProvider {
 
     /**
@@ -52,5 +51,4 @@ public class MessageProvider {
         }
         return wynik;
     }
-
 }

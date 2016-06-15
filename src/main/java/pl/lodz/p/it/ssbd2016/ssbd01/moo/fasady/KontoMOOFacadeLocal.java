@@ -28,6 +28,11 @@ public interface KontoMOOFacadeLocal {
 
     List<Konto> findRange(int[] range);
 
+    /**
+     * Zwraca konto o podanym loginie
+     * @param login
+     * @return 
+     */
     Konto znajdzPoLoginie(String login);
 
     int count();

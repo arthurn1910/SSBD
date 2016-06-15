@@ -54,12 +54,6 @@ public interface MOOEndpointLocal {
      */
     List<KategoriaWyposazeniaNieruchomosci> pobierzKategorie();
     /**
-     * Metoda aktywuje ogłoszenie
-     * @param rowData 
-     */
-    void aktywujOgloszenie(Ogloszenie rowData);
-    
-    /**
      * Metoda deaktywuje ogłoszenie
      * @param rowData
      * @throws WyjatekSystemu 
