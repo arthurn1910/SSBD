@@ -19,7 +19,9 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.CloneUtils;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -434,17 +436,20 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     /***
      * Funckja zwracająca liste agentów
      * @return 
+     * @throws javax.naming.NamingException 
      */
     @Override
     @RolesAllowed("pobierzAgentow")
-    public List<Konto> getAgenci() {
+    public List<Konto> getAgenci() throws NamingException{
+        PoziomDostepuManager poziomDostepuManager=new PoziomDostepuManager();
         List<Konto> tmp=kontoFacade.findAll();
         List<Konto> tmp2=new ArrayList<>();
         for(Konto k : tmp){
-            for(PoziomDostepu p :k.getPoziomDostepuCollection())
-                if(p.getPoziom().equals("AGENT"))
+            for(PoziomDostepu p :k.getPoziomDostepuCollection()){
+                if(p.getPoziom().equals(poziomDostepuManager.getPoziomyDostepu().get(2)))
                     tmp2.add(k);
-        }           
+            }
+        }
         return tmp2;
     }
 }

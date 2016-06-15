@@ -19,7 +19,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.KontoFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.fasady.PoziomDostepuFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.MD5Generator;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.PoziomDostepuManager;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.PoziomDostepuManager;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**

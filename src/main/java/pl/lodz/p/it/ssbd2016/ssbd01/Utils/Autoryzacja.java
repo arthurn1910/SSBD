@@ -1,4 +1,4 @@
-package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
+package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;

@@ -1,8 +1,10 @@
-package pl.lodz.p.it.ssbd2016.ssbd01.mok.utils;
+package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

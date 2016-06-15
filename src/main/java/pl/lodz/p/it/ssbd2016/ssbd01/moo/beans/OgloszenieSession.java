@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedBean;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import java.util.logging.Logger;
+import javax.naming.NamingException;
 
 /**
  * Ziarno zarządzające sesją użytkownika. Udostępnia API dla widoku.
@@ -363,7 +364,7 @@ public class OgloszenieSession implements Serializable {
      * Funkcja zwracająca liste agentów.
      * @return 
      */
-    List<Konto> getAgenci() {
+    List<Konto> getAgenci() throws NamingException {
         return mooEndpoint.getAgenci();
     }
     /***

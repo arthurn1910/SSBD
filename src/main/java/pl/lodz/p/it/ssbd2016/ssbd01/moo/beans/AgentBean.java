@@ -11,6 +11,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -41,7 +42,7 @@ public class AgentBean {
         try {
             agenci = new ListDataModel<Konto>(ogloszenieSession.getAgenci());
             ogloszenie = ogloszenieSession.getOgloszenieDoWyswietlenia();
-        } catch (WyjatekSystemu ex) {
+        } catch (NamingException | WyjatekSystemu ex) {
             Logger lg=Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
             lg.log(Level.SEVERE, this.getClass()+": Wystąpił wyjątek: ",ex);
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();

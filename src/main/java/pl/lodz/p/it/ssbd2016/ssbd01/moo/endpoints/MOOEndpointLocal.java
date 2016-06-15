@@ -6,6 +6,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import javax.ejb.Local;
 import java.io.IOException;
 import java.util.List;
+import javax.naming.NamingException;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.ElementWyposazeniaNieruchomosci;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Nieruchomosc;
@@ -174,7 +175,7 @@ public interface MOOEndpointLocal {
      * Funkcja zwracająca liste agentów.
      * @return 
      */
-    public List<Konto> getAgenci();
+    public List<Konto> getAgenci() throws NamingException;
     
     public TypNieruchomosci getTypNieruchomosci(String typ);
     public TypOgloszenia getTypOgloszenia(String typ) ;
