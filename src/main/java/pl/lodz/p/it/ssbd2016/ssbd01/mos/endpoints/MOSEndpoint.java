@@ -19,6 +19,7 @@ import javax.ejb.*;
 import javax.interceptor.Interceptors;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,9 +49,23 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("pobierzSpotkania")
-    public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
+    public List<Spotkanie> pobierzSpotkaniaKlienta(Konto spotkaniaDlaKonta) {
 
         return spotkanieFacade.pobierzSpotkaniaUzytkownika(spotkaniaDlaKonta);
+    }
+
+    @Override
+    @RolesAllowed("pobierzSpotkania")
+    public List<Spotkanie> pobierzSpotkaniaAgenta(Konto spotkaniaDlaKonta) {
+        List<Spotkanie> listaSpotkanAgentaPowiazanaZOgloszeniem = new ArrayList<>();
+        final List<Ogloszenie> wszystkieOgloszeniaAgenta = ogloszenieFacade.findByAgent(spotkaniaDlaKonta);
+        for (Ogloszenie ogloszenie : wszystkieOgloszeniaAgenta) {
+            final List<Spotkanie> byOgloszenie = spotkanieFacade.findByOgloszenie(ogloszenie);
+            listaSpotkanAgentaPowiazanaZOgloszeniem.addAll(byOgloszenie);
+        }
+
+        return listaSpotkanAgentaPowiazanaZOgloszeniem;
+
     }
 
     @Override

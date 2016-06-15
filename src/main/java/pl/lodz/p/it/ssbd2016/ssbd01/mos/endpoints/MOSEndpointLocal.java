@@ -44,12 +44,18 @@ public interface MOSEndpointLocal {
     void anulujSpotkanie(Spotkanie spotkanieDoAnulowania);
 
     /**
-     * Pobiera wszystkie spotkania, stworzona dla MOS.4, Kamil Rogowski
-     * @param spotkanieDlaKonta
+     * Pobiera wszystkie spotkania klienta, stworzona dla MOS.4, Kamil Rogowski
+     * @param spotkanieDlaKonta konto
      * @return lista spotkań
-     * @author Kamil Rogowski
      */
-    List<Spotkanie> pobierzSpotkania(Konto spotkanieDlaKonta);
+    List<Spotkanie> pobierzSpotkaniaKlienta(Konto spotkanieDlaKonta);
+
+    /**
+     * Pobiera wszystkie spotkania agenta, stworzona dla MOS.4, Kamil Rogowski
+     * @param spotkanieDlaKonta konto
+     * @return lista spotkań
+     */
+    List<Spotkanie> pobierzSpotkaniaAgenta(Konto spotkanieDlaKonta);
 
     /**
      * Pobiera spotkania dla ogłoszenia, MOS.5, Kamil Rogowski

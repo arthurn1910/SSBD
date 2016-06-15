@@ -1,8 +1,5 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.managers;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.ZalogowanyUzytkownik;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Ogloszenie;
@@ -11,6 +8,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.interceptors.TrackerInterceptor;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.KontoFacadeLocalInMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.OgloszenieFacadeLocalInMOS;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
@@ -18,10 +16,11 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.interceptor.Interceptors;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 /**
  * Menadżer dla spotkań
@@ -30,7 +29,7 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 @Interceptors({TrackerInterceptor.class})
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class SpotkanieManager implements SpotkanieManagerLocal {
-
+    private static final Logger logger = Logger.getLogger(SpotkanieManager.class.getName());
     @EJB
     private SpotkanieFacadeLocal spotkanieFacade;
     @EJB
@@ -95,7 +94,6 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     @Override
     @RolesAllowed("anulujSpotkanie")
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
-
         final Ogloszenie spotkaniaPowiazaneZOgloszeniem = spotkanieDoAnulowania.getIdOgloszenia();
         spotkaniaPowiazaneZOgloszeniem.getSpotkanieCollection().remove(spotkanieDoAnulowania);
         final Konto konto = kontoFacade.znajdzPoLoginie(ZalogowanyUzytkownik.getLoginZalogowanegoUzytkownika());

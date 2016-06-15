@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/MainTemplate.xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+>
     <ui:define name="top">
         <h>${msg["tytulyPrzypadkow.wyswietlOgloszenia"]}</h>
     </ui:define>
@@ -41,7 +41,7 @@
                 </h:column>
                 <h:column id="typOgloszenia">
                     <f:facet name="header">${msg["daneOgloszenia.typOgloszenia"]}</f:facet>
-                    <h:outputText value="#{row.typOgloszenia.nazwa}" />
+                    <h:outputText value="#{msg[row.typOgloszenia.nazwa]}" />
                 </h:column>
                 <h:column id="miejscowosc">
                     <f:facet name="header">${msg["daneOgloszenia.miejscowosc"]}</f:facet>

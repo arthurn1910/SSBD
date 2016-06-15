@@ -31,11 +31,11 @@
                 </h:column>
 
                 <h:column id="imieAgenta" rendered="#{autoryzacja.czyKlient()}">
-                    <f:facet name="header">${msg["spotkanie.nazwisko_agenta"]}</f:facet>
+                    <f:facet name="header">${msg["spotkanie.imie_angeta"]}</f:facet>
                     <h:outputText value="#{spotkanie.idOgloszenia.idAgenta.imie}" />
                 </h:column>
                 <h:column id="nazwiskoAgenta" rendered="#{autoryzacja.czyKlient()}" >
-                    <f:facet name="header">${msg["spotkanie.imie_angeta"]}</f:facet>
+                    <f:facet name="header">${msg["spotkanie.nazwisko_agenta"]}</f:facet>
                     <h:outputText value="#{spotkanie.idOgloszenia.idAgenta.nazwisko}" />
                 </h:column>
 
@@ -55,8 +55,8 @@
                     </p:commandButton>
 
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                        <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                         <p:commandButton value="#{msg['komunikat.nie']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        <p:commandButton value="#{msg['komunikat.tak']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     </p:confirmDialog>
                 </h:column>
             </h:dataTable>
