@@ -255,14 +255,22 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("deaktywujOgloszenieInnegoUzytkownika")
     public void deaktywujOgloszenieInnegoUzytkownika(Ogloszenie ogloszenie) throws WyjatekSystemu {
         Ogloszenie o = ogloszenieFacadeLocal.find(ogloszenie.getId());
-        
+        if(o.getSpotkanieCollection() != null) {
+            if(o.getSpotkanieCollection().size() != 0) {
+                System.out.println("------------aaa");
+                WyjatekSystemu ex=new WyjatekSystemu("blad.toOgloszenieMaSpotkania","MOO");
+                throw new WyjatekSystemu("blad.toOgloszenieMaSpotkania", ex, "MOO");
+            }
+        }
         if(o.getAktywne() == false) {
             throw new WyjatekSystemu("blad.ogloszenieDeaktywowaneWczesniej","MOO");
         }
         else {
             o.setAktywne(false);
             ogloszenieFacadeLocal.edit(o);
+            ogloszenieManager.przeliczAgregat();
         }
+        
     }
 
     @RolesAllowed("pobierzTypyOgloszen")

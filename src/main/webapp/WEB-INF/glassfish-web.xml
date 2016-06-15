@@ -178,18 +178,16 @@
         <group-name>AGENT</group-name>
     </security-role-mapping>
     <security-role-mapping>
-        <role-name>znajdzPoID</role-name>
-        <group-name>MENADZER</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
         <role-name>getWszystkieMozliweElementyWyposazeniaNieruchomosci</role-name>
         <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
         <group-name>AGENT</group-name>
     </security-role-mapping>
     <security-role-mapping>
         <role-name>pobierzWyposazenieNieruchomosci</role-name>
         <group-name>KLIENT</group-name>
         <group-name>AGENT</group-name>
+        <group-name>MENADZER</group-name>
     </security-role-mapping>
     
     <!-- role MOS -->
@@ -216,10 +214,6 @@
         <role-name>pobierzSpotkaniaDlaOgloszenia</role-name>
         <group-name>MENADZER</group-name>
         <group-name>AGENT</group-name>
-        <group-name>KLIENT</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>rezerwujSpotkanie</role-name>
         <group-name>KLIENT</group-name>
     </security-role-mapping>
     <security-role-mapping>
@@ -251,6 +245,7 @@
     <security-role-mapping>
         <role-name>przeliczAgregat</role-name>
         <group-name>KLIENT</group-name>
+        <group-name>MENADZER</group-name>
     </security-role-mapping>
 
     <security-role-mapping>

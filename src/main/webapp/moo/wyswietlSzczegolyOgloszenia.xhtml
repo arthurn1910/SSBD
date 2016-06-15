@@ -57,12 +57,15 @@
             <h:commandButton value="#{msg['szczegolyOgloszenia.zmienAgenta']}" action="zmienAgenta"  class="edit_icon" rendered="#{wyswietlSzczegolyOgloszeniaBean.posiadaAgenta() and autoryzacja.czyMenadzer()}">
             </h:commandButton> 
             
-            <p:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and wyswietlSzczegolyOgloszeniaBean.czyOgloszenieAktywne() and menuBean.zalogowany}">
-                <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
+            <p:commandButton value="${msg['komunikat.deaktywujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}">
+                <p:confirm message="#{msg['komunikat.potwierdzenieDezaktywacja']}" icon="ui-icon-alert" />
             </p:commandButton>
-            <h:commandButton value="${msg['komunikat.deaktywujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
-            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.isZalogowany()}"/>
-            <h:commandButton value="${msg['komunikat.edytujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}"/>
+            
+            <p:commandButton value="${msg['komunikat.deaktywujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.deaktywujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer()}">
+                 <p:confirm message="#{msg['komunikat.potwierdzenieDezaktywacja']}" icon="ui-icon-alert" />
+            </p:commandButton>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenie']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieDanegoUzytkownika()}" rendered="#{wyswietlSzczegolyOgloszeniaBean.czyMojeOgloszenie() and menuBean.zalogowany}"/>
+            <h:commandButton value="${msg['komunikat.edytujOgloszenieInnegoUzytkownika']}" action="#{wyswietlSzczegolyOgloszeniaBean.edytujOgloszenieInnegoUzytkownika()}" rendered="#{autoryzacja.czyMenadzer() and wyswietlSzczegolyOgloszeniaBean.czyOgloszenieAktywne()}"/>
             <h:commandButton value="${msg['komunikat.powrot']}" action="wyswietlOgloszenia" />
             <h:commandButton value="#{msg['komunikat.rezerwacjaSpotkania']}"  action="rezerwacjaSpotkania"  class="edit_icon" rendered="#{autoryzacja.czyKlient() and wyswietlSzczegolyOgloszeniaBean.ogloszenie.aktywne}">
             <p:commandButton update="@form" value="#{msg['komunikat.dodajDoUlubionych']}"  action="#{wyswietlSzczegolyOgloszeniaBean.dodajDoUlubionych()}" rendered="#{not wyswietlSzczegolyOgloszeniaBean.czyUlubione() and autoryzacja.czyKlient()}">

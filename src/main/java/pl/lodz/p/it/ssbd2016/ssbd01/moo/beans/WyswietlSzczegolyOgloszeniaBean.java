@@ -103,6 +103,20 @@ public class WyswietlSzczegolyOgloszeniaBean {
         return "wyswietlOgloszenia";
     }
     
+      /**
+     * Sprawdza czy ogłoszenie jest aktywne
+     * @return wartośc logiczna czy ogłoszenie jest aktywne
+     * @throws WyjatekSystemu
+     */    
+    public Boolean czyOgloszenieAktywne() throws WyjatekSystemu {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return false;
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        if(!otwarte.getAktywne())
+            return false;
+        return true;
+    }
+    
     /**
      * Pobiera liste agentow
      */
@@ -151,20 +165,6 @@ public class WyswietlSzczegolyOgloszeniaBean {
             externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
         }
         return "wyswietlOgloszenia";
-    }
-    
-    /**
-     * Sprawdza czy ogłoszenie jest aktywne
-     * @return wartośc logiczna czy ogłoszenie jest aktywne
-     * @throws WyjatekSystemu
-     */    
-    public Boolean czyOgloszenieAktywne() throws WyjatekSystemu {
-        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
-            return false;
-        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
-        if(!otwarte.getAktywne())
-            return false;
-        return true;
     }
     
     /**

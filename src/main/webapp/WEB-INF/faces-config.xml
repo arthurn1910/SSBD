@@ -198,6 +198,14 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+        <navigation-rule>
+        <from-view-id>/moo/wyswietlSzczegolyOgloszenia.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>edytujOgloszenieInnegoUzytkownika</from-outcome>
+            <to-view-id>/moo/zalogowani/menadzer/edytujOgloszenieInnegoUzytkownika.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
 
 
     <!-- MOS -->
