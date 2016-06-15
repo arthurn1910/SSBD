@@ -277,7 +277,9 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
         else {
             o.setAktywne(false);
             ogloszenieFacadeLocal.edit(o);
+            ogloszenieManager.przeliczAgregat();
         }
+        
     }
 
     @RolesAllowed("pobierzTypyOgloszen")
