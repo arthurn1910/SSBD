@@ -99,7 +99,15 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Przypadek użycia - MOO5
      */
     public String deaktywujOgloszenieInnegoUzytkownika() throws Exception {
+        try {
         ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
+        return "wyswietlOgloszenia";
+        }
+        catch(Exception e) {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
+        }
         return "wyswietlOgloszenia";
     }
     
@@ -142,6 +150,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
         return "wyswietlOgloszenia";
     }
     
+   
     /**
      * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
      * @return
