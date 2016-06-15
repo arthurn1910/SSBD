@@ -1,7 +1,7 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
-import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.Autoryzacja;
+import pl.lodz.p.it.ssbd2016.ssbd01.Utils.Autoryzacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
