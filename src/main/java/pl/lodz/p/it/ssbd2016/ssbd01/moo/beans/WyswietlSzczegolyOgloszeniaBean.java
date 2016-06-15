@@ -99,16 +99,22 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Przypadek użycia - MOO5
      */
     public String deaktywujOgloszenieInnegoUzytkownika() throws Exception {
-        try {
         ogloszenieSession.deaktywujOgloszenieInnegoUzytkownika(ogloszenie);
         return "wyswietlOgloszenia";
-        }
-        catch(Exception e) {
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
-        }
-        return "wyswietlOgloszenia";
+    }
+    
+      /**
+     * Sprawdza czy ogłoszenie jest aktywne
+     * @return wartośc logiczna czy ogłoszenie jest aktywne
+     * @throws WyjatekSystemu
+     */    
+    public Boolean czyOgloszenieAktywne() throws WyjatekSystemu {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return false;
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        if(!otwarte.getAktywne())
+            return false;
+        return true;
     }
     
     /**
