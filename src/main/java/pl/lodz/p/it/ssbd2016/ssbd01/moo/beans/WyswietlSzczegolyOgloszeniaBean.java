@@ -114,6 +114,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * Metoda odpowiada za pobranie ogłoszenia do edycji
      * Stowrzył Maksymilian Zgierski
      * MOO.2
+     * @throws Exception
      * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
      */
     public String edytujOgloszenieDanegoUzytkownika() throws Exception {
@@ -135,29 +136,54 @@ public class WyswietlSzczegolyOgloszeniaBean {
     /**
      * Stworzył: Maksymilian Zgierski
      * Przypadek użycia: MOO.4 - Deaktywuj ogłoszenie dotyczące danego użytkownika 
+     * @return łańcuch przekierowujący do widoku z przeglądaniem ogłoszeń
+     * @throws Exception
      */
     public String deaktywujOgloszenieDanegoUzytkownika() throws Exception {
- //       ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
-        ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+        try {
+   //       ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
+            ogloszenieSession.deaktywujOgloszenieDanegoUzytkownika(ogloszenie);
+            return "wyswietlOgloszenia";
+        }
+        catch(Exception e) {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
+        }
         return "wyswietlOgloszenia";
     }
     
     /**
+     * Sprawdza czy ogłoszenie jest aktywne
+     * @return wartośc logiczna czy ogłoszenie jest aktywne
+     * @throws WyjatekSystemu
+     */    
+    public Boolean czyOgloszenieAktywne() throws WyjatekSystemu {
+        if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
+            return false;
+        Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
+        if(!otwarte.getAktywne())
+            return false;
+        return true;
+    }
+    
+    /**
      * Sprawdza czy użytkownik jest właścicielem lub agentem aktualnie otwartego ogłoszenia
-     * @return
+     * @return wartośc logiczna czy ogłoszenie należy do aktualnie zalogowanego ogłoszenia
+     * @throws WyjatekSystemu
      */
     public Boolean czyMojeOgloszenie() throws WyjatekSystemu
     {
+        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
         if(ogloszenieSession.getOgloszenieDoWyswietlenia()==null)
-            return null;
+            return false;
         Ogloszenie otwarte = ogloszenieSession.getOgloszenieDoWyswietlenia();
         
-        String loginKonta = ogloszenieSession.pobierzZalogowanegoUzytkownika();
-        if(otwarte.getIdAgenta()!=null)
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta) == false && otwarte.getIdAgenta().getLogin().equals(loginKonta) == false){
+        if(otwarte.getIdAgenta()!=null) {
+            if(!otwarte.getIdWlasciciela().getLogin().equals(loginKonta)&& !otwarte.getIdAgenta().getLogin().equals(loginKonta))
                 return false;
         }else{
-            if(otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
+            if(!otwarte.getIdWlasciciela().getLogin().equals(loginKonta)){
                 return false;
             }
         }    
