@@ -442,7 +442,6 @@ public class MOOEndpoint implements MOOEndpointLocal, SessionSynchronization {
     @RolesAllowed("pobierzAgentow")
     public List<Konto> getAgenci() throws NamingException{
         PoziomDostepuManager poziomDostepuManager=new PoziomDostepuManager();
-        Logger lg = Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
         List<Konto> tmp=kontoFacade.findAll();
         List<Konto> tmp2=new ArrayList<>();
         for(Konto k : tmp){
