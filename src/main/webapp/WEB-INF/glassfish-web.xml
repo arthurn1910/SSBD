@@ -196,6 +196,7 @@
     <security-role-mapping>
         <role-name>listaOgloszenPoIDAgenta</role-name>
         <group-name>KLIENT</group-name>
+        <group-name>AGENT</group-name>
     </security-role-mapping>
     <security-role-mapping>
         <role-name>pobierzSpotkania</role-name>

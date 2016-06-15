@@ -53,22 +53,30 @@ public class SpotkanieSession implements Serializable {
      * @return lista spotkań
      */
     public List<Spotkanie> pobierzSpotkania(Konto spotkaniaDlaKonta) {
-        return mosEndpoint.pobierzSpotkania(spotkaniaDlaKonta);
+        return mosEndpoint.pobierzSpotkaniaKlienta(spotkaniaDlaKonta);
     }
 
     /**
-     * Pobiera listę swoich spotkań dla konta,
+     * Pobiera listę swoich spotkań dla konta - klient,
      * MOS. 4, Kamil Rogowski
      * @return lista spotkań
      */
     List<Spotkanie> pobierzSwojeSpotkania() {
-         return  mosEndpoint.pobierzSpotkania(mosEndpoint.pobierzMojeKonto());
+         return  mosEndpoint.pobierzSpotkaniaKlienta(mosEndpoint.pobierzMojeKonto());
     }
 
+    /**
+     * Pobiera listę swoich spotkań dla konta - agent,
+     * MOS. 4, Kamil Rogowski
+     * @return lista spotkań
+     */
 
+    List<Spotkanie> pobierzSpotkaniaAgenta() {
+        return  mosEndpoint.pobierzSpotkaniaAgenta(mosEndpoint.pobierzMojeKonto());
+    }
     /**
      * Anuluje spotkania dla konta, MOS.3, Kamil Rogowski
-     *   po anuluje przekierowuje na ta samo strone
+     *  po anuluje przekierowuje na ta samo strone
      * @param spotkanieDoAnulowania spotkanie do anulowania
      */
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {

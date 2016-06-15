@@ -1,13 +1,16 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
+import pl.lodz.p.it.ssbd2016.ssbd01.mok.utils.Autoryzacja;
 import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.naming.NamingException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,7 +23,6 @@ public class PrzegladajSwojeSpotkania implements Serializable {
 
     @Inject
     private SpotkanieSession spotkanieSession;
-    private boolean czyKlient = false;
     private List<Spotkanie> spotkania;
 
     //na potrzeby przetestowania anulowania wybranego spotkania
@@ -36,13 +38,26 @@ public class PrzegladajSwojeSpotkania implements Serializable {
      */
     @PostConstruct
     public void init() {
-        spotkania = spotkanieSession.pobierzSwojeSpotkania();
+        final Autoryzacja autoryzacja = new Autoryzacja();
+
+        try {
+            if (autoryzacja.czyKlient()) {
+                spotkania = spotkanieSession.pobierzSwojeSpotkania();
+
+            } else spotkania = spotkanieSession.pobierzSpotkaniaAgenta();
+        } catch (NamingException e) {
+            e.printStackTrace();
+        } catch (WyjatekSystemu wyjatekSystemu) {
+            wyjatekSystemu.printStackTrace();
+        }
     }
+
 
     /**
      * Anuluje spotkania powiązane z kontem MOS.3, Kamil Rogowski
      */
     public void anulujSpotkanie(Spotkanie wybraneSpotkanie) {
+
         spotkanieSession.anulujSpotkanie(wybraneSpotkanie);
     }
 
