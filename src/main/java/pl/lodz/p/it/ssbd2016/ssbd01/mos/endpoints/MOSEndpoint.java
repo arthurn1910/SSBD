@@ -57,14 +57,14 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
     @Override
     @RolesAllowed("pobierzSpotkania")
     public List<Spotkanie> pobierzSpotkaniaAgenta(Konto spotkaniaDlaKonta) {
-        List<Spotkanie> ogloszenie2 = new ArrayList<>();
+        List<Spotkanie> listaSpotkanAgentaPowiazanaZOgloszeniem = new ArrayList<>();
         final List<Ogloszenie> wszystkieOgloszeniaAgenta = ogloszenieFacade.findByAgent(spotkaniaDlaKonta);
         for (Ogloszenie ogloszenie : wszystkieOgloszeniaAgenta) {
             final List<Spotkanie> byOgloszenie = spotkanieFacade.findByOgloszenie(ogloszenie);
-            ogloszenie2.addAll(byOgloszenie);
+            listaSpotkanAgentaPowiazanaZOgloszeniem.addAll(byOgloszenie);
         }
 
-        return ogloszenie2;
+        return listaSpotkanAgentaPowiazanaZOgloszeniem;
 
     }
 

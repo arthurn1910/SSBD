@@ -32,8 +32,8 @@
             ${msg["szczegolyOgloszenia.getRokBudowy"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getRokBudowy()}"/><br />
             ${msg["szczegolyOgloszenia.getUlica"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getUlica()}"/><br />
             
-            ${msg["szczegolyOgloszenia.nazwaOgloszenia"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getTypOgloszenia().getNazwa()}"/><br />
-            ${msg["szczegolyOgloszenia.typNieruchomosciNazwa"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getNazwa()}"/><br />
+            ${msg["szczegolyOgloszenia.nazwaOgloszenia"]}  <h:outputText  value="#{msg[wyswietlSzczegolyOgloszeniaBean.ogloszenie.getTypOgloszenia().getNazwa()]}"/><br />
+            ${msg["szczegolyOgloszenia.typNieruchomosciNazwa"]}  <h:outputText  value="#{msg[wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getNazwa()]}"/><br />
             ${msg["szczegolyOgloszenia.cenaMetra"]}  <h:outputText  value="#{wyswietlSzczegolyOgloszeniaBean.ogloszenie.getNieruchomosc().getTypNieruchomosci().getSredniaCenaMetraKwadratowego()}"/><br />
             
             <h>${msg["szczegolyOgloszenia.wyposazenie"]}</h>

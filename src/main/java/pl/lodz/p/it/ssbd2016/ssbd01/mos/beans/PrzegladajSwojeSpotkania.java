@@ -8,11 +8,17 @@ import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Obsługuje widok przeglądania swoich spotkań
@@ -45,10 +51,19 @@ public class PrzegladajSwojeSpotkania implements Serializable {
                 spotkania = spotkanieSession.pobierzSwojeSpotkania();
 
             } else spotkania = spotkanieSession.pobierzSpotkaniaAgenta();
-        } catch (NamingException e) {
-            e.printStackTrace();
-        } catch (WyjatekSystemu wyjatekSystemu) {
-            wyjatekSystemu.printStackTrace();
+        } catch (NamingException ex) {
+            spotkanieSession.setException(ex);
+
+        } catch (WyjatekSystemu ex) {
+            Logger lg = Logger.getLogger("javax.enterprice.system.conteiner.web.faces");
+            lg.log(Level.SEVERE, this.getClass() + ": Wystąpił wyjątek: ", ex);
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            HttpServletRequest origRequest = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            try {
+                externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatek.xhtml");
+            } catch (IOException ex1) {
+                Logger.getLogger(PrzegladajSwojeSpotkania.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
     }
 
