@@ -72,6 +72,10 @@ public class OgloszenieSession implements Serializable {
         ogloszeniaDataModel = o;
     }
     
+    /**
+     * Zwraca DataModel ogloszen, ogranicza wykonanie zapytań do bazy danych
+     * @return 
+     */
     public List<Ogloszenie> getOgloszeniaDataModel() {
         if(this.licznikWyswietlOgloszenia == 0) {
             pobierzWszystkieOgloszenia();
@@ -102,7 +106,11 @@ public class OgloszenieSession implements Serializable {
         czyWyswietlicPotwierdzenie = true;
     }
 
-
+    /**
+     * Tworzy ogloszenie na podstawie podanego
+     * @param ogloszenie
+     * @return 
+     */
     private Ogloszenie ustawOgloszenie(Ogloszenie ogloszenie) {
         Ogloszenie noweOgloszenie = new Ogloszenie();
         noweOgloszenie.setTytul(ogloszenie.getTytul());
@@ -115,7 +123,12 @@ public class OgloszenieSession implements Serializable {
         noweOgloszenie.setTypOgloszenia(ogloszenie.getTypOgloszenia());
         return noweOgloszenie;
     }
-
+    
+    /**
+     * Tworzy nieruchomosc na podstawie podanego
+     * @param ogloszenie
+     * @return 
+     */
     private Nieruchomosc ustawNieruchomosc(Nieruchomosc nieruchomosc) {
         Nieruchomosc nowaNieruchomosc = new Nieruchomosc();
         nowaNieruchomosc.setMiejscowosc(nieruchomosc.getMiejscowosc());
@@ -249,10 +262,10 @@ public class OgloszenieSession implements Serializable {
      * Metoda zapisuje zmienione ogloszenie innego uzytkownika.
      * @throws WyjatekSystemu
      */
-public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
-        mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
-        czyWyswietlicPotwierdzenie = true;
-}
+    public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
+            mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
+            czyWyswietlicPotwierdzenie = true;
+    }
 
     /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
@@ -276,6 +289,11 @@ public void zapiszOgloszenieInnegoUzytkownikaPoEdycji() throws WyjatekSystemu{
         return mooEndpoint.pobierzListeAgentow();
     }
     
+    /**
+     * Zwraca ogloszenie do wysweitlenia, ogranicza liczbe zapytań do bazy
+     * @return
+     * @throws WyjatekSystemu 
+     */
     public Ogloszenie getOgloszenieDoWyswietlenia() throws WyjatekSystemu {
         try{
             if(ogloszenieDoWyswietlenia==null){

@@ -24,6 +24,8 @@ public interface SpotkanieManagerLocal {
     /**
      * Dodaje spotkanie
      * @param spotkanie spotkanie jakie ma zostac dodane
+     * @param login
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
     void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu;
     

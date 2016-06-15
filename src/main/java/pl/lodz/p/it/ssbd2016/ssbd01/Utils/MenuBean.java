@@ -2,7 +2,6 @@ package pl.lodz.p.it.ssbd2016.ssbd01.Utils;
 
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.Konto;
 import pl.lodz.p.it.ssbd2016.ssbd01.encje.PoziomDostepu;
-import pl.lodz.p.it.ssbd2016.ssbd01.moo.beans.OgloszenieSession;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;

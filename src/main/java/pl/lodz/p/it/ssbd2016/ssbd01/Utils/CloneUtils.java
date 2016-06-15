@@ -16,7 +16,8 @@ public class CloneUtils {
      * Metoda wykonuje głęboką kopie obiektu wykorzystując serializację
      * @param source obiekt do wykonania kopii
      * @return kopia obiektu 
-     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu 
+     * @throws java.io.IOException 
+     * @throws java.lang.ClassNotFoundException 
      */
     public static Object deepCloneThroughSerialization(Serializable source) throws IOException, ClassNotFoundException{
             ByteArrayOutputStream bos = new ByteArrayOutputStream();

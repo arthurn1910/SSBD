@@ -87,7 +87,10 @@ public class OgloszenieManager implements OgloszenieManagerLocal {
         for (TypNieruchomosci typNieruchomosci : listaNieruchomosci) {
 
             for (Ogloszenie ogloszenie : ogloszenia) {
-
+                
+                if (!ogloszenie.getAktywne())
+                    continue;
+                
                 if(typNieruchomosci.getId().equals(ogloszenie.getNieruchomosc().getTypNieruchomosci().getId()) && typNieruchomosci.getId() == 3 ){
                     powierzchnia += ogloszenie.getNieruchomosc().getPowierzchniaDzialki();
                     cena += ogloszenie.getCena();

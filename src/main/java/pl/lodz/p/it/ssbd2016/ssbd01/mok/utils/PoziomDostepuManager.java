@@ -21,7 +21,7 @@ public class PoziomDostepuManager {
     
     /**
      * Konstruktor inicjalizujący listy
-     * @throws WyjatekSystemu 
+     * @throws javax.naming.NamingException
      */
     public PoziomDostepuManager() throws NamingException{    
         poziomyDostepu = dodajPoziomyDostepu();

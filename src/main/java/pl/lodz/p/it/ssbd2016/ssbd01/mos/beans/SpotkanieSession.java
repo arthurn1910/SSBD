@@ -70,7 +70,6 @@ public class SpotkanieSession implements Serializable {
      * MOS. 4, Kamil Rogowski
      * @return lista spotkań
      */
-
     List<Spotkanie> pobierzSpotkaniaAgenta() {
         return  mosEndpoint.pobierzSpotkaniaAgenta(mosEndpoint.pobierzMojeKonto());
     }

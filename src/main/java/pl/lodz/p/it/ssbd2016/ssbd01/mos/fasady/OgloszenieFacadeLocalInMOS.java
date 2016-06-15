@@ -38,6 +38,7 @@ public interface OgloszenieFacadeLocalInMOS {
      * @return objekt ogloszenie
      */
     Ogloszenie findById(Long id);
+    
     /***
      * Znajduje liste ogłoszeń po id agenta
      * @param agent
