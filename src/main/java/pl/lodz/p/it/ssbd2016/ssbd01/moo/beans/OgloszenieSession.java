@@ -272,13 +272,14 @@ public class OgloszenieSession implements Serializable {
     /**
      * metoda umożliwiająca edycje ogłoszenia innego użytkownika
      */
-    void edytujOgloszenieInnegoUzytkownika() {
+    void edytujOgloszenieInnegoUzytkownika() throws Exception {
         try {
             mooEndpoint.edytujOgloszenieInnegoUzytkownika(ogloszenieEdytuj);
             pobierzWszystkieOgloszenia();
             czyWyswietlicPotwierdzenie = true;
         } catch (Exception e) {
-            e.printStackTrace();
+            this.exception = e;
+            throw e;
         }
     }
     
