@@ -1,12 +1,10 @@
 package pl.lodz.p.it.ssbd2016.ssbd01.mos.beans;
 
-import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.Utils.Autoryzacja;
-import pl.lodz.p.it.ssbd2016.ssbd01.mos.fasady.SpotkanieFacadeLocal;
+import pl.lodz.p.it.ssbd2016.ssbd01.encje.Spotkanie;
 import pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -16,6 +14,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,9 +30,12 @@ public class PrzegladajSwojeSpotkania implements Serializable {
     private SpotkanieSession spotkanieSession;
     private List<Spotkanie> spotkania;
 
-    //na potrzeby przetestowania anulowania wybranego spotkania
-    @EJB
-    private SpotkanieFacadeLocal spotkanieFacade;
+    public Date getTenDzien() {
+        return tenDzien;
+    }
+
+    private Date tenDzien = new Date();
+
     /**
      * Metoda wywoływana zaraz po stworzeniu obiektu. Inicjalizuje pole
      * konto przez konto użytkownika obecnie zalogowanego
@@ -70,10 +72,13 @@ public class PrzegladajSwojeSpotkania implements Serializable {
 
     /**
      * Anuluje spotkania powiązane z kontem MOS.3, Kamil Rogowski
+     *  @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
+     *  @return wyswietlMojeSpotkania ta sama strona
      */
-    public void anulujSpotkanie(Spotkanie wybraneSpotkanie) {
+    public String anulujSpotkanie(Spotkanie wybraneSpotkanie) throws WyjatekSystemu {
 
         spotkanieSession.anulujSpotkanie(wybraneSpotkanie);
+        return "wyswietlMojeSpotkania";
     }
 
     public List<Spotkanie> getSpotkania() {

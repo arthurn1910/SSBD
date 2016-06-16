@@ -10,8 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -77,16 +75,17 @@ public class SpotkanieSession implements Serializable {
      * Anuluje spotkania dla konta, MOS.3, Kamil Rogowski
      *  po anuluje przekierowuje na ta samo strone
      * @param spotkanieDoAnulowania spotkanie do anulowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
-        mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
-        czyWyswietlicPotwierdzenie = true;
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) throws WyjatekSystemu {
         try {
-            context.redirect(context.getRequestContextPath() + "/mos/zalogowani/klientAgent/wyswietlSwojeSpotkania.xhtml");
-        } catch (IOException e) {
-
+            mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
+            czyWyswietlicPotwierdzenie = true;
+        } catch (WyjatekSystemu e) {
+            this.exception = e;
+            throw e;
         }
+
     }
 
     /**

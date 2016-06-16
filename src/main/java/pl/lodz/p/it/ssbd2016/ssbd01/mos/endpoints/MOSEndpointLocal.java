@@ -40,8 +40,9 @@ public interface MOSEndpointLocal {
     /**
      * Anuluje spotkanie powiąane z kontem, stworzona dla MOS.3, Kamil Rogowski
      * @param spotkanieDoAnulowania spotkanie do anulowania
+     * @throws pl.lodz.p.it.ssbd2016.ssbd01.wyjatki.WyjatekSystemu
      */
-    void anulujSpotkanie(Spotkanie spotkanieDoAnulowania);
+    void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) throws WyjatekSystemu;
 
     /**
      * Pobiera wszystkie spotkania klienta, stworzona dla MOS.4, Kamil Rogowski

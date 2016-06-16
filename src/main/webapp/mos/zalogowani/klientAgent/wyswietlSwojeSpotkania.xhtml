@@ -50,7 +50,7 @@
 
                 <h:column id="akcje">
                     <f:facet name="header">${msg["spotkanie.akcje"]}</f:facet>
-                    <p:commandButton value="#{msg['spotkanie.anuluj']}" action="#{przegladajSwojeSpotkania.anulujSpotkanie(spotkanie)}">
+                    <p:commandButton rendered="#{spotkanie.dataSpotkania > przegladajSwojeSpotkania.tenDzien}" value="#{msg['spotkanie.anuluj']}" action="#{przegladajSwojeSpotkania.anulujSpotkanie(spotkanie)}" update="@form">
                         <p:confirm message="#{msg['komunikat.potwierdzenie']}" icon="ui-icon-alert" />
                     </p:commandButton>
 
