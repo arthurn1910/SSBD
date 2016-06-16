@@ -158,10 +158,15 @@ public class OgloszenieSession implements Serializable {
      * Edytuje dane ogłoszenie
      * @throws WyjatekSystemu
      */
-    void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {
-        this.licznikWyswietlOgloszenia = 0;
-        mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
-        czyWyswietlicPotwierdzenie = true;
+    void edytujOgloszenieDanegoUzytkownika() throws WyjatekSystemu {       
+        try {
+            this.licznikWyswietlOgloszenia = 0;
+            mooEndpoint.edytujOgloszenieDotyczaceUzytkownika(ogloszenieEdytuj);
+            czyWyswietlicPotwierdzenie = true;
+        } catch (WyjatekSystemu e) {
+            this.exception = e;
+            throw e;
+        }
     }
 
     /**
