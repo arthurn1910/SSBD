@@ -80,11 +80,12 @@ public class SpotkanieSession implements Serializable {
     public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) throws WyjatekSystemu {
         try {
             mosEndpoint.anulujSpotkanie(spotkanieDoAnulowania);
+            czyWyswietlicPotwierdzenie = true;
         } catch (WyjatekSystemu e) {
             this.exception = e;
             throw e;
         }
-        czyWyswietlicPotwierdzenie = true;
+
     }
 
     /**
