@@ -132,16 +132,7 @@ public class WyswietlSzczegolyOgloszeniaBean {
      * @return Łańcuch przekierowuje do widoku z edycją danych ogłoszenia
      */
     public String edytujOgloszenieDanegoUzytkownika() throws Exception {
-        try {
-   //       ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
-            ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
-            return "edytujOgloszenieDanegoUzytkownika";
-        }
-        catch(Exception e) {
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-            externalContext.redirect(origRequest.getContextPath() + "/wyjatki/wyjatekMOO.xhtml");  
-        }
+        ogloszenieSession.pobierzOgloszenieDoEdycji(ogloszenie);
         return "edytujOgloszenieDanegoUzytkownika";
     }
     
