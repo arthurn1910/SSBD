@@ -53,6 +53,11 @@ public class SpotkanieManager implements SpotkanieManagerLocal {
     @Override
     @RolesAllowed("rezerwujSpotkanie")
     public void rezerwujSpotkanie(Spotkanie spotkanie, String login) throws WyjatekSystemu{
+        if(ogloszenieFacade.find(spotkanie.getIdOgloszenia().getId()).getAktywne()==false){
+            WyjatekSystemu e= new WyjatekSystemu("blad.ogloszenieNieAktywne", "MOS");
+            throw new WyjatekSystemu(e.getMessage(), e, "MOS");
+        }
+            
         spotkanie.setIdUzytkownika(kontoFacade.znajdzPoLoginie(login));
         List<Spotkanie> listaTerminowZajetych=new ArrayList<Spotkanie>();
         listaTerminowZajetych=spotkanieFacade.terminyUzytkownika(spotkanie.getIdUzytkownika());
