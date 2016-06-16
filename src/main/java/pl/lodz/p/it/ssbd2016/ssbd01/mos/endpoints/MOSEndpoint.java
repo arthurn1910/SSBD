@@ -70,7 +70,7 @@ public class MOSEndpoint implements MOSEndpointLocal, SessionSynchronization {
 
     @Override
     @RolesAllowed("anulujSpotkanie")
-    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) {
+    public void anulujSpotkanie(Spotkanie spotkanieDoAnulowania) throws WyjatekSystemu {
         spotkanieManager.anulujSpotkanie(spotkanieDoAnulowania);
     }
 

@@ -238,5 +238,12 @@
             <redirect />
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>wyswietlMojeSpotkania</from-outcome>
+            <to-view-id>/mos/zalogowani/klientAgent/wyswietlSwojeSpotkania.xhtml</to-view-id>
+            <redirect />
+        </navigation-case>
+    </navigation-rule>
     
 </faces-config>
