@@ -61,9 +61,10 @@ public class AgentBean {
      * MOO 6
      * MOO 7
      */
-    public void przydzielAgenta() {
+    public String przydzielAgenta() {
         ogloszenieSession.przydzielAgentaDoOgloszenia(ogloszenie, agenci.getRowData());
         initModel();
+        return "wyswietlOgloszenia";
     }
     
     /**
